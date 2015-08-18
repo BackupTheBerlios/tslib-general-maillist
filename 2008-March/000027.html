@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Tslib stylus problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20stylus%20problem&In-Reply-To=%3C70EBC5652FA82044842A32C185EB46413927%40ala-mail09.corp.ad.wrs.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000025.html">
+   <LINK REL="Next"  HREF="000029.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Tslib stylus problem</H1>
+    <B>Shapiro, Alex (OTTAWA)</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20stylus%20problem&In-Reply-To=%3C70EBC5652FA82044842A32C185EB46413927%40ala-mail09.corp.ad.wrs.com%3E"
+       TITLE="[Tslib-general] Tslib stylus problem">Alex.Shapiro at windriver.com
+       </A><BR>
+    <I>Sun Mar 30 16:02:08 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000025.html">[Tslib-general] Tslib stylus problem
+</A></li>
+        <LI>Next message: <A HREF="000029.html">[Tslib-general] Tslib stylus problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#27">[ date ]</a>
+              <a href="thread.html#27">[ thread ]</a>
+              <a href="subject.html#27">[ subject ]</a>
+              <a href="author.html#27">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Alim,
+ 
+With my dmesg enabled, both my old environment (k-2.6.14) and the new
+env (k-2.6.21) with the touchscreen problem are attached. in both cases
+when I touch the screen during ts_cal &amp; ts_test, nothing added to the
+dmesg. There are some &quot;omapfb&quot; differences in these outputs, not sure if
+this causing to problem.
+The version of ADS7846 driver i'm using in my new environment is exactly
+the same as in my old env. I didn't customize it.
+How can I test the low level driver?
+ 
+Thanks,
+Alex
+
+________________________________
+
+From: Alim Akhtar [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">alim.akhtar at gmail.com</A>] 
+Sent: Saturday, March 29, 2008 11:17 AM
+To: Shapiro, Alex (OTTAWA)
+Subject: Re: [Tslib-general] Tslib stylus problem
+
+
+Hi Alex,
+
+&gt;<i>Are you suggesting that the actual problem is in DirectFB rather then
+</I>in tslib?
+Truly speeking ts_calibrate does not depends on DirectFB or even Xfdev.
+Can you send me dmesg (log) with event interface debug enabled. in both
+cases i.e when you touch the screen with finger and with styls.
+Donot run DirectFB and after copying all the libs and supported file to
+board, run only tslib tools like ts_cali or ts_test etc. and send me the
+log, what about the ADS7846 driver. have you done any custamization on
+that? Is the low level driver is working properly?
+Regards,
+Alim
+ 
+ 
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080330/82828504/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20080330/82828504/attachment.html</A>&gt;
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: dmesg-good.txt
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080330/82828504/attachment.txt">https://lists.berlios.de/pipermail/tslib-general/attachments/20080330/82828504/attachment.txt</A>&gt;
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: dmesg-bad.txt
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080330/82828504/attachment-0001.txt">https://lists.berlios.de/pipermail/tslib-general/attachments/20080330/82828504/attachment-0001.txt</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000025.html">[Tslib-general] Tslib stylus problem
+</A></li>
+	<LI>Next message: <A HREF="000029.html">[Tslib-general] Tslib stylus problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#27">[ date ]</a>
+              <a href="thread.html#27">[ thread ]</a>
+              <a href="subject.html#27">[ subject ]</a>
+              <a href="author.html#27">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Gunze touch screen with Xfbdev
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Gunze%20touch%20screen%20with%20Xfbdev&In-Reply-To=%3Ce00ad49f0810100301i399d1e4ej54712ce1810ff80c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000084.html">
+   <LINK REL="Next"  HREF="000085.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Gunze touch screen with Xfbdev</H1>
+    <B>Leon Ljunggren</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Gunze%20touch%20screen%20with%20Xfbdev&In-Reply-To=%3Ce00ad49f0810100301i399d1e4ej54712ce1810ff80c%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Gunze touch screen with Xfbdev">leon.ljunggren at gmail.com
+       </A><BR>
+    <I>Fri Oct 10 12:01:14 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000084.html">[Tslib-general] Gunze touch screen with Xfbdev
+</A></li>
+        <LI>Next message: <A HREF="000085.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#86">[ date ]</a>
+              <a href="thread.html#86">[ thread ]</a>
+              <a href="subject.html#86">[ subject ]</a>
+              <a href="author.html#86">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+Thanks for the help, it turned out that my kernel wasn't configured
+for evdev so I reconfigured and rebuilt it. That caused the evtest to
+start working but tslib still didn't like my touch screen, applying
+the patch didn't change that but I noticed in evtest that it did not
+have a abs_pressure val so I removed it from the check (as Hinko
+suggested in an old post) and that at least made it stop complaining,
+but I also had to set a constant pressure value in EV_SYN (as Kaius
+described in another post) to make it work. I also had to remove the
+part in linear.c from the patch since it caused the cursor to be at a
+higher and higher offset from my finger the longer from the upper left
+corner I moved it (at the upper left corner it was dead on, at half
+the screen it was all the way down).
+
+So now the test applications work perfect with &quot;input&quot; as the module,
+however I'm still seeing the same problem in Xfbdev as I did when
+using the h3600 module. A touch will be registered at the correct
+position, but when I release the screen the cursor will jump a bit
+down and too the left, it seems it does this before it registers the
+up event, because if I for example is trying to mark text from bottom
+and up the marked text will be at where the cursor ends up and not
+where I released my finger.
+
+When looking at evtest output I can't see any reason why this would happen:
+
+./evtest /dev/input/event0
+Input driver version is 1.0.0
+Input device ID: bus 0x13 vendor 0x1c product 0x51 version 0x100
+Input device name: &quot;Gunze AHL-51S TouchScreen&quot;
+Supported events:
+  Event type 0 (Sync)
+  Event type 1 (Key)
+    Event code 330 (Touch)
+  Event type 3 (Absolute)
+    Event code 0 (X)
+      Value    387
+      Min       24
+      Max     1000
+    Event code 1 (Y)
+      Value    291
+      Min       24
+      Max     1000
+Testing ... (interrupt to exit)
+Event: time 1223639758.055065, type 3 (Absolute), code 0 (X), value 508
+Event: time 1223639758.055075, type 3 (Absolute), code 1 (Y), value 407
+Event: time 1223639758.055079, type 1 (Key), code 330 (Touch), value 1
+Event: time 1223639758.055082, -------------- Report Sync ------------
+Event: time 1223639758.095046, type 3 (Absolute), code 1 (Y), value 405
+Event: time 1223639758.095055, -------------- Report Sync ------------
+Event: time 1223639758.095060, type 3 (Absolute), code 0 (X), value 509
+Event: time 1223639758.095063, type 3 (Absolute), code 1 (Y), value 407
+Event: time 1223639758.095066, -------------- Report Sync ------------
+Event: time 1223639758.105056, type 1 (Key), code 330 (Touch), value 0
+Event: time 1223639758.105059, -------------- Report Sync ------------
+Event: time 1223639759.705083, type 3 (Absolute), code 0 (X), value 697
+Event: time 1223639759.705093, type 3 (Absolute), code 1 (Y), value 246
+Event: time 1223639759.705097, type 1 (Key), code 330 (Touch), value 1
+Event: time 1223639759.705100, -------------- Report Sync ------------
+Event: time 1223639759.715098, type 3 (Absolute), code 1 (Y), value 245
+Event: time 1223639759.715107, -------------- Report Sync ------------
+Event: time 1223639759.735048, type 3 (Absolute), code 1 (Y), value 244
+Event: time 1223639759.735053, -------------- Report Sync ------------
+Event: time 1223639759.745050, type 1 (Key), code 330 (Touch), value 0
+Event: time 1223639759.745054, -------------- Report Sync ------------
+
+This was two as quick as I can taps on the screen, and it seems like
+the events are still at the same coordinates on release as when I tap
+it down. So I don't understand why it would move the cursor.
+
+Same if I do two quick taps in ts_test:
+
+1223639930.244582:    169    350     10
+1223639930.264575:    169    350     10
+1223639930.274590:    169    349     10
+1223639930.294548:    169    349     10
+1223639930.314548:    169    349     10
+1223639930.314559:    170    349     10
+1223639930.324554:    172    350      0
+1223639935.134552:    478    307     10
+1223639935.134552:    478    307     10
+1223639935.154555:    478    306     10
+1223639935.174563:    478    306     10
+1223639935.174573:    478    306     10
+1223639935.204563:    478    306     10
+1223639935.204572:    479    306      0
+
+Anyone has any idea of why the cursor decides to move in Xfbdev, even
+though it doesn't appear to get events that tells it to?
+
+Thanks
+/Leon Ljunggren
+
+On Thu, Oct 9, 2008 at 8:50 PM, Rakesh Jagota &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">jrakesh at gdatech.com</A>&gt; wrote:
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Try the attached patch with tslib-1.0 version and see if this works.
+</I>&gt;<i>
+</I>&gt;<i> Kind Regards,
+</I>&gt;<i> Rakesh Jagota
+</I>&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: Hinko Kocevar [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>]
+</I>&gt;<i> Sent: Thursday, October 09, 2008 5:36 AM
+</I>&gt;<i> To: Leon Ljunggren
+</I>&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Tslib-general] Gunze touch screen with Xfbdev
+</I>&gt;<i>
+</I>&gt;<i> Leon Ljunggren wrote:
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i> I'm having a bit of a problem with getting my gunze touch screen (and
+</I>&gt;&gt;<i> gunze controller) working with tslib. When I try to use the normal
+</I>&gt;&gt;<i> input module I get a &quot;selected device is not a touchscreen I
+</I>&gt;&gt;<i> understand&quot; message, if I instead use module h3600 it seems to work
+</I>&gt;<i>
+</I>&gt;<i> See few posts back. Someone posted a hack used to get the ts as input
+</I>&gt;<i> device through evdev working. It it probably failing because kernel
+</I>&gt;<i> driver does not set appropriate bits in the evdev info.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Hinko
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> &#268;ETRTA POT, d.o.o., Kranj
+</I>&gt;<i> Planina 3
+</I>&gt;<i> 4000 Kranj
+</I>&gt;<i> Slovenia, Europe
+</I>&gt;<i> Tel. +386 (0) 4 280 66 03
+</I>&gt;<i> E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+</I>&gt;<i> Http: www.cetrtapot.si
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000084.html">[Tslib-general] Gunze touch screen with Xfbdev
+</A></li>
+	<LI>Next message: <A HREF="000085.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#86">[ date ]</a>
+              <a href="thread.html#86">[ thread ]</a>
+              <a href="subject.html#86">[ subject ]</a>
+              <a href="author.html#86">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

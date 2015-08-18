@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] touch screen with x-server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touch%20screen%20with%20x-server&In-Reply-To=%3C4846473B.1010602%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000047.html">
+   <LINK REL="Next"  HREF="000049.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] touch screen with x-server</H1>
+    <B>Hinko Ko&#269;evar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touch%20screen%20with%20x-server&In-Reply-To=%3C4846473B.1010602%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] touch screen with x-server">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Wed Jun  4 09:41:47 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000047.html">[Tslib-general] touch screen with x-server
+</A></li>
+        <LI>Next message: <A HREF="000049.html">[Tslib-general] touch screen with x-server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#48">[ date ]</a>
+              <a href="thread.html#48">[ thread ]</a>
+              <a href="subject.html#48">[ subject ]</a>
+              <a href="author.html#48">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Rakesh Jagota wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> I am trying to calibrate my touch screen on ppc based reference platform.
+</I>&gt;<i> The LCD resolution is 1024x600.
+</I>&gt;<i> 
+</I>&gt;<i> While running the 'ts_calibarte' utility I am not seeing any cross-hair
+</I>&gt;<i> pointer on the LCD panel and the log message for 'ts_calibrate is as below:
+</I>&gt;<i> 
+</I>&gt;<i> -------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> gda211:~# ts_calibrate 
+</I>&gt;<i> 
+</I>&gt;<i> xres = 1024, yres = 600
+</I>&gt;<i> 
+</I>&gt;<i> selected device is not a touchscreen I understand
+</I>
+Have you ever took a look at the message above?
+
+&gt;<i> 
+</I>&gt;<i> Took 13 samples...
+</I>&gt;<i> 
+</I>&gt;<i> Top left : X = 805502960 Y = 269287424
+</I>&gt;<i> 
+</I>&gt;<i> Took 13 samples...
+</I>&gt;<i> 
+</I>&gt;<i> Top right : X = 805502960 Y = 269287424
+</I>&gt;<i> 
+</I>&gt;<i> Took 13 samples...
+</I>&gt;<i> 
+</I>&gt;<i> Bot right : X = 805502960 Y = 269287424
+</I>&gt;<i> 
+</I>&gt;<i> Took 13 samples...
+</I>&gt;<i> 
+</I>&gt;<i> Bot left : X = 805502960 Y = 269287424
+</I>&gt;<i> 
+</I>&gt;<i> Took 13 samples...
+</I>&gt;<i> 
+</I>&gt;<i> Center : X = 805502960 Y = 269287424
+</I>
+Looking at these samples they all seem to come from the single touch point - but 
+it is almost impossible to touch the panel on the same spot 5 times and the even 
+take the same number of samples.. My guess is there is something wrong with
+a) your input/touchscreen kernel driver
+b) hardware
+c) touchscreen connections
+
+I've seen broken touchscreen parts where the panel would return invalid sample 
+values when calibrated.
+Also the samples shown above are greatly over the max of your touchscreen value 
+limits - X 350 - 3900; Y 320 - 3750!?
+
+&gt;<i> 
+</I>&gt;<i> export TSLIB_CONSOLEDEVICE=none
+</I>
+Set this to /dev/tty or /dev/vc/.
+
+
+HTH,
+Hinko
+
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000047.html">[Tslib-general] touch screen with x-server
+</A></li>
+	<LI>Next message: <A HREF="000049.html">[Tslib-general] touch screen with x-server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#48">[ date ]</a>
+              <a href="thread.html#48">[ thread ]</a>
+              <a href="subject.html#48">[ subject ]</a>
+              <a href="author.html#48">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

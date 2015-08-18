@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Configuring a touch screen that is controlled	by inputattach
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%09by%20inputattach&In-Reply-To=%3Cdb471ace0810220909i37bd7e42wb59842047e40d180%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000113.html">
+   <LINK REL="Next"  HREF="000115.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Configuring a touch screen that is controlled	by inputattach</H1>
+    <B>Peter Geoghegan</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%09by%20inputattach&In-Reply-To=%3Cdb471ace0810220909i37bd7e42wb59842047e40d180%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Configuring a touch screen that is controlled	by inputattach">peter.geoghegan86 at gmail.com
+       </A><BR>
+    <I>Wed Oct 22 18:09:30 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000113.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+        <LI>Next message: <A HREF="000115.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#114">[ date ]</a>
+              <a href="thread.html#114">[ thread ]</a>
+              <a href="subject.html#114">[ subject ]</a>
+              <a href="author.html#114">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hinko,
+
+I ran a GDB before I &quot;make install&quot; per your instructions. Here's what I get:
+
+...
+Loading module /usr/local/lib/ts//input.so
+Loading module /usr/local/lib/ts//pthres.so
+Couldnt load module pthres
+194                                        perror(&quot;ts_config&quot;);
+
+It can't load pthres.so because there is no shared object, only a
+static .la library.
+
+I run configure again, but this time I just have the
+--enable-debug=yes flag. I make, make install.
+
+Here is a transcript of my gdb session:
+
+Copyright (C) 2008 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;<A HREF="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</A>&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;i486-linux-gnu&quot;...
+(gdb) b main
+Breakpoint 1 at 0x8048f87: file ts_calibrate.c, line 166.
+(gdb) r
+Starting program: /usr/local/bin/ts_calibrate
+
+Breakpoint 1, main () at ts_calibrate.c:166
+166	{
+(gdb) n
+175		signal(SIGSEGV, sig);
+(gdb) n
+176		signal(SIGINT, sig);
+(gdb) n
+177		signal(SIGTERM, sig);
+(gdb) n
+179		if( (tsdevice = getenv(&quot;TSLIB_TSDEVICE&quot;)) != NULL ) {
+(gdb) n
+180			ts = ts_open(tsdevice,0);
+(gdb) n
+189		if (!ts) {
+(gdb) n
+193		if (ts_config(ts)) {
+(gdb) n
+Loading module /usr/local/lib/ts//input.so
+Loading module /usr/local/lib/ts//pthres.so
+Loading module /usr/local/lib/ts//variance.so
+Loading module /usr/local/lib/ts//dejitter.so
+Loading module /usr/local/lib/ts//linear.so
+198		if (open_framebuffer()) {
+(gdb) s
+open_framebuffer () at fbutils.c:59
+59		if ((fbdevice = getenv (&quot;TSLIB_FBDEVICE&quot;)) == NULL)
+(gdb) n
+53	{
+(gdb) n
+59		if ((fbdevice = getenv (&quot;TSLIB_FBDEVICE&quot;)) == NULL)
+(gdb) n
+60			fbdevice = defaultfbdevice;
+(gdb) n
+62		if ((consoledevice = getenv (&quot;TSLIB_CONSOLEDEVICE&quot;)) == NULL)
+(gdb) n
+63			consoledevice = defaultconsoledevice;
+(gdb) n
+65		if (strcmp (consoledevice, &quot;none&quot;) != 0) {
+(gdb) n
+66			sprintf (vtname,&quot;%s%d&quot;, consoledevice, 1);
+(gdb) n
+67	        	fd = open (vtname, O_WRONLY);
+(gdb) n
+68	        	if (fd &lt; 0) {
+(gdb) n
+67	        	fd = open (vtname, O_WRONLY);
+(gdb) n
+68	        	if (fd &lt; 0) {
+(gdb) n
+73			if (ioctl(fd, VT_OPENQRY, &amp;nr) &lt; 0) {
+(gdb) n
+77	        	close(fd);
+(gdb) n
+79	        	sprintf(vtname, &quot;%s%d&quot;, consoledevice, nr);
+(gdb) n
+81	        	con_fd = open(vtname, O_RDWR | O_NDELAY);
+(gdb) n
+82	        	if (con_fd &lt; 0) {
+(gdb) n
+81	        	con_fd = open(vtname, O_RDWR | O_NDELAY);
+(gdb) n
+82	        	if (con_fd &lt; 0) {
+(gdb) n
+87	        	if (ioctl(con_fd, VT_GETSTATE, &amp;vts) == 0)
+(gdb) n
+88	        	        last_vt = vts.v_active;
+(gdb) n
+90	        	if (ioctl(con_fd, VT_ACTIVATE, nr) &lt; 0) {
+(gdb) n
+
+...
+
+And now, the screen goes black.
+
+As before, I cannot do anything other than restarting with ctrl, alt
+and del. However, I cannot see the &quot;TSLIB calibration utility, touch
+the cursor&quot; message, unlike before.
+
+It's definitely writing to /dev/fb0 , which is an intelfb that uses
+the intelfb kernel module. I did a p some_var that showed that in an
+earlier run of debugging.
+
+Does this offer any hints as to what the problem might be?
+
+Thanks,
+Peter
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000113.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+	<LI>Next message: <A HREF="000115.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#114">[ date ]</a>
+              <a href="thread.html#114">[ thread ]</a>
+              <a href="subject.html#114">[ subject ]</a>
+              <a href="author.html#114">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib: Selected device is not a touchscreen (must support ABS and KEY event types)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2012-August/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%3A%20Selected%20device%20is%20not%20a%20touchscreen%20%28must%0A%20support%20ABS%20and%20KEY%20event%20types%29&In-Reply-To=%3CCAGtevcpzpgA3rG0RSPOXYdEwXiD1jQJunh%3D64PR2fGk7n2dBHA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000425.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib: Selected device is not a touchscreen (must support ABS and KEY event types)</H1>
+    <B>Phillip Class</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%3A%20Selected%20device%20is%20not%20a%20touchscreen%20%28must%0A%20support%20ABS%20and%20KEY%20event%20types%29&In-Reply-To=%3CCAGtevcpzpgA3rG0RSPOXYdEwXiD1jQJunh%3D64PR2fGk7n2dBHA%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] tslib: Selected device is not a touchscreen (must support ABS and KEY event types)">phillip.d.class at gmail.com
+       </A><BR>
+    <I>Mon Aug 13 17:13:33 CEST 2012</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000425.html">[Tslib-general] tslib: Selected device is not a touchscreen (must support ABS and KEY event types)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#424">[ date ]</a>
+              <a href="thread.html#424">[ thread ]</a>
+              <a href="subject.html#424">[ subject ]</a>
+              <a href="author.html#424">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello, I have cross-compiled the latest commit of tslib from github (
+<A HREF="https://github.com/kergoth/tslib/commits/master">https://github.com/kergoth/tslib/commits/master</A> ). My touchscreen is hooked
+up to my embedded board and I enabled the drivers from the vender. When I
+boot and look at the output of 'cat /dev/input/touchscreen' I can see
+plenty of output being generated from moving my fingers around the screen.
+The Kernel also outputs to the console nicely formatted messages for
+'finger1' and 'finger2'.
+
+I am not able to calibrate however! When I set my environment variables
+like shown below and run ts_calibrate, it spits out the message 'xres =
+640, yres = 480 tslib: Selected device is not a touchscreen (must support
+ABS and KEY event types)' and does nothing more...
+
+So Linux knows that my device exists and I can see scrolling output, but
+tslib can't calibrate. What am I doing wrong and how can I fix this? Thanks
+alot!
+
+# ls -rlt /dev/input/touchscreen
+lrwxrwxrwx    1 root     root             6 Jan 17 21:06
+/dev/input/touchscreen -&gt; event1
+# chmod 777 /dev/input/touchscreen
+# chmod 777 /dev/input/event1
+
+# cat /dev/input/touchscreen  | hexdump
+0000000 9011 3883 565f 0001 0003 0030 0001 0000
+0000010 9011 3883 565f 0001 0003 0032 0001 0000
+0000020 9011 3883 565f 0001 0003 0035 04c9 0000
+0000030 9011 3883 565f 0001 0003 0036 0c3f 0000
+0000040 9011 3883 565f 0001 0000 0002 0000 0000
+0000050 9011 3883 565f 0001 0000 0000 0000 0000
+0000060 9011 3883 90a9 0001 0003 0030 0001 0000
+0000070 9011 3883 90a9 0001 0003 0032 0001 0000
+
+# cat /sys/devices/virtual/input/input1/uevent
+PRODUCT=0/0/0/0
+NAME=&quot;aura-touchscreen&quot;
+PROP=0
+EV=9
+ABS=650000 0
+MODALIAS=input:b0000v0000p0000e0000-e0,3,kra30,32,35,36,mlsfw
+
+# cat /etc/ts.conf
+# Uncomment if you wish to use the linux input layer event interface
+module_raw input
+module pthres pmin=1
+module variance delta=30
+module dejitter delta=100
+module linear
+
+export TSLIB_TSEVENTTYPE=INPUT
+export TSLIB_TSDEVICE=/dev/input/touchscreen
+export TSLIB_CALIBFILE=/etc/pointercal
+export TSLIB_CONFFILE=/etc/ts.conf
+export TSLIB_PLUGINDIR=/usr/lib/ts
+export TSLIB_FBDEVICE=/dev/fb0
+export TSLIB_CONSOLEDEVICE=none
+export TSTS_INFO_FILE=/sys/devices/virtual/input/input1/uevent
+export QWS_MOUSE_PROTO=tslib:/dev/input/touchscreen
+export PATH=$PATH:/usr/bin
+ts_calibrate
+xres = 640, yres = 480
+tslib: Selected device is not a touchscreen (must support ABS and KEY event
+types)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20120813/3741c637/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20120813/3741c637/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000425.html">[Tslib-general] tslib: Selected device is not a touchscreen (must support ABS and KEY event types)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#424">[ date ]</a>
+              <a href="thread.html#424">[ thread ]</a>
+              <a href="subject.html#424">[ subject ]</a>
+              <a href="author.html#424">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

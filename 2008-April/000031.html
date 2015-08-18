@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] eGalax (touchkitusb)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20eGalax%20%28touchkitusb%29&In-Reply-To=%3C0CD68E1888B7EE49B856BA14C6CA8C5F0DC94EAA%40edumail3.education.tas.gov.au%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000032.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] eGalax (touchkitusb)</H1>
+    <B>Price, Phil</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20eGalax%20%28touchkitusb%29&In-Reply-To=%3C0CD68E1888B7EE49B856BA14C6CA8C5F0DC94EAA%40edumail3.education.tas.gov.au%3E"
+       TITLE="[Tslib-general] eGalax (touchkitusb)">phil.price at education.tas.gov.au
+       </A><BR>
+    <I>Sun Apr  6 13:06:55 CEST 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000032.html">[Tslib-general] tslib option for Xfbdev
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#31">[ date ]</a>
+              <a href="thread.html#31">[ thread ]</a>
+              <a href="subject.html#31">[ subject ]</a>
+              <a href="author.html#31">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Kaius,
+Thanks for your reply. I tried hardcoding the pressure value, either I didn't do it right or it didn't help. ts_test gives me a message saying the selected device is not one that tslib understands, even though it does actually display.
+
+Phil
+
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general-bounces at lists.berlios.de</A> on behalf of Kaius H&#228;ggblom
+Sent: Wed 3/26/2008 1:57 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+Subject: Re: [Tslib-general] eGalax (touchkitusb)
+ 
+Hi Phil.
+
+&gt;<i> I have a touchscreen with an eGalax controller, it is used by the
+</I>&gt;<i> &quot;usbtouchscreen&quot; kernel module and appears as /dev/input/event1.
+</I>&gt;<i> 
+</I>&gt;<i> Should this device be supported with the &quot;module_raw input&quot; line in
+</I>&gt;<i> ts.conf?
+</I>
+I got that setup working modifying the plugin input-raw a bit. The
+problem was that the eGalax with usbtouchscreen driver doesn't report
+pressure, which the input driver seems to require.
+
+As a very brute work-around solution (just to get it working) I just
+added a hardcoded pressure in the EV_SYN handler:
+samp-&gt;x = i-&gt;current_x;
+samp-&gt;y = i-&gt;current_y;
+samp-&gt;pressure = 10;
+
+&gt;<i> If it isn't supported, would it be difficult to implement? I would
+</I>&gt;<i> really like to use tslib/kdrive in my embedded system, but I don't
+</I>&gt;<i> really have that much choice on the type of touchscreen controller.
+</I>
+I share your opinion. We use directfb in our embedded, and need to
+support a variety of touchscreens, and tslib provides a nice
+abstraction.
+
+regards,
+Kaius H&#228;ggblom
+Oliotalo Oy
+
+
+_______________________________________________
+Tslib-general mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+
+
+
+
+CONFIDENTIALITY NOTICE AND DISCLAIMER
+
+Information in this transmission is intended only for the person(s) to whom it is addressed and may contain privileged and/or confidential information. If you are not the intended recipient, any disclosure, copying or dissemination of the information is unauthorised and you should delete/destroy all copies and notify the sender. No liability is accepted for any unauthorised use of the information contained in this transmission.
+
+This disclaimer has been automatically added.
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000032.html">[Tslib-general] tslib option for Xfbdev
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#31">[ date ]</a>
+              <a href="thread.html#31">[ thread ]</a>
+              <a href="subject.html#31">[ subject ]</a>
+              <a href="author.html#31">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

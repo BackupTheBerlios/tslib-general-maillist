@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib and input events.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20and%20input%20events.&In-Reply-To=%3C20121019155530.GC2876%40bitwizard.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000437.html">
+   <LINK REL="Next"  HREF="000439.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib and input events.</H1>
+    <B>Rogier Wolff</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20and%20input%20events.&In-Reply-To=%3C20121019155530.GC2876%40bitwizard.nl%3E"
+       TITLE="[Tslib-general] tslib and input events.">R.E.Wolff at BitWizard.nl
+       </A><BR>
+    <I>Fri Oct 19 17:55:30 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000437.html">[Tslib-general] tslib and input events.
+</A></li>
+        <LI>Next message: <A HREF="000439.html">[Tslib-general] tslib and input events.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#438">[ date ]</a>
+              <a href="thread.html#438">[ thread ]</a>
+              <a href="subject.html#438">[ subject ]</a>
+              <a href="author.html#438">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Oct 19, 2012 at 07:43:13AM -0700, Chris Larson wrote:
+&gt;<i> On Fri, Oct 19, 2012 at 2:34 AM, Rogier Wolff &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">R.E.Wolff at bitwizard.nl</A>&gt; wrote:
+</I>&gt;<i> &gt; In the past I've written a &quot;driver&quot; for a touchscreen that would work
+</I>&gt;<i> &gt; through a shopping window. This worked by inserting the touch events
+</I>&gt;<i> &gt; as mouse events into the kernel using uinput.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I have a very old touchscreen that I'd like to use. However, the
+</I>&gt;<i> &gt; drivers have gone out-of-maintenance. So I modified the previous
+</I>&gt;<i> &gt; driver, and lo and behold it works. That is, the raw events come
+</I>&gt;<i> &gt; through, but what's a click, what's a drag, what's a doubleclick etc
+</I>&gt;<i> &gt; etc is not yet implemented.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; This is, I think, where tslib comes in. tslib should be able to help
+</I>&gt;<i> &gt; in these things, right?
+</I>&gt;<i> 
+</I>&gt;<i> No more than any other calibration mechanism, but yes.
+</I>
+I get events from the touchscreen 
+
+   &lt;penup/down, x, y&gt;
+
+usually a sequence with &quot;pendown&quot; and then one with &quot;penup&quot; when the
+user lifts the finger.
+
+I was thinking of algorithms that would call a short touch with little
+movement a &quot;click&quot;, while a drag would translate to a real drag.
+
+I was hoping tslib already has this logic implemented. Is that the
+case?
+
+&gt;<i> &gt; On the other hand, as far as I can deduce, tslib is meant as a library
+</I>&gt;<i> &gt; with a single application, and not meant for use with &quot;X Windows&quot;. So
+</I>&gt;<i> &gt; I'd need to port my uinput &quot;driver&quot; into tslib so that all tslib
+</I>&gt;<i> &gt; supported drivers would be able to send events to uinput, which in
+</I>&gt;<i> &gt; turn allows us to work with X Windows. Right?
+</I>&gt;<i> 
+</I>&gt;<i> tslib was intended to be used by other applications, and is, in many
+</I>&gt;<i> cases. The binaries shipped with tslib are for debugging and testing
+</I>&gt;<i> only.
+</I>
+So, I would write a little application that uses tslib to pass events
+on to uinput. I would think that it sensible to distribute that with
+tslib in the future. 
+
+On the other hand, it seems that the Xserver has tslib input
+support. So that part seems taken care of. I'll port my driver to
+tslib in the weekend, provided the weather is as bad as is predicted
+right now.
+
+	Roger. 
+
+-- 
+** <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">R.E.Wolff at BitWizard.nl</A> ** <A HREF="http://www.BitWizard.nl/">http://www.BitWizard.nl/</A> ** +31-15-2600998 **
+**    Delftechpark 26 2628 XH  Delft, The Netherlands. KVK: 27239233    **
+*-- BitWizard writes Linux device drivers for any device you may have! --*
+The plan was simple, like my brother-in-law Phil. But unlike
+Phil, this plan just might work.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000437.html">[Tslib-general] tslib and input events.
+</A></li>
+	<LI>Next message: <A HREF="000439.html">[Tslib-general] tslib and input events.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#438">[ date ]</a>
+              <a href="thread.html#438">[ thread ]</a>
+              <a href="subject.html#438">[ subject ]</a>
+              <a href="author.html#438">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

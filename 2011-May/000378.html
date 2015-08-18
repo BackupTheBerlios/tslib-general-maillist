@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] FW: tslib cross compilation arguments required
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20FW%3A%20tslib%20cross%20compilation%20arguments%20required&In-Reply-To=%3C5A5E7FE10211554092D8AD20B55FAEBD0D552B126D%40EXCHINDMAIL.patni.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] FW: tslib cross compilation arguments required</H1>
+    <B>Yadav, Sunil (GRiT, Navi Mumbai)</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20FW%3A%20tslib%20cross%20compilation%20arguments%20required&In-Reply-To=%3C5A5E7FE10211554092D8AD20B55FAEBD0D552B126D%40EXCHINDMAIL.patni.com%3E"
+       TITLE="[Tslib-general] FW: tslib cross compilation arguments required">sunil.kyadav at igatepatni.com
+       </A><BR>
+    <I>Wed May 25 16:36:06 CEST 2011</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#378">[ date ]</a>
+              <a href="thread.html#378">[ thread ]</a>
+              <a href="subject.html#378">[ subject ]</a>
+              <a href="author.html#378">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+We are cross compiling &quot;tslib&quot; for PowerPC processor.
+We are getting following log when we tried to crosscompile.
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">root at localhost</A> tslib-1.0]# ./configure CC=ppc_6xx-gcc CXX=ppc_6xx-g++ prefix=/home/Sunil/tslib_installed
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking for C++ compiler default output file name... a.out
+checking whether the C++ compiler works... configure: error: in `/home/Sunil/tslib-1.0':
+configure: error: cannot run C++ compiled programs.
+If you meant to cross compile, use `--host'.
+See `config.log' for more details.
+[<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">root at localhost</A> tslib-1.0]#
+
+I am not able to figure out what should I give in -host and -build arguments in the configuration script.
+
+Please help in finding appropriate arguments
+
+Thanks,
+Sunil
+
+
+
+  ________________________________
+Information contained and transmitted by this e-mail is confidential and proprietary to iGATE Patni and its affiliates and is intended for use only by the recipient. If you are not the intended recipient, you are hereby notified that any dissemination, distribution, copying or use of this e-mail is strictly prohibited and you are requested to delete this e-mail immediately and notify the originator or <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">netadmin at igatepatni.com.</A> iGATE Patni does not enter into any agreement with any party by e-mail. Any views expressed by an individual do not necessarily reflect the view of iGATE Patni. iGATE Patni is not responsible for the consequences of any actions taken on the basis of information provided, through this email. The contents of an attachment to this e-mail may contain software viruses, which could damage your own computer system. While iGATE Patni has taken every reasonable precaution to minimise this risk, we cannot accept liability for any damage which you sustain as a result of software viruses. You should carry out your own virus checks before opening an attachment. To know more about iGATE Patni please visit www.igatepatni.com.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20110525/4b31bc69/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20110525/4b31bc69/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#378">[ date ]</a>
+              <a href="thread.html#378">[ thread ]</a>
+              <a href="subject.html#378">[ subject ]</a>
+              <a href="author.html#378">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

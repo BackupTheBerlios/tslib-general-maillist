@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib + egalax touch controller problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2012-November/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20%2B%20egalax%20touch%20controller%20problems&In-Reply-To=%3C253372771.1545126.1353515236079.JavaMail.root%40zmail.sgconsulting.it%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000441.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib + egalax touch controller problems</H1>
+    <B>Forconi</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20%2B%20egalax%20touch%20controller%20problems&In-Reply-To=%3C253372771.1545126.1353515236079.JavaMail.root%40zmail.sgconsulting.it%3E"
+       TITLE="[Tslib-general] tslib + egalax touch controller problems">forconi at wavecomm.it
+       </A><BR>
+    <I>Wed Nov 21 17:27:16 CET 2012</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000441.html">[Tslib-general] tslib + egalax touch controller problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#440">[ date ]</a>
+              <a href="thread.html#440">[ thread ]</a>
+              <a href="subject.html#440">[ subject ]</a>
+              <a href="author.html#440">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I'm using an eGalax USB Touch Screen Controller and I'd like to get tslib working with such device.
+I'm currently running Ubuntu Server 12.04 LTS, with no X.org, kernel is 3.2.0-33-generic.
+
+The touch controller seems to be correctly recognized using hid-multitouch kernel module:
+
+dmesg:
+
+[  190.811669] input: eGalax Inc. USB TouchController as /devices/pci0000:00/0000:00:1d.1/usb3/3-2/3-2:1.0/input/input15
+[  190.812535] input: eGalax Inc. USB TouchController as /devices/pci0000:00/0000:00:1d.1/usb3/3-2/3-2:1.0/input/input16
+[  190.813843] input: eGalax Inc. USB TouchController as /devices/pci0000:00/0000:00:1d.1/usb3/3-2/3-2:1.0/input/input17
+[  190.814874] input: eGalax Inc. USB TouchController as /devices/pci0000:00/0000:00:1d.1/usb3/3-2/3-2:1.0/input/input18
+[  190.823963] input: eGalax Inc. USB TouchController as /devices/pci0000:00/0000:00:1d.1/usb3/3-2/3-2:1.0/input/input19
+[  190.825328] hid-multitouch 0003:0EEF:0001.0003: input,hiddev0,hidraw2: USB HID v2.10 Pointer [eGalax Inc. USB TouchController] on usb-0000:00:1d.1-2/input0
+
+ls -l /dev/input/by-id/:
+total 0
+lrwxrwxrwx 1 root root  9 nov 21 15:46 usb-0d3d_USBPS2-event-kbd -&gt; ../event3
+lrwxrwxrwx 1 root root  9 nov 21 15:46 usb-0d3d_USBPS2-if01-event-mouse -&gt; ../event4
+lrwxrwxrwx 1 root root  9 nov 21 15:46 usb-0d3d_USBPS2-if01-mouse -&gt; ../mouse0
+lrwxrwxrwx 1 root root 10 nov 21 15:49 usb-eGalax_Inc._USB_TouchController-event-if00 -&gt; ../event13
+
+
+cat /proc/bus/input/devices:
+
+I: Bus=0003 Vendor=0eef Product=0001 Version=0210
+N: Name=&quot;eGalax Inc. USB TouchController&quot;
+P: Phys=usb-0000:00:1d.1-2/input0
+S: Sysfs=/devices/pci0000:00/0000:00:1d.1/usb3/3-2/3-2:1.0/input/input15
+U: Uniq=
+H: Handlers=event10
+B: PROP=0
+B: EV=b
+B: KEY=0
+B: ABS=0
+
+I: Bus=0003 Vendor=0eef Product=0001 Version=0210
+N: Name=&quot;eGalax Inc. USB TouchController&quot;
+P: Phys=usb-0000:00:1d.1-2/input0
+S: Sysfs=/devices/pci0000:00/0000:00:1d.1/usb3/3-2/3-2:1.0/input/input16
+U: Uniq=
+H: Handlers=mouse1 event11
+B: PROP=2
+B: EV=b
+B: KEY=400 0 0 0 0 0 0 0 0 0 0
+B: ABS=600000 3
+
+I: Bus=0003 Vendor=0eef Product=0001 Version=0210
+N: Name=&quot;eGalax Inc. USB TouchController&quot;
+P: Phys=usb-0000:00:1d.1-2/input0
+S: Sysfs=/devices/pci0000:00/0000:00:1d.1/usb3/3-2/3-2:1.0/input/input17
+U: Uniq=
+H: Handlers=event12
+B: PROP=0
+B: EV=1
+
+I: Bus=0003 Vendor=0eef Product=0001 Version=0210
+N: Name=&quot;eGalax Inc. USB TouchController&quot;
+P: Phys=usb-0000:00:1d.1-2/input0
+S: Sysfs=/devices/pci0000:00/0000:00:1d.1/usb3/3-2/3-2:1.0/input/input18
+U: Uniq=
+H: Handlers=mouse2 event13
+B: PROP=2
+B: EV=b
+B: KEY=400 0 0 0 0 0 0 0 0 0 0
+B: ABS=2608000 3
+
+I: Bus=0003 Vendor=0eef Product=0001 Version=0210
+N: Name=&quot;eGalax Inc. USB TouchController&quot;
+P: Phys=usb-0000:00:1d.1-2/input0
+S: Sysfs=/devices/pci0000:00/0000:00:1d.1/usb3/3-2/3-2:1.0/input/input19
+U: Uniq=
+H: Handlers=event14
+B: PROP=0
+B: EV=1
+
+
+I have patched tslib-1.0 using egalax-patch, and now I have the galax.so module.
+I have set the TSLIB_TSDEVICE environment variable: export TSLIB_TSDEVICE=/dev/input/event13
+I have edited ts.conf in order to use galax module:
+module_raw input
+module_raw galax
+module pthres pmin=1
+module variance delta=30
+module dejitter delta=100
+module linear
+
+
+But when I run ts_print_raw, I get always 0 for X and Y coordinates.
+
+# ts_print_raw
+1353514668.711625:      0      0    255
+1353514668.715627:      0      0    255
+1353514668.721629:      0      0    255
+1353514668.727627:      0      0    255
+1353514668.731628:      0      0    255
+1353514668.737629:      0      0    255
+1353514668.743627:      0      0    255
+1353514668.747632:      0      0    255
+1353514668.753634:      0      0    255
+1353514668.759632:      0      0    255
+1353514668.769616:      0      0    255
+1353514668.775634:      0      0    255
+1353514668.779630:      0      0    255
+1353514668.789615:      0      0    255
+1353514668.795630:      0      0    255
+1353514668.801634:      0      0    255
+1353514668.805634:      0      0    255
+1353514668.811634:      0      0    255
+1353514668.815632:      0      0    255
+1353514668.833634:      0      0    255
+1353514668.839632:      0      0    255
+1353514668.843632:      0      0    255
+1353514668.849633:      0      0    255
+1353514668.855631:      0      0    255
+1353514668.909592:      0      0      0
+
+
+Another try that I have done is to cat the /dev/input/mouse2 that is associated with event13:
+
+# cat /dev/input/mouse2 | hexdump
+0000000 7f29 09be 002a 0009 0902 0101 0109 0901
+0000010 0101 0109 0900 0001 0109 0900 0100 ff19
+0000020 0900 0100 fe19 3900 ffff fe19 1900 00f9
+0000030 fb39 19ff 00fc fd39 19ff 00fe ff19 1900
+0000040 00ff ff19 1900 00ff 0008 0900 184f fb39
+0000050 39fe fefc fd19 3900 fffe fd19 1900 00fe
+0000060 ff19 1900 00fe ff19 1900 00fe fe19 1901
+0000070 00fe fe19 1900 00fd fd39 39ff fffe fd39
+0000080 19ff 00fe ff19 1900 00ff ff19 1900 00ff
+0000090 0009 1901 01ff ff19 1900 00ff ff19 1900
+00000a0 00ff ff19 1900 00ff ff19 1900 00ff ff19
+00000b0 1900 00ff ff19 1900 00ff ff19 1900 00fe
+00000c0 ff39 19ff 00fe ff39 19ff 00fe ff19 1900
+00000d0 00ff ff19 1900 00ff ff19 1900 00ff ff19
+00000e0 1900 00ff ff19 0900 0100 ff19 1900 01ff
+00000f0 ff19 1900 00ff ff19 1900 00ff ff19 1900
+0000100 00ff ff19 1900 00ff ff19 1900 00ff ff19
+0000110 3900 ffff ff19 3900 ffff ff19 1900 00ff
+0000120 ff19 1900 00fe ff39 19ff 00fe ff19 1900
+0000130 00fe ff19 1900 00ff ff19 0900 0100 ff19
+
+
+
+I can't understand if the problem is in the egalax.so module that is not able to read correctly the data from the device or elsewhere...
+
+Thanks for any help/suggestions.
+
+Regards,
+Samuele.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000441.html">[Tslib-general] tslib + egalax touch controller problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#440">[ date ]</a>
+              <a href="thread.html#440">[ thread ]</a>
+              <a href="subject.html#440">[ subject ]</a>
+              <a href="author.html#440">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

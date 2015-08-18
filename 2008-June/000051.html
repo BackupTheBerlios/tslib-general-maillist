@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] touch screen with x-server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touch%20screen%20with%20x-server&In-Reply-To=%3C4848E81D.3070905%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000050.html">
+   <LINK REL="Next"  HREF="000052.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] touch screen with x-server</H1>
+    <B>Hinko Ko&#269;evar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touch%20screen%20with%20x-server&In-Reply-To=%3C4848E81D.3070905%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] touch screen with x-server">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Fri Jun  6 09:32:45 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000050.html">[Tslib-general] touch screen with x-server
+</A></li>
+        <LI>Next message: <A HREF="000052.html">[Tslib-general] When reading input device how often is ts.conf	accessed?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#51">[ date ]</a>
+              <a href="thread.html#51">[ thread ]</a>
+              <a href="subject.html#51">[ subject ]</a>
+              <a href="author.html#51">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Rakesh Jagota wrote:
+
+&gt;<i> 
+</I>&gt;<i> ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version)
+</I>&gt;<i> 
+</I>&gt;<i> is made. It checks the return of the ioctl() call and prints out the warning if 
+</I>&gt;<i> the kernel driver does not conform.
+</I>&gt;<i> 
+</I>&gt;<i> Even I have seen this tslib code and currently I have installed tsplib package using Debian and did not compile this tslib code for ppc. Looks hard to cross-compile for ppc, otherwise I can include some more debug message in this.
+</I>&gt;<i> 
+</I>
+Try to trim down the huge if sentence that in turn prints the warning you are 
+seeing - this is how you can reveal the cause of the warning and eventually fix it.
+
+&gt;<i> 
+</I>&gt;<i> I suggest you make the touchscreen work on a lower layer first - use evtest, 
+</I>&gt;<i> evbug and similar, then use it with X. Then try out ts_print_raw and ts_print.
+</I>&gt;<i> 
+</I>&gt;<i> [Rakesh] I tried evtest and output used to be:
+</I>&gt;<i> ----------------------------------------------------------
+</I>&gt;<i> gda211:~# evtest /dev/input/event2
+</I>&gt;<i> Input driver version is 1.0.0
+</I>&gt;<i> Input device ID: bus 0x0 vendor 0x0 product 0x0 version 0x0
+</I>&gt;<i> Input device name: &quot;wm97xx touchscreen&quot;
+</I>&gt;<i> Supported events:
+</I>&gt;<i>   Event type 0 (Reset)
+</I>&gt;<i>     Event code 0 (Reset)
+</I>&gt;<i>     Event code 3 (Absolute)
+</I>&gt;<i>   Event type 3 (Absolute)
+</I>&gt;<i>     Event code 0 (X)
+</I>&gt;<i>       Value   1447
+</I>&gt;<i>       Min      350
+</I>&gt;<i>       Max     3900
+</I>&gt;<i>       Fuzz       5
+</I>&gt;<i>     Event code 1 (Y)
+</I>&gt;<i>       Value   2008
+</I>&gt;<i>       Min      320
+</I>&gt;<i>       Max     3750
+</I>&gt;<i>       Fuzz      40
+</I>&gt;<i>     Event code 24 (Pressure)
+</I>&gt;<i>       Value      0
+</I>&gt;<i>       Min        0
+</I>&gt;<i>       Max      150
+</I>&gt;<i>       Fuzz       4
+</I>&gt;<i> Testing ... (interrupt to exit)
+</I>&gt;<i> Event: time 1212668796.849806, type 3 (Absolute), code 0 (X), value 209
+</I>&gt;<i> Event: time 1212668796.849812, type 3 (Absolute), code 1 (Y), value 573
+</I>&gt;<i> Event: time 1212668796.849815, type 3 (Absolute), code 24 (Pressure), value 192
+</I>&gt;<i> Event: time 1212668796.849818, type 0 (Reset), code 0 (Reset), value 0
+</I>&gt;<i> Event: time 1212668796.857703, type 3 (Absolute), code 0 (X), value 205
+</I>&gt;<i> Event: time 1212668796.857708, type 3 (Absolute), code 1 (Y), value 546
+</I>&gt;<i> Event: time 1212668796.857712, type 0 (Reset), code 0 (Reset), value 0
+</I>&gt;<i> ---------------------------------------------------------
+</I>&gt;<i> 
+</I>
+It looks fine to me - X,Y,pressure and SYN events arrived for touch and release. 
+One thing - you might try to correct the mix and max that kernel driver is 
+reporting. I see that kernel driver returned X=209, while it reports that its X 
+and Y minimums are at 320.
+See drivers/input/touchscreen/wm97xx-core.c in Linux sources for the module 
+parameters that can be used to set the min and max boundaries.
+
+evtest seems to return sane values, while the ones printed out by the 
+ts_calibrate (from the other mail) have really weird values:
+
+Top left : X = 805502960 Y = 269287424
+
+This only further points to the tslib problem, if evtest does return sane values.
+
+
+&gt;<i> [Rakesh] Kernel Version: 2.6.22 and tslib version I am not very sure as I have installed using 'apt-get' command.
+</I>&gt;<i> The X and Y values are not printing in the boundary, the minimum values are Ok but the maximum side it should be 1024 and 600 but the max values goes up to 3800, 3800. 
+</I>
+These values depend on the type of touchscreen chip and panel you are using - 
+they may vary. It's good to know what are the absolute maximum X,Y values that 
+your chip supports (eg. 0 - 4096 for tsc2301) - see chip datasheet. After the 
+raw events are received by the userspace application the are fitted in the real 
+touch panel coordinates by the use of calibration transforms. Before any 
+calibration calculations are performed the values might be larger then your 
+touchscreen panel actually is.
+
+Linux kernel version seems recent enough, for tslib I bet there is someway you 
+can tell the apt to tell you the version of the tslib installed - sorry using 
+gentoo here. If not, try the latest SVN tslib source that should cross compile 
+for ppc too.
+
+HTH,
+Hinko
+
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000050.html">[Tslib-general] touch screen with x-server
+</A></li>
+	<LI>Next message: <A HREF="000052.html">[Tslib-general] When reading input device how often is ts.conf	accessed?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#51">[ date ]</a>
+              <a href="thread.html#51">[ thread ]</a>
+              <a href="subject.html#51">[ subject ]</a>
+              <a href="author.html#51">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

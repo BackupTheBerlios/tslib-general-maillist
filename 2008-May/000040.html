@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib with x-server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20with%20x-server&In-Reply-To=%3C000e01c8c196%243260f7d0%249722e770%24%40com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000043.html">
+   <LINK REL="Next"  HREF="000042.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib with x-server</H1>
+    <B>Rakesh Jagota</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20with%20x-server&In-Reply-To=%3C000e01c8c196%243260f7d0%249722e770%24%40com%3E"
+       TITLE="[Tslib-general] tslib with x-server">jrakesh at gdatech.com
+       </A><BR>
+    <I>Thu May 29 16:13:35 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000043.html">[Tslib-general] touch screen with x-server
+</A></li>
+        <LI>Next message: <A HREF="000042.html">[Tslib-general] FW:  touch screen with x-server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#40">[ date ]</a>
+              <a href="thread.html#40">[ thread ]</a>
+              <a href="subject.html#40">[ subject ]</a>
+              <a href="author.html#40">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+ 
+
+I am testing the touch screen and it is not working as expected. I have
+installed the tslib package and ts_calibrate  and ts_test utility for
+calibrating the touch screen. I need to integrate the touch screen user
+interface with X-server. I am sending the output here:
+
+ 
+
+=============================================================
+
+gda211:~# TSLIB_TSDEVICE=/dev/input/event2 ts_calibrate
+
+xres = 1024, yres = 600
+
+selected device is not a touchscreen I understand
+
+Took 13 samples...
+
+Top left : X = 805502960 Y = 269318584
+
+Took 13 samples...
+
+Top right : X = 805502960 Y = 269318584
+
+Took 13 samples...
+
+Bot right : X = 805502960 Y = 269318584
+
+Took 13 samples...
+
+Bot left : X = 805502960 Y = 269318584
+
+Took 13 samples...
+
+Center : X = 805502960 Y = 269318584
+
+0.014873 0.090344 -0.270209
+
+1.266691 0.114512 -0.342491
+
+Calibration constants: 974 5920 -17708 83013 7504 -22445 65536 
+
+gda211:~#
+
+ 
+
+ 
+
+=============================================================
+
+ 
+
+ 
+
+And with &quot;ts_test&quot; utility, it is:
+
+=============================================================
+
+gda211:~# ts_test
+
+selected device is not a touchscreen I understand
+
+=============================================================
+
+ 
+
+ 
+
+And 'dmesg' is as follows:
+
+=============================================================
+
+While touching upper left most corner:
+
+pen down: x=9:206, y=a:1030, pressure=b:192
+
+pen down: x=9:279, y=a:687, pressure=b:192
+
+pen down: x=9:339, y=a:1065, pressure=b:192
+
+pen down: x=9:219, y=a:562, pressure=b:192
+
+pen down: x=9:245, y=a:686, pressure=b:192
+
+pen down: x=9:341, y=a:1135, pressure=b:192
+
+pen down: x=9:146, y=a:314, pressure=b:192
+
+ 
+
+While touching right upper most corner:
+
+pen down: x=9:368, y=a:1062, pressure=b:192
+
+pen down: x=9:206, y=a:1030, pressure=b:192
+
+pen down: x=9:279, y=a:687, pressure=b:192
+
+pen down: x=9:339, y=a:1065, pressure=b:192
+
+pen down: x=9:219, y=a:562, pressure=b:192
+
+pen down: x=9:245, y=a:686, pressure=b:192
+
+pen down: x=9:341, y=a:1135, pressure=b:192
+
+pen down: x=9:146, y=a:314, pressure=b:192
+
+ 
+
+ 
+
+While touching lower left most corner:
+
+pen down: x=9:3774, y=a:3399, pressure=b:192
+
+pen down: x=9:3927, y=a:3702, pressure=b:192
+
+pen down: x=9:3915, y=a:3372, pressure=b:192
+
+pen down: x=9:3927, y=a:3675, pressure=b:192
+
+pen down: x=9:3771, y=a:3304, pressure=b:192
+
+pen down: x=9:3959, y=a:3423, pressure=b:192
+
+pen down: x=9:3842, y=a:3396, pressure=b:192
+
+pen down: x=9:3884, y=a:3634, pressure=b:192
+
+pen down: x=9:3898, y=a:3664, pressure=b:192
+
+ 
+
+While touching lower right most corner:
+
+pen down: x=9:204, y=a:3355, pressure=b:192
+
+pen down: x=9:375, y=a:3357, pressure=b:192
+
+pen down: x=9:365, y=a:3715, pressure=b:192
+
+pen down: x=9:384, y=a:3697, pressure=b:192
+
+pen down: x=9:222, y=a:2999, pressure=b:192
+
+ 
+
+==============================================================
+
+ 
+
+gda211:/usr/bin# evtest /dev/input/event2
+
+Input driver version is 1.0.0
+
+Input device ID: bus 0x0 vendor 0x0 product 0x0 version 0x0
+
+Input device name: &quot;wm97xx touchscreen&quot;
+
+Supported events:
+
+  Event type 0 (Reset)
+
+    Event code 0 (Reset)
+
+    Event code 3 (Absolute)
+
+  Event type 3 (Absolute)
+
+    Event code 0 (X)
+
+      Value   3875
+
+      Min      350
+
+      Max     3900
+
+      Fuzz       5
+
+    Event code 1 (Y)
+
+      Value    902
+
+      Min      320
+
+      Max     3750
+
+      Fuzz      40
+
+    Event code 24 (Pressure)
+
+      Value      0
+
+      Min        0
+
+      Max      150
+
+      Fuzz       4
+
+Testing ... (interrupt to exit)
+
+ 
+
+gda211:/usr/bin# 
+
+ 
+
+Please give me any suggestion on this to get it fixed.
+
+ 
+
+Regards,
+
+Rakesh
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080529/a98de002/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20080529/a98de002/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000043.html">[Tslib-general] touch screen with x-server
+</A></li>
+	<LI>Next message: <A HREF="000042.html">[Tslib-general] FW:  touch screen with x-server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#40">[ date ]</a>
+              <a href="thread.html#40">[ thread ]</a>
+              <a href="subject.html#40">[ subject ]</a>
+              <a href="author.html#40">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

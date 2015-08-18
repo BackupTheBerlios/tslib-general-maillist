@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [PATCH 2/3] plugins: add driver for DMC touchscreens
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%202/3%5D%20plugins%3A%20add%20driver%20for%20DMC%20touchscreens&In-Reply-To=%3C1300016880-11913-3-git-send-email-w.sang%40pengutronix.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000364.html">
+   <LINK REL="Next"  HREF="000366.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [PATCH 2/3] plugins: add driver for DMC touchscreens</H1>
+    <B>Wolfram Sang</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%202/3%5D%20plugins%3A%20add%20driver%20for%20DMC%20touchscreens&In-Reply-To=%3C1300016880-11913-3-git-send-email-w.sang%40pengutronix.de%3E"
+       TITLE="[Tslib-general] [PATCH 2/3] plugins: add driver for DMC touchscreens">w.sang at pengutronix.de
+       </A><BR>
+    <I>Sun Mar 13 12:47:59 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000364.html">[Tslib-general] [PATCH V2 RESEND 0/3] Some new drivers for tslib
+</A></li>
+        <LI>Next message: <A HREF="000366.html">[Tslib-general] [PATCH 3/3] plugins: new touchkit driver, reposted
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#365">[ date ]</a>
+              <a href="thread.html#365">[ thread ]</a>
+              <a href="subject.html#365">[ subject ]</a>
+              <a href="author.html#365">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Signed-off-by: Michael Olbrich &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">m.olbrich at pengutronix.de</A>&gt;
+Signed-off-by: Wolfram Sang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt;
+---
+ configure.ac        |    1 +
+ plugins/Makefile.am |   10 ++++
+ plugins/dmc-raw.c   |  139 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 150 insertions(+), 0 deletions(-)
+ create mode 100644 plugins/dmc-raw.c
+
+diff --git a/configure.ac b/configure.ac
+index 9ab9654..066d635 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -65,6 +65,7 @@ TSLIB_CHECK_MODULE([h3600], [yes], [Enable building of h3600 raw module (HP iPaq
+ TSLIB_CHECK_MODULE([mk712], [yes], [Enable building of mk712 raw module (Hi tachi support)])
+ TSLIB_CHECK_MODULE([arctic2], [yes], [Enable building of arctic2 raw module (IBM Arctic II support)])
+ TSLIB_CHECK_MODULE([tatung], [yes], [Enable building of tatung raw module (Tatung Webpad support)])
++TSLIB_CHECK_MODULE([dmc], [yes], [Enable building of dmc raw module (HP iPaq DMC support)])
+ TSLIB_CHECK_MODULE([input], [yes], [Enable building of generic input raw module (Linux /dev/input/eventN support)])
+ 
+ AC_MSG_CHECKING([where to place modules])
+diff --git a/plugins/Makefile.am b/plugins/Makefile.am
+index 304141b..b748a65 100644
+--- a/plugins/Makefile.am
++++ b/plugins/Makefile.am
+@@ -84,6 +84,12 @@ else
+ TATUNG_MODULE =
+ endif
+ 
++if ENABLE_DMC_MODULE
++DMC_MODULE = dmc.la
++else
++DMC_MODULE =
++endif
++
+ if ENABLE_INPUT_MODULE
+ INPUT_MODULE = input.la
+ else
+@@ -114,6 +120,7 @@ pluginexec_LTLIBRARIES = \
+ 	$(MK712_MODULE) \
+ 	$(ARCTIC2_MODULE) \
+ 	$(TATUNG_MODULE) \
++	$(DMC_MODULE) \
+ 	$(H2200_LINEAR_MODULE) \
+ 	$(INPUT_MODULE) \
+ 	$(CY8MRLN_PALMPRE_MODULE)
+@@ -156,6 +163,9 @@ arctic2_la_LDFLAGS	= -module $(LTVSN)
+ tatung_la_SOURCES	= tatung-raw.c
+ tatung_la_LDFLAGS	= -module $(LTVSN)
+ 
++dmc_la_SOURCES		= dmc-raw.c
++dmc_la_LDFLAGS		= -module $(LTVSN)
++
+ input_la_SOURCES	= input-raw.c
+ input_la_LDFLAGS	= -module $(LTVSN)
+ input_la_LIBADD		= $(top_builddir)/src/libts.la
+diff --git a/plugins/dmc-raw.c b/plugins/dmc-raw.c
+new file mode 100644
+index 0000000..f9f5381
+--- /dev/null
++++ b/plugins/dmc-raw.c
+@@ -0,0 +1,139 @@
++/*
++ * tslib driver for DMC touchscreens
++ * Copyright (C) 2009 Michael Olbrich, Pengutronix e.K.
++ * some inspiration from the old xf86-input-dmc xorg input driver.
++ *
++ * This file is placed under the LGPL.  Please see the file COPYING for more
++ * details.
++ */
++
++#include &lt;stdlib.h&gt;
++#include &lt;stdio.h&gt;
++#include &lt;unistd.h&gt;
++#include &lt;inttypes.h&gt;
++#include &lt;errno.h&gt;
++#include &lt;termios.h&gt;
++
++#include &quot;config.h&quot;
++#include &quot;tslib-private.h&quot;
++
++struct tslib_dmc {
++	struct tslib_module_info module;
++
++	int	current_x;
++	int	current_y;
++	int	sane_fd;
++};
++
++int dmc_init_device(struct tsdev *dev)
++{
++	int fd = dev-&gt;fd;
++	struct termios t;
++	char buf[1];
++
++	/* flags from the old xorg driver.
++	 * I have no idea what all of these mean but it works (tm). */
++	tcgetattr(fd, &amp;t);
++	t.c_iflag &amp;= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL|IXON|IXOFF);
++
++	t.c_oflag &amp;= ~OPOST;
++
++	t.c_lflag &amp;= ~(ECHO|ECHONL|ICANON|ISIG|IEXTEN);
++
++	t.c_cflag &amp;= ~(CSIZE|PARENB|CSTOPB);
++	t.c_cflag |= CS8|CLOCAL;
++
++	cfsetispeed (&amp;t, B9600);
++	cfsetospeed (&amp;t, B9600);
++
++	t.c_cc[VMIN] = 3;
++	t.c_cc[VTIME] = 1;
++
++	tcsetattr(fd, TCSANOW, &amp;t);
++
++	if (write(fd, &quot;\x55&quot;, 1) != 1) {
++		fprintf(stderr, &quot;dmc: failed to write. Check permissions of the device!\n&quot;);
++		return EINVAL;
++	}
++	sleep(1);
++	if (write(fd, &quot;\x05\x40&quot;, 2) != 2) {
++		perror(&quot;dmc write&quot;);
++		goto fail;
++	}
++	if (read(fd, buf, 1) != 1) {
++		perror(&quot;dmc read&quot;);
++		goto fail;
++	}
++	if (buf[0] != 0x6) {
++		fprintf(stderr, &quot;dmc: got wrong return value. The touchscreen may not work.\n&quot;);
++	}
++	if (write(fd, &quot;\x31&quot;, 1) != 1) {
++		perror(&quot;dmc write&quot;);
++		goto fail;
++	}
++	return 0;
++fail:
++	fprintf(stderr, &quot;dmc: selected device is not a touchscreen I understand\n&quot;);
++	return EINVAL;
++}
++
++static int dmc_read(struct tslib_module_info *inf, struct ts_sample *samp, int nr)
++{
++	struct tslib_dmc *dmc = (struct tslib_dmc*)inf;
++	struct tsdev *ts = inf-&gt;dev;
++	uint8_t buf[5];
++	int ret;
++	int i;
++
++	for (i = 0; i &lt; nr; ++i) {
++		if ((ret = read(ts-&gt;fd, buf, 1)) != 1) {
++			--i;
++			break;
++		}
++		if (buf[0] == 0x10) {
++			/* release. No coords follow. Use old values */
++			samp-&gt;x = dmc-&gt;current_x;
++			samp-&gt;y = dmc-&gt;current_y;
++			samp-&gt;pressure = 0;
++		}
++		else if (buf[0] == 0x11) {
++			/* read coords */
++			if ((ret = read(ts-&gt;fd, buf, 4)) != 4) {
++				/* must have 4 bytes */
++				--i;
++				break;
++			}
++			samp-&gt;x = dmc-&gt;current_x = (int)((buf[0] &lt;&lt; 8) + buf[1]);
++			samp-&gt;y = dmc-&gt;current_y = (int)((buf[2] &lt;&lt; 8) + buf[3]);
++			samp-&gt;pressure = 100;
++		}
++		else
++			continue;
++#ifdef DEBUG
++		fprintf(stderr,&quot;RAW---------------------------&gt; %d %d %d\n&quot;,samp-&gt;x,samp-&gt;y,samp-&gt;pressure);
++#endif /*DEBUG*/
++		gettimeofday(&amp;samp-&gt;tv,NULL);
++		++samp;
++	}
++	return i;
++}
++
++static const struct tslib_ops dmc_ops =
++{
++	.read	= dmc_read,
++};
++
++TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++{
++	struct tslib_dmc *m;
++
++	if (dmc_init_device(dev) != 0)
++		return 0;
++
++	m = calloc(1, sizeof(struct tslib_dmc));
++	if (m == NULL)
++		return NULL;
++
++	m-&gt;module.ops = &amp;dmc_ops;
++	return (struct tslib_module_info*)m;
++}
+-- 
+1.7.2.3
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000364.html">[Tslib-general] [PATCH V2 RESEND 0/3] Some new drivers for tslib
+</A></li>
+	<LI>Next message: <A HREF="000366.html">[Tslib-general] [PATCH 3/3] plugins: new touchkit driver, reposted
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#365">[ date ]</a>
+              <a href="thread.html#365">[ thread ]</a>
+              <a href="subject.html#365">[ subject ]</a>
+              <a href="author.html#365">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

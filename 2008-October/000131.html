@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Configuring a touch screen that is controlled	by inputattach
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%09by%20inputattach&In-Reply-To=%3Cdb471ace0810280238s2d8a6f4o1959f14f13183a61%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000130.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Configuring a touch screen that is controlled	by inputattach</H1>
+    <B>Peter Geoghegan</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%09by%20inputattach&In-Reply-To=%3Cdb471ace0810280238s2d8a6f4o1959f14f13183a61%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Configuring a touch screen that is controlled	by inputattach">peter.geoghegan86 at gmail.com
+       </A><BR>
+    <I>Tue Oct 28 10:38:09 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000130.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#131">[ date ]</a>
+              <a href="thread.html#131">[ thread ]</a>
+              <a href="subject.html#131">[ subject ]</a>
+              <a href="author.html#131">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hinko,
+
+&gt;<i> Me thinks it is also possible with simple tslib applications - see ts_draw
+</I>&gt;<i> in tests that comes with tslib. You can drag or draw - essentially it
+</I>&gt;<i> is the same :)
+</I>
+It *should* be possible. In ts_test, if I switch to &quot;drag&quot;, I cannot
+drag, I can only click on one place and have the cursor jump there -
+It's because tslib reads that I'm clicking and immediately releasing,
+even if I'm actually holding my finger down. If I switch to draw
+within ts_test, I can do nothing. Messages to tslib looks like this.
+Note the alternating pressure of 0 and 1:
+
+1224674076.940475:   1908   1972      1
+1224674076.940477:   1902   1976      0
+1224674088.956466:   1902   1976      1
+1224674088.956469:   1698   1698      0
+
+I went with your patch, not Vojtech's.
+
+&gt;<i> It is up to the application to mimic sliding or whatever.
+</I>
+I'm certain that the application would mimic sliding if Tslib worked correctly.
+
+Is what I've described consistent with what you'd expect from your
+patched input-raw?
+
+Regards,
+Peter
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000130.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#131">[ date ]</a>
+              <a href="thread.html#131">[ thread ]</a>
+              <a href="subject.html#131">[ subject ]</a>
+              <a href="author.html#131">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

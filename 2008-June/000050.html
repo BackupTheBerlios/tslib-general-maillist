@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] touch screen with x-server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touch%20screen%20with%20x-server&In-Reply-To=%3C484793D7.6010402%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000049.html">
+   <LINK REL="Next"  HREF="000051.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] touch screen with x-server</H1>
+    <B>Hinko Ko&#269;evar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touch%20screen%20with%20x-server&In-Reply-To=%3C484793D7.6010402%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] touch screen with x-server">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Thu Jun  5 09:20:55 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000049.html">[Tslib-general] touch screen with x-server
+</A></li>
+        <LI>Next message: <A HREF="000051.html">[Tslib-general] touch screen with x-server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#50">[ date ]</a>
+              <a href="thread.html#50">[ thread ]</a>
+              <a href="subject.html#50">[ subject ]</a>
+              <a href="author.html#50">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Rakesh Jagota wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> This is my strace output along with all the configuration file:
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> gda211:~# strace ts_calibrate
+</I>&gt;<i> execve(&quot;/usr/bin/ts_calibrate&quot;, [&quot;ts_calibrate&quot;], [/* 21 vars */]) = 0
+</I>&gt;<i> brk(0)                                  = 0x1001f000
+</I>&gt;<i> access(&quot;/etc/ld.so.nohwcap&quot;, F_OK)      = -1 ENOENT (No such file or directory)
+</I>&gt;<i> mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x3001f000
+</I>&gt;<i> access(&quot;/etc/ld.so.preload&quot;, R_OK)      = -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/etc/ld.so.cache&quot;, O_RDONLY)      = 3
+</I>&gt;<i> fstat64(3, {st_mode=S_IFREG|0644, st_size=36358, ...}) = 0
+</I>&gt;<i> mmap(NULL, 36358, PROT_READ, MAP_PRIVATE, 3, 0) = 0x30020000
+</I>&gt;<i> close(3)                                = 0
+</I>&gt;<i> access(&quot;/etc/ld.so.nohwcap&quot;, F_OK)      = -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/usr/lib/libts-0.0.so.0&quot;, O_RDONLY) = 3
+</I>&gt;<i> read(3, &quot;\177ELF\1\2\1\0\0\0\0\0\0\0\0\0\0\3\0\24\0\0\0\1\0\0\35&quot;..., 512) = 512
+</I>&gt;<i> fstat64(3, {st_mode=S_IFREG|0644, st_size=14004, ...}) = 0
+</I>&gt;<i> mmap(0xffdc000, 79308, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xffdc000
+</I>&gt;<i> mprotect(0xffdf000, 65536, PROT_NONE)   = 0
+</I>&gt;<i> mmap(0xffef000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0xffef000
+</I>&gt;<i> close(3)                                = 0
+</I>&gt;<i> access(&quot;/etc/ld.so.nohwcap&quot;, F_OK)      = -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/lib/libdl.so.2&quot;, O_RDONLY)       = 3
+</I>&gt;<i> read(3, &quot;\177ELF\1\2\1\0\0\0\0\0\0\0\0\0\0\3\0\24\0\0\0\1\0\0\v&quot;..., 512) = 512
+</I>&gt;<i> fstat64(3, {st_mode=S_IFREG|0644, st_size=13900, ...}) = 0
+</I>&gt;<i> mmap(0xffb8000, 77952, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xffb8000
+</I>&gt;<i> mprotect(0xffbb000, 61440, PROT_NONE)   = 0
+</I>&gt;<i> mmap(0xffca000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0xffca000
+</I>&gt;<i> close(3)                                = 0
+</I>&gt;<i> access(&quot;/etc/ld.so.nohwcap&quot;, F_OK)      = -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/lib/libc.so.6&quot;, O_RDONLY)        = 3
+</I>&gt;<i> read(3, &quot;\177ELF\1\2\1\0\0\0\0\0\0\0\0\0\0\3\0\24\0\0\0\1\0\1\351&quot;..., 512) = 512
+</I>&gt;<i> fstat64(3, {st_mode=S_IFREG|0755, st_size=1458348, ...}) = 0
+</I>&gt;<i> mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x30029000
+</I>&gt;<i> mmap(0xfe32000, 1528376, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xfe32000
+</I>&gt;<i> mprotect(0xff90000, 65536, PROT_NONE)   = 0
+</I>&gt;<i> mmap(0xffa0000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x15e000) = 0xffa0000
+</I>&gt;<i> mmap(0xffa5000, 8760, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xffa5000
+</I>&gt;<i> close(3)                                = 0
+</I>&gt;<i> mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x3002a000
+</I>&gt;<i> mprotect(0xffa0000, 4096, PROT_READ)    = 0
+</I>&gt;<i> mprotect(0xffca000, 4096, PROT_READ)    = 0
+</I>&gt;<i> munmap(0x30020000, 36358)               = 0
+</I>&gt;<i> rt_sigaction(SIGSEGV, {0x100028b0, [SEGV], SA_RESTART}, {SIG_DFL}, 8) = 0
+</I>&gt;<i> rt_sigaction(SIGINT, {0x100028b0, [INT], SA_RESTART}, {SIG_DFL}, 8) = 0
+</I>&gt;<i> rt_sigaction(SIGTERM, {0x100028b0, [TERM], SA_RESTART}, {SIG_DFL}, 8) = 0
+</I>&gt;<i> brk(0)                                  = 0x1001f000
+</I>&gt;<i> brk(0x10040000)                         = 0x10040000
+</I>&gt;<i> open(&quot;/dev/input/event2&quot;, O_RDONLY)     = 3
+</I>&gt;<i> open(&quot;/etc/ts.conf&quot;, O_RDONLY)          = 4
+</I>&gt;<i> fstat64(4, {st_mode=S_IFREG|0644, st_size=173, ...}) = 0
+</I>&gt;<i> mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x30020000
+</I>&gt;<i> read(4, &quot;# Uncomment if you wish to use t&quot;..., 4096) = 173
+</I>&gt;<i> open(&quot;/usr/lib/ts/input.so&quot;, O_RDONLY)  = 5
+</I>&gt;<i> read(5, &quot;\177ELF\1\2\1\0\0\0\0\0\0\0\0\0\0\3\0\24\0\0\0\1\0\0\31&quot;..., 512) = 512
+</I>&gt;<i> fstat64(5, {st_mode=S_IFREG|0644, st_size=10892, ...}) = 0
+</I>&gt;<i> mmap(0xfe0f000, 75176, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 5, 0) = 0xfe0f000
+</I>&gt;<i> mprotect(0xfe12000, 61440, PROT_NONE)   = 0
+</I>&gt;<i> mmap(0xfe21000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 5, 0x2000) = 0xfe21000
+</I>&gt;<i> close(5)                                = 0
+</I>&gt;<i> open(&quot;/usr/lib/ts/pthres.so&quot;, O_RDONLY) = 5
+</I>&gt;<i> read(5, &quot;\177ELF\1\2\1\0\0\0\0\0\0\0\0\0\0\3\0\24\0\0\0\1\0\0\30&quot;..., 512) = 512
+</I>&gt;<i> fstat64(5, {st_mode=S_IFREG|0644, st_size=10212, ...}) = 0
+</I>&gt;<i> mmap(0xfdec000, 74508, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 5, 0) = 0xfdec000
+</I>&gt;<i> mprotect(0xfdef000, 61440, PROT_NONE)   = 0
+</I>&gt;<i> mmap(0xfdfe000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 5, 0x2000) = 0xfdfe000
+</I>&gt;<i> close(5)                                = 0
+</I>&gt;<i> open(&quot;/usr/lib/ts/variance.so&quot;, O_RDONLY) = 5
+</I>&gt;<i> read(5, &quot;\177ELF\1\2\1\0\0\0\0\0\0\0\0\0\0\3\0\24\0\0\0\1\0\0\30&quot;..., 512) = 512
+</I>&gt;<i> fstat64(5, {st_mode=S_IFREG|0644, st_size=10520, ...}) = 0
+</I>&gt;<i> mmap(0xfdc9000, 74804, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 5, 0) = 0xfdc9000
+</I>&gt;<i> mprotect(0xfdcc000, 61440, PROT_NONE)   = 0
+</I>&gt;<i> mmap(0xfddb000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 5, 0x2000) = 0xfddb000
+</I>&gt;<i> close(5)                                = 0
+</I>&gt;<i> open(&quot;/usr/lib/ts/dejitter.so&quot;, O_RDONLY) = 5
+</I>&gt;<i> read(5, &quot;\177ELF\1\2\1\0\0\0\0\0\0\0\0\0\0\3\0\24\0\0\0\1\0\0\30&quot;..., 512) = 512
+</I>&gt;<i> fstat64(5, {st_mode=S_IFREG|0644, st_size=10400, ...}) = 0
+</I>&gt;<i> mmap(0xfda6000, 74684, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 5, 0) = 0xfda6000
+</I>&gt;<i> mprotect(0xfda9000, 61440, PROT_NONE)   = 0
+</I>&gt;<i> mmap(0xfdb8000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 5, 0x2000) = 0xfdb8000
+</I>&gt;<i> close(5)                                = 0
+</I>&gt;<i> open(&quot;/usr/lib/ts/linear.so&quot;, O_RDONLY) = 5
+</I>&gt;<i> read(5, &quot;\177ELF\1\2\1\0\0\0\0\0\0\0\0\0\0\3\0\24\0\0\0\1\0\0\31&quot;..., 512) = 512
+</I>&gt;<i> fstat64(5, {st_mode=S_IFREG|0644, st_size=10348, ...}) = 0
+</I>&gt;<i> mmap(0xfd83000, 74632, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 5, 0) = 0xfd83000
+</I>&gt;<i> mprotect(0xfd86000, 61440, PROT_NONE)   = 0
+</I>&gt;<i> mmap(0xfd95000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 5, 0x2000) = 0xfd95000
+</I>&gt;<i> close(5)                                = 0
+</I>&gt;<i> stat64(&quot;/etc/pointercal&quot;, {st_mode=S_IFREG|015, st_size=53, ...}) = 0
+</I>&gt;<i> open(&quot;/etc/pointercal&quot;, O_RDONLY)       = 5
+</I>&gt;<i> read(5, &quot;-1048579 3136552 53079 -1357505 &quot;..., 200) = 53
+</I>&gt;<i> close(5)                                = 0
+</I>&gt;<i> read(4, &quot;&quot;, 4096)                       = 0
+</I>&gt;<i> close(4)                                = 0
+</I>&gt;<i> munmap(0x30020000, 4096)                = 0
+</I>&gt;<i> open(&quot;/dev/fb0&quot;, O_RDWR)                = 4
+</I>&gt;<i> ioctl(4, FBIOGET_FSCREENINFO, 0x10016e90) = 0
+</I>&gt;<i> ioctl(4, FBIOGET_VSCREENINFO, 0x10016dec) = 0
+</I>&gt;<i> mmap(NULL, 2457600, PROT_READ|PROT_WRITE, MAP_SHARED, 4, 0) = 0x30031000
+</I>&gt;<i> fstat64(1, {st_mode=S_IFCHR|0600, st_rdev=makedev(136, 1), ...}) = 0
+</I>&gt;<i> mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x30020000
+</I>&gt;<i> write(1, &quot;xres = 1024, yres = 600\n&quot;, 24xres = 1024, yres = 600
+</I>&gt;<i> ) = 24
+</I>&gt;<i> ioctl(3, EVIOCGVERSION, 0x7f873df8)     = 0
+</I>&gt;<i> ioctl(3, 0x40204520, 0x7f873dfc)        = 4
+</I>&gt;<i> ioctl(3, 0x40404523, 0x7f873e00)        = 8
+</I>&gt;<i> write(2, &quot;selected device is not a touchsc&quot;..., 50selected device is not a touchscreen I understand
+</I>&gt;<i> ) = 50
+</I>&gt;<i> 
+</I>
+This is from tslib library which is informing you that the touchscreen device 
+your are trying to use does not seem to be compatible with tslib. Now , I don't 
+know about the wm97xx touchscreen, but the kernel driver for the wm97xx should 
+set correct parameters for the touchscreen device it supports - the driver seems 
+to report some missing bits to the tslib.
+Look at the check_fd() where call
+
+ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version)
+
+is made. It checks the return of the ioctl() call and prints out the warning if 
+the kernel driver does not conform.
+
+&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> My ts.conf file is:
+</I>&gt;<i> 
+</I>&gt;<i> --------------------------------------------------------------------------
+</I>&gt;<i> module_raw input
+</I>&gt;<i> 
+</I>&gt;<i> module pthres pmin=1
+</I>&gt;<i> module variance delta=30
+</I>&gt;<i> module dejitter delta=100
+</I>&gt;<i> module linear
+</I>
+This look sane.
+
+&gt;<i> ---------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> My /etc/profile file is:
+</I>&gt;<i> -------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> .....
+</I>&gt;<i> .....
+</I>&gt;<i> ......
+</I>&gt;<i> 
+</I>&gt;<i> export TSLIB_TSDEVICE=/dev/input/event2 ts_calibrate
+</I>&gt;<i> export TSLIB_CALIBFILE=&quot;/etc/pointercal&quot;
+</I>&gt;<i> export TSLIB_CONFFILE=&quot;/etc/ts.conf&quot;
+</I>&gt;<i> export TSLIB_PLUGINDIR=&quot;/usr/lib/ts&quot;
+</I>&gt;<i> export TSLIB_FBDEVICE=/dev/fb0
+</I>&gt;<i> export TSLIB_CONSOLEDEVICE=none
+</I>
+This too, except for the TSLIB_CONSOLEDEVICE (I'm not sure if it needs to be set 
+to something or would this be OK).
+
+&gt;<i> --------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> And touch screen section is included in xorg.conf file as well:
+</I>&gt;<i> 
+</I>&gt;<i> ---------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> Section &quot;InputDevice&quot;
+</I>&gt;<i>         Identifier      &quot;wm97xx touchscreen&quot;
+</I>&gt;<i>         Driver          &quot;tslib&quot;
+</I>&gt;<i>         Option          &quot;Device&quot;        &quot;/dev/input/event2&quot;
+</I>&gt;<i>         Option          &quot;DeviceName&quot;    &quot;touchscreen&quot;
+</I>&gt;<i>         Option          &quot;Protocol&quot;      &quot;Auto&quot;
+</I>&gt;<i> #       Option          &quot;MinX&quot; &quot;50&quot;
+</I>&gt;<i> #       Option          &quot;MinY&quot; &quot;50&quot;
+</I>&gt;<i> #       Option          &quot;MaxX&quot; &quot;800&quot;
+</I>&gt;<i> #       Option          &quot;MaxY&quot; &quot;600&quot;
+</I>&gt;<i>         Option          &quot;Rotate&quot; &quot;CCW&quot;
+</I>&gt;<i>         Option          &quot;ReportingMode&quot; &quot;Raw&quot;
+</I>&gt;<i>         Option          &quot;SendCoreEvents&quot; &quot;On&quot;
+</I>&gt;<i> #       Option          &quot;SwapX&quot; &quot;true&quot;
+</I>&gt;<i> EndSection
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Section &quot;ServerLayout&quot;
+</I>&gt;<i>         Identifier      &quot;Default Layout&quot;
+</I>&gt;<i>         Screen          &quot;Default Screen&quot;
+</I>&gt;<i>         InputDevice     &quot;Generic Keyboard&quot;
+</I>&gt;<i>         InputDevice     &quot;Configured Mouse&quot;
+</I>&gt;<i>         InputDevice     &quot;wm97xx touchscreen&quot; &quot;CorePointer&quot;
+</I>&gt;<i>         InputDevice     &quot;dummy&quot;
+</I>&gt;<i> EndSection
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+I suggest you make the touchscreen work on a lower layer first - use evtest, 
+evbug and similar, then use it with X. Then try out ts_print_raw and ts_print.
+
+&gt;<i> 
+</I>&gt;<i> I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+</I>&gt;<i> N: Name=&quot;wm97xx touchscreen&quot;
+</I>&gt;<i> P: Phys=0-0:WM9711,WM9712/input0
+</I>&gt;<i> S: Sysfs=/class/input/input2
+</I>&gt;<i> U: Uniq=
+</I>&gt;<i> H: Handlers=event2 evbug 
+</I>&gt;<i> B: EV=9
+</I>&gt;<i> B: ABS=1000003
+</I>&gt;<i> 
+</I>&gt;<i> gda211:~#
+</I>&gt;<i> 
+</I>
+This too looks fine. For example my touchscreen device is showing me this:
+
+# cat /proc/bus/input/devices
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name=&quot;TSC2301 touchscreen panel&quot;
+P: Phys=
+S: Sysfs=/devices/virtual/input/input0
+U: Uniq=
+H: Handlers=event0
+B: EV=9
+B: ABS=1000003
+
+I forgot to ask - what kernel version and tslib version are you using? What does 
+evbug output look like when you load the module and touch the screen? Are the 
+X,Y values printed in dmesg inside the boundaries of the min,max of the touchscreen?
+
+Best regards,
+Hinko
+
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000049.html">[Tslib-general] touch screen with x-server
+</A></li>
+	<LI>Next message: <A HREF="000051.html">[Tslib-general] touch screen with x-server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#50">[ date ]</a>
+              <a href="thread.html#50">[ thread ]</a>
+              <a href="subject.html#50">[ subject ]</a>
+              <a href="author.html#50">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

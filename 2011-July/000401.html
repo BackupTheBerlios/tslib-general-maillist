@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] ts_calibrate freezes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-July/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20ts_calibrate%20freezes&In-Reply-To=%3Cacccac96212471900bd3d225dc71a784%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000402.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] ts_calibrate freezes</H1>
+    <B>Jared Wiltshire</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20ts_calibrate%20freezes&In-Reply-To=%3Cacccac96212471900bd3d225dc71a784%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] ts_calibrate freezes">jared.wiltshire at delta-automation.com.au
+       </A><BR>
+    <I>Fri Jul  8 06:04:33 CEST 2011</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000402.html">[Tslib-general] How should one recalibrate a touch screen without reopening the touch screen device ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#401">[ date ]</a>
+              <a href="thread.html#401">[ thread ]</a>
+              <a href="subject.html#401">[ subject ]</a>
+              <a href="author.html#401">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I'm having trouble calibrating a Zytronic touchscreen, it uses the
+usbtouchscreen module (2.6.35 kernel on Ubuntu 10.04) and I am using tslib
+compiled from the github source.
+When I try and run the ts_calibrate program it just freezes, I just get a
+blinking cursor and I can't exit the program via Ctrl-C or killing it from
+SSH (kill -9). ts_test does the same thing.
+
+I can read values from the touchscreen fine using ts_print_raw. eg.
+xxxx 860 236 255 (top left corner touch)
+xxxx 311 529 255 (bottom right corner touch)
+
+Maybe it's the frame buffer device crashing or something, I can't see
+anything in any of the logs or on the screen though.
+I have tried /dev/fb0 and /dev/fb1, as they both exist. The video driver
+is the psb kernel module for the notorious GMA500.
+
+/proc/bus/input/devices:
+I: Bus=0003 Vendor=14c8 Product=0003 Version=0100
+N: Name=&quot;Zytronic Displays Limited Zytronic, x-y, USB&quot;
+P: Phys=usb-0000:00:1d.0-2/input0
+S: Sysfs=/devices/pci0000:00/0000:00:1d.0/usb2/2-2/2-2:1.0/input/input4
+U: Uniq=
+H: Handlers=mouse0 event3
+B: EV=b
+B: KEY=400 0 0 0 0 0 0 0 0 0 0
+B: ABS=3
+
+Environment variables:
+export TSLIB_CONFFILE=/etc/ts.conf
+export TSLIB_TSDEVICE=/dev/input/event3
+export TSLIB_FBDEVICE=/dev/fb0
+export TSLIB_CONSOLEDEVICE=none
+export TSLIB_CALIBFILE=/etc/pointercal
+export TSLIB_PLUGINDIR=/home/user/lib/ts
+
+/etc/ts.conf:
+module_raw input
+module pthres pmin=1
+module variance delta=30
+module dejitter delta=100
+module linear
+
+Permissions on /dev/input/event3 and /dev/fb0 are set appropriately.
+
+I was using the evtouch Xorg module before, here are the calibration
+values I was using with it.
+        Option                  &quot;MinX&quot;          &quot;871&quot;
+        Option                  &quot;MaxX&quot;          &quot;293&quot;
+        Option                  &quot;MinY&quot;          &quot;231&quot;
+        Option                  &quot;MaxY&quot;          &quot;480&quot;
+
+Perhaps these calibration values can be transposed into a tslib
+calibration file?
+
+Any help appreciated.
+
+Thanks,
+Jared Wiltshire
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000402.html">[Tslib-general] How should one recalibrate a touch screen without reopening the touch screen device ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#401">[ date ]</a>
+              <a href="thread.html#401">[ thread ]</a>
+              <a href="subject.html#401">[ subject ]</a>
+              <a href="author.html#401">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [PATCH 1/4] fbutils: add support for RGB24
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%201/4%5D%20fbutils%3A%20add%20support%20for%20RGB24&In-Reply-To=%3C1329074168-30208-1-git-send-email-vapier%40gentoo.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000416.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [PATCH 1/4] fbutils: add support for RGB24</H1>
+    <B>Mike Frysinger</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%201/4%5D%20fbutils%3A%20add%20support%20for%20RGB24&In-Reply-To=%3C1329074168-30208-1-git-send-email-vapier%40gentoo.org%3E"
+       TITLE="[Tslib-general] [PATCH 1/4] fbutils: add support for RGB24">vapier at gentoo.org
+       </A><BR>
+    <I>Sun Feb 12 20:16:05 CET 2012</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000416.html">[Tslib-general] [PATCH 2/4] ts_calibrate: fix clearbuf return type
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#415">[ date ]</a>
+              <a href="thread.html#415">[ thread ]</a>
+              <a href="subject.html#415">[ subject ]</a>
+              <a href="author.html#415">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>From: Michael Hennerich &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">michael.hennerich at analog.com</A>&gt;
+
+Signed-off-by: Michael Hennerich &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">michael.hennerich at analog.com</A>&gt;
+Signed-off-by: Mike Frysinger &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">vapier at gentoo.org</A>&gt;
+---
+ tests/fbutils.c |   12 ++++++++++++
+ 1 files changed, 12 insertions(+), 0 deletions(-)
+
+diff --git a/tests/fbutils.c b/tests/fbutils.c
+index ec267f7..fd7a0ed 100644
+--- a/tests/fbutils.c
++++ b/tests/fbutils.c
+@@ -249,6 +249,7 @@ void setcolor(unsigned colidx, unsigned value)
+         	        perror(&quot;ioctl FBIOPUTCMAP&quot;);
+ 		break;
+ 	case 2:
++	case 3:
+ 	case 4:
+ 		red = (value &gt;&gt; 16) &amp; 0xff;
+ 		green = (value &gt;&gt; 8) &amp; 0xff;
+@@ -276,6 +277,17 @@ static inline void __setpixel (union multiptr loc, unsigned xormode, unsigned co
+ 		else
+ 			*loc.p16 = color;
+ 		break;
++	case 3:
++		if (xormode) {
++			*loc.p8++ ^= (color &gt;&gt; 16) &amp; 0xff;
++			*loc.p8++ ^= (color &gt;&gt; 8) &amp; 0xff;
++			*loc.p8 ^= color &amp; 0xff;
++		} else {
++			*loc.p8++ = (color &gt;&gt; 16) &amp; 0xff;
++			*loc.p8++ = (color &gt;&gt; 8) &amp; 0xff;
++			*loc.p8 = color &amp; 0xff;
++		}
++		break;
+ 	case 4:
+ 		if (xormode)
+ 			*loc.p32 ^= color;
+-- 
+1.7.8.4
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000416.html">[Tslib-general] [PATCH 2/4] ts_calibrate: fix clearbuf return type
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#415">[ date ]</a>
+              <a href="thread.html#415">[ thread ]</a>
+              <a href="subject.html#415">[ subject ]</a>
+              <a href="author.html#415">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

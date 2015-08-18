@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] touchscreen without BTN_TOUCH
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touchscreen%20without%20BTN_TOUCH&In-Reply-To=%3C390.627-14125-314169774-1255703642%40seznam.cz%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000231.html">
+   <LINK REL="Next"  HREF="000234.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] touchscreen without BTN_TOUCH</H1>
+    <B>tomas.dosoudil at seznam.cz</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touchscreen%20without%20BTN_TOUCH&In-Reply-To=%3C390.627-14125-314169774-1255703642%40seznam.cz%3E"
+       TITLE="[Tslib-general] touchscreen without BTN_TOUCH">tomas.dosoudil at seznam.cz
+       </A><BR>
+    <I>Fri Oct 16 16:34:02 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000231.html">[Tslib-general] tslib ts_read_raw.c
+</A></li>
+        <LI>Next message: <A HREF="000234.html">[Tslib-general] touchscreen without BTN_TOUCH
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#233">[ date ]</a>
+              <a href="thread.html#233">[ thread ]</a>
+              <a href="subject.html#233">[ subject ]</a>
+              <a href="author.html#233">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+I just bought an acoustic touchscreen from SAWTouch TouchSystems.
+
+[  264.804311] input: SAWTouch TouchSystems SAWTouch USB Touchscreen as /class/input/input7
+[  264.821503] generic-usb 0003:0DF9:0001.0001: input,hiddev96,hidraw0: USB HID v1.10 Mouse [SAWTouch TouchSystems SAWTouch USB Touchscreen] on usb-0000:00:02.0-2/input0
+[  264.821762] usb 2-2: New USB device found, idVendor=0df9, idProduct=0001
+[  264.821768] usb 2-2: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+
+My problem is that, this touchscreen doesn't support BTN_TOUCH and there is also no driver for this touchscreen. Question is what can I do? Can I solve that with some tslib patch or I need kernel driver at first. 
+
+I tried to comment out return value in plugins/input-raw.c where BTN_TOUCH is tested.
+    if (!(absbit[BIT_WORD(ABS_PRESSURE)] &amp; BIT_MASK(ABS_PRESSURE))) {
+        i-&gt;current_p = 255;
+
+        if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_KEY, KEY_CNT), keybit) &lt; 0) ||
+            !(keybit[BIT_WORD(BTN_TOUCH)] &amp; BIT_MASK(BTN_TOUCH)) ) {
+            fprintf(stderr, &quot;tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)\n&quot;);
+            //return -1;
+        }
+    }
+
+
+Then I could run ts_print with following outputs:
+(for one press )
+Loading module /usr/lib64/ts/input.so
+Loading module /usr/lib64/ts/pthres.so
+Loading module /usr/lib64/ts/variance.so
+Loading module /usr/lib64/ts/dejitter.so
+Loading module /usr/lib64/ts/linear.so
+tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)
+RAW---------------------&gt; 528 744 255 1255703174.749334
+tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)
+RAW---------------------&gt; 528 744 255 1255703174.757331
+VARIANCE----------------&gt; 528 744 255
+BEFORE CALIB--------------------&gt; 528 744 255
+TS_READ----&gt; x = 528, y = 744, pressure = 255
+1255703174.749334:    528    744    255
+tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)
+RAW---------------------&gt; 528 744 255 1255703174.813331
+VARIANCE----------------&gt; 528 744 255
+DEJITTER----------------&gt; 528 744 255
+BEFORE CALIB--------------------&gt; 528 744 255
+TS_READ----&gt; x = 528, y = 744, pressure = 255
+1255703174.757331:    528    744    255
+tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)
+
+But it doesn't work with ts_calibration. There is no reaction for pressing. 
+
+My system is Gentoo linux 2.6.28.8
+
+Thanks for advice
+Tomas
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000231.html">[Tslib-general] tslib ts_read_raw.c
+</A></li>
+	<LI>Next message: <A HREF="000234.html">[Tslib-general] touchscreen without BTN_TOUCH
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#233">[ date ]</a>
+              <a href="thread.html#233">[ thread ]</a>
+              <a href="subject.html#233">[ subject ]</a>
+              <a href="author.html#233">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Plugin read method general question
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Plugin%20read%20method%20general%20question&In-Reply-To=%3C1299577929.6987.31.camel%40localhost%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000364.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Plugin read method general question</H1>
+    <B>J&#246;rg Faschingbauer</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Plugin%20read%20method%20general%20question&In-Reply-To=%3C1299577929.6987.31.camel%40localhost%3E"
+       TITLE="[Tslib-general] Plugin read method general question">joerg.faschingbauer at aon.at
+       </A><BR>
+    <I>Tue Mar  8 10:52:09 CET 2011</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000364.html">[Tslib-general] [PATCH V2 RESEND 0/3] Some new drivers for tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#362">[ date ]</a>
+              <a href="thread.html#362">[ thread ]</a>
+              <a href="subject.html#362">[ subject ]</a>
+              <a href="author.html#362">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I'm just starting to write a driver for a Navpixel serial type device,
+and want to make sure I understand a bit before I begin.
+
+I see that the plugins expect to read a complete sample (or set of
+samples if nr&gt;1), and nobody ever cares about incomplete samples.
+
+Can it happen that incomplete samples occur altogether? I suppose yes,
+for example if the reader has realtime scheduling policy or at least in
+some other contrived scenario.
+
+&gt;<i>From what I see, if that happens, the plugins will generally go bogus
+</I>for a short time and spit out garbage, until they kind of self-align
+naturally - simply because the user can't touch fast enough.
+
+Is this correct?
+
+Thanks,
+Joerg
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000364.html">[Tslib-general] [PATCH V2 RESEND 0/3] Some new drivers for tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#362">[ date ]</a>
+              <a href="thread.html#362">[ thread ]</a>
+              <a href="subject.html#362">[ subject ]</a>
+              <a href="author.html#362">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

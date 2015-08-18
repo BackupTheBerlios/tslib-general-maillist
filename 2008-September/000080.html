@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] TSLIB fix for X and Y are different values e.g.	[1024x768 or 1024x600	or 800x600]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20TSLIB%20fix%20for%20X%20and%20Y%20are%20different%20values%20e.g.%0A%09%5B1024x768%20or%201024x600%09or%20800x600%5D&In-Reply-To=%3C007401c911f2%245bc89680%241359c380%24%40com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000078.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] TSLIB fix for X and Y are different values e.g.	[1024x768 or 1024x600	or 800x600]</H1>
+    <B>Rakesh Jagota</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20TSLIB%20fix%20for%20X%20and%20Y%20are%20different%20values%20e.g.%0A%09%5B1024x768%20or%201024x600%09or%20800x600%5D&In-Reply-To=%3C007401c911f2%245bc89680%241359c380%24%40com%3E"
+       TITLE="[Tslib-general] TSLIB fix for X and Y are different values e.g.	[1024x768 or 1024x600	or 800x600]">jrakesh at gdatech.com
+       </A><BR>
+    <I>Mon Sep  8 22:34:52 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000078.html">[Tslib-general] Help with tslib
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#80">[ date ]</a>
+              <a href="thread.html#80">[ thread ]</a>
+              <a href="subject.html#80">[ subject ]</a>
+              <a href="author.html#80">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I was facing the issue with tslib to test the touch screen[1024x600] and there is always a vertical offset. As I touch the panel on the top, it looks fine but as keep on touching the stylus and come done on the panel, the vertical offset keeps on increasing.
+
+So after doing some exercise we did few modification in plugin/linear.c file as shown below to avoid the vertical offset issue.
+
+-----------------------------------------------------------------------
+static int
+linear_read(struct tslib_module_info *info, struct ts_sample *samp, int nr)
+{
+	struct tslib_linear *lin = (struct tslib_linear *)info;
+	int ret;
++	int xtemp,ytemp;
++	int fd;
++	double xres, yres, xratio, yratio;
++	static struct fb_var_screeninfo screen;
+	
++	fd = open(&quot;/dev/fb0&quot;, O_RDWR);
++       if (fd == -1) {
++                perror(&quot;open fbdevice&quot;);
++                return -1;
++        }
++        if (ioctl(fd, FBIOGET_VSCREENINFO, &amp;screen) &lt; 0) {
++                perror(&quot;ioctl FBIOGET_VSCREENINFO&quot;);
++                close(fd);
++                return -1;
++        }
++	 /* Get the X and Y resolution from the frame buffer driver */
++        xres = screen.xres;
++        yres = screen.yres;
+	ret = info-&gt;next-&gt;ops-&gt;read(info-&gt;next, samp, nr);
+	if (ret &gt;= 0) {
+		int nr;
+
+		for (nr = 0; nr &lt; ret; nr++, samp++) {
+#ifdef DEBUG
+			fprintf(stderr,&quot;BEFORE CALIB--------------------&gt; %d %d %d\n&quot;,samp-&gt;x, samp-&gt;y, samp-&gt;pressure);
+#endif /*DEBUG*/
+			xtemp = samp-&gt;x; ytemp = samp-&gt;y;
+			samp-&gt;x = 	( lin-&gt;a[2] +
+					lin-&gt;a[0]*xtemp + 
+					lin-&gt;a[1]*ytemp ) / lin-&gt;a[6];
+			samp-&gt;y =	( lin-&gt;a[5] +
+					lin-&gt;a[3]*xtemp +
+					lin-&gt;a[4]*ytemp ) / lin-&gt;a[6];
+
++			xratio = 1024/xres;
++                 yratio = 1024/yres;
++
++			samp-&gt;x = xratio *(samp-&gt;x);
++                 samp-&gt;y = yratio *(samp-&gt;y);
+
+			samp-&gt;pressure = ((samp-&gt;pressure + lin-&gt;p_offset)
+						 * lin-&gt;p_mult) / lin-&gt;p_div;
+
+			if (lin-&gt;swap_xy) {
+				int tmp = samp-&gt;x;
+				samp-&gt;x = samp-&gt;y;
+				samp-&gt;y = tmp;
+			}
+		}
+	}
+
+	return ret;
+}
+---------------------------------------------------------------------------------------------------
+
+So we have included the multiple factor for y rsolution to avoid the vertical offset. I need to confirm whether this patch after doing some clean-up can be put in to the tslib package or we should handle this in the driver.
+
+Thanks &amp; Regards,
+Rakesh Jagota
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080908/a10f5a5e/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20080908/a10f5a5e/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000078.html">[Tslib-general] Help with tslib
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#80">[ date ]</a>
+              <a href="thread.html#80">[ thread ]</a>
+              <a href="subject.html#80">[ subject ]</a>
+              <a href="author.html#80">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

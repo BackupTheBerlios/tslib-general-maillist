@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] What is the intential behavoir on &quot;pen up&quot; events?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20What%20is%20the%20intential%20behavoir%20on%20%22pen%20up%22%20events%3F&In-Reply-To=%3C200901142257.37165.michael.heimpold%40s2000.tu-chemnitz.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000168.html">
+   <LINK REL="Next"  HREF="000182.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] What is the intential behavoir on &quot;pen up&quot; events?</H1>
+    <B>Michael Heimpold</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20What%20is%20the%20intential%20behavoir%20on%20%22pen%20up%22%20events%3F&In-Reply-To=%3C200901142257.37165.michael.heimpold%40s2000.tu-chemnitz.de%3E"
+       TITLE="[Tslib-general] What is the intential behavoir on &quot;pen up&quot; events?">michael.heimpold at s2000.tu-chemnitz.de
+       </A><BR>
+    <I>Wed Jan 14 22:57:36 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000168.html">[Tslib-general] Tslib-general Digest, Vol 20, Issue 4
+</A></li>
+        <LI>Next message: <A HREF="000182.html">[Tslib-general] [PATCH] Rely on SYN-Events when pen is lifted (WAS:	What is the intential behavoir on &quot;pen up&quot; events?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#166">[ date ]</a>
+              <a href="thread.html#166">[ thread ]</a>
+              <a href="subject.html#166">[ subject ]</a>
+              <a href="author.html#166">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi list,
+
+I'm developing on a Atmel AT91SAM9263-EK board with ads7846 touch driver
+and some nice touch display.
+I want to use tslib for filtering and calibration but I wonder about the 
+events I got from a ts_print compiled with debugging:
+
+TSLib:
+
+RAW---------------------&gt; 1345 1047 7500 1053.62783
+BEFORE CALIB--------------------&gt; 1345 1047 7500
+TS_READ----&gt; x = 609, y = 331, pressure = 7500
+1053.062783:    609    331   7500
+
+
+RAW---------------------&gt; 1338 1048 7500 1053.80491
+BEFORE CALIB--------------------&gt; 1338 1048 7500
+TS_READ----&gt; x = 609, y = 332, pressure = 7500
+1053.080491:    609    332   7500
+
+
+RAW---------------------&gt; 1339 1045 7500 1053.98240
+BEFORE CALIB--------------------&gt; 1339 1045 7500
+TS_READ----&gt; x = 609, y = 332, pressure = 7500
+1053.098240:    609    332   7500
+
+
+RAW---------------------&gt; 1350 1041 7500 1053.116118
+BEFORE CALIB--------------------&gt; 1350 1041 7500
+TS_READ----&gt; x = 610, y = 330, pressure = 7500
+1053.116118:    610    330   7500
+
+
+RAW---------------------&gt; 1367 1029 7500 1053.133916
+BEFORE CALIB--------------------&gt; 1367 1029 7500
+TS_READ----&gt; x = 613, y = 328, pressure = 7500
+1053.133916:    613    328   7500
+
+
+RAW---------------------&gt; 818 3436 7500 1053.151201
+BEFORE CALIB--------------------&gt; 818 3436 7500
+TS_READ----&gt; x = 115, y = 398, pressure = 7500
+1053.151201:    115    398   7500
+
+
+BEFORE CALIB--------------------&gt; 0 0 0
+TS_READ----&gt; x = 826, y = 507, pressure = 0
+1053.156435:    826    507      0
+
+
+RAW---------------------&gt; 818 3436 0 1053.156467
+BEFORE CALIB--------------------&gt; 818 3436 0
+TS_READ----&gt; x = 115, y = 398, pressure = 0
+1053.156467:    115    398      0
+
+
+
+As you can see, there are two &quot;pen up&quot; events (pressure = 0) when lifting
+the pen. The first sample has a &quot;anywhere in space&quot; coordinate pair, which 
+differs in dependence of the linearization constants.
+I track down that the ads7846 driver delivers two events to tslib plus an 
+additional &quot;sync&quot;. See evtest trace below for same touch event.
+
+
+evtest:
+
+Event: time 1053.062677, type 1 (Key), code 330 (Touch), value 1
+Event: time 1053.062732, type 3 (Absolute), code 0 (X), value 1345
+Event: time 1053.062749, type 3 (Absolute), code 1 (Y), value 1047
+Event: time 1053.062766, type 3 (Absolute), code 24 (Pressure), value 7500
+Event: time 1053.062783, -------------- Report Sync ------------
+
+
+Event: time 1053.080423, type 3 (Absolute), code 0 (X), value 1338
+Event: time 1053.080464, type 3 (Absolute), code 1 (Y), value 1048
+Event: time 1053.080491, -------------- Report Sync ------------
+
+
+
+Event: time 1053.098166, type 3 (Absolute), code 0 (X), value 1339
+Event: time 1053.098212, type 3 (Absolute), code 1 (Y), value 1045
+Event: time 1053.098240, -------------- Report Sync ------------
+
+
+
+Event: time 1053.116044, type 3 (Absolute), code 0 (X), value 1350
+Event: time 1053.116091, type 3 (Absolute), code 1 (Y), value 1041
+Event: time 1053.116118, -------------- Report Sync ------------
+
+
+Event: time 1053.133846, type 3 (Absolute), code 0 (X), value 1367
+Event: time 1053.133889, type 3 (Absolute), code 1 (Y), value 1029
+Event: time 1053.133916, -------------- Report Sync ------------
+
+
+Event: time 1053.151134, type 3 (Absolute), code 0 (X), value 818
+Event: time 1053.151174, type 3 (Absolute), code 1 (Y), value 3436
+Event: time 1053.151201, -------------- Report Sync ------------
+
+
+Event: time 1053.156435, type 1 (Key), code 330 (Touch), value 0
+Event: time 1053.156456, type 3 (Absolute), code 24 (Pressure), value 0
+Event: time 1053.156467, -------------- Report Sync ------------
+
+The origin of the two tslib events seen above is the code in the input-raw.c
+plugin: the state machine releases a &quot;pen up&quot; event on the incomingi BTN_TOUCH
+event, and then an additional one with the &quot;pressure = 0&quot; and the following 
+sync.
+
+My questions are:
+1) Is this designed behavoir? What does an application (i.g. kdrive) should 
+expect from tslib?
+2) Should an application use the x,y-pair from the pen up event and interpret 
+it as &quot;last known position&quot; or should it completely ignore the values (when 
+pen is lifted any current position information doesn't make sense anymore).
+3) Is there any documentation about using tslib I missed? A RTFM with an URL
+would answer this question :-) Currently, I only looked into sources.
+
+regards,
+Michael
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000168.html">[Tslib-general] Tslib-general Digest, Vol 20, Issue 4
+</A></li>
+	<LI>Next message: <A HREF="000182.html">[Tslib-general] [PATCH] Rely on SYN-Events when pen is lifted (WAS:	What is the intential behavoir on &quot;pen up&quot; events?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#166">[ date ]</a>
+              <a href="thread.html#166">[ thread ]</a>
+              <a href="subject.html#166">[ subject ]</a>
+              <a href="author.html#166">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

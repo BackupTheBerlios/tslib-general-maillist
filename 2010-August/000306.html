@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] eGalax usbhid-driver and raw-input
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-August/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%0A%09%3D%3Fkoi8-r%3Fb%3FZUdhbGF4IHVzYmhpZC1kcml2ZXIgYW5kIHJh%3F%3D%0A%09%3D%3Fkoi8-r%3Fb%3Fdy1pbnB1dA%3D%3D%3F%3D&In-Reply-To=%3CE1OqUzH-0006j8-00.al_yashkov-mail-ru%40f138.mail.ru%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] eGalax usbhid-driver and raw-input</H1>
+    <B>&#1040;&#1083;&#1077;&#1082;&#1089;&#1077;&#1081; &#1071;&#1096;&#1082;&#1086;&#1074;</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%0A%09%3D%3Fkoi8-r%3Fb%3FZUdhbGF4IHVzYmhpZC1kcml2ZXIgYW5kIHJh%3F%3D%0A%09%3D%3Fkoi8-r%3Fb%3Fdy1pbnB1dA%3D%3D%3F%3D&In-Reply-To=%3CE1OqUzH-0006j8-00.al_yashkov-mail-ru%40f138.mail.ru%3E"
+       TITLE="[Tslib-general] eGalax usbhid-driver and raw-input">al_yashkov at mail.ru
+       </A><BR>
+    <I>Tue Aug 31 19:51:11 CEST 2010</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#306">[ date ]</a>
+              <a href="thread.html#306">[ thread ]</a>
+              <a href="subject.html#306">[ subject ]</a>
+              <a href="author.html#306">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi.
+
+I read
+<A HREF="https://lists.berlios.de/pipermail/tslib-general/2008-March/000019.html">https://lists.berlios.de/pipermail/tslib-general/2008-March/000019.html</A>
+message and I have probably the similar problem. I try to use eGalax
+touch screen driver instead of old one came with devkit8000. Of course
+I`d like to use my touch screen with tslib...
+
+What I have at all:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">root at DevKit8000</A>:/dev/input# cat /proc/bus/input/devices
+I: Bus=0019 Vendor=0001 Product=0001 Version=0003
+N: Name=&quot;omap_twl4030keypad&quot;
+P: Phys=omap_twl4030keypad/input0
+S: Sysfs=/class/input/input0
+U: Uniq=
+H: Handlers=kbd event0 
+B: EV=100003
+B: KEY=78000000 10004ffc
+
+I: Bus=0019 Vendor=0001 Product=0001 Version=0100
+N: Name=&quot;gpio-keys&quot;
+P: Phys=gpio-keys/input0
+S: Sysfs=/class/input/input1
+U: Uniq=
+H: Handlers=event1 
+B: EV=3
+B: KEY=100000 0 0 0 0 0 0 0 0
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name=&quot;ADS784x Touchscreen&quot;
+P: Phys=spi2.0/input0
+S: Sysfs=/class/input/input2
+U: Uniq=
+H: Handlers=event2 
+B: EV=b
+B: KEY=400 0 0 0 0 0 0 0 0 0 0
+B: ABS=1000003
+
+I: Bus=0003 Vendor=0eef Product=0001 Version=0112
+N: Name=&quot;eGalax Inc. Touch&quot;
+P: Phys=usb-ehci-omap.0-1.1/input0
+S: Sysfs=/class/input/input5
+U: Uniq=
+H: Handlers=event3 
+B: EV=1b
+B: KEY=401 0 30000 0 0 0 0 0 0 0 0
+B: ABS=f
+B: MSC=10
+
+Here we know my eGalax event (event3)
+
+Test event...
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">root at DevKit8000</A>:/bin# evtest /dev/input/event3
+Input driver version is 1.0.0evdev.c(EVIOCGBIT): Suspicious buffer size
+511, limiting outpul
+
+Input device ID: bus 0x3 vendor 0xeef product 0x1 version 0x112
+Input device name: &quot;eGalax Inc. Touch&quot;
+Supported events:
+  Event type 0 (Sync)
+  Event type 1 (Key)
+    Event code 272 (LeftBtn)
+    Event code 273 (RightBtn)
+    Event code 320 (ToolPen)
+    Event code 330 (Touch)
+  Event type 3 (Absolute)
+    Event code 0 (X)
+      Value      0
+      Min       42
+      Max     1981
+    Event code 1 (Y)
+      Value      0
+      Min       42
+      Max     1981
+    Event code 2 (Z)
+      Value   1538
+      Min        0
+      Max     2047
+    Event code 3 (Rx)
+      Value    472
+      Min        0
+      Max     2047
+  Event type 4 (Misc)
+    Event code 4 (ScanCode)
+Testing ... (interrupt to exit)
+Event: time 1233051390.476074, type 4 (Misc), code 4 (ScanCode), value
+d0042
+Event: time 1233051390.476104, type 1 (Key), code 330 (Touch), value 1
+Event: time 1233051390.476104, type 3 (Absolute), code 2 (Z), value 912
+Event: time 1233051390.476104, type 3 (Absolute), code 3 (Rx), value
+1041
+Event: time 1233051390.476104, -------------- Report Sync ------------
+Event: time 1233051390.500030, type 3 (Absolute), code 3 (Rx), value
+1042
+Event: time 1233051390.500030, -------------- Report Sync ------------
+
+Well, I see about the same thing that author described in mentioned
+post. Because tslib operate basically Event code 0 (X) and Event code 1
+(Y)  and I can`t see these events at all, my application not work
+properly.  
+
+My question is: how to solve this issue.
+
+P.s.: maybe you can point to my mistake
+P.s.2: if I use ts_print_raw I see 0 coordinates (in ts.conf I use
+module_raw input)
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">root at DevKit8000</A>:/bin# ts_print_raw
+1233053775.123168:      0      0    255
+1233053775.195098:      0      0    255
+1233053775.203094:      0      0    255
+1233053775.211089:      0      0    255
+1233053775.219116:      0      0      0
+1233053776.347106:      0      0    255
+1233053776.363067:      0      0    255
+1233053776.371063:      0      0    255
+
+
+WBR,
+ Alexey Yashkov
+ 
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#306">[ date ]</a>
+              <a href="thread.html#306">[ thread ]</a>
+              <a href="subject.html#306">[ subject ]</a>
+              <a href="author.html#306">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

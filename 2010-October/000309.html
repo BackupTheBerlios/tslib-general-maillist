@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Fw%3A%20Patched%20TSLib%20for%20TS-TPC-7390/95&In-Reply-To=%3CC72A5B70B7842F4AB4589C3BAB82113506C8FC%40MS-CDA-01.advanced-input.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000308.html">
+   <LINK REL="Next"  HREF="000310.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95</H1>
+    <B>Whealon, Lynetta</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Fw%3A%20Patched%20TSLib%20for%20TS-TPC-7390/95&In-Reply-To=%3CC72A5B70B7842F4AB4589C3BAB82113506C8FC%40MS-CDA-01.advanced-input.com%3E"
+       TITLE="[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95">Lynetta.Whealon at esterline.com
+       </A><BR>
+    <I>Thu Oct 21 23:39:44 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000308.html">[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+</A></li>
+        <LI>Next message: <A HREF="000310.html">[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#309">[ date ]</a>
+              <a href="thread.html#309">[ thread ]</a>
+              <a href="subject.html#309">[ subject ]</a>
+              <a href="author.html#309">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am certainly not working on the same platform that you are but I have had to deal with these issues using the Hampshire Tsharc Devilray12 resistive touchscreen in my platform.  It also has no pressure sensors.  Hampshire provided me a patch for the file input_raw.c in the plugins directory within tslib1.0.
+
+I also saw this error when running ts_calibrate because TSLIB_TSDEVICE was not set correctly.  It must be set to the actual device that is setup and being used for your touchscreen.  If not set correctly I saw that error.
+
+Lynetta Whealon
+________________________________
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general-bounces at lists.berlios.de</A>] On Behalf Of <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">SCrook at bevair.com</A>
+Sent: Thursday, October 21, 2010 2:15 PM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+Subject: [Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+
+
+Hello,
+
+I'm trying to compile TSLib for the TS-TPC-7395 using a Debian Lenny EABI distro.
+While I am able to compile, when I try to run ts_calibrate I get the following message:
+
+&quot;selected device is not a touchscreen I understand&quot;
+
+&gt;<i>From what I've been able to gather from searching google, I need to make some patches to the TSLib in order to use it with this device. I've not found anything out there as far as a package that is already patched nor any instructions about how I should go about patching however from what I can tell it appears that I need to make a no pressure sensors patch as well as a plugin module patch.
+</I>
+Any ideas on what specifically I might need to do to the stock TSLib source to accomplish this?
+
+Thanks,
+
+
+Scott Crook
+Automation/Test Engineer
+Beverage-Air Corporation
+336.245.6420
+www.beverage-air.com&lt;<A HREF="http://www.beverage-air.com/">http://www.beverage-air.com/</A>&gt;
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20101021/a1a1bc70/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20101021/a1a1bc70/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000308.html">[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+</A></li>
+	<LI>Next message: <A HREF="000310.html">[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#309">[ date ]</a>
+              <a href="thread.html#309">[ thread ]</a>
+              <a href="subject.html#309">[ subject ]</a>
+              <a href="author.html#309">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

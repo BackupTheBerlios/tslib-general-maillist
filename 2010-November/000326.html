@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [PATCH] tests: clear screen on exit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%5D%20tests%3A%20clear%20screen%20on%20exit&In-Reply-To=%3C1289472659-7650-1-git-send-email-w.sang%40pengutronix.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000322.html">
+   <LINK REL="Next"  HREF="000342.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [PATCH] tests: clear screen on exit</H1>
+    <B>Wolfram Sang</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%5D%20tests%3A%20clear%20screen%20on%20exit&In-Reply-To=%3C1289472659-7650-1-git-send-email-w.sang%40pengutronix.de%3E"
+       TITLE="[Tslib-general] [PATCH] tests: clear screen on exit">w.sang at pengutronix.de
+       </A><BR>
+    <I>Thu Nov 11 11:50:59 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000322.html">[Tslib-general] [PATCH 2/3] plugins: add driver for DMC touchscreens
+</A></li>
+        <LI>Next message: <A HREF="000342.html">[Tslib-general] [PATCH V2 0/3] Some new drivers for tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#326">[ date ]</a>
+              <a href="thread.html#326">[ thread ]</a>
+              <a href="subject.html#326">[ subject ]</a>
+              <a href="author.html#326">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>So users don't get confused by a non-reacting application on the
+display because of the left-over image.
+
+Signed-off-by: Wolfram Sang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt;
+---
+ tests/ts_calibrate.c |    1 +
+ tests/ts_test.c      |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/tests/ts_calibrate.c b/tests/ts_calibrate.c
+index 1bee699..fc1412f 100644
+--- a/tests/ts_calibrate.c
++++ b/tests/ts_calibrate.c
+@@ -268,6 +268,7 @@ int main()
+ 		i = -1;
+ 	}
+ 
++	fillrect (0, 0, xres - 1, yres - 1, 0);
+ 	close_framebuffer();
+ 	return i;
+ }
+diff --git a/tests/ts_test.c b/tests/ts_test.c
+index 02aa216..b0e2d45 100644
+--- a/tests/ts_test.c
++++ b/tests/ts_test.c
+@@ -213,5 +213,6 @@ int main()
+ 		if (quit_pressed)
+ 			break;
+ 	}
++	fillrect (0, 0, xres - 1, yres - 1, 0);
+ 	close_framebuffer();
+ }
+-- 
+1.7.2.3
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000322.html">[Tslib-general] [PATCH 2/3] plugins: add driver for DMC touchscreens
+</A></li>
+	<LI>Next message: <A HREF="000342.html">[Tslib-general] [PATCH V2 0/3] Some new drivers for tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#326">[ date ]</a>
+              <a href="thread.html#326">[ thread ]</a>
+              <a href="subject.html#326">[ subject ]</a>
+              <a href="author.html#326">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

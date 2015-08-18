@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Need help with tslib and directfb
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Need%20help%20with%20tslib%20and%20directfb&In-Reply-To=%3Cop.u6p5t8nbd1z8pn%40imac-6%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000254.html">
+   <LINK REL="Next"  HREF="000256.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Need help with tslib and directfb</H1>
+    <B>Andreas K&#228;nner</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Need%20help%20with%20tslib%20and%20directfb&In-Reply-To=%3Cop.u6p5t8nbd1z8pn%40imac-6%3E"
+       TITLE="[Tslib-general] Need help with tslib and directfb">andreas at kaenner.de
+       </A><BR>
+    <I>Mon Jan 18 11:52:46 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000254.html">[Tslib-general] How to use tslib in Feroda 12 for Arm
+</A></li>
+        <LI>Next message: <A HREF="000256.html">[Tslib-general] Need help with tslib and directfb
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#255">[ date ]</a>
+              <a href="thread.html#255">[ thread ]</a>
+              <a href="subject.html#255">[ subject ]</a>
+              <a href="author.html#255">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I want to use directfb it in conjunction with tslib but it always grabs  
+the standard linux input driver. I think it has to do with this log  
+message: Couldnt load module pthres (see below)
+
+
+The files:
+
+pthres.a
+pthres.la
+pthres.so
+
+live in a directory named &quot;ts&quot; inside the lib directory. I looks like  
+directfb is not searching for pthres in this directory.
+
+Is this path adjustable in tslib so that directfb can find it?
+
+I am glad to hear any suggestions.
+
+Thank you,
+
+Andreas
+
+
+
+
+Output is from dfbinfo:
+
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~| DirectFB 1.4.3 |~~~~~~~~~~~~~~~~~~~~~~~~~~
+         (c) 2001-2009  The world wide DirectFB Open Source Community
+         (c) 2000-2004  Convergence (integrated media) GmbH
+       ----------------------------------------------------------------
+
+(*) DirectFB/Core: Single Application Core. (2010-01-18 08:20) [ DEBUG ]
+(*) Direct/Memcpy: Using libc memcpy()
+(*) Direct/Thread: Started 'VT Switcher' (1861) [CRITICAL OTHER/OTHER 0/0]  
+&lt;8388608&gt;...
+(*) Direct/Thread: Started 'VT Flusher' (-1) [DEFAULT OTHER/OTHER 0/0]  
+&lt;8388608&gt;...
+(*) DirectFB/FBDev: Found 'chumbyfwfb' (ID 0) with frame buffer at  
+0x43a00000, 300k (MMIO 0x00000000, 0k)
+(*) Direct/Thread: Started 'PS/2 Input' (1865) [INPUT OTHER/OTHER 0/0]  
+&lt;8388608&gt;...
+(*) DirectFB/Input: IMPS/2 Mouse 1.0 (directfb.org)
+(*) Direct/Thread: Started 'Keyboard Input' (1866) [INPUT OTHER/OTHER 0/0]  
+&lt;8388608&gt;...
+(*) DirectFB/Input: Keyboard 0.9 (directfb.org)
+Couldnt load module pthres
+(*) Direct/Thread: Started 'Linux Input' (1868) [INPUT OTHER/OTHER 0/0]  
+&lt;8388608&gt;...
+(*) DirectFB/Input: bend-sensor (1) 0.1 (directfb.org)
+(*) Direct/Thread: Started 'Linux Input' (1870) [INPUT OTHER/OTHER 0/0]  
+&lt;8388608&gt;...
+(*) DirectFB/Input: stmp3xxx-rotdec (2) 0.1 (directfb.org)
+(*) DirectFB/Graphics: Generic Software Rasterizer 0.6 (directfb.org)
+(*) DirectFB/Core/WM: Default 0.3 (directfb.org)
+
+
+
+Screen (00) FBDev Primary Screen            (primary screen)
+    Caps: VSYNC POWER_MANAGEMENT
+
+      Layer (00) FBDev Primary Layer             (primary layer)
+         Type:    GRAPHICS
+         Caps:    SURFACE BRIGHTNESS CONTRAST SATURATION
+
+
+Input (01) IMPS/2 Mouse                    (primary mouse)
+    Type: MOUSE
+    Caps: AXES BUTTONS
+    Max. Axis: 2
+    Max. Button: 2
+
+Input (00) Keyboard                        (primary keyboard)
+    Type: KEYBOARD
+    Caps: KEYS
+    Min. Keycode: 0
+    Max. Keycode: 127
+
+Input (10) bend-sensor
+    Type: KEYBOARD MOUSE REMOTE
+    Caps: KEYS BUTTONS
+    Min. Keycode: 0
+    Max. Keycode: 127
+    Max. Button: 15
+
+Input (11) stmp3xxx-rotdec
+    Type:
+    Caps: AXES
+    Max. Axis: 0
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000254.html">[Tslib-general] How to use tslib in Feroda 12 for Arm
+</A></li>
+	<LI>Next message: <A HREF="000256.html">[Tslib-general] Need help with tslib and directfb
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#255">[ date ]</a>
+              <a href="thread.html#255">[ thread ]</a>
+              <a href="subject.html#255">[ subject ]</a>
+              <a href="author.html#255">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

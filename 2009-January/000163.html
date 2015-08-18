@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Filtering
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Filtering&In-Reply-To=%3Cb6ebd0a50901131224l2a8036e0l8d1bd28810164e10%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000162.html">
+   <LINK REL="Next"  HREF="000164.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Filtering</H1>
+    <B>Chris Larson</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Filtering&In-Reply-To=%3Cb6ebd0a50901131224l2a8036e0l8d1bd28810164e10%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Filtering">kergoth at gmail.com
+       </A><BR>
+    <I>Tue Jan 13 21:24:22 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000162.html">[Tslib-general] Filtering
+</A></li>
+        <LI>Next message: <A HREF="000164.html">[Tslib-general] Tslib-general Digest, Vol 20, Issue 4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#163">[ date ]</a>
+              <a href="thread.html#163">[ thread ]</a>
+              <a href="subject.html#163">[ subject ]</a>
+              <a href="author.html#163">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I didn't write the filter code, but, iirc, variance is just a running
+average, and dejitter just throws out outliers based on a running
+stddev.  Do let the list know if you come up with any details on the
+problems you're seeing.
+
+On Tue, Jan 13, 2009 at 12:52 PM, Dan Lyke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">danlyke at flutterby.com</A>&gt; wrote:
+&gt;<i> Just a note to others who may be struggling with similar issues.
+</I>&gt;<i>
+</I>&gt;<i> I'm playing with an AT91SAM9261-EK which has an ADS7843E touch
+</I>&gt;<i> screen controller, with an OSD 4.3&quot; display, and was getting
+</I>&gt;<i> horrendously noisy touchscreen values from tslib. There are possible
+</I>&gt;<i> reasons for this, we have much longer cables with this display and other
+</I>&gt;<i> whackiness, but what was weird was that I had several clusters of
+</I>&gt;<i> values, and spikes along the X and Y axes around my center point.
+</I>&gt;<i>
+</I>&gt;<i> This morning, as a test, I commented out everything but the
+</I>&gt;<i>
+</I>&gt;<i>   module linear
+</I>&gt;<i>
+</I>&gt;<i> in my /etc/ts.conf and just continually read 16 values and averaged
+</I>&gt;<i> them, and got something that looked a lot more like a reasonable, and
+</I>&gt;<i> which had values that were nicely clustered and roughly +- 10 rather
+</I>&gt;<i> than +-20 or more.
+</I>&gt;<i>
+</I>&gt;<i> I haven't dug into the tslib code yet, but I strongly suspect that the
+</I>&gt;<i> &quot;variance&quot; and/or the &quot;dejitter&quot; modules have some numerical error
+</I>&gt;<i> issues that are causing strange artifacts.
+</I>&gt;<i>
+</I>&gt;<i> I'm headed the direction of just throwing away the first 32 or so
+</I>&gt;<i> values when I start getting a touch event, and averaging some set of
+</I>&gt;<i> ts_read() samples while I've got pressure. If your hardware is giving
+</I>&gt;<i> you fits you might investigate doing the simple thing as well.
+</I>&gt;<i>
+</I>&gt;<i> Dan
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+Chris Larson
+clarson at kergoth dot com
+clarson at mvista dot com
+Founder - BitBake, OpenEmbedded, OpenZaurus
+Maintainer - Tslib
+Software Engineer
+MontaVista Software, Inc.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000162.html">[Tslib-general] Filtering
+</A></li>
+	<LI>Next message: <A HREF="000164.html">[Tslib-general] Tslib-general Digest, Vol 20, Issue 4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#163">[ date ]</a>
+              <a href="thread.html#163">[ thread ]</a>
+              <a href="subject.html#163">[ subject ]</a>
+              <a href="author.html#163">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

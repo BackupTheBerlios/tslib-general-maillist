@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Gunze touch screen with Xfbdev
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Gunze%20touch%20screen%20with%20Xfbdev&In-Reply-To=%3Ce00ad49f0810090800o16b94970y7bb4b50975a34eb0%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000082.html">
+   <LINK REL="Next"  HREF="000084.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Gunze touch screen with Xfbdev</H1>
+    <B>Leon Ljunggren</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Gunze%20touch%20screen%20with%20Xfbdev&In-Reply-To=%3Ce00ad49f0810090800o16b94970y7bb4b50975a34eb0%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Gunze touch screen with Xfbdev">leon.ljunggren at gmail.com
+       </A><BR>
+    <I>Thu Oct  9 17:00:35 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000082.html">[Tslib-general] Gunze touch screen with Xfbdev
+</A></li>
+        <LI>Next message: <A HREF="000084.html">[Tslib-general] Gunze touch screen with Xfbdev
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#83">[ date ]</a>
+              <a href="thread.html#83">[ thread ]</a>
+              <a href="subject.html#83">[ subject ]</a>
+              <a href="author.html#83">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Oct 9, 2008 at 2:36 PM, Hinko Kocevar
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>&gt; wrote:
+&gt;<i> See few posts back. Someone posted a hack used to get the ts as input
+</I>&gt;<i> device through evdev working. It it probably failing because kernel
+</I>&gt;<i> driver does not set appropriate bits in the evdev info.
+</I>
+It appears that it uses tsdev rather than evdev so I guess it's not
+suprising that the input module doesn't work.
+
+cat /proc/bus/input/handlers
+N: Number=0 Name=kbd
+N: Number=1 Name=mousedev Minor=32
+N: Number=2 Name=tsdev Minor=128
+
+cat /proc/bus/input/devices
+I: Bus=0013 Vendor=001c Product=0051 Version=0100
+N: Name=&quot;Gunze AHL-51S TouchScreen&quot;
+P: Phys=ttyS3/serio0/input0
+S: Sysfs=/class/input/input0
+H: Handlers=mouse0 ts0
+B: EV=b
+B: KEY=400 0 0 0 0 0 0 0 0 0 0
+B: ABS=3
+
+I don't understand how the h3600 module can work perfectly with the
+test programs but fail in Xfbdev. The Gunze driver I'm using came with
+the kernel (2.6.20).
+
+Regards
+/Leon
+
+Ps. In this list's archive the latest post was from 8th Sept, has
+there been no new posts in over a month?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000082.html">[Tslib-general] Gunze touch screen with Xfbdev
+</A></li>
+	<LI>Next message: <A HREF="000084.html">[Tslib-general] Gunze touch screen with Xfbdev
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#83">[ date ]</a>
+              <a href="thread.html#83">[ thread ]</a>
+              <a href="subject.html#83">[ subject ]</a>
+              <a href="author.html#83">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Tslib and Elo serial touchscreen
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20and%20Elo%20serial%20touchscreen&In-Reply-To=%3C48F2FF55.1050408%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000088.html">
+   <LINK REL="Next"  HREF="000090.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Tslib and Elo serial touchscreen</H1>
+    <B>Hinko Kocevar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20and%20Elo%20serial%20touchscreen&In-Reply-To=%3C48F2FF55.1050408%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] Tslib and Elo serial touchscreen">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Mon Oct 13 09:57:09 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000088.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+        <LI>Next message: <A HREF="000090.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#89">[ date ]</a>
+              <a href="thread.html#89">[ thread ]</a>
+              <a href="subject.html#89">[ subject ]</a>
+              <a href="author.html#89">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Peter Geoghegan wrote:
+&gt;<i> Hinko,
+</I>&gt;<i> 
+</I>&gt;<i> I've compiled a fresh kernel with support for the elo serial
+</I>&gt;<i> touchscreens.  Could you please clarify some of your comments? Why
+</I>&gt;<i> should I see the device in /proc/bus/input/devices , if it's an
+</I>&gt;<i> entirely passive serial device (not a USB device)? In other words, If
+</I>&gt;<i> I &quot;cat /dev/ttyS4&quot;, I never see any output until I press the screen,
+</I>&gt;<i> so why *should* the kernel be able to detect the touchscreen, which
+</I>&gt;<i> might be connected to any of my serial ports?
+</I>&gt;<i> 
+</I>
+Every device driver that calls input_register_device() as elo does in 
+elo_connect() should be seen in /proc/bus/input/devices.
+And touchscreen certainly is an input device. Underlying protocol that
+elo uses is serial protocol handled by the serio subsystem in Linux.
+When elo driver is loaded it registers itself with serio and input
+subsystems. At this point new input event device should be available.
+
+
+&gt;<i> I guess I should use a kernel parameter or something to specify the
+</I>&gt;<i> correct interface, but I don't know what.  Documentation is sparse.
+</I>&gt;<i> 
+</I>
+elo driver does not seem to take any kernel module parameters.
+
+&gt;<i> Any further help  you could give would be *greatly* appreciated, as
+</I>&gt;<i> this is a high priority for me. I think it would also be of great
+</I>&gt;<i> general utility if I could document here how it is possible to get Elo
+</I>&gt;<i> touchscreens to work with Tslib, for posterity, as they are a major
+</I>&gt;<i> manufacturer of touchscreens and I can't be the only one who is
+</I>&gt;<i> interested.
+</I>&gt;<i> 
+</I>
+I never used elo and have never even seen one, so my comments might be
+slightly off because elo looks like a touchscreen with its own of protocol
+over the serial line. Nevertheless you should be able to get input device
+listed under /proc/bus/input/devices (eg. a serial mouse can also be seen
+as a input device).
+
+Make sure you have (besides elo touchscreen device driver selected):
+ Device Drivers  ---&gt; Input device support  ---&gt; Event interface
+ Device Drivers  ---&gt; Input device support  ---&gt; Event debugging
+ Device Drivers  ---&gt; Input device support  ---&gt; Hardware I/O ports  ---&gt; Serial I/O support
+
+If you enable Event debugging you should see a lot of messages in 
+/var/log/messages or dmesg for every touch the touchscreen generates.
+
+Best regards,
+Hinko
+
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000088.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+	<LI>Next message: <A HREF="000090.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#89">[ date ]</a>
+              <a href="thread.html#89">[ thread ]</a>
+              <a href="subject.html#89">[ subject ]</a>
+              <a href="author.html#89">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

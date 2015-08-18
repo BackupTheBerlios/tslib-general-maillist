@@ -1,0 +1,379 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Segmentation fault while executing ts_calibrate
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Segmentation%20fault%20while%20executing%20ts_calibrate&In-Reply-To=%3Cb6ebd0a50912020711g50138113s4f2b7d3cf7b7926a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000245.html">
+   <LINK REL="Next"  HREF="000247.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Segmentation fault while executing ts_calibrate</H1>
+    <B>Chris Larson</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Segmentation%20fault%20while%20executing%20ts_calibrate&In-Reply-To=%3Cb6ebd0a50912020711g50138113s4f2b7d3cf7b7926a%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Segmentation fault while executing ts_calibrate">kergoth at gmail.com
+       </A><BR>
+    <I>Wed Dec  2 16:11:41 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000245.html">[Tslib-general] Segmentation fault while executing ts_calibrate
+</A></li>
+        <LI>Next message: <A HREF="000247.html">[Tslib-general] Need help in getting tslib to work properly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#246">[ date ]</a>
+              <a href="thread.html#246">[ thread ]</a>
+              <a href="subject.html#246">[ subject ]</a>
+              <a href="author.html#246">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>An strace is almost never useful when dealing with a segmentation fault.
+ I'd suggest running it in gdb and getting a backtrace when it segfaults, or
+use the catchsegv tool (iirc it comes from glibc).
+
+On Wed, Dec 2, 2009 at 4:02 AM, majo huber &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">majo.huber at googlemail.com</A>&gt;wrote:
+
+&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Hello at all</A>,
+</I>&gt;<i>
+</I>&gt;<i> after doing a lot of tests with tslib in order to get the library
+</I>&gt;<i> running I got stuck with this problem:
+</I>&gt;<i> When executing ts_calibrate a segmentation fault SIGSEGV occurs.
+</I>&gt;<i>
+</I>&gt;<i> I have an openembedded toolchain for arm-linux (armv5te).
+</I>&gt;<i> I tried several versions of tslib (version that comes openembedded,
+</I>&gt;<i> version from download page, and version from svn repository).
+</I>&gt;<i> Everytime the same: SIGSEGV. Also qt tells me that there is possibly
+</I>&gt;<i> something wrong with the tslib installation.
+</I>&gt;<i>
+</I>&gt;<i> I made an strace and it seems that loading the plugins causes the
+</I>&gt;<i> problem (input.so):
+</I>&gt;<i> Has anyboy an idea?
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">root at embedded</A>:/usr/bin# strace ts_calibrate
+</I>&gt;<i> execve(&quot;/usr/bin/ts_calibrate&quot;, [&quot;ts_calibrate&quot;], [/* 14 vars */]) = 0
+</I>&gt;<i> brk(0)                                  = 0x1e000
+</I>&gt;<i> uname({sys=&quot;Linux&quot;, node=&quot;at91sam9263ek&quot;, ...}) = 0
+</I>&gt;<i> mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1,
+</I>&gt;<i> 0) = 0x4001c000
+</I>&gt;<i> access(&quot;/etc/ld.so.preload&quot;, R_OK)      = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i>
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/tls/v5l/fast-mult/half/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/tls/v5l/fast-mult/half&quot;,
+</I>&gt;<i> 0xbeb4c220) = -1 ENOENT (No such file or directory)
+</I>&gt;<i>
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/tls/v5l/fast-mult/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/tls/v5l/fast-mult&quot;,
+</I>&gt;<i> 0xbeb4c220) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/tls/v5l/half/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/tls/v5l/half&quot;, 0xbeb4c220)
+</I>&gt;<i> = -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/tls/v5l/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/tls/v5l&quot;, 0xbeb4c220) = -1
+</I>&gt;<i> ENOENT (No such file or directory)
+</I>&gt;<i>
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/tls/fast-mult/half/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/tls/fast-mult/half&quot;,
+</I>&gt;<i> 0xbeb4c220) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/tls/fast-mult/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/tls/fast-mult&quot;,
+</I>&gt;<i> 0xbeb4c220) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/tls/half/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/tls/half&quot;, 0xbeb4c220) =
+</I>&gt;<i> -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/tls/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/tls&quot;, 0xbeb4c220) = -1
+</I>&gt;<i> ENOENT (No such file or directory)
+</I>&gt;<i>
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/v5l/fast-mult/half/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/v5l/fast-mult/half&quot;,
+</I>&gt;<i> 0xbeb4c220) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/v5l/fast-mult/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/v5l/fast-mult&quot;,
+</I>&gt;<i> 0xbeb4c220) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/v5l/half/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/v5l/half&quot;, 0xbeb4c220) =
+</I>&gt;<i> -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/v5l/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/v5l&quot;, 0xbeb4c220) = -1
+</I>&gt;<i> ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/fast-mult/half/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/fast-mult/half&quot;,
+</I>&gt;<i> 0xbeb4c220) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/fast-mult/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/fast-mult&quot;, 0xbeb4c220) =
+</I>&gt;<i> -1 ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/half/libts-1.0.so.0&quot;,
+</I>&gt;<i> O_RDONLY) = -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib/half&quot;, 0xbeb4c220) = -1
+</I>&gt;<i> ENOENT (No such file or directory)
+</I>&gt;<i> open(&quot;/home/jm/temp/tslib_svn/install/lib/libts-1.0.so.0&quot;, O_RDONLY) =
+</I>&gt;<i> -1 ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/home/jm/temp/tslib_svn/install/lib&quot;, 0xbeb4c220) = -1 ENOENT
+</I>&gt;<i> (No such file or directory)
+</I>&gt;<i> open(&quot;/var/run/ld.so.cache&quot;, O_RDONLY)  = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/lib/tls/v5l/fast-mult/half/libts-1.0.so.0&quot;, O_RDONLY) = -1
+</I>&gt;<i> ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/lib/tls/v5l/fast-mult/half&quot;, 0xbeb4c220) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> open(&quot;/lib/tls/v5l/fast-mult/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT
+</I>&gt;<i> (No such file or directory)
+</I>&gt;<i> stat64(&quot;/lib/tls/v5l/fast-mult&quot;, 0xbeb4c220) = -1 ENOENT (No such file
+</I>&gt;<i> or directory)
+</I>&gt;<i> open(&quot;/lib/tls/v5l/half/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No
+</I>&gt;<i> such file or directory)
+</I>&gt;<i> stat64(&quot;/lib/tls/v5l/half&quot;, 0xbeb4c220) = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/lib/tls/v5l/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> stat64(&quot;/lib/tls/v5l&quot;, 0xbeb4c220)      = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/lib/tls/fast-mult/half/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT
+</I>&gt;<i> (No such file or directory)
+</I>&gt;<i> stat64(&quot;/lib/tls/fast-mult/half&quot;, 0xbeb4c220) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> open(&quot;/lib/tls/fast-mult/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No
+</I>&gt;<i> such file or directory)
+</I>&gt;<i> stat64(&quot;/lib/tls/fast-mult&quot;, 0xbeb4c220) = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/lib/tls/half/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> stat64(&quot;/lib/tls/half&quot;, 0xbeb4c220)     = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/lib/tls/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> stat64(&quot;/lib/tls&quot;, 0xbeb4c220)          = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/lib/v5l/fast-mult/half/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT
+</I>&gt;<i> (No such file or directory)
+</I>&gt;<i> stat64(&quot;/lib/v5l/fast-mult/half&quot;, 0xbeb4c220) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> open(&quot;/lib/v5l/fast-mult/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No
+</I>&gt;<i> such file or directory)
+</I>&gt;<i> stat64(&quot;/lib/v5l/fast-mult&quot;, 0xbeb4c220) = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/lib/v5l/half/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> stat64(&quot;/lib/v5l/half&quot;, 0xbeb4c220)     = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/lib/v5l/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> stat64(&quot;/lib/v5l&quot;, 0xbeb4c220)          = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/lib/fast-mult/half/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No
+</I>&gt;<i> such file or directory)
+</I>&gt;<i> stat64(&quot;/lib/fast-mult/half&quot;, 0xbeb4c220) = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/lib/fast-mult/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> stat64(&quot;/lib/fast-mult&quot;, 0xbeb4c220)    = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/lib/half/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No such file
+</I>&gt;<i> or directory)
+</I>&gt;<i> stat64(&quot;/lib/half&quot;, 0xbeb4c220)         = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/lib/libts-1.0.so.0&quot;, O_RDONLY)   = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> stat64(&quot;/lib&quot;, {st_mode=S_IFDIR|0755, st_size=0, ...}) = 0
+</I>&gt;<i> open(&quot;/usr/lib/tls/v5l/fast-mult/half/libts-1.0.so.0&quot;, O_RDONLY) = -1
+</I>&gt;<i> ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/tls/v5l/fast-mult/half&quot;, 0xbeb4c220) = -1 ENOENT (No
+</I>&gt;<i> such file or directory)
+</I>&gt;<i> open(&quot;/usr/lib/tls/v5l/fast-mult/libts-1.0.so.0&quot;, O_RDONLY) = -1
+</I>&gt;<i> ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/tls/v5l/fast-mult&quot;, 0xbeb4c220) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> open(&quot;/usr/lib/tls/v5l/half/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No
+</I>&gt;<i> such file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/tls/v5l/half&quot;, 0xbeb4c220) = -1 ENOENT (No such file
+</I>&gt;<i> or directory)
+</I>&gt;<i> open(&quot;/usr/lib/tls/v5l/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/tls/v5l&quot;, 0xbeb4c220)  = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/usr/lib/tls/fast-mult/half/libts-1.0.so.0&quot;, O_RDONLY) = -1
+</I>&gt;<i> ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/tls/fast-mult/half&quot;, 0xbeb4c220) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> open(&quot;/usr/lib/tls/fast-mult/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT
+</I>&gt;<i> (No such file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/tls/fast-mult&quot;, 0xbeb4c220) = -1 ENOENT (No such file
+</I>&gt;<i> or directory)
+</I>&gt;<i> open(&quot;/usr/lib/tls/half/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No
+</I>&gt;<i> such file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/tls/half&quot;, 0xbeb4c220) = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/usr/lib/tls/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/tls&quot;, 0xbeb4c220)      = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/usr/lib/v5l/fast-mult/half/libts-1.0.so.0&quot;, O_RDONLY) = -1
+</I>&gt;<i> ENOENT (No such file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/v5l/fast-mult/half&quot;, 0xbeb4c220) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> open(&quot;/usr/lib/v5l/fast-mult/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT
+</I>&gt;<i> (No such file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/v5l/fast-mult&quot;, 0xbeb4c220) = -1 ENOENT (No such file
+</I>&gt;<i> or directory)
+</I>&gt;<i> open(&quot;/usr/lib/v5l/half/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No
+</I>&gt;<i> such file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/v5l/half&quot;, 0xbeb4c220) = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/usr/lib/v5l/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/v5l&quot;, 0xbeb4c220)      = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/usr/lib/fast-mult/half/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT
+</I>&gt;<i> (No such file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/fast-mult/half&quot;, 0xbeb4c220) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> open(&quot;/usr/lib/fast-mult/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No
+</I>&gt;<i> such file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/fast-mult&quot;, 0xbeb4c220) = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/usr/lib/half/libts-1.0.so.0&quot;, O_RDONLY) = -1 ENOENT (No such
+</I>&gt;<i> file or directory)
+</I>&gt;<i> stat64(&quot;/usr/lib/half&quot;, 0xbeb4c220)     = -1 ENOENT (No such file or
+</I>&gt;<i> directory)
+</I>&gt;<i> open(&quot;/usr/lib/libts-1.0.so.0&quot;, O_RDONLY) = 3
+</I>&gt;<i> read(3, &quot;\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\260\t\0&quot;...,
+</I>&gt;<i> 512) = 512
+</I>&gt;<i> fstat64(3, {st_mode=S_IFREG|0755, st_size=11891, ...}) = 0
+</I>&gt;<i> mmap2(NULL, 39248, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3,
+</I>&gt;<i> 0) = 0x40025000
+</I>&gt;<i> mprotect(0x40027000, 28672, PROT_NONE)  = 0
+</I>&gt;<i> mmap2(0x4002e000, 4096, PROT_READ|PROT_WRITE,
+</I>&gt;<i> MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1) = 0x4002e000
+</I>&gt;<i> close(3)                                = 0
+</I>&gt;<i> open(&quot;/lib/libdl.so.2&quot;, O_RDONLY)       = 3
+</I>&gt;<i> read(3, &quot;\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\364\10\0&quot;..., 512)
+</I>&gt;<i> = 512
+</I>&gt;<i> fstat64(3, {st_mode=S_IFREG|0755, st_size=9744, ...}) = 0
+</I>&gt;<i> mmap2(NULL, 41136, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3,
+</I>&gt;<i> 0) = 0x4002f000
+</I>&gt;<i> mprotect(0x40031000, 28672, PROT_NONE)  = 0
+</I>&gt;<i> mmap2(0x40038000, 8192, PROT_READ|PROT_WRITE,
+</I>&gt;<i> MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1) = 0x40038000
+</I>&gt;<i> close(3)                                = 0
+</I>&gt;<i> open(&quot;/lib/libc.so.6&quot;, O_RDONLY)        = 3
+</I>&gt;<i> read(3, &quot;\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\220K\1\000&quot;...,
+</I>&gt;<i> 512) = 512
+</I>&gt;<i> fstat64(3, {st_mode=S_IFREG|0755, st_size=1111536, ...}) = 0
+</I>&gt;<i> mmap2(NULL, 1147328, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE,
+</I>&gt;<i> 3, 0) = 0x4003a000
+</I>&gt;<i> mprotect(0x40145000, 32768, PROT_NONE)  = 0
+</I>&gt;<i> mmap2(0x4014d000, 12288, PROT_READ|PROT_WRITE,
+</I>&gt;<i> MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x10b) = 0x4014d000
+</I>&gt;<i> mmap2(0x40150000, 8640, PROT_READ|PROT_WRITE,
+</I>&gt;<i> MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x40150000
+</I>&gt;<i> mprotect(0xbeb4c000, 4096, PROT_READ|PROT_WRITE|PROT_EXEC|PROT_GROWSDOWN) =
+</I>&gt;<i> 0
+</I>&gt;<i> close(3)                                = 0
+</I>&gt;<i> mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1,
+</I>&gt;<i> 0) = 0x4001d000
+</I>&gt;<i> syscall_983045(0x4001d760, 0x4001d760, 0x68c, 0x4001de38, 0x40024060,
+</I>&gt;<i> 0x40024000, 0, 0xf0005, 0x60, 0xffff565c, 0, 0xbeb4caec, 0,
+</I>&gt;<i> 0xbeb4c7e8, 0x40010e24, 0x40001fc4, 0x200000100
+</I>&gt;<i> mprotect(0x4014d000, 8192, PROT_READ)   = 0
+</I>&gt;<i> mprotect(0x40038000, 4096, PROT_READ)   = 0
+</I>&gt;<i> mprotect(0x40023000, 4096, PROT_READ)   = 0
+</I>&gt;<i> rt_sigaction(SIGSEGV, {0x97a0, [SEGV], SA_RESTART|0x4000000}, {SIG_DFL}, 8)
+</I>&gt;<i> = 0
+</I>&gt;<i> rt_sigaction(SIGINT, {0x97a0, [INT], SA_RESTART|0x4000000}, {SIG_DFL}, 8) =
+</I>&gt;<i> 0
+</I>&gt;<i> rt_sigaction(SIGTERM, {0x97a0, [TERM], SA_RESTART|0x4000000}, {SIG_DFL}, 8)
+</I>&gt;<i> = 0
+</I>&gt;<i> brk(0)                                  = 0x1e000
+</I>&gt;<i> brk(0x3f000)                            = 0x3f000
+</I>&gt;<i> open(&quot;/dev/input/event0&quot;, O_RDONLY)     = 3
+</I>&gt;<i> open(&quot;/etc/ts.conf&quot;, O_RDONLY)          = 4
+</I>&gt;<i> fstat64(4, {st_mode=S_IFREG|0644, st_size=645, ...}) = 0
+</I>&gt;<i> mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1,
+</I>&gt;<i> 0) = 0x4001e000
+</I>&gt;<i> read(4, &quot;# Uncomment if you wish to use t&quot;..., 4096) = 645
+</I>&gt;<i> open(&quot;/usr/lib/ts/input.so&quot;, O_RDONLY)  = 5
+</I>&gt;<i> read(5, &quot;\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0004\6\0\000&quot;...,
+</I>&gt;<i> 512) = 512
+</I>&gt;<i> fstat64(5, {st_mode=S_IFREG|0755, st_size=9670, ...}) = 0
+</I>&gt;<i> mmap2(NULL, 37288, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 5,
+</I>&gt;<i> 0) = 0x40153000
+</I>&gt;<i> mprotect(0x40155000, 28672, PROT_NONE)  = 0
+</I>&gt;<i> mmap2(0x4015c000, 4096, PROT_READ|PROT_WRITE,
+</I>&gt;<i> MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 5, 0x1) = 0x4015c000
+</I>&gt;<i> close(5)                                = 0
+</I>&gt;<i> --- SIGSEGV (Segmentation fault) @ 0 (0) ---
+</I>&gt;<i> munmap(0, 0)                            = -1 EINVAL (Invalid argument)
+</I>&gt;<i> close(0)                                = 0
+</I>&gt;<i> --- SIGSEGV (Segmentation fault) @ 0 (0) ---
+</I>&gt;<i> +++ killed by SIGSEGV +++
+</I>&gt;<i> Process 988 detached
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">root at embedded</A>:/usr/bin#
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Thanks in advance,
+</I>&gt;<i> majo
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+Chris Larson
+clarson at kergoth dot com
+clarson at mvista dot com
+Founder - BitBake, OpenEmbedded, OpenZaurus
+Maintainer - Tslib
+Software Engineer
+MontaVista Software, Inc.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20091202/ee75845a/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20091202/ee75845a/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000245.html">[Tslib-general] Segmentation fault while executing ts_calibrate
+</A></li>
+	<LI>Next message: <A HREF="000247.html">[Tslib-general] Need help in getting tslib to work properly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#246">[ date ]</a>
+              <a href="thread.html#246">[ thread ]</a>
+              <a href="subject.html#246">[ subject ]</a>
+              <a href="author.html#246">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

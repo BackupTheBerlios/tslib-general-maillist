@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib and input events.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20and%20input%20events.&In-Reply-To=%3CCABcZANkmSw%3D%2B8-Cz%2BhZio7mj6jw6GWpfzcGGQTxeOLCQiHpn2A%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000438.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib and input events.</H1>
+    <B>Chris Larson</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20and%20input%20events.&In-Reply-To=%3CCABcZANkmSw%3D%2B8-Cz%2BhZio7mj6jw6GWpfzcGGQTxeOLCQiHpn2A%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] tslib and input events.">clarson at kergoth.com
+       </A><BR>
+    <I>Fri Oct 19 18:01:31 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000438.html">[Tslib-general] tslib and input events.
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#439">[ date ]</a>
+              <a href="thread.html#439">[ thread ]</a>
+              <a href="subject.html#439">[ subject ]</a>
+              <a href="author.html#439">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Oct 19, 2012 at 8:55 AM, Rogier Wolff &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">R.E.Wolff at bitwizard.nl</A>&gt; wrote:
+&gt;&gt;<i> &gt; I have a very old touchscreen that I'd like to use. However, the
+</I>&gt;&gt;<i> &gt; drivers have gone out-of-maintenance. So I modified the previous
+</I>&gt;&gt;<i> &gt; driver, and lo and behold it works. That is, the raw events come
+</I>&gt;&gt;<i> &gt; through, but what's a click, what's a drag, what's a doubleclick etc
+</I>&gt;&gt;<i> &gt; etc is not yet implemented.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; This is, I think, where tslib comes in. tslib should be able to help
+</I>&gt;&gt;<i> &gt; in these things, right?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> No more than any other calibration mechanism, but yes.
+</I>&gt;<i>
+</I>&gt;<i> I get events from the touchscreen
+</I>&gt;<i>
+</I>&gt;<i>    &lt;penup/down, x, y&gt;
+</I>&gt;<i>
+</I>&gt;<i> usually a sequence with &quot;pendown&quot; and then one with &quot;penup&quot; when the
+</I>&gt;<i> user lifts the finger.
+</I>&gt;<i>
+</I>&gt;<i> I was thinking of algorithms that would call a short touch with little
+</I>&gt;<i> movement a &quot;click&quot;, while a drag would translate to a real drag.
+</I>&gt;<i>
+</I>&gt;<i> I was hoping tslib already has this logic implemented. Is that the
+</I>&gt;<i> case?
+</I>
+You don't need to worry about this. Any UI that can handle touchscreen
+input knows how to interpret the events. X, Qt, etc. tslib doesn't
+need to handle it either. All tslib does is filters the coordindates
+using some filter plugins to help reduce jitter, etc, and to handle
+calibration to deal with the manufacturing offset between the touch
+panel and the lcd panel.
+
+&gt;&gt;<i> &gt; On the other hand, as far as I can deduce, tslib is meant as a library
+</I>&gt;&gt;<i> &gt; with a single application, and not meant for use with &quot;X Windows&quot;. So
+</I>&gt;&gt;<i> &gt; I'd need to port my uinput &quot;driver&quot; into tslib so that all tslib
+</I>&gt;&gt;<i> &gt; supported drivers would be able to send events to uinput, which in
+</I>&gt;&gt;<i> &gt; turn allows us to work with X Windows. Right?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> tslib was intended to be used by other applications, and is, in many
+</I>&gt;&gt;<i> cases. The binaries shipped with tslib are for debugging and testing
+</I>&gt;&gt;<i> only.
+</I>&gt;<i>
+</I>&gt;<i> So, I would write a little application that uses tslib to pass events
+</I>&gt;<i> on to uinput. I would think that it sensible to distribute that with
+</I>&gt;<i> tslib in the future.
+</I>
+This doesn't make a great deal of sense to me. tslib is a library that
+reads events from /dev/ and filters them and hands them off to the
+application.
+
+&gt;<i> On the other hand, it seems that the Xserver has tslib input
+</I>&gt;<i> support. So that part seems taken care of. I'll port my driver to
+</I>&gt;<i> tslib in the weekend, provided the weather is as bad as is predicted
+</I>&gt;<i> right now.
+</I>
+You don't &quot;port your driver to tslib&quot;. Tslib supports reading from
+many drivers, including /dev/input/event*.
+-- 
+Christopher Larson
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000438.html">[Tslib-general] tslib and input events.
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#439">[ date ]</a>
+              <a href="thread.html#439">[ thread ]</a>
+              <a href="subject.html#439">[ subject ]</a>
+              <a href="author.html#439">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

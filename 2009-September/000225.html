@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] input-raw: Handling of EVIOCGBIT() ioctl coding
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20input-raw%3A%20Handling%20of%20EVIOCGBIT%28%29%20ioctl%20coding&In-Reply-To=%3C4AAE1084.5050205%40atmel.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000224.html">
+   <LINK REL="Next"  HREF="000226.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] input-raw: Handling of EVIOCGBIT() ioctl coding</H1>
+    <B>Nicolas Ferre</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20input-raw%3A%20Handling%20of%20EVIOCGBIT%28%29%20ioctl%20coding&In-Reply-To=%3C4AAE1084.5050205%40atmel.com%3E"
+       TITLE="[Tslib-general] input-raw: Handling of EVIOCGBIT() ioctl coding">nicolas.ferre at atmel.com
+       </A><BR>
+    <I>Mon Sep 14 11:44:36 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000224.html">[Tslib-general] HI (Vinay Mallikarjun)
+</A></li>
+        <LI>Next message: <A HREF="000226.html">[Tslib-general] input-raw: Handling of EVIOCGBIT() ioctl coding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#225">[ date ]</a>
+              <a href="thread.html#225">[ thread ]</a>
+              <a href="subject.html#225">[ subject ]</a>
+              <a href="author.html#225">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Correct the coding of ioctl() when using EVIOCGBIT() macro.
+Indeed, instead of a number of bits, this field requires
+a size in bytes.
+This bug is described in the Linux kernel drivers/input/evdev.c
+file and in this webpage:
+<A HREF="http://userweb.kernel.org/~dtor/eviocgbit-bug.html">http://userweb.kernel.org/~dtor/eviocgbit-bug.html</A>
+
+Signed-off-by: Nicolas Ferre &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">nicolas.ferre at atmel.com</A>&gt;
+---
+This bug has been experienced while using at91sam9 embedded
+platforms with atmel_tsadcc touchscreen driver.
+The EV_SYN indication in evbit tab was squashed by the call to
+ioctl(ts-&gt;fd, EVIOCGBIT(EV_KEY, KEY_CNT), keybit).
+
+--- a/plugins/input-raw.c
++++ b/plugins/input-raw.c
+@@ -84,14 +84,14 @@
+ 		return -1;
+ 	}
+
+-	if ( (ioctl(ts-&gt;fd, EVIOCGBIT(0, EV_CNT), evbit) &lt; 0) ||
++	if ( (ioctl(ts-&gt;fd, EVIOCGBIT(0, sizeof(evbit)), evbit) &lt; 0) ||
+ 		!(evbit[BIT_WORD(EV_ABS)] &amp; BIT_MASK(EV_ABS)) ||
+ 		!(evbit[BIT_WORD(EV_KEY)] &amp; BIT_MASK(EV_KEY)) ) {
+ 		fprintf(stderr, &quot;tslib: Selected device is not a touchscreen (must
+support ABS and KEY event types)\n&quot;);
+ 		return -1;
+ 	}
+
+-	if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_ABS, ABS_CNT), absbit)) &lt; 0 ||
++	if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_ABS, sizeof(absbit)), absbit)) &lt; 0 ||
+ 		!(absbit[BIT_WORD(ABS_X)] &amp; BIT_MASK(ABS_X)) ||
+ 		!(absbit[BIT_WORD(ABS_Y)] &amp; BIT_MASK(ABS_Y))) {
+ 		fprintf(stderr, &quot;tslib: Selected device is not a touchscreen (must
+support ABS_X and ABS_Y events)\n&quot;);
+@@ -106,7 +106,7 @@
+ 	if (!(absbit[BIT_WORD(ABS_PRESSURE)] &amp; BIT_MASK(ABS_PRESSURE))) {
+ 		i-&gt;current_p = 255;
+
+-		if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_KEY, KEY_CNT), keybit) &lt; 0) ||
++		if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_KEY, sizeof(keybit)), keybit) &lt; 0) ||
+ 			!(keybit[BIT_WORD(BTN_TOUCH)] &amp; BIT_MASK(BTN_TOUCH)) ) {
+ 			fprintf(stderr, &quot;tslib: Selected device is not a touchscreen (must
+support BTN_TOUCH events)\n&quot;);
+ 			return -1;
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000224.html">[Tslib-general] HI (Vinay Mallikarjun)
+</A></li>
+	<LI>Next message: <A HREF="000226.html">[Tslib-general] input-raw: Handling of EVIOCGBIT() ioctl coding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#225">[ date ]</a>
+              <a href="thread.html#225">[ thread ]</a>
+              <a href="subject.html#225">[ subject ]</a>
+              <a href="author.html#225">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

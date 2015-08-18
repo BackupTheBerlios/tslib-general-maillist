@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] TSLib/Xorg with Gentoo on the Beaglebone
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2012-September/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20TSLib/Xorg%20with%20Gentoo%20on%20the%20Beaglebone&In-Reply-To=%3C20120916100209.GB3694%40solfire%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000435.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] TSLib/Xorg with Gentoo on the Beaglebone</H1>
+    <B>meino.cramer at gmx.de</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20TSLib/Xorg%20with%20Gentoo%20on%20the%20Beaglebone&In-Reply-To=%3C20120916100209.GB3694%40solfire%3E"
+       TITLE="[Tslib-general] TSLib/Xorg with Gentoo on the Beaglebone">meino.cramer at gmx.de
+       </A><BR>
+    <I>Sun Sep 16 12:02:09 CEST 2012</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000435.html">[Tslib-general] tslib pen down event bug
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#434">[ date ]</a>
+              <a href="thread.html#434">[ thread ]</a>
+              <a href="subject.html#434">[ subject ]</a>
+              <a href="author.html#434">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+currently I am installing (its a longer way... ;) Gentoo on my
+Beaglebone.
+Already working is: X11 (xorg-server) with openbox.
+I am using an 7&quot; LCD screen for it, with 800x480 pixel resolution.
+
+I installed the tslib and compiled Xorg-server with tslib support.
+
+The X11-cursor is following the the stylus on the touchscreen...with
+an offset, so I can not reach the taskbar for example.
+
+Running ts_print_raw prints a lot of funny numbers, when the stylus
+is moving on the touchscreen (done as root):
+beaglebone:input/by-path&gt;ts_print_raw                          
+1347789319.499766:   2144   2532      0
+1347789319.500957:   2143   2532      0
+1347789319.502147:   2138   2532      0
+1347789319.504527:   2143   2540      0
+1347789319.509227:   2127   2526      0
+1347789319.511607:   2113   2523      0
+1347789319.512797:   2116   2528      0
+1347789319.513988:   2122   2532      0
+1347789319.515178:   2115   2530      0
+1347789319.516337:   2107   2530      0
+1347789319.518718:   2116   2520      0
+1347789319.522258:   2091   2511      0
+1347789319.523448:   2080   2507      0
+1347789319.526988:   2086   2510      0
+1347789319.531688:   2066   2491      0
+1347789319.542277:   2045   2490      0
+1347789319.546123:      0      0      0
+1347789319.546123:   2045   2490      0
+1347789319.551555:   2016   2472      0
+1347789319.556285:   1999   2440      0
+1347789319.562175:   1989   2435      0
+1347789319.565715:   1972   2415      0
+1347789319.566905:   1968   2414      0
+
+So, it is somehow &quot;working&quot;...
+
+But:
+Running ts_calibrate to get rid of the offset I described
+above, shows, that touching the displayed crosshair will not
+be recognized at all. The equivalent of a &quot;mouse click&quot; on the
+crosshair is missing it seems.
+
+How can I fix this issue?
+
+Thank you very much in advance for any help!
+Best regards
+mcc
+
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000435.html">[Tslib-general] tslib pen down event bug
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#434">[ date ]</a>
+              <a href="thread.html#434">[ thread ]</a>
+              <a href="subject.html#434">[ subject ]</a>
+              <a href="author.html#434">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,373 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Low resolution touchscreen
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Low%20resolution%20touchscreen&In-Reply-To=%3C000001cbab29%24cc2c3850%246484a8f0%24%40net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000349.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Low resolution touchscreen</H1>
+    <B>Cosmin Munteanu</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Low%20resolution%20touchscreen&In-Reply-To=%3C000001cbab29%24cc2c3850%246484a8f0%24%40net%3E"
+       TITLE="[Tslib-general] Low resolution touchscreen">cosmin at topwing.net
+       </A><BR>
+    <I>Mon Jan  3 10:37:10 CET 2011</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000349.html">[Tslib-general] Low resolution touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#347">[ date ]</a>
+              <a href="thread.html#347">[ thread ]</a>
+              <a href="subject.html#347">[ subject ]</a>
+              <a href="author.html#347">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi everybody,
+
+ 
+
+I've been trying for days to get a 4 wire touchscreen working on a TI OMAP
+platform with a 7&quot; screen. The problem I'm having is that I get very low
+resolution on the touch screen. I mean, it seems like the touchscreen is
+scanning only 15 steps in each direction which results in very poor
+performance. In ts_test for example, I can only draw squares of approx.
+53x35.
+
+ 
+
+I'm using the TSC2046 as the controller and I have tried to use it with the
+internal VREF (2.5V), with external VREF connected to VCC (3.3V) and I've
+tried every possible configuration in the kernel driver, without any
+success.
+
+ 
+
+ 
+
+Has anyone experienced this behavior so far ? 
+
+ 
+
+This is the output from ts_calibrate:
+
+xres = 800, yres = 480
+
+Took 4 samples...
+
+Top left : X = 4353 Y = 7437
+
+Took 4 samples...
+
+Top right : X = 7694 Y = 7437
+
+Took 11 samples...
+
+Bot right : X = 7694 Y = 4610
+
+Took 5 samples...
+
+Bot left : X = 4353 Y = 4353
+
+Took 15 samples...
+
+Center : X = 5896 Y = 5895
+
+-854.395996 0.209280 -0.000145
+
+972.848877 0.005004 -0.128290
+
+Calibration constants: -55993696 13715 -9 63756624 327 -8407 65536
+
+ 
+
+And this is the ts_test output trying to draw a straight line from left to
+right:
+
+1289738408.686157:      2    303   3996
+
+1289738408.693725:      2    303   4025
+
+1289738408.858306:      2    303      0
+
+1289738413.697326:      2    303   3949
+
+1289738413.704895:      2    303   3978
+
+1289738413.720031:      2    303   4010
+
+1289738413.945983:      2    303   4016
+
+1289738413.953582:      2    303   4034
+
+1289738414.233093:     55    304   4008
+
+1289738414.233093:     55    304   4008
+
+1289738414.453277:     55    304   4008
+
+1289738414.462982:     55    304   4008
+
+1289738414.487792:     55    304   4008
+
+1289738414.504974:     55    304   4027
+
+1289738414.522064:     55    304   4040
+
+1289738414.546173:     55    304   4050
+
+1289738414.554626:     55    304   4060
+
+1289738414.562744:     55    304   4060
+
+1289738414.656158:     55    304   4060
+
+1289738414.672210:     55    304   4060
+
+1289738414.703887:     55    304   4060
+
+1289738414.712097:     55    304   4060
+
+1289738414.727294:     55    304   4060
+
+1289738414.933563:    109    305   4030
+
+1289738414.933563:    109    305   4030
+
+1289738415.066925:    109    305   4030
+
+1289738415.078155:    109    305   4030
+
+1289738415.493560:    163    306   4054
+
+1289738415.493560:    163    306   4054
+
+1289738415.964599:    216    308   4028
+
+1289738415.964599:    216    308   4028
+
+1289738415.972412:    216    308   4028
+
+1289738416.121551:    216    308   4047
+
+1289738416.535461:    270    309   4059
+
+1289738416.535461:    270    309   4059
+
+1289738416.544036:    270    309   4059
+
+1289738416.630706:    270    309   4058
+
+1289738416.638153:    270    309   4058
+
+1289738416.723022:    270    309   4058
+
+1289738416.730560:    270    309   4058
+
+1289738417.031646:    324    310   4036
+
+1289738417.031646:    324    310   4036
+
+1289738417.054626:    324    310   4063
+
+1289738417.067047:    324    310   4049
+
+1289738417.075103:    324    310   4066
+
+1289738417.083190:    324    310   4060
+
+1289738417.090667:    324    310   4046
+
+1289738417.520782:    378    311   4072
+
+1289738417.520782:    378    311   4072
+
+1289738417.535736:    378    311   4072
+
+1289738417.545257:    378    311   4072
+
+1289738418.105957:    378    311   4072
+
+1289738418.113555:    378    311   4072
+
+1289738418.138061:    432    313   4053
+
+1289738418.138061:    432    313   4053
+
+1289738418.193542:    432    313   4053
+
+1289738418.203002:    432    313   4053
+
+1289738418.271087:    432    313   4032
+
+1289738418.279235:    432    313   4039
+
+1289738418.365173:    432    313   3990
+
+1289738418.395324:    432    313   3955
+
+1289738418.402893:    432    313   3940
+
+1289738418.442749:    432    313   3966
+
+1289738418.450653:    432    313   3980
+
+1289738418.458160:    432    313   4014
+
+1289738418.474060:    432    313   4044
+
+1289738418.483154:    432    313   4044
+
+1289738418.500732:    432    313   4002
+
+1289738418.508270:    432    313   4019
+
+1289738418.568847:    432    313   4028
+
+1289738418.576446:    432    313   4028
+
+1289738418.735412:    432    313   4055
+
+1289738418.849426:    486    314   4037
+
+1289738418.849426:    486    314   4037
+
+1289738418.866149:    485    314   4037
+
+1289738418.883239:    485    314   4037
+
+1289738419.059661:    485    314   4037
+
+1289738419.067474:    485    314   4037
+
+1289738419.210723:    486    314   4037
+
+1289738419.218292:    486    314   4037
+
+1289738419.365325:    486    314   4037
+
+1289738419.381500:    539    315   4019
+
+1289738419.381500:    539    315   4019
+
+1289738419.413787:    539    315   4019
+
+1289738419.791870:    539    315   4019
+
+1289738419.960662:    593    317   4001
+
+1289738419.960662:    593    317   4001
+
+1289738419.976745:    593    317   4001
+
+1289738419.993896:    593    317   4024
+
+1289738420.041503:    593    317   4016
+
+1289738420.049072:    593    317   4035
+
+1289738420.056640:    593    317   4028
+
+1289738420.096099:    593    317   4035
+
+1289738420.218170:    593    317   4028
+
+1289738420.531524:    647    318   4049
+
+1289738420.531524:    647    318   4049
+
+1289738420.539093:    647    318   4048
+
+1289738420.610015:    647    318   4048
+
+1289738420.617614:    647    318   4048
+
+1289738420.632751:    647    318   4048
+
+1289738421.163940:    701    319   4034
+
+1289738421.163940:    701    319   4034
+
+1289738421.179168:    701    319   4033
+
+1289738421.295715:    701    319   4033
+
+1289738421.747528:    755    320   4018
+
+1289738421.747528:    755    320   4018
+
+1289738421.975891:    754    320   4018
+
+1289738421.985717:    754    320   4018
+
+1289738422.093902:    754    320   4018
+
+1289738422.101501:    754    320   4018
+
+1289738422.433105:    755    320   4042
+
+1289738422.501922:    808    322   4003
+
+1289738422.501922:    808    322   4003
+
+1289738422.557434:    808    322   4037
+
+1289738422.707580:    808    322   4020
+
+1289738422.813446:    808    322   3991
+
+1289738422.818573:    808    322      0
+
+ 
+
+The Y value seems to have more resolution in this output but I guess that's
+because the calibration was done in a hurry and is not optimal.
+
+ 
+
+I would appreciate any help or any ideas to get this TS working.
+
+ 
+
+Thank you,
+
+Cosmin
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20110103/479fa2a1/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20110103/479fa2a1/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000349.html">[Tslib-general] Low resolution touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#347">[ date ]</a>
+              <a href="thread.html#347">[ thread ]</a>
+              <a href="subject.html#347">[ subject ]</a>
+              <a href="author.html#347">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

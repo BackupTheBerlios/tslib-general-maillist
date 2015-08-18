@@ -1,0 +1,332 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] touch screen with x-server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touch%20screen%20with%20x-server&In-Reply-To=%3C001c01c8c19a%247f01ae00%247d050a00%24%40com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000039.html">
+   <LINK REL="Next"  HREF="000043.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] touch screen with x-server</H1>
+    <B>Rakesh Jagota</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touch%20screen%20with%20x-server&In-Reply-To=%3C001c01c8c19a%247f01ae00%247d050a00%24%40com%3E"
+       TITLE="[Tslib-general] touch screen with x-server">jrakesh at gdatech.com
+       </A><BR>
+    <I>Thu May 29 16:44:22 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000039.html">[Tslib-general] touch screen with x-server
+</A></li>
+        <LI>Next message: <A HREF="000043.html">[Tslib-general] touch screen with x-server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#41">[ date ]</a>
+              <a href="thread.html#41">[ thread ]</a>
+              <a href="subject.html#41">[ subject ]</a>
+              <a href="author.html#41">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Thanks for prompt response.
+I have exported the following:
+
+TSLIB_TSDEVICE=&quot;/dev/input/event2&quot;
+TSLIB_CONFFILE=&quot;/etc/ts.conf&quot;
+
+export TSLIB_TSDEVICE TSLIB_CONFFILE
+
+I did not include all as mentioned by you, and now I have included all:
+
+TSLIB_CALIBFILE=&quot;/etc/pointercal&quot;
+TSLIB_PLUGINDIR=&quot;/usr/lib/ts&quot;
+
+export TSLIB_TSDEVICE TSLIB_CONFFILE TSLIB_CALIBFILE TSLIB_PLUGINDIR
+
+But still I am not seeing this working.
+
+Regards,
+Rakesh Jagota
+
+I will try with these as well.
+-----Original Message-----
+From: Diego A. Fons [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">diegofons at apexar.com</A>] 
+Sent: Thursday, May 29, 2008 5:12 AM
+To: Rakesh Jagota
+Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+Subject: Re: [Tslib-general] touch screen with x-server
+
+Rakesh Jagota wrote:
+&gt;<i>
+</I>&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> I am testing the touch screen and it is not working as expected. I 
+</I>&gt;<i> have installed the tslib package and ts_calibrate  and ts_test utility 
+</I>&gt;<i> for calibrating the touch screen. I need to integrate the touch screen 
+</I>&gt;<i> user interface with X-server. I am sending the output here:
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> =============================================================
+</I>&gt;<i>
+</I>&gt;<i> gda211:~# TSLIB_TSDEVICE=/dev/input/event2 ts_calibrate
+</I>&gt;<i>
+</I>&gt;<i> xres = 1024, yres = 600
+</I>&gt;<i>
+</I>&gt;<i> selected device is not a touchscreen I understand
+</I>&gt;<i>
+</I>&gt;<i> Took 13 samples...
+</I>&gt;<i>
+</I>&gt;<i> Top left : X = 805502960 Y = 269318584
+</I>&gt;<i>
+</I>&gt;<i> Took 13 samples...
+</I>&gt;<i>
+</I>&gt;<i> Top right : X = 805502960 Y = 269318584
+</I>&gt;<i>
+</I>&gt;<i> Took 13 samples...
+</I>&gt;<i>
+</I>&gt;<i> Bot right : X = 805502960 Y = 269318584
+</I>&gt;<i>
+</I>&gt;<i> Took 13 samples...
+</I>&gt;<i>
+</I>&gt;<i> Bot left : X = 805502960 Y = 269318584
+</I>&gt;<i>
+</I>&gt;<i> Took 13 samples...
+</I>&gt;<i>
+</I>&gt;<i> Center : X = 805502960 Y = 269318584
+</I>&gt;<i>
+</I>&gt;<i> 0.014873 0.090344 -0.270209
+</I>&gt;<i>
+</I>&gt;<i> 1.266691 0.114512 -0.342491
+</I>&gt;<i>
+</I>&gt;<i> Calibration constants: 974 5920 -17708 83013 7504 -22445 65536
+</I>&gt;<i>
+</I>&gt;<i> gda211:~#
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> =============================================================
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> And with &quot;ts_test&quot; utility, it is:
+</I>&gt;<i>
+</I>&gt;<i> =============================================================
+</I>&gt;<i>
+</I>&gt;<i> gda211:~# ts_test
+</I>&gt;<i>
+</I>&gt;<i> selected device is not a touchscreen I understand
+</I>&gt;<i>
+</I>&gt;<i> =============================================================
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> And 'dmesg' is as follows:
+</I>&gt;<i>
+</I>&gt;<i> =============================================================
+</I>&gt;<i>
+</I>&gt;<i> *While touching upper left most corner:*
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:206, y=a:1030, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:279, y=a:687, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:339, y=a:1065, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:219, y=a:562, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:245, y=a:686, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:341, y=a:1135, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:146, y=a:314, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> *While touching right upper most corner:*
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:368, y=a:1062, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:206, y=a:1030, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:279, y=a:687, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:339, y=a:1065, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:219, y=a:562, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:245, y=a:686, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:341, y=a:1135, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:146, y=a:314, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> *While touching lower left most corner:*
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:3774, y=a:3399, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:3927, y=a:3702, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:3915, y=a:3372, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:3927, y=a:3675, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:3771, y=a:3304, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:3959, y=a:3423, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:3842, y=a:3396, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:3884, y=a:3634, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:3898, y=a:3664, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> * *
+</I>&gt;<i>
+</I>&gt;<i> *While touching lower right most corner:*
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:204, y=a:3355, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:375, y=a:3357, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:365, y=a:3715, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:384, y=a:3697, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i> pen down: x=9:222, y=a:2999, pressure=b:192
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> ==============================================================
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> gda211:/usr/bin# evtest /dev/input/event2
+</I>&gt;<i>
+</I>&gt;<i> Input driver version is 1.0.0
+</I>&gt;<i>
+</I>&gt;<i> Input device ID: bus 0x0 vendor 0x0 product 0x0 version 0x0
+</I>&gt;<i>
+</I>&gt;<i> Input device name: &quot;wm97xx touchscreen&quot;
+</I>&gt;<i>
+</I>&gt;<i> Supported events:
+</I>&gt;<i>
+</I>&gt;<i>   Event type 0 (Reset)
+</I>&gt;<i>
+</I>&gt;<i>     Event code 0 (Reset)
+</I>&gt;<i>
+</I>&gt;<i>     Event code 3 (Absolute)
+</I>&gt;<i>
+</I>&gt;<i>   Event type 3 (Absolute)
+</I>&gt;<i>
+</I>&gt;<i>     Event code 0 (X)
+</I>&gt;<i>
+</I>&gt;<i>       Value   3875
+</I>&gt;<i>
+</I>&gt;<i>       Min      350
+</I>&gt;<i>
+</I>&gt;<i>       Max     3900
+</I>&gt;<i>
+</I>&gt;<i>       Fuzz       5
+</I>&gt;<i>
+</I>&gt;<i>     Event code 1 (Y)
+</I>&gt;<i>
+</I>&gt;<i>       Value    902
+</I>&gt;<i>
+</I>&gt;<i>       Min      320
+</I>&gt;<i>
+</I>&gt;<i>       Max     3750
+</I>&gt;<i>
+</I>&gt;<i>       Fuzz      40
+</I>&gt;<i>
+</I>&gt;<i>     Event code 24 (Pressure)
+</I>&gt;<i>
+</I>&gt;<i>       Value      0
+</I>&gt;<i>
+</I>&gt;<i>       Min        0
+</I>&gt;<i>
+</I>&gt;<i>       Max      150
+</I>&gt;<i>
+</I>&gt;<i>       Fuzz       4
+</I>&gt;<i>
+</I>&gt;<i> Testing ... (interrupt to exit)
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> gda211:/usr/bin#
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> Please give me any suggestion on this to get it fixed.
+</I>&gt;<i>
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i>
+</I>&gt;<i> Rakesh
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>   
+</I>
+Hi,
+
+Did you export the environment variables needed?
+
+TSLIB_TSDEVICE=&quot;/dev/input/event1&quot;
+TSLIB_CALIBFILE=&quot;/etc/pointercal&quot;
+TSLIB_CONFFILE=&quot;/etc/ts.conf&quot;
+TSLIB_PLUGINDIR=&quot;/usr/lib/ts&quot;
+
+Regards,
+Diego A. Fons.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000039.html">[Tslib-general] touch screen with x-server
+</A></li>
+	<LI>Next message: <A HREF="000043.html">[Tslib-general] touch screen with x-server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#41">[ date ]</a>
+              <a href="thread.html#41">[ thread ]</a>
+              <a href="subject.html#41">[ subject ]</a>
+              <a href="author.html#41">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Error: &quot;selected device is not a touchscreen I	understand&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Error%3A%20%22selected%20device%20is%20not%20a%20touchscreen%20I%0A%09understand%22&In-Reply-To=%3CAANLkTimrKf9h4%3DQsORHp9m_UocTUPpNJtHG8UXaPFB6z%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000351.html">
+   <LINK REL="Next"  HREF="000353.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Error: &quot;selected device is not a touchscreen I	understand&quot;</H1>
+    <B>Thomas Besemer</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Error%3A%20%22selected%20device%20is%20not%20a%20touchscreen%20I%0A%09understand%22&In-Reply-To=%3CAANLkTimrKf9h4%3DQsORHp9m_UocTUPpNJtHG8UXaPFB6z%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Error: &quot;selected device is not a touchscreen I	understand&quot;">thomas.besemer at gmail.com
+       </A><BR>
+    <I>Fri Jan 14 05:17:44 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000351.html">[Tslib-general] Error: &quot;selected device is not a touchscreen I	understand&quot;
+</A></li>
+        <LI>Next message: <A HREF="000353.html">[Tslib-general] Rebuilding tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#352">[ date ]</a>
+              <a href="thread.html#352">[ thread ]</a>
+              <a href="subject.html#352">[ subject ]</a>
+              <a href="author.html#352">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi David -
+
+I went through some issues like this with USB TS (3M as well) on MX51.
+
+I ended up creating a USB plugin; have not posted it to mailing list, as
+it's really not up to snuff - got it working on my end.  Found that
+different devices, such as PanJit, showed X/Y coming in as X/Z or Y/Z,
+etc..  You can see the hack work I did on attached, what I did to make it
+work with my specific devices.
+
+Also attached is a general utility that dumps the input stream from stuff
+like /dev/input/x
+
+Russell - if I ever figure out how to make this reasonable for the TSLIB
+stuff, will advise.  Maybe you can take a look, see if you have any ideas.
+
+Next step is multi-touch on USB devices, and how to make that work with QT.
+End game is you drag your fingers on capacitive TS, like iPhone or Android
+phone, and see the multi-coordinates come in, work with QT.  If anyone has
+any ideas on that, please advise.
+
+tom
+
+
+On Thu, Jan 13, 2011 at 7:51 PM, David Rea &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">dave at daverea.com</A>&gt; wrote:
+
+&gt;<i> Hello-
+</I>&gt;<i>
+</I>&gt;<i> I am trying to get a 3M MTouch serial touch screen working on a Freescale
+</I>&gt;<i> iMX51-based board. My kernel has mtouch support, I have built `inputattach`
+</I>&gt;<i> for the target, and `evtest` successfully reports touch events as follows:
+</I>&gt;<i>
+</I>&gt;<i> ~ # ./evtest /dev/input/event0
+</I>&gt;<i>
+</I>&gt;<i> Input driver version is 1.0.0
+</I>&gt;<i>
+</I>&gt;<i> Input device ID: bus 0x13 vendor 0x30 product 0x0 version 0x100
+</I>&gt;<i>
+</I>&gt;<i> Input device name: &quot;MicroTouch Serial TouchScreen&quot;
+</I>&gt;<i>
+</I>&gt;<i> Supported events:
+</I>&gt;<i>
+</I>&gt;<i>   Event type 0 (Sync)
+</I>&gt;<i>
+</I>&gt;<i>   Event type 1 (Key)
+</I>&gt;<i>
+</I>&gt;<i>     Event code 330 (Touch)
+</I>&gt;<i>
+</I>&gt;<i>   Event type 3 (Absolute)
+</I>&gt;<i>
+</I>&gt;<i>     Event code 0 (X)
+</I>&gt;<i>
+</I>&gt;<i>       Value   8601
+</I>&gt;<i>
+</I>&gt;<i>       Min        0
+</I>&gt;<i>
+</I>&gt;<i>       Max    16383
+</I>&gt;<i>
+</I>&gt;<i>     Event code 1 (Y)
+</I>&gt;<i>
+</I>&gt;<i>       Value   4426
+</I>&gt;<i>
+</I>&gt;<i>       Min        0
+</I>&gt;<i>
+</I>&gt;<i>       Max    16383
+</I>&gt;<i>
+</I>&gt;<i> Testing ... (interrupt to exit)
+</I>&gt;<i>
+</I>&gt;<i> Event: time 25197.880411, type 3 (Absolute), code 0 (X), value 8566
+</I>&gt;<i>
+</I>&gt;<i> Event: time 25197.880417, type 3 (Absolute), code 1 (Y), value 5875
+</I>&gt;<i>
+</I>&gt;<i> Event: time 25197.880419, type 1 (Key), code 330 (Touch), value 1
+</I>&gt;<i>
+</I>&gt;<i> Event: time 25197.880422, -------------- Report Sync ------------
+</I>&gt;<i>
+</I>&gt;<i> Event: time 25197.880427, type 1 (Key), code 330 (Touch), value 0
+</I>&gt;<i>
+</I>&gt;<i> Event: time 25197.880428, -------------- Report Sync ------------
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> As soon as I run ts_calibrate or ts_print_raw, however, I get the dreaded
+</I>&gt;<i> &quot;selected device is not a touchscreen I understand&quot; message. I have defined
+</I>&gt;<i> the environment variables as:
+</I>&gt;<i>
+</I>&gt;<i> TSLIB_TSDEVICE=/dev/input/event0
+</I>&gt;<i>
+</I>&gt;<i> TSLIB_PLUGINDIR=/usr/lib/ts
+</I>&gt;<i>
+</I>&gt;<i> TSLIB_CONFFILE=/etc/ts.conf
+</I>&gt;<i>
+</I>&gt;<i> QWS_MOUSE_PROTO=tslib:/dev/input/event0
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I have reviewed the advice over in this thread&lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/2008-October/000095.html">https://lists.berlios.de/pipermail/tslib-general/2008-October/000095.html</A>&gt;,
+</I>&gt;<i> but stopped short at recompiling tslib with debugging on. I'm not quite sure
+</I>&gt;<i> how to do that in my cross-compiler environment (DigiEL 5.6). I tried
+</I>&gt;<i> configuring the code right in the source directory, but there doesn't seem
+</I>&gt;<i> to be a .configure script in the latest code from GitHub.
+</I>&gt;<i>
+</I>&gt;<i> Can someone give me some direction as to what to try next? Is there
+</I>&gt;<i> anything else to try before recompiling tslib with debugging on?
+</I>&gt;<i>
+</I>&gt;<i> Many Thanks,
+</I>&gt;<i> Dave
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20110113/412c8fd1/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20110113/412c8fd1/attachment.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: usb-raw.c
+Type: text/x-csrc
+Size: 6423 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20110113/412c8fd1/attachment.c">https://lists.berlios.de/pipermail/tslib-general/attachments/20110113/412c8fd1/attachment.c</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: touch_chk.c
+Type: text/x-csrc
+Size: 5570 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20110113/412c8fd1/attachment-0001.c">https://lists.berlios.de/pipermail/tslib-general/attachments/20110113/412c8fd1/attachment-0001.c</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000351.html">[Tslib-general] Error: &quot;selected device is not a touchscreen I	understand&quot;
+</A></li>
+	<LI>Next message: <A HREF="000353.html">[Tslib-general] Rebuilding tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#352">[ date ]</a>
+              <a href="thread.html#352">[ thread ]</a>
+              <a href="subject.html#352">[ subject ]</a>
+              <a href="author.html#352">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

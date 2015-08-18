@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Inconsistent message from tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-December/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%0A%20%3D%3Futf-8%3Fq%3FInconsistent_message_from_tslib%3D3A_Sele%3F%3D%0A%20%3D%3Futf-8%3Fq%3Fcted_device_is_not_a_touchscreen_%3D28must_support_BTN%3D5FTOUCH_ev%3F%3D%0A%20%3D%3Futf-8%3Fq%3Fents%3D29%3F%3D&In-Reply-To=%3C1323200439.34416864%40apps.rackspace.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000413.html">
+   <LINK REL="Next"  HREF="000411.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Inconsistent message from tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)</H1>
+    <B>minh at imi-test.com</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%0A%20%3D%3Futf-8%3Fq%3FInconsistent_message_from_tslib%3D3A_Sele%3F%3D%0A%20%3D%3Futf-8%3Fq%3Fcted_device_is_not_a_touchscreen_%3D28must_support_BTN%3D5FTOUCH_ev%3F%3D%0A%20%3D%3Futf-8%3Fq%3Fents%3D29%3F%3D&In-Reply-To=%3C1323200439.34416864%40apps.rackspace.com%3E"
+       TITLE="[Tslib-general] Inconsistent message from tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)">minh at imi-test.com
+       </A><BR>
+    <I>Tue Dec  6 20:40:39 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000413.html">[Tslib-general] Inconsistent message from tslib: Selected	device is not a touchscreen (must support BTN_TOUCH events)
+</A></li>
+        <LI>Next message: <A HREF="000411.html">[Tslib-general] how to get beep/click sound on each contact on	touch pad
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#414">[ date ]</a>
+              <a href="thread.html#414">[ thread ]</a>
+              <a href="subject.html#414">[ subject ]</a>
+              <a href="author.html#414">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+Thank you Lisandro.  I've found the problem.  As you've mentioned, the TSLIB_TSDEVICE environment variable is changing at every reboot/restart of the system.  Even though i use the exact device name, it still not work.  What i have to do is to check for the /dev/input/event that is associated with the eGalax TouchScreen and use that event# for the TSLIB_TSDEVICE and QWS_MOUSE_PROTO variables.
+ 
+This mailing list is really awesome.  Thank you so much.
+Minh.
+ 
+ -----Original Message-----
+From: &quot;Lisandro Dami&#225;n Nicanor P&#233;rez Meyer&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">perezmeyer at gmail.com</A>&gt;
+Sent: Tuesday, December 6, 2011 8:11am
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+Subject: Re: [Tslib-general] Inconsistent message from tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)
+
+
+
+_______________________________________________
+Tslib-general mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+On Mon 05 Dec 2011 20:43:41 <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">minh at imi-test.com</A> escribi&#243;:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I have Qt 4.7.3 and tslib 1.0-98 installed. Both are setup and working
+</I>&gt;<i> fine on openSuse 11.4 using 7 inches USB powered touch screen Lilliput
+</I>&gt;<i> UM-70/C/T . The following environment variables are set:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> export TSLIB_TSEVENTTYPE=INPUT
+</I>&gt;<i> export TSLIB_FBDEVICE=/dev/fb1
+</I>&gt;<i> export
+</I>&gt;<i> TSLIB_TSDEVICE=&quot;/usr/input/by-id/usb-eGalax_Inc._USB_TouchController-event
+</I>&gt;<i> -mouse&quot; export TSLIB_CALIBFILE=/etc/ts.calib
+</I>&gt;<i> 
+</I>&gt;<i> export TSLIB_CONFFILE=/usr/local/etc/ts.conf
+</I>&gt;<i> 
+</I>&gt;<i> export TSLIB_PLUGINDIR=/usr/local/lib/ts
+</I>&gt;<i> export TSLIB_CONSOLEDEVICE=none
+</I>&gt;<i> &#65279;export
+</I>&gt;<i> QWS_MOUSE_PROTO=&quot;tslib:/dev/input/by-id/usb-eGalax_Inc._USB_TouchControlle
+</I>&gt;<i> r-event-mouse&quot; &#65279;export QWS_DISPLAY=&quot;LinuxFb:/dev/fb1&quot;
+</I>&gt;<i> &#65279;
+</I>&gt;<i> &#65279;I was able to launh my program using the following command ./myprogram
+</I>&gt;<i> -qws and everything works great. But i just noticed that after i do a
+</I>&gt;<i> restart / reboot of my system, launch my program again using ./myprogram
+</I>&gt;<i> -qws, and then when i touch the screen, i get the following message &#65279;
+</I>&gt;<i> &#65279;tslib: Selected device is not a touchscreen (must support BTN_TOUCH
+</I>&gt;<i> events) &#65279;
+</I>&gt;<i> This problem does not happen all the times, but it do happen
+</I>&gt;<i> inconsistently. To solve the issue, I have to force a reboot / or
+</I>&gt;<i> shutdown of the system (3-4 times) before i can get it to work as usual
+</I>&gt;<i> using the touch screen. Once working, it works great. &#65279;
+</I>&gt;<i> &#65279;Can anyone please help me on this? Any idea?
+</I>
+Maybe your input (TSLIB_TSDEVICE) is changing it's name in those cases?
+
+You will normally add a rule (&#191;to udev? I franckly don't remember it exactly) 
+to rename the input to a saner name in that case.
+
+Also check if you have a saner name in /dev/input.
+
+Kinds regadrs, and hope it helps, Lisandro.
+
+-- 
+No pienses que estoy loco, es s&#243;lo una manera de actuar
+De m&#237; - Charly Garc&#237;a
+
+Lisandro Dami&#225;n Nicanor P&#233;rez Meyer
+<A HREF="http://perezmeyer.com.ar/">http://perezmeyer.com.ar/</A>
+<A HREF="http://perezmeyer.blogspot.com/">http://perezmeyer.blogspot.com/</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20111206/a72feb1f/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20111206/a72feb1f/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000413.html">[Tslib-general] Inconsistent message from tslib: Selected	device is not a touchscreen (must support BTN_TOUCH events)
+</A></li>
+	<LI>Next message: <A HREF="000411.html">[Tslib-general] how to get beep/click sound on each contact on	touch pad
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#414">[ date ]</a>
+              <a href="thread.html#414">[ thread ]</a>
+              <a href="subject.html#414">[ subject ]</a>
+              <a href="author.html#414">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

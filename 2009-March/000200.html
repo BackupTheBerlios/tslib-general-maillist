@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Patch to make /etc/pointercal relative to	systemconfdir
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Patch%20to%20make%20/etc/pointercal%20relative%20to%0A%09systemconfdir&In-Reply-To=%3C49C92048.2080502%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000199.html">
+   <LINK REL="Next"  HREF="000201.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Patch to make /etc/pointercal relative to	systemconfdir</H1>
+    <B>Christopher Larson</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Patch%20to%20make%20/etc/pointercal%20relative%20to%0A%09systemconfdir&In-Reply-To=%3C49C92048.2080502%40gmail.com%3E"
+       TITLE="[Tslib-general] Patch to make /etc/pointercal relative to	systemconfdir">kergoth at gmail.com
+       </A><BR>
+    <I>Tue Mar 24 19:02:48 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000199.html">[Tslib-general] [PATCH] Prefix/correct some error messages in input-raw module
+</A></li>
+        <LI>Next message: <A HREF="000201.html">[Tslib-general] [PATCH] Rely on SYN-Events when pen is lifted	(WAS: What is the intential behavoir on &quot;pen up&quot; events?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#200">[ date ]</a>
+              <a href="thread.html#200">[ thread ]</a>
+              <a href="subject.html#200">[ subject ]</a>
+              <a href="author.html#200">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Applied, thanks.
+
+Daniel Jabbour wrote:
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> While /etc/ts.conf is always relative to systemconfdir (set during ./
+</I>&gt;<i> configure), the /etc/pointercal file is hard-coded to /etc/pointercal.
+</I>&gt;<i> For users who wish to prefix their installation this is troublesome,
+</I>&gt;<i> and impossible if they cannot/do not which to modify the root /etc.
+</I>&gt;<i> The patch below resolves this by making /etc/pointercal relative to
+</I>&gt;<i> the systemconfdir set during ./configure (or defaults to prefix/etc as
+</I>&gt;<i> it should). This mirrors the behavior of tslib's /etc/ts.conf file.
+</I>&gt;<i>
+</I>&gt;<i> You should note that the changes to ts_calibrate.c also include the
+</I>&gt;<i> changes I submitted in a previous patch regarding changes in order to
+</I>&gt;<i> compile with the -D_FORIFY_SOURCE=2 flag. Unfortunately, this patch
+</I>&gt;<i> includes code on the same lines, so it would conflict if you patched
+</I>&gt;<i> previously.
+</I>&gt;<i>
+</I>&gt;<i> Thank you,
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Daniel Jabbour
+</I>&gt;<i> Software Engineer
+</I>&gt;<i> Laptouch, Inc.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Index: plugins/linear.c
+</I>&gt;<i> ===================================================================
+</I>&gt;<i> --- plugins/linear.c    (revision 70)
+</I>&gt;<i> +++ plugins/linear.c    (working copy)
+</I>&gt;<i> @@ -108,7 +108,6 @@
+</I>&gt;<i>           int index;
+</I>&gt;<i>           char *tokptr;
+</I>&gt;<i>           char *calfile=NULL;
+</I>&gt;<i> -       char *defaultcalfile = &quot;/etc/pointercal&quot;;
+</I>&gt;<i>
+</I>&gt;<i>           lin = malloc(sizeof(struct tslib_linear));
+</I>&gt;<i>           if (lin == NULL)
+</I>&gt;<i> @@ -132,7 +131,7 @@
+</I>&gt;<i>           /*
+</I>&gt;<i>            * Check calibration file
+</I>&gt;<i>            */
+</I>&gt;<i> -       if( (calfile = getenv(&quot;TSLIB_CALIBFILE&quot;)) == NULL) calfile =
+</I>&gt;<i> defaultcalfile;
+</I>&gt;<i> +       if( (calfile = getenv(&quot;TSLIB_CALIBFILE&quot;)) == NULL) calfile =
+</I>&gt;<i> TS_POINTERCAL;
+</I>&gt;<i>           if(stat(calfile,&amp;sbuf)==0) {
+</I>&gt;<i>                   pcal_fd = open(calfile,O_RDONLY);
+</I>&gt;<i>                   read(pcal_fd,pcalbuf,200);
+</I>&gt;<i> Index: plugins/Makefile.am
+</I>&gt;<i> ===================================================================
+</I>&gt;<i> --- plugins/Makefile.am (revision 70)
+</I>&gt;<i> +++ plugins/Makefile.am (working copy)
+</I>&gt;<i> @@ -9,7 +9,7 @@
+</I>&gt;<i>    # $Id: Makefile.am,v 1.7 2005/02/28 23:44:12 kergoth Exp $
+</I>&gt;<i>    #
+</I>&gt;<i>
+</I>&gt;<i> -AM_CFLAGS              = $(DEBUGFLAGS) $(LIBFLAGS) $(VIS_CFLAGS)
+</I>&gt;<i> +AM_CFLAGS              = -DTS_POINTERCAL=\&quot;@TS_POINTERCAL@\&quot; $
+</I>&gt;<i> (DEBUGFLAGS) $(LIBFLAGS) $(VIS_CFLAGS)
+</I>&gt;<i>    LDADD          = -rpath $(PLUGIN_DIR)
+</I>&gt;<i>    INCLUDES               = -I$(top_srcdir)/src
+</I>&gt;<i>
+</I>&gt;<i> Index: tests/Makefile.am
+</I>&gt;<i> ===================================================================
+</I>&gt;<i> --- tests/Makefile.am   (revision 70)
+</I>&gt;<i> +++ tests/Makefile.am   (working copy)
+</I>&gt;<i> @@ -9,7 +9,7 @@
+</I>&gt;<i>    # $Id: Makefile.am,v 1.4 2004/07/21 19:12:59 dlowder Exp $
+</I>&gt;<i>    #
+</I>&gt;<i>
+</I>&gt;<i> -AM_CFLAGS               = $(DEBUGFLAGS)
+</I>&gt;<i> +AM_CFLAGS               = -DTS_POINTERCAL=\&quot;@TS_POINTERCAL@\&quot; $
+</I>&gt;<i> (DEBUGFLAGS)
+</I>&gt;<i>    INCLUDES               = -I$(top_srcdir)/src
+</I>&gt;<i>
+</I>&gt;<i>    bin_PROGRAMS           = ts_test ts_calibrate ts_print ts_print_raw
+</I>&gt;<i> ts_harvest
+</I>&gt;<i> Index: tests/ts_calibrate.c
+</I>&gt;<i> ===================================================================
+</I>&gt;<i> --- tests/ts_calibrate.c        (revision 70)
+</I>&gt;<i> +++ tests/ts_calibrate.c        (working copy)
+</I>&gt;<i> @@ -21,6 +21,7 @@
+</I>&gt;<i>    #include&lt;sys/ioctl.h&gt;
+</I>&gt;<i>    #include&lt;sys/mman.h&gt;
+</I>&gt;<i>    #include&lt;sys/time.h&gt;
+</I>&gt;<i> +#include&lt;sys/stat.h&gt;
+</I>&gt;<i>    #include&lt;linux/kd.h&gt;
+</I>&gt;<i>    #include&lt;linux/vt.h&gt;
+</I>&gt;<i>    #include&lt;linux/fb.h&gt;
+</I>&gt;<i> @@ -250,9 +251,9 @@
+</I>&gt;<i>                   for (i = 0; i&lt;  7; i++) printf(&quot;%d &quot;, cal.a [i]);
+</I>&gt;<i>                   printf(&quot;\n&quot;);
+</I>&gt;<i>                   if ((calfile = getenv(&quot;TSLIB_CALIBFILE&quot;)) != NULL) {
+</I>&gt;<i> -                       cal_fd = open (calfile, O_CREAT | O_RDWR);
+</I>&gt;<i> +                       cal_fd = open (calfile, O_CREAT | O_RDWR,
+</I>&gt;<i> S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+</I>&gt;<i>                   } else {
+</I>&gt;<i> -                       cal_fd = open (&quot;/etc/pointercal&quot;, O_CREAT |
+</I>&gt;<i> O_RDWR);
+</I>&gt;<i> +                       cal_fd = open (TS_POINTERCAL, O_CREAT |
+</I>&gt;<i> O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+</I>&gt;<i>                   }
+</I>&gt;<i>                   sprintf (cal_buffer,&quot;%d %d %d %d %d %d %d&quot;,
+</I>&gt;<i>                            cal.a[1], cal.a[2], cal.a[0],
+</I>&gt;<i> Index: configure.ac
+</I>&gt;<i> ===================================================================
+</I>&gt;<i> --- configure.ac        (revision 70)
+</I>&gt;<i> +++ configure.ac        (working copy)
+</I>&gt;<i> @@ -200,6 +200,9 @@
+</I>&gt;<i>    TS_CONF='${sysconfdir}/ts.conf'
+</I>&gt;<i>    AC_SUBST(TS_CONF)
+</I>&gt;<i>
+</I>&gt;<i> +TS_POINTERCAL='${sysconfdir}/pointercal'
+</I>&gt;<i> +AC_SUBST(TS_POINTERCAL)
+</I>&gt;<i> +
+</I>&gt;<i>    # Library versioning
+</I>&gt;<i>    LT_RELEASE=1.0
+</I>&gt;<i>    LT_CURRENT=0
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>    
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000199.html">[Tslib-general] [PATCH] Prefix/correct some error messages in input-raw module
+</A></li>
+	<LI>Next message: <A HREF="000201.html">[Tslib-general] [PATCH] Rely on SYN-Events when pen is lifted	(WAS: What is the intential behavoir on &quot;pen up&quot; events?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#200">[ date ]</a>
+              <a href="thread.html#200">[ thread ]</a>
+              <a href="subject.html#200">[ subject ]</a>
+              <a href="author.html#200">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

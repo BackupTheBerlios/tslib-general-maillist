@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] touchscreen not working after installing xserver-xorg-input-tslib on Ubuntu
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touchscreen%20not%20working%20after%20installing%0A%20xserver-xorg-input-tslib%20on%20Ubuntu&In-Reply-To=%3CSNT110-W60B8AC1BE4150C808DA305A8A50%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000376.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] touchscreen not working after installing xserver-xorg-input-tslib on Ubuntu</H1>
+    <B>Victor henri</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touchscreen%20not%20working%20after%20installing%0A%20xserver-xorg-input-tslib%20on%20Ubuntu&In-Reply-To=%3CSNT110-W60B8AC1BE4150C808DA305A8A50%40phx.gbl%3E"
+       TITLE="[Tslib-general] touchscreen not working after installing xserver-xorg-input-tslib on Ubuntu">nadaeck at hotmail.com
+       </A><BR>
+    <I>Wed Apr  6 14:12:45 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000376.html">[Tslib-general] touchscreen not working after installing xserver-xorg-input-tslib on Ubuntu
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#377">[ date ]</a>
+              <a href="thread.html#377">[ thread ]</a>
+              <a href="subject.html#377">[ subject ]</a>
+              <a href="author.html#377">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+Hello Hector,
+
+&gt;<i> 
+</I>&gt;<i> Have you installed xserver-xorg-dev? 'apt-get build-dep
+</I>&gt;<i> xserver-xorg-input-tslib' might help.
+</I>
+Yes the -dev package was installed; this was not the problem I guess, because the './configure' step went just fine; the problem arrived at the compilation step.
+
+&gt;<i> 
+</I>&gt;<i> &gt; 3) the xserver-xorg-input-tslib of Natty is still the 0.6.5....
+</I>&gt;<i> 
+</I>&gt;<i> Oh! Dear... ubuntu mess.. test if it works, then we can report them to fix it.
+</I>
+This time, I'm not even able to install it from the repositories in Natty; it seems that there is an unresolved dependency... I have the following message :
+
+The following packages have unmet dependencies:
+ xserver-xorg-input-tslib : Depends: xorg-input-abi-11.0 but it is not installable
+E: Broken packages
+
+Indeed I cannot find the 'xorg-input-abi' although I have enabled all the available repositories
+
+But it is still the developpment version of Natty.....
+
+Thank you
+
+Victor
+ 		 	   		  
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20110406/47d61ec1/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20110406/47d61ec1/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000376.html">[Tslib-general] touchscreen not working after installing xserver-xorg-input-tslib on Ubuntu
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#377">[ date ]</a>
+              <a href="thread.html#377">[ thread ]</a>
+              <a href="subject.html#377">[ subject ]</a>
+              <a href="author.html#377">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

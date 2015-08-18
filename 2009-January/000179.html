@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Running tslib as unprivileged user
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Running%20tslib%20as%20unprivileged%20user&In-Reply-To=%3C6AC27EAA-462E-4AFA-9BAD-C06AB5446947%40laptouchinc.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000178.html">
+   <LINK REL="Next"  HREF="000180.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Running tslib as unprivileged user</H1>
+    <B>Daniel Jabbour</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Running%20tslib%20as%20unprivileged%20user&In-Reply-To=%3C6AC27EAA-462E-4AFA-9BAD-C06AB5446947%40laptouchinc.com%3E"
+       TITLE="[Tslib-general] Running tslib as unprivileged user">daniel at laptouchinc.com
+       </A><BR>
+    <I>Sun Jan 25 02:35:49 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000178.html">[Tslib-general] usbtouchscreen/eGalax
+</A></li>
+        <LI>Next message: <A HREF="000180.html">[Tslib-general] Patch to make /etc/pointercal relative to	systemconfdir
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#179">[ date ]</a>
+              <a href="thread.html#179">[ thread ]</a>
+              <a href="subject.html#179">[ subject ]</a>
+              <a href="author.html#179">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I am successfully using tslib (latest SVN copy) with a linux &quot;event&quot;  
+input device. When I run stuff as the root user, things work  
+perfectly. However, when I try running ts_test or ts_calibrate as a  
+non-root user, it won't run. ts_print works fine. So it doesn't appear  
+to be anything with the actual touch screen input, rather something  
+with the framebuffer output. Here is the debugging I've done so far.
+
+As a non root user, when I run ts_test I get:
+
+VT_ACTIVATE: Operation not permitted
+KDSETMODE: Bad file descriptor
+VT_ACTIVATE: Bad file descriptor
+
+This points to some kind of issue with the tty. I chmod 777 /dev/ 
+tty*, /dev/fb0, and /dev/console, and still no luck. I decided to run  
+strace on ts_test. Here is the relevant part of the trace:
+
+open(&quot;/dev/tty9&quot;, O_RDWR|O_NONBLOCK)    = 4
+ioctl(4, VT_GETSTATE, 0xbfc5432e)       = 0
+ioctl(4, VIDIOC_G_COMP or VT_ACTIVATE, 0x9) = -1 EPERM (Operation not  
+permitted)
+
+Finally, I tried running a Qt Embedded application as a test to see if  
+framebuffer output works at all as a non-root user. Qt Embedded has  
+its own window server that talks directly to the linux framebuffer.  
+This worked perfectly (including with touchscreen input) as a non-root  
+user.
+
+I can only conclude this has to be something specific with tslib. Has  
+anyone tried running tslib ts_test or ts_calibrate as a non-root user?  
+Do you have any suggestions on what I need to do in order to get this  
+to work? Do you think this might be something distribution-specific? I  
+am currently testing with Ubuntu 8.10. Thanks,
+
+Daniel
+
+--
+Daniel Jabbour
+Software Engineer
+Laptouch, Inc.
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000178.html">[Tslib-general] usbtouchscreen/eGalax
+</A></li>
+	<LI>Next message: <A HREF="000180.html">[Tslib-general] Patch to make /etc/pointercal relative to	systemconfdir
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#179">[ date ]</a>
+              <a href="thread.html#179">[ thread ]</a>
+              <a href="subject.html#179">[ subject ]</a>
+              <a href="author.html#179">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] no graphics at ts_calibrate
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20no%20graphics%20at%20ts_calibrate&In-Reply-To=%3C20100519100947.11130%40gmx.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000296.html">
+   <LINK REL="Next"  HREF="000298.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] no graphics at ts_calibrate</H1>
+    <B>&quot;Stefan W&#246;hle&quot;</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20no%20graphics%20at%20ts_calibrate&In-Reply-To=%3C20100519100947.11130%40gmx.net%3E"
+       TITLE="[Tslib-general] no graphics at ts_calibrate">ghal_maraz at gmx.de
+       </A><BR>
+    <I>Wed May 19 12:09:47 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000296.html">[Tslib-general] no graphics at ts_calibrate
+</A></li>
+        <LI>Next message: <A HREF="000298.html">[Tslib-general] cy8mrln-palmpre
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#297">[ date ]</a>
+              <a href="thread.html#297">[ thread ]</a>
+              <a href="subject.html#297">[ subject ]</a>
+              <a href="author.html#297">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>yes. sorry. i asked for a configuration problem and forgot to mention
+my configuration:
+
+from /etc/profile:
+
+ ...
+
+ #
+ # Setup the environment for the touch screen.
+ #
+ export TSLIB_CONFFILE=/etc/ts.conf
+ export TSLIB_TSDEVICE=/dev/input/event0
+ export TSLIB_FBDEVICE=/dev/fb0
+ export TSLIB_CONSOLEDEVICE=none
+ export TSLIB_CALIBFILE=/etc/pointercal
+
+ ...
+
+and from /etc/ts.conf:
+
+ # Uncomment if you wish to use the linux input layer event interface
+ module_raw input
+
+ ...
+
+ module pthres pmin=1
+ module variance delta=30
+ module dejitter delta=100
+ module linear
+
+
+&gt;<i> Did you set the frame buffer device.
+</I>&gt;<i> 
+</I>&gt;<i> eg.
+</I>&gt;<i> $ export TSLIB_FBDEVICE=/dev/fb0
+</I>&gt;<i> 
+</I>&gt;<i> On Wed, May 19, 2010 at 10:44 AM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">ghal_maraz at gmx.de</A>&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; i'm running the tslib on the adb1000 with at91sam9g45 and embedded linux
+</I>&gt;<i> &gt; (own build with buildroot-2009.02).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; when i start ts_calibrate the screen stays black. touchs are registered
+</I>&gt;<i> &gt; normally, but it's difficult to guess the right position of the cross.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; qt (qt embedded 4.5.3) works properly, but because of the bad pointercal
+</I>&gt;<i> i
+</I>&gt;<i> &gt; got an offset in the sensed position.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; with the delivered linux image and filesystem it works.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; could it be an configuration problem? anybody experience with this kind
+</I>&gt;<i> of
+</I>&gt;<i> &gt; problems?
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; GRATIS f&#252;r alle GMX-Mitglieder: Die maxdome Movie-FLAT!
+</I>&gt;<i> &gt; Jetzt freischalten unter <A HREF="http://portal.gmx.net/de/go/maxdome01">http://portal.gmx.net/de/go/maxdome01</A>
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Tslib-general mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i> &gt;
+</I>
+-- 
+GRATIS f&#252;r alle GMX-Mitglieder: Die maxdome Movie-FLAT!
+Jetzt freischalten unter <A HREF="http://portal.gmx.net/de/go/maxdome01">http://portal.gmx.net/de/go/maxdome01</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000296.html">[Tslib-general] no graphics at ts_calibrate
+</A></li>
+	<LI>Next message: <A HREF="000298.html">[Tslib-general] cy8mrln-palmpre
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#297">[ date ]</a>
+              <a href="thread.html#297">[ thread ]</a>
+              <a href="subject.html#297">[ subject ]</a>
+              <a href="author.html#297">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

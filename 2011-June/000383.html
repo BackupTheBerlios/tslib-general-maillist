@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] problems reading touchscreen values
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20problems%20reading%20touchscreen%20values&In-Reply-To=%3C6EE7D1502C48E44E92DCADF9DD3E0DB90187A6B1AE77%40SRV-VS06.TELEVIC.COM%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000381.html">
+   <LINK REL="Next"  HREF="000382.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] problems reading touchscreen values</H1>
+    <B>Vanalme Filip</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20problems%20reading%20touchscreen%20values&In-Reply-To=%3C6EE7D1502C48E44E92DCADF9DD3E0DB90187A6B1AE77%40SRV-VS06.TELEVIC.COM%3E"
+       TITLE="[Tslib-general] problems reading touchscreen values">F.Vanalme at TELEVIC.com
+       </A><BR>
+    <I>Fri Jun 10 08:28:57 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000381.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+        <LI>Next message: <A HREF="000382.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#383">[ date ]</a>
+              <a href="thread.html#383">[ thread ]</a>
+              <a href="subject.html#383">[ subject ]</a>
+              <a href="author.html#383">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: Paulius Zaleckas [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">paulius.zaleckas at gmail.com</A>]
+</I>&gt;<i> Sent: woensdag 8 juni 2011 16:24
+</I>&gt;<i> To: Vanalme Filip
+</I>&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Tslib-general] problems reading touchscreen values
+</I>&gt;<i> 
+</I>&gt;<i> On Wed, Jun 8, 2011 at 5:08 PM, Vanalme Filip &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">F.Vanalme at televic.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> [...]
+</I>&gt;<i> &gt; Anyone who recognizes this kind of problem ? Anyone who has encountered
+</I>&gt;<i> &gt; similar problems ? Maybe some setting is wrong or not set ?
+</I>&gt;<i> 
+</I>&gt;<i> You should really try the latest version from git. There were a lot of
+</I>&gt;<i> very serious bugs
+</I>&gt;<i> fixed since version 1.0.
+</I>[Filip] I downloaded the latest version from git and managed to get it in ltib environment. However, it makes no difference. Still the same behavior.
+What is really weird : with ts_print_raw, when I tick the screen, I still get output while screen is not touched anymore (sometimes for more than 1 sec after release !). Where do these readings come from ? Why does the driver continues reading when screen is not touched anymore ?
+Some values that it prints during that period :
+...
+123.603673:      0   4092   4090
+123.624282:      0   4092   4094
+123.663811:      0   4092   4090
+123.684267:      0   4092   4094
+123.703652:      0   4092   4090
+123.728763:      0   4092   4094
+123.744276:      0   4092   4092
+123.783903:      0   4092   4090
+123.805759:      0   4092   4094
+123.863721:      0   4092   4092
+123.903624:      0   4092   4094
+123.944204:      0   4092   4092
+123.963665:      0   4092   4094
+124.003636:      0   4092   4090
+124.024293:      0   4092   4092
+124.044248:      0      0      0
+
+I guess columns are X, Y and pressure, right ?
+X seems always zero, Y is almost maximum (I guess max is 4095) and pressure is also almost maximum. That's not normal I suppose...
+What could cause the driver to continue reading values ? Perhaps bad interrupt handling ?
+Could it be a problem in the mc13783 driver ?
+I think I have to add some debugging info into mc13783_ts.c to see what's happening.
+
+Filip
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000381.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+	<LI>Next message: <A HREF="000382.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#383">[ date ]</a>
+              <a href="thread.html#383">[ thread ]</a>
+              <a href="subject.html#383">[ subject ]</a>
+              <a href="author.html#383">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

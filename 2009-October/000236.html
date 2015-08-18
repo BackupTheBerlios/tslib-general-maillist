@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] touchscreen without BTN_TOUCH
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touchscreen%20without%20BTN_TOUCH&In-Reply-To=%3C390.627-8276-285548685-1255857252%40seznam.cz%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000234.html">
+   <LINK REL="Next"  HREF="000232.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] touchscreen without BTN_TOUCH</H1>
+    <B>tomas.dosoudil at seznam.cz</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touchscreen%20without%20BTN_TOUCH&In-Reply-To=%3C390.627-8276-285548685-1255857252%40seznam.cz%3E"
+       TITLE="[Tslib-general] touchscreen without BTN_TOUCH">tomas.dosoudil at seznam.cz
+       </A><BR>
+    <I>Sun Oct 18 11:14:12 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000234.html">[Tslib-general] touchscreen without BTN_TOUCH
+</A></li>
+        <LI>Next message: <A HREF="000232.html">[Tslib-general] No shared libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#236">[ date ]</a>
+              <a href="thread.html#236">[ thread ]</a>
+              <a href="subject.html#236">[ subject ]</a>
+              <a href="author.html#236">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yes I can see outputs from device /dev/input/evdev5 using hexdump (od is probably similar but I can't use it now). ts_print gets this device name over variable getenv(&quot;TSLIB_TSDEVICE&quot;). When I touched the screen ts_print show me axes which is probably correct but there is always warning that, touchscreen doesn't support BTN_TOUCH.
+
+Thanks
+Tomas
+
+&gt;<i> Have you established that the touchscreen works at a lower level, by
+</I>&gt;<i> doing a &quot;od /dev/device_node&quot; or similar and touching the screen to
+</I>&gt;<i> see raw bytes being printed? I have a serial touchscreen, so for me
+</I>&gt;<i> that would be &quot;od /dev/ttyS0&quot;.
+</I>&gt;<i> 
+</I>&gt;<i> Regards,
+</I>&gt;<i> Peter Geoghegan
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000234.html">[Tslib-general] touchscreen without BTN_TOUCH
+</A></li>
+	<LI>Next message: <A HREF="000232.html">[Tslib-general] No shared libs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#236">[ date ]</a>
+              <a href="thread.html#236">[ thread ]</a>
+              <a href="subject.html#236">[ subject ]</a>
+              <a href="author.html#236">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

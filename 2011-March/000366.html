@@ -1,0 +1,293 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [PATCH 3/3] plugins: new touchkit driver, reposted
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%203/3%5D%20plugins%3A%20new%20touchkit%20driver%2C%20reposted&In-Reply-To=%3C1300016880-11913-4-git-send-email-w.sang%40pengutronix.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000365.html">
+   <LINK REL="Next"  HREF="000367.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [PATCH 3/3] plugins: new touchkit driver, reposted</H1>
+    <B>Wolfram Sang</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%203/3%5D%20plugins%3A%20new%20touchkit%20driver%2C%20reposted&In-Reply-To=%3C1300016880-11913-4-git-send-email-w.sang%40pengutronix.de%3E"
+       TITLE="[Tslib-general] [PATCH 3/3] plugins: new touchkit driver, reposted">w.sang at pengutronix.de
+       </A><BR>
+    <I>Sun Mar 13 12:48:00 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000365.html">[Tslib-general] [PATCH 2/3] plugins: add driver for DMC touchscreens
+</A></li>
+        <LI>Next message: <A HREF="000367.html">[Tslib-general] [PATCH V2 RESEND 0/3] Some new drivers for tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#366">[ date ]</a>
+              <a href="thread.html#366">[ thread ]</a>
+              <a href="subject.html#366">[ subject ]</a>
+              <a href="author.html#366">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Original submission from Fr&#233;d&#233;ric Salabartan:
+
+<A HREF="https://lists.berlios.de/pipermail/tslib-general/2009-July/000212.html">https://lists.berlios.de/pipermail/tslib-general/2009-July/000212.html</A>
+
+[w.sang] - updated to latest git (Makefile.am, configure.ac)
+	 - used Lindent on the c-files and removed C++ comments
+	 - fix two build warnings
+	 - removed egalax-driver, should be included in input-raw.c
+
+&lt;there was no SoB by Frederic&gt;
+Tested-by: Michael Olbrich &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">m.olbrich at pengutronix.de</A>&gt;
+Signed-off-by: Wolfram Sang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt;
+---
+ configure.ac           |    1 +
+ plugins/Makefile.am    |   10 +++
+ plugins/touchkit-raw.c |  157 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 168 insertions(+), 0 deletions(-)
+ create mode 100644 plugins/touchkit-raw.c
+
+diff --git a/configure.ac b/configure.ac
+index 066d635..c42be91 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -67,6 +67,7 @@ TSLIB_CHECK_MODULE([arctic2], [yes], [Enable building of arctic2 raw module (IBM
+ TSLIB_CHECK_MODULE([tatung], [yes], [Enable building of tatung raw module (Tatung Webpad support)])
+ TSLIB_CHECK_MODULE([dmc], [yes], [Enable building of dmc raw module (HP iPaq DMC support)])
+ TSLIB_CHECK_MODULE([input], [yes], [Enable building of generic input raw module (Linux /dev/input/eventN support)])
++TSLIB_CHECK_MODULE([touchkit], [yes], [Enable building of serial TouchKit raw module (Linux /dev/ttySX support)])
+ 
+ AC_MSG_CHECKING([where to place modules])
+ AC_ARG_WITH(plugindir,
+diff --git a/plugins/Makefile.am b/plugins/Makefile.am
+index b748a65..a237e31 100644
+--- a/plugins/Makefile.am
++++ b/plugins/Makefile.am
+@@ -96,6 +96,12 @@ else
+ INPUT_MODULE =
+ endif
+ 
++if ENABLE_TOUCHKIT_MODULE
++TOUCHKIT_MODULE = touchkit.la
++else
++TOUCHKIT_MODULE =
++endif
++
+ if ENABLE_LINEAR_H2200_MODULE
+ H2200_LINEAR_MODULE = linear_h2200.la
+ else
+@@ -123,6 +129,7 @@ pluginexec_LTLIBRARIES = \
+ 	$(DMC_MODULE) \
+ 	$(H2200_LINEAR_MODULE) \
+ 	$(INPUT_MODULE) \
++	$(TOUCHKIT_MODULE) \
+ 	$(CY8MRLN_PALMPRE_MODULE)
+   
+ variance_la_SOURCES	= variance.c
+@@ -170,6 +177,9 @@ input_la_SOURCES	= input-raw.c
+ input_la_LDFLAGS	= -module $(LTVSN)
+ input_la_LIBADD		= $(top_builddir)/src/libts.la
+ 
++touchkit_la_SOURCES	= touchkit-raw.c
++touchkit_la_LDFLAGS	= -module $(LTVSN)
++
+ linear_h2200_la_SOURCES	= linear-h2200.c
+ linear_h2200_la_LDFLAGS	= -module $(LTVSN)
+ 
+diff --git a/plugins/touchkit-raw.c b/plugins/touchkit-raw.c
+new file mode 100644
+index 0000000..e072f21
+--- /dev/null
++++ b/plugins/touchkit-raw.c
+@@ -0,0 +1,157 @@
++
++#include &lt;stdlib.h&gt;
++#include &lt;stdio.h&gt;
++#include &lt;unistd.h&gt;
++#include &lt;termios.h&gt;
++#include &lt;string.h&gt;
++
++#include &quot;config.h&quot;
++#include &quot;tslib-private.h&quot;
++
++/*
++ * TouchKit RS232 driver
++ * (controller type SAT4000UR)
++ * 2009.07  Fred Salabartan
++ *
++ * Packet format for position report (5 bytes):
++ * [0] 1 0 0 0 0 0 0 t = header (t=touched)
++ * [1] 0 0 0 0 X X X X = X coord most significant bits
++ * [2] 0 X X X X X X X = X coord less significant bits
++ * [3] 0 0 0 0 Y Y Y Y = Y coord most significant bits
++ * [4] 0 Y Y Y Y Y Y Y = Y coord less significant bits
++ *
++ * Problem: sometimes some packets overlap, so it is possible
++ * to find a new packet in the middle of another packet.
++ * -&gt; check that no byte in the packet (but the first one)
++ *    have its first bit set (0x80 = start)
++ *
++ * This file is placed under the LGPL.  Please see the file
++ * COPYING for more details.
++*/
++
++enum {
++	PACKET_SIZE = 5,
++	BUFFER_SIZE = 100,
++	PACKET_SIGNATURE = 0x81
++};
++
++/* Is is a start of packet ? */
++#define IsStart(x) (((x)|1) == PACKET_SIGNATURE)
++
++static int touchkit_init(int dev)
++{
++	struct termios tty;
++
++	tcgetattr(dev, &amp;tty);
++	tty.c_iflag = IGNBRK | IGNPAR;
++	tty.c_oflag = 0;
++	tty.c_lflag = 0;
++	tty.c_line = 0;
++	tty.c_cc[VTIME] = 0;
++	tty.c_cc[VMIN] = 1;
++	tty.c_cflag = CS8 | CREAD | CLOCAL | HUPCL;
++	tty.c_cflag |= B9600;
++	tcsetattr(dev, TCSAFLUSH, &amp;tty);
++
++	return 1;
++}
++
++static int touchkit_read(struct tslib_module_info *inf, struct ts_sample *samp,
++			 int nr)
++{
++	static int initDone = 0;
++	static unsigned char buffer[BUFFER_SIZE];	/* enough space for 2 &quot;normal&quot; packets */
++	static int pos = 0;
++
++	struct tsdev *ts = inf-&gt;dev;
++
++	if (initDone == 0) {
++		initDone = touchkit_init(ts-&gt;fd);
++		if (initDone == -1)
++			return -1;
++	}
++	/* read some new bytes (enough for 1 normal packet) */
++	int ret = read(ts-&gt;fd, buffer + pos, PACKET_SIZE);
++	if (ret &lt;= 0)
++		return -1;
++
++	pos += ret;
++	if (pos &lt; PACKET_SIZE)
++		return 0;
++
++	/* find start */
++	int p;
++	int total = 0;
++	for (p = 0; p &lt; pos; ++p)
++		if (IsStart(buffer[p])) {
++			/* we have enough data for a packet ? */
++			if (p + PACKET_SIZE &gt; pos) {
++				if (p &gt; 0) {
++                                        /*
++					 * we have found a start &gt;0, it means we have garbage
++					 * at beginning of buffer
++					 * so let's shift data to ignore this garbage
++                                         */
++					memcpy(buffer, buffer + p, pos - p);
++					pos -= p;
++				}
++				break;
++			}
++
++			unsigned char *data = buffer + p;
++
++			/* check if all bytes are ok (no 'start' embedded) */
++			int q;
++			for (q = 1; q &lt; PACKET_SIZE; ++q)
++				if (IsStart(buffer[p + q]))
++					break;
++			if (q &lt; PACKET_SIZE) {
++#ifdef DEBUG
++				fprintf(stderr,
++					&quot;Start found within packet [%X %X %X %X %X] ignore %d bytes\n&quot;,
++					data[0], data[1], data[2], data[3],
++					data[4], q);
++#endif
++				p += q - 1;
++				continue;
++			}
++			/* now let's decode it */
++			samp-&gt;x = (data[1] &amp; 0x000F) &lt;&lt; 7 | (data[2] &amp; 0x007F);
++			samp-&gt;y =
++			    ((data[3] &amp; 0x000F) &lt;&lt; 7 | (data[4] &amp; 0x007F));
++			samp-&gt;pressure = (data[0] &amp; 1) ? 200 : 0;
++			gettimeofday(&amp;samp-&gt;tv, NULL);
++#ifdef DEBUG
++			fprintf(stderr,
++				&quot;RAW -------------------------&gt; data=[%X %X %X %X %X]  x=%d y=%d pres=%d\n&quot;,
++				data[0], data[1], data[2], data[3], data[4],
++				samp-&gt;x, samp-&gt;y, samp-&gt;pressure);
++#endif
++			samp++;
++
++			/* now remove it */
++			memcpy(buffer, buffer + p + PACKET_SIZE,
++			       pos - p - PACKET_SIZE);
++			pos -= p + PACKET_SIZE;
++			total = 1;
++			break;
++		}
++
++	return total;
++}
++
++static const struct tslib_ops touchkit_ops = {
++	.read = touchkit_read,
++};
++
++TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++{
++	struct tslib_module_info *m;
++
++	m = malloc(sizeof(struct tslib_module_info));
++	if (m == NULL)
++		return NULL;
++
++	m-&gt;ops = &amp;touchkit_ops;
++	return m;
++}
+-- 
+1.7.2.3
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000365.html">[Tslib-general] [PATCH 2/3] plugins: add driver for DMC touchscreens
+</A></li>
+	<LI>Next message: <A HREF="000367.html">[Tslib-general] [PATCH V2 RESEND 0/3] Some new drivers for tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#366">[ date ]</a>
+              <a href="thread.html#366">[ thread ]</a>
+              <a href="subject.html#366">[ subject ]</a>
+              <a href="author.html#366">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

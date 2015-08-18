@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] What can be the reason for low resolution on	touchpanel ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20What%20can%20be%20the%20reason%20for%20low%20resolution%20on%0A%09touchpanel%20%3F&In-Reply-To=%3C21490556.606701250069844306.JavaMail.servlet%40kundenserver%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000215.html">
+   <LINK REL="Next"  HREF="000217.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] What can be the reason for low resolution on	touchpanel ?</H1>
+    <B>Bastian Ruppert</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20What%20can%20be%20the%20reason%20for%20low%20resolution%20on%0A%09touchpanel%20%3F&In-Reply-To=%3C21490556.606701250069844306.JavaMail.servlet%40kundenserver%3E"
+       TITLE="[Tslib-general] What can be the reason for low resolution on	touchpanel ?">ng at max01.eu
+       </A><BR>
+    <I>Wed Aug 12 11:37:24 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000215.html">[Tslib-general] TSLIB: support for capacitive touchscreens (iow	extending ts_sample struct)
+</A></li>
+        <LI>Next message: <A HREF="000217.html">[Tslib-general] What can be the reason for low resolution on	touchpanel ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#216">[ date ]</a>
+              <a href="thread.html#216">[ thread ]</a>
+              <a href="subject.html#216">[ subject ]</a>
+              <a href="author.html#216">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+i try to enable an ads7846 touchcontroller on an embedded arm9
+platform (ti omap-l137).
+The driver is working so far, but the tool ts_calibrate gives me a
+very low resolution:
+
+output of ts_calibrate:
+
+-bash-3.2# ts_calibrate
+xres = 320, yres = 240
+Took 4 samples...
+Top left : X =    3 Y =   11
+Took 4 samples...
+Top right : X =   13 Y =   11
+Took 1 samples...
+Bot right : X =   13 Y =    4
+Took 1 samples...
+Bot left : X =    3 Y =    3
+Took 5 samples...
+Center : X =    7 Y =    7
+-9.818115 21.828579 -0.061775
+246.256531 0.958162 -18.573639
+Calibration constants: -643440 1430557 -4048 16138668 62794 -1217242
+65536
+
+It seems the touchscreen is only able to scan max. 15 steps.
+
+This results in bad performance for example with the tool ts_test.
+
+The question is:
+Which part of the system can influence the resolution of the
+touchscreen (where is the problem, hardware, tslib or driver or
+whatever) and what&#180;s to do?
+
+Has anybody experience with problems like that?
+
+Any ideas are very welcome, thank you!
+Bastian. 
+
+P.S.
+The environment is a little bit noisy.
+I reduced the driver SPI speed to make the driver working. 
+
+
+kernel Version :  2.6.29-rc8-davinci1
+
+tslib 1.0
+
+I compiled the ads7846 driver (the driver is in the kernel, not a module)
+with VERBOSE and DEBUG and dmesg gives me the following output when pressing the touchscreen:
+
+evbug.c: Event. Dev: input0, Type: 1, Code: 330, Value: 1
+evbug.c: Event. Dev: input0, Type: 3, Code: 0, Value: 10
+evbug.c: Event. Dev: input0, Type: 3, Code: 1, Value: 5
+evbug.c: Event. Dev: input0, Type: 3, Code: 24, Value: 4
+evbug.c: Event. Dev: input0, Type: 0, Code: 0, Value: 0
+evbug.c: Event. Dev: input0, Type: 1, Code: 330, Value: 0
+evbug.c: Event. Dev: input0, Type: 3, Code: 24, Value: 0
+evbug.c: Event. Dev: input0, Type: 0, Code: 0, Value: 0
+evbug.c: Event. Dev: input0, Type: 1, Code: 330, Value: 1
+evbug.c: Event. Dev: input0, Type: 3, Code: 1, Value: 4
+evbug.c: Event. Dev: input0, Type: 3, Code: 24, Value: 5
+evbug.c: Event. Dev: input0, Type: 0, Code: 0, Value: 0
+evbug.c: Event. Dev: input0, Type: 1, Code: 330, Value: 0
+evbug.c: Event. Dev: input0, Type: 3, Code: 24, Value: 0
+evbug.c: Event. Dev: input0, Type: 0, Code: 0, Value: 0
+
+
+-bash-3.2# cat /proc/bus/input/devices
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name=&quot;ADS784x Touchscreen&quot;
+P: Phys=spi0.0/input0
+S: Sysfs=/class/input/input0
+U: Uniq=
+H: Handlers=event0 evbug 
+B: EV=b
+B: KEY=400 0 0 0 0 0 0 0 0 0 0
+B: ABS=1000003
+
+
+-bash-3.2# evtest /dev/input/event0
+evdev.c(EVIOCGBIT): Suspicious buffer size 511, limiting output to 64 bytes. Seel
+Input driver version is 1.0.0
+Input device ID: bus 0x0 vendor 0x0 product 0x0 version 0x0
+Input device name: &quot;ADS784x Touchscreen&quot;
+Supported events:
+  Event type 0 (Sync)
+  Event type 1 (Key)
+    Event code 330 (Touch)
+  Event type 3 (Absolute)
+    Event code 0 (X)
+      Value     10
+      Min        0
+      Max     4095
+    Event code 1 (Y)
+      Value      4
+      Min        0
+      Max     4095
+    Event code 24 (Pressure)
+      Value      0
+      Min        0
+      Max     4096
+Testing ... (interrupt to exit)
+Event: time 1250068896.475094, type 1 (Key), code 330 (Touch), value 1
+Event: time 1250068896.475207, type 3 (Absolute), code 0 (X), value 6
+Event: time 1250068896.475260, type 3 (Absolute), code 1 (Y), value 9
+Event: time 1250068896.475305, type 3 (Absolute), code 24 (Pressure), value 2
+Event: time 1250068896.475348, -------------- Report Sync ------------
+Event: time 1250068896.521596, type 3 (Absolute), code 24 (Pressure), value 1
+Event: time 1250068896.522028, -------------- Report Sync ------------
+Event: time 1250068896.712321, type 3 (Absolute), code 24 (Pressure), value 2
+Event: time 1250068896.712783, -------------- Report Sync ------------
+Event: time 1250068896.730290, type 1 (Key), code 330 (Touch), value 0
+Event: time 1250068896.730401, type 3 (Absolute), code 24 (Pressure), value 0
+Event: time 1250068896.730448, -------------- Report Sync ------------
+Event: time 1250068898.585877, type 1 (Key), code 330 (Touch), value 1
+Event: time 1250068898.586350, type 3 (Absolute), code 24 (Pressure), value 3
+Event: time 1250068898.586710, -------------- Report Sync ------------
+Event: time 1250068898.600223, type 3 (Absolute), code 24 (Pressure), value 2
+Event: time 1250068898.600651, -------------- Report Sync ------------
+Event: time 1250068898.626484, type 3 (Absolute), code 24 (Pressure), value 1
+Event: time 1250068898.626917, -------------- Report Sync ------------
+Event: time 1250068898.754460, type 3 (Absolute), code 24 (Pressure), value 2
+Event: time 1250068898.754923, -------------- Report Sync ------------
+Event: time 1250068898.776418, type 1 (Key), code 330 (Touch), value 0
+Event: time 1250068898.776533, type 3 (Absolute), code 24 (Pressure), value 0
+Event: time 1250068898.776583, -------------- Report Sync ------------
+
+What does -------------- Report Sync ------------ mean?
+
+
+This is part of the driversettings in the kernel:
+static struct ads7846_platform_data ads_info = {
+   .model            = 7846,
+   .x_plate_ohms         = 600,//750, // FIXME 
+   .y_plate_ohms         = 220,//400,//300, // FIXME 
+   .pressure_max         = 4096,//4096,
+   .debounce_max         = 20,//1,
+   .debounce_rep         = 4,//0,
+   .debounce_tol         = 5,//(~0),
+   .get_pendown_state      = ads7846_pendown_state,
+   //.gpio_pendown         =ADS7846_PENIRQ,
+};
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000215.html">[Tslib-general] TSLIB: support for capacitive touchscreens (iow	extending ts_sample struct)
+</A></li>
+	<LI>Next message: <A HREF="000217.html">[Tslib-general] What can be the reason for low resolution on	touchpanel ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#216">[ date ]</a>
+              <a href="thread.html#216">[ thread ]</a>
+              <a href="subject.html#216">[ subject ]</a>
+              <a href="author.html#216">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

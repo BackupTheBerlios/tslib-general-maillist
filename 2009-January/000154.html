@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Reg: tslib-1.0 ported on kernel linux-2.6.25
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Reg%3A%20tslib-1.0%20ported%20on%20kernel%20linux-2.6.25&In-Reply-To=%3C200901091845.07019.praveen%40e-consystems.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000153.html">
+   <LINK REL="Next"  HREF="000155.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Reg: tslib-1.0 ported on kernel linux-2.6.25</H1>
+    <B>praveen</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Reg%3A%20tslib-1.0%20ported%20on%20kernel%20linux-2.6.25&In-Reply-To=%3C200901091845.07019.praveen%40e-consystems.com%3E"
+       TITLE="[Tslib-general] Reg: tslib-1.0 ported on kernel linux-2.6.25">praveen at e-consystems.com
+       </A><BR>
+    <I>Fri Jan  9 14:15:05 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000153.html">[Tslib-general] Main event loop: How do I get data in from other	processes?
+</A></li>
+        <LI>Next message: <A HREF="000155.html">[Tslib-general] Reg: tslib-1.0 ported on kernel linux-2.6.25
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#154">[ date ]</a>
+              <a href="thread.html#154">[ thread ]</a>
+              <a href="subject.html#154">[ subject ]</a>
+              <a href="author.html#154">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi All,
+
+I am working in PXA270 processor based reference board with ucb1400 touch 
+screen controller. I am porting linux-2.6.25 in our board. I am using UCB1x00 
+module in tslib-1.0. 
+
+While running ts_calibrate application, it continously try to read the x,y, 
+and pressure value from the driver using the function 
+	ret = read(ts-&gt;fd, ucb1x00_evt, sizeof(*ucb1x00_evt) * nr);
+
+I don't know which function the above read will call in driver in 
+Linux-2.6.25.
+
+please any one help for above issue.
+
+-- 
+Thanks and regards,
+Praveen
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000153.html">[Tslib-general] Main event loop: How do I get data in from other	processes?
+</A></li>
+	<LI>Next message: <A HREF="000155.html">[Tslib-general] Reg: tslib-1.0 ported on kernel linux-2.6.25
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#154">[ date ]</a>
+              <a href="thread.html#154">[ thread ]</a>
+              <a href="subject.html#154">[ subject ]</a>
+              <a href="author.html#154">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

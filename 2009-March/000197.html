@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib and Qt
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20and%20Qt&In-Reply-To=%3C771570c10903211232k73fd086ek26193bc6e9334329%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000196.html">
+   <LINK REL="Next"  HREF="000198.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib and Qt</H1>
+    <B>Donal</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20and%20Qt&In-Reply-To=%3C771570c10903211232k73fd086ek26193bc6e9334329%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] tslib and Qt">donaloconnor at gmail.com
+       </A><BR>
+    <I>Sat Mar 21 20:32:48 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000196.html">[Tslib-general] tslib and Qt
+</A></li>
+        <LI>Next message: <A HREF="000198.html">[Tslib-general] don't restart the xserver after execute the	programe of ts_calibrate?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#197">[ date ]</a>
+              <a href="thread.html#197">[ thread ]</a>
+              <a href="subject.html#197">[ subject ]</a>
+              <a href="author.html#197">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Are you using QT or QT/Embedded?
+
+This is how I compiled QT/Embedded:
+
+<A HREF="http://automon.killarneyonline.eu/?p=74">http://automon.killarneyonline.eu/?p=74</A>
+
+This is my configure for QT/Embedded:
+* echo yes | ./configure -embedded arm -xplatform qws/linux-arm-g++ -no-qvfb
+-depths all -qt-mouse-tslib -qt-kbd-usb -I /usr/local/arm/tslib/include -L
+/usr/local/arm/tslib/lib
+
+Did you include the -qt-mouse-tslib configure option?
+*
+This is how I configured and installed Tslib:
+
+<A HREF="http://automon.killarneyonline.eu/?p=83">http://automon.killarneyonline.eu/?p=83</A>
+
+Hope this helps.
+
+Regards,
+Donal
+
+
+
+On Sat, Mar 21, 2009 at 6:55 PM, Bahar Wadia &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">bwadia at uico.com</A>&gt; wrote:
+
+&gt;<i> Hello Donal,
+</I>&gt;<i>
+</I>&gt;<i> I have tried both,
+</I>&gt;<i>
+</I>&gt;<i> QWS_MOUSE_PROTO=tslib:/dev/input/event0 (which is where, my touchscreen is
+</I>&gt;<i> connected)
+</I>&gt;<i>
+</I>&gt;<i> and
+</I>&gt;<i>
+</I>&gt;<i> QWS_MOUSE_PROTO=tslib
+</I>&gt;<i>
+</I>&gt;<i> Neither has helped. I am wondering if there is something else in QT that
+</I>&gt;<i> needs to be enabled/set. If I don't set QWS_MOUSE_PROTO to anything the
+</I>&gt;<i> cursor moves erratically when I touch the screen. I think this is because
+</I>&gt;<i> the absolute coordinates are interpreted as relative mouse movements.
+</I>&gt;<i>
+</I>&gt;<i> BW
+</I>&gt;<i>
+</I>&gt;<i> On Mar 21, 2009, at 1:33 PM, Donal wrote:
+</I>&gt;<i>
+</I>&gt;<i> Have you set the:
+</I>&gt;<i>
+</I>&gt;<i> QWS_MOUSE_PROTO env variable to:
+</I>&gt;<i>
+</I>&gt;<i> export QWS_MOUSE_PROTO=Tslib
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Donal
+</I>&gt;<i>
+</I>&gt;<i> 2009/3/21 Bahar Wadia &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">bwadia at uico.com</A>&gt;
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hello All,
+</I>&gt;&gt;<i> I am able to get our touchscreen to work with tslib (See attached output
+</I>&gt;&gt;<i> file ts_print-result.rtf). I am able to use ts_calibrate, ts_print, and
+</I>&gt;&gt;<i> ts_test to veirfy the functionality.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am trying to use Tslib with Qt. I have compiled our Qt application with
+</I>&gt;&gt;<i> the correct options and I am also able to verify that the Qt application is
+</I>&gt;&gt;<i> accessing tslib at load time. I am able to verify this by forcing a change
+</I>&gt;&gt;<i> of name to the tslib folder and then running the Qt application,
+</I>&gt;&gt;<i> which generates an error. So I believe, the Qt application is accessing
+</I>&gt;&gt;<i> tslib correctly.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am however unable to get Qt to recognize the touchscreen inputs. I am
+</I>&gt;&gt;<i> attaching a file that lists our env variables (profile.rtf) for your
+</I>&gt;&gt;<i> examination.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am past my deadline and need some serious assistance. Any help that you
+</I>&gt;&gt;<i> can offer will be greatly appreciated.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> BW
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Tslib-general mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20090321/2d0e4dcb/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20090321/2d0e4dcb/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000196.html">[Tslib-general] tslib and Qt
+</A></li>
+	<LI>Next message: <A HREF="000198.html">[Tslib-general] don't restart the xserver after execute the	programe of ts_calibrate?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#197">[ date ]</a>
+              <a href="thread.html#197">[ thread ]</a>
+              <a href="subject.html#197">[ subject ]</a>
+              <a href="author.html#197">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

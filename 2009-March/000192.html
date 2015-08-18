@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib + xorg
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20%2B%20xorg&In-Reply-To=%3C20090317130522.97cfa1fe.codehelp%40debian.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000191.html">
+   <LINK REL="Next"  HREF="000193.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib + xorg</H1>
+    <B>Neil Williams</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20%2B%20xorg&In-Reply-To=%3C20090317130522.97cfa1fe.codehelp%40debian.org%3E"
+       TITLE="[Tslib-general] tslib + xorg">codehelp at debian.org
+       </A><BR>
+    <I>Tue Mar 17 14:05:22 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000191.html">[Tslib-general] tslib + xorg
+</A></li>
+        <LI>Next message: <A HREF="000193.html">[Tslib-general] tslib + xorg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#192">[ date ]</a>
+              <a href="thread.html#192">[ thread ]</a>
+              <a href="subject.html#192">[ subject ]</a>
+              <a href="author.html#192">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, 17 Mar 2009 13:46:57 +0300
+afunix &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">afunix at hing.rednet.ru</A>&gt; wrote:
+
+&gt;<i> Hello
+</I>&gt;<i> 
+</I>&gt;<i> I've installed debian lenny on dell axim. 
+</I>&gt;<i> I've calibrated touchscreen with ts_calibrate. 
+</I>&gt;<i> When I'm using ts_test a can access every corner of my screen with stylus.
+</I>&gt;<i> But when I'm starting X, I can use only some part of it. When I move stylus to top-left corner of screen, mouse-pointer is in top-left corner too, right under stylus. But when I move stylus to bottom-left corner, pointer is somewhere in the middle of the screen.
+</I>
+This sounds like an issue with the old version of the Xorg driver in
+Debian - the current version in lenny.
+
+See <A HREF="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511912">http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511912</A>
+
+Note that the current version of the Xorg driver in unstable has issues
+with xrandr, use the version in testing (squeeze).
+
+
+-- 
+
+
+Neil Williams
+=============
+<A HREF="http://www.data-freedom.org/">http://www.data-freedom.org/</A>
+<A HREF="http://www.nosoftwarepatents.com/">http://www.nosoftwarepatents.com/</A>
+<A HREF="http://www.linux.codehelp.co.uk/">http://www.linux.codehelp.co.uk/</A>
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 197 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20090317/842c5cfa/attachment.pgp">https://lists.berlios.de/pipermail/tslib-general/attachments/20090317/842c5cfa/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000191.html">[Tslib-general] tslib + xorg
+</A></li>
+	<LI>Next message: <A HREF="000193.html">[Tslib-general] tslib + xorg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#192">[ date ]</a>
+              <a href="thread.html#192">[ thread ]</a>
+              <a href="subject.html#192">[ subject ]</a>
+              <a href="author.html#192">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

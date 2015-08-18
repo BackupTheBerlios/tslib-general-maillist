@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib configuration for ELO on ADS5121e board
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20configuration%20for%20ELO%20on%20ADS5121e%20board&In-Reply-To=%3Cc56e0c650909170108i71b68150h9edfda8327ad361%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000228.html">
+   <LINK REL="Next"  HREF="000230.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib configuration for ELO on ADS5121e board</H1>
+    <B>yigit agabey</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20configuration%20for%20ELO%20on%20ADS5121e%20board&In-Reply-To=%3Cc56e0c650909170108i71b68150h9edfda8327ad361%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] tslib configuration for ELO on ADS5121e board">yagabey at gmail.com
+       </A><BR>
+    <I>Thu Sep 17 10:08:24 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000228.html">[Tslib-general] need more pressure to get exact co-ordinate reading - Calibration problem ??
+</A></li>
+        <LI>Next message: <A HREF="000230.html">[Tslib-general] ts_calibrate does not work?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#229">[ date ]</a>
+              <a href="thread.html#229">[ thread ]</a>
+              <a href="subject.html#229">[ subject ]</a>
+              <a href="author.html#229">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+I am trying to run tslib on a powerpc based board ADS5121 with a touchscreen
+ELO 1715L. I built kernel with ELO Touch Serial Driver support. I cross
+compiled tslib succesfully and put tslib files on my board.
+
+A folder is created  &quot;./sys/bus/serio/drivers/elo&quot; with contents &quot;bind,
+bind_mode,    description,  uevent,   unbind&quot;. And when I &quot;cat ttyPSC0&quot; I
+get some output from touch screen.
+My env parameters are:
+
+export TSLIB_CONSOLEDEVICE=/dev/ttyPSC0
+export TSLIB_CONFFILE=/etc/ts.conf
+export TSLIB_CALIBFILE=/etc/pointercal
+export TSLIB_FBDEVICE=/dev/fb0
+export TSLIB_TSDEVICE=/sys/bus/serio/drivers/elo/uevent
+export TSLIB_TSEVENTTYPE=INPUT
+export TSLIB_PLUGINDIR=/lib/ts
+
+
+in ts.conf file I uncomment &quot;module_raw input&quot; .
+Everything is ok till here. The problem starts now.
+When i run ts_calibrate, I get :
+
+Couldnt load module input
+No raw modules loaded.
+ts_config: Success
+
+Do I make a mistake in the configuration? Actually I am suspicious about the
+value of TSLIB_TSDEVICE. But there is no &quot;/dev/input/event&quot; kind of thing.
+What should i do?
+
+Thanks in advance..
+Yigit
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20090917/1f0dc2bc/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20090917/1f0dc2bc/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000228.html">[Tslib-general] need more pressure to get exact co-ordinate reading - Calibration problem ??
+</A></li>
+	<LI>Next message: <A HREF="000230.html">[Tslib-general] ts_calibrate does not work?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#229">[ date ]</a>
+              <a href="thread.html#229">[ thread ]</a>
+              <a href="subject.html#229">[ subject ]</a>
+              <a href="author.html#229">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

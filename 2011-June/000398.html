@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Aberration in the ts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Aberration%20in%20the%20ts&In-Reply-To=%3C201106281238.15267.perezmeyer%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000397.html">
+   <LINK REL="Next"  HREF="000399.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Aberration in the ts</H1>
+    <B>Lisandro Dami&#225;n Nicanor P&#233;rez Meyer</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Aberration%20in%20the%20ts&In-Reply-To=%3C201106281238.15267.perezmeyer%40gmail.com%3E"
+       TITLE="[Tslib-general] Aberration in the ts">perezmeyer at gmail.com
+       </A><BR>
+    <I>Tue Jun 28 17:38:08 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000397.html">[Tslib-general] [PATCH] add support for a ELO 1529L 15&#8221; LCD Touchmonitor
+</A></li>
+        <LI>Next message: <A HREF="000399.html">[Tslib-general] Working with Capacitive touch screen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#398">[ date ]</a>
+              <a href="thread.html#398">[ thread ]</a>
+              <a href="subject.html#398">[ subject ]</a>
+              <a href="author.html#398">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello! This is my first post to this list, and I may be missing some doc, so 
+please bare with me :-)
+
+I have aberration on using a ts with tslib, as you can see in [0][1][2]
+
+[0] &lt;<A HREF="http://perezmeyer.com.ar/temp/G100415N0176%202011-03-29.jpg">http://perezmeyer.com.ar/temp/G100415N0176%202011-03-29.jpg</A>&gt;
+[1] &lt;<A HREF="http://perezmeyer.com.ar/temp/G100415N0176%202011-06-22.jpg">http://perezmeyer.com.ar/temp/G100415N0176%202011-06-22.jpg</A>&gt;
+[3] &lt;<A HREF="http://perezmeyer.com.ar/temp/G100415N0176%202011-06-23.jpg">http://perezmeyer.com.ar/temp/G100415N0176%202011-06-23.jpg</A>&gt;
+
+The ts has been previously calibrated with ts_calibrate.
+
+Is there a way to solve this problem? For example, I ran ts_harvest, but I 
+don't know if the data it outputs it's somehow usable.
+
+My ts.conf:
+
+--8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;--
+
+# Uncomment if you wish to use the linux input layer event interface
+module_raw input
+
+# Uncomment if you're using a device with a UCB1200/1300/1400 TS interface
+#module_raw ucb1x00
+
+module pthres pmin=1
+module variance delta=30
+module dejitter delta=100
+module linear
+
+--8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;----8&lt;--
+
+On a side note, I have a UCB1400, and if I comment out module_raw input and 
+uncomment module_raw ucb1x00, the ts doesn't works :-/
+
+Kinds regards, Lisandro.
+
+-- 
+If little green men land in your back yard, hide any little green women
+you've got in the house.
+  Mike Harding, &quot;The Armchair Anarchist's Almanac&quot;
+
+Lisandro Dami&#225;n Nicanor P&#233;rez Meyer
+<A HREF="http://perezmeyer.com.ar/">http://perezmeyer.com.ar/</A>
+<A HREF="http://perezmeyer.blogspot.com/">http://perezmeyer.blogspot.com/</A>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 836 bytes
+Desc: This is a digitally signed message part.
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20110628/009638e3/attachment.pgp">https://lists.berlios.de/pipermail/tslib-general/attachments/20110628/009638e3/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000397.html">[Tslib-general] [PATCH] add support for a ELO 1529L 15&#8221; LCD Touchmonitor
+</A></li>
+	<LI>Next message: <A HREF="000399.html">[Tslib-general] Working with Capacitive touch screen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#398">[ date ]</a>
+              <a href="thread.html#398">[ thread ]</a>
+              <a href="subject.html#398">[ subject ]</a>
+              <a href="author.html#398">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

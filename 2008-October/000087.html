@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Tslib and Elo serial touchscreen
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20and%20Elo%20serial%20touchscreen&In-Reply-To=%3C48EF3437.6070609%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000085.html">
+   <LINK REL="Next"  HREF="000088.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Tslib and Elo serial touchscreen</H1>
+    <B>Hinko Kocevar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20and%20Elo%20serial%20touchscreen&In-Reply-To=%3C48EF3437.6070609%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] Tslib and Elo serial touchscreen">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Fri Oct 10 12:53:43 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000085.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+        <LI>Next message: <A HREF="000088.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#87">[ date ]</a>
+              <a href="thread.html#87">[ thread ]</a>
+              <a href="subject.html#87">[ subject ]</a>
+              <a href="author.html#87">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Peter Geoghegan wrote:
+&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> I'm writing a Linux application that will rely on an Elo touch screen. I
+</I>&gt;<i> have it working with X.org on a 2.6 kernel, using proprietary drivers (Elo's
+</I>&gt;<i> own 3.2 unified serial driver for Linux).
+</I>&gt;<i> 
+</I>&gt;<i> I can't seem to find any specific information about getting this device,
+</I>&gt;<i> which uses a simple proprietary protocol, to work with Tslib - Google hasn't
+</I>&gt;<i> been helpful, and there is no reference to Elo products in ts.conf . This is
+</I>&gt;<i> surprising, as there is direct support for it in the Linux kernel (although,
+</I>&gt;<i> as I've said, I'm not currently availing of that support).
+</I>&gt;<i> 
+</I>&gt;<i> If someone could at least point me in the right direction, that would be
+</I>&gt;<i> greatly appreciated.
+</I>
+Looking at the elo kernel driver code it seems that the driver registers as 
+input device with ABS_X, ABS_Y, ABS_PRESSURE parameters. Which looks like a
+valid touchscreen device to me. Try using 'module_raw input' in ts.conf and
+look at /proc/bus/input/devices where the device soulhd be registered as a 
+eventx. Then run evtest and/or ts_test on that /dev/input/eventx.
+
+HTH,
+Hinko
+
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000085.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+	<LI>Next message: <A HREF="000088.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#87">[ date ]</a>
+              <a href="thread.html#87">[ thread ]</a>
+              <a href="subject.html#87">[ subject ]</a>
+              <a href="author.html#87">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Rebuilding tslib
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Rebuilding%20tslib&In-Reply-To=%3CAANLkTikUO8KjpnCSiCvWS%2Bot7wn%3DadusTr7XWybWtCtt%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000356.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Rebuilding tslib</H1>
+    <B>David Rea</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Rebuilding%20tslib&In-Reply-To=%3CAANLkTikUO8KjpnCSiCvWS%2Bot7wn%3DadusTr7XWybWtCtt%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Rebuilding tslib">dave at daverea.com
+       </A><BR>
+    <I>Fri Jan 14 21:31:04 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000356.html">[Tslib-general] Rebuilding tslib
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#357">[ date ]</a>
+              <a href="thread.html#357">[ thread ]</a>
+              <a href="subject.html#357">[ subject ]</a>
+              <a href="author.html#357">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Jan 14, 2011 at 3:04 PM, Chris Larson &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">clarson at kergoth.com</A>&gt; wrote:
+&gt;<i> FYI, if you use a more standard prefix (e.g. --prefix=/usr), and
+</I>&gt;<i> instead run make DESTDIR=path/to/install-result install to get the
+</I>&gt;<i> files where you want them, tslib should be able to find pointercal,
+</I>&gt;<i> ts.conf, etc just fine using the default paths, so you could stick to
+</I>&gt;<i> just setting TSLIB_DEVICE and QWS_MOUSE_PROTO.
+</I>
+Good point - though in my case the target filesystem isn't accessible
+from the shell; the vendor's toolchain builds up a jffs2 image which
+you then drop on the target by TFTP. Though they do provide a shell
+script to add things to the virtual rootfs before building, so I
+suppose a hook in the makefile could just run that for the 'install'
+target...
+
+Thanks for your work on tslib!
+
+Regards,
+Dave
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000356.html">[Tslib-general] Rebuilding tslib
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#357">[ date ]</a>
+              <a href="thread.html#357">[ thread ]</a>
+              <a href="subject.html#357">[ subject ]</a>
+              <a href="author.html#357">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

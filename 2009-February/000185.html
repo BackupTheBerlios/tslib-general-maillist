@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Doubt with TSLIB a my touchscreen,	problem with 	some events...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Doubt%20with%20TSLIB%20a%20my%20touchscreen%2C%0A%09problem%20with%20%09some%20events...&In-Reply-To=%3C6185ba530902020812o38018196w986728968c95a0bd%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000186.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Doubt with TSLIB a my touchscreen,	problem with 	some events...</H1>
+    <B>webquinty quinty</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Doubt%20with%20TSLIB%20a%20my%20touchscreen%2C%0A%09problem%20with%20%09some%20events...&In-Reply-To=%3C6185ba530902020812o38018196w986728968c95a0bd%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Doubt with TSLIB a my touchscreen,	problem with 	some events...">webquinty at gmail.com
+       </A><BR>
+    <I>Mon Feb  2 17:12:47 CET 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000186.html">[Tslib-general] Module for Hampshire touch screen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#185">[ date ]</a>
+              <a href="thread.html#185">[ thread ]</a>
+              <a href="subject.html#185">[ subject ]</a>
+              <a href="author.html#185">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Hinko,
+
+Well, I have changed my kernel module and now kernel report me this:
+
+Absolute Axis:
+     Absolute axis 0x00: X axis
+     Absolute axis 0x01: Y axis
+     Absolute axis 0x18: Pressure.
+
+After this change, I have tested tslib and it works fine, but with QT does
+not work properly.
+Anyway, thank you very much for your idea.
+
+Best regards.
+
+
+2009/1/30 Hinko Kocevar &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>&gt;
+
+&gt;<i> webquinty quinty wrote:
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I would like to use my touchscreen with QT embedded and TSLIB btu I have
+</I>&gt;<i> a
+</I>&gt;<i> &gt; problem, my touch has not a event, ABS_PRESSURE.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Support events types:
+</I>&gt;<i> &gt;     Event type 0x00: event sync
+</I>&gt;<i> &gt;     Event type 0x01: Keys or buttons
+</I>&gt;<i> &gt;     Event type 0x03: Absolute axis
+</I>&gt;<i> &gt;     Event type 0x04: Something miscellaneous
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Absolute Axis:
+</I>&gt;<i> &gt;     Absolute axis 0x00: X axis
+</I>&gt;<i> &gt;     Absolute axis 0x01: Y axis
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; My touch has not more events and input-raw.c of tslib make a check of
+</I>&gt;<i> touch
+</I>&gt;<i> &gt; and it fail to check because there is not ABS_PRESSURE event.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Can I change source code of input-raw.c to use my touch or is it very
+</I>&gt;<i> &gt; difficult to do it???
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> That should do the trick, or you may fix the kernel module driver
+</I>&gt;<i> for your touchscreen device to report ABS_PRESSURE..
+</I>&gt;<i>
+</I>&gt;<i> HTH,
+</I>&gt;<i> Hinko
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Hinko Ko&#269;evar, OSS developer
+</I>&gt;<i> &#268;ETRTA POT, d.o.o.
+</I>&gt;<i> Planina 3, 4000 Kranj, SI EU
+</I>&gt;<i> tel     ++386 (0) 4 280 66 03
+</I>&gt;<i> e-mail  <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+</I>&gt;<i> http    www.cetrtapot.si
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20090202/bd28a1ff/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20090202/bd28a1ff/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000186.html">[Tslib-general] Module for Hampshire touch screen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#185">[ date ]</a>
+              <a href="thread.html#185">[ thread ]</a>
+              <a href="subject.html#185">[ subject ]</a>
+              <a href="author.html#185">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

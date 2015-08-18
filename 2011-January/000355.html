@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Rebuilding tslib
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Rebuilding%20tslib&In-Reply-To=%3CAANLkTinXiijU-%3DOZNbvt9N2yJpt46hz3zBkfBuxBv7y3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000354.html">
+   <LINK REL="Next"  HREF="000356.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Rebuilding tslib</H1>
+    <B>David Rea</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Rebuilding%20tslib&In-Reply-To=%3CAANLkTinXiijU-%3DOZNbvt9N2yJpt46hz3zBkfBuxBv7y3%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Rebuilding tslib">dave at daverea.com
+       </A><BR>
+    <I>Fri Jan 14 21:00:19 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000354.html">[Tslib-general] Rebuilding tslib
+</A></li>
+        <LI>Next message: <A HREF="000356.html">[Tslib-general] Rebuilding tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#355">[ date ]</a>
+              <a href="thread.html#355">[ thread ]</a>
+              <a href="subject.html#355">[ subject ]</a>
+              <a href="author.html#355">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello once again-
+
+I've managed to figure out the build by combing several web sites and
+the mailing list archives. For the benefit of those Googling for this
+in the future, I'm following up with a summary of how I got it
+working.
+
+1) Recent versions of tslib work with 3M MicroTouch serial touch
+screens natively; a new plugin isn't necessary.
+2) The &quot;selected device is not a touchscreen I understand&quot; error was
+removed from tslib after November 2008, so dev's seeing this error
+should strongly consider updating to a more-recent tslib.
+
+Here are the commands necessary to cross-compile tslib for the iMX51:
+
+`git clone&#160;<A HREF="https://github.com/kergoth/tslib.git">https://github.com/kergoth/tslib.git</A> &amp;&amp; cd tslib`
+`./autogen.sh`
+`./configure --prefix=&quot;/path/to/install-result&quot;
+CC=/path/to/arm-linux-gcc --build=i386-linux --host=arm-linux
+--target=arm`
+`make &amp;&amp; make install`
+
+&gt;<i>From there, the binaries in tslib/install-result/ must be added to the
+</I>target rootfs. Once the rootfs is downloaded, set the following
+environment variables...
+
+TSLIB_DEVICE=/dev/input/event0
+TSLIB_PLUGINDIR=/lib/ts
+TSLIB_CONFFILE=/etc/ts.conf
+TSLIB_CALIBFILE=/etc/pointercal
+QWS_MOUSE_PROTO=tslib:/dev/input/event0 &lt;-- optional;&#160;connects Qt's
+QWS with tslib
+
+...then `touch /etc/pointercal` (if it doesn't already exist) and run
+ts_calibrate wherever you put the binary.&#160;Since ts_calibrate drops its
+results straight into the /etc/pointercal file, you can then run
+ts_test and make sure everything worked.
+
+Again, just posting this for posterity - in case anyone in my shoes is
+Googling for how to do it, and stumbles into the archives as I did. I
+hope someday it proves helpful!
+
+Cheers, and Thanks,
+Dave
+
+On Fri, Jan 14, 2011 at 9:28 AM, David Rea &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">dave at daverea.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> .......*and* I've just discovered autogen.sh! Sorry for the list noise there.
+</I>&gt;<i> Cross compilation questions are still outstanding, though - now that I have a ./configure script, are there any options besides --host=arm-linux that I need to be passing? Is there a way I could run the configure to use the build toolchain supplied by the board vendor?
+</I>&gt;<i> Sorry for the somewhat basic questions, but my cross-compilation experience is with bare-metal C code running on microcontrollers!
+</I>&gt;<i> Cheers &amp; Thanks,
+</I>&gt;<i> Dave
+</I>&gt;<i> On Fri, Jan 14, 2011 at 9:19 AM, David Rea &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">dave at daverea.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi All-
+</I>&gt;&gt;<i> Based on presence of the &quot;selected device is not a touchscreen I understand&quot; error on my device, I'm thinking that I am running a pretty old version of tslib. The Git log shows that this error (and the portion of the file descriptor check that triggered it) were removed in November 2008. And based on Thomas' plug-in advice in my previous thread, it looks like I'm going to have to rebuild tslib either way.
+</I>&gt;&gt;<i> The problem is, I'm not sure where to start on doing that. When I try to run ./configure in the repository root or src/ directories, I get a bash error saying &quot;No such file or directory&quot; - but I see the configure.ac present! I've made sure autoconf is installed and tried to follow the directions in INSTALL, but no dice.
+</I>&gt;&gt;<i> When I run `autoconf` or `automake` in the source directory, I get piles of errors. Is there a different build procedure I should be following than the one in INSTALL?
+</I>&gt;&gt;<i> I'm also concerned about making sure my configuration is for the iMX51 target, not my build machine. It looks like it's necessary to add a &quot;--host=arm-linux&quot; switch to the configure command, and then I'm assuming that once I have a config.h file I can pull the whole thing into my vendor-supplied IDE and build from there. Does this sound reasonable?
+</I>&gt;&gt;<i> Thanks Very Much,
+</I>&gt;&gt;<i> Dave
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000354.html">[Tslib-general] Rebuilding tslib
+</A></li>
+	<LI>Next message: <A HREF="000356.html">[Tslib-general] Rebuilding tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#355">[ date ]</a>
+              <a href="thread.html#355">[ thread ]</a>
+              <a href="subject.html#355">[ subject ]</a>
+              <a href="author.html#355">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

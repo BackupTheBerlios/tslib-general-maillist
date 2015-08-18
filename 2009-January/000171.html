@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] query on tslib,Qt and touch devices
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20query%20on%20tslib%2CQt%20and%20touch%20devices&In-Reply-To=%3C496EFA21.8000508%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000170.html">
+   <LINK REL="Next"  HREF="000172.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] query on tslib,Qt and touch devices</H1>
+    <B>Hinko Kocevar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20query%20on%20tslib%2CQt%20and%20touch%20devices&In-Reply-To=%3C496EFA21.8000508%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] query on tslib,Qt and touch devices">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Thu Jan 15 09:56:01 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000170.html">[Tslib-general] query on tslib,Qt and touch devices
+</A></li>
+        <LI>Next message: <A HREF="000172.html">[Tslib-general] Reg: calibration issue in qtopia-free-2.2.0 with	tslib-1.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#171">[ date ]</a>
+              <a href="thread.html#171">[ thread ]</a>
+              <a href="subject.html#171">[ subject ]</a>
+              <a href="author.html#171">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Avishek_Sharma wrote:
+&gt;<i> Hi everyone.
+</I>&gt;<i> I  got  two questions,one regarding 'tslib' ,the other about 'Qt' and touch devices.
+</I>&gt;<i> 
+</I>&gt;<i>   tslib problem--
+</I>&gt;<i>  I tried installing tslib in my system(linux fedora) but it's not working.
+</I>
+&gt;<i>   I tried  ./autogen.sh to generate the 'configure' file but ,I am getting the error  bash: ./autogen.sh:Permission denied.
+</I>
+Try:
+$ sh autogen.sh
+That is probably because autogen.sh is not marked as executable file/script.
+
+&gt;<i>   The 'configure' file is   not getting created.
+</I>&gt;<i>   I also tried ./autoreconf-f-i  but that's  showing 'No such file or directory'.
+</I>&gt;<i>   Please advice on what to do?
+</I>&gt;<i> 
+</I>
+No, use like this:
+$ autoreconf -f -i
+
+Notice the spaces.. autoreconf is system utility and is probably not located in your current directory as you were trying to use it.
+
+This is very basic Linux stuff, I suggest diving into some a Linux book to get to know the system better.
+
+&gt;<i>  Qt confusion--
+</I>&gt;<i>  I have Qt for Linux/x11 installed in my PC(which Isn't touch senstive).If I want to develop touch applications,do I have to switch to Qt for  embedded linux ?Or,can I work on 'qt for linux/x11' ?
+</I>&gt;<i> From what I understood so far(which is very less),I think that to develop applications for touch senstive PCs(meaning bigger devices with more RAM etc) one would go for 'Qt for Linux/x11'.
+</I>&gt;<i> If one plans to develop applications for Mobiles,PDAs, 'Qt for embedded linux'should be the choice.Have I got it right?
+</I>&gt;<i> :)..please correct me if I am wrong .
+</I>&gt;<i> 
+</I>
+This is probably best to ask on Qt page/mailing list. But as you said embedded variation of library should probably make more sense on and embedded device. Especially if you plan NOT to run X11 or similar..
+
+HTH,
+Hinko
+
+-- 
+Hinko Ko&#269;evar, OSS developer
+&#268;ETRTA POT, d.o.o.
+Planina 3, 4000 Kranj, SI EU
+tel     ++386 (0) 4 280 66 03
+e-mail  <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+http    www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000170.html">[Tslib-general] query on tslib,Qt and touch devices
+</A></li>
+	<LI>Next message: <A HREF="000172.html">[Tslib-general] Reg: calibration issue in qtopia-free-2.2.0 with	tslib-1.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#171">[ date ]</a>
+              <a href="thread.html#171">[ thread ]</a>
+              <a href="subject.html#171">[ subject ]</a>
+              <a href="author.html#171">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

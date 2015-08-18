@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Touch working only horizontal after lib upgrade
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2012-November/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Touch%20working%20only%20horizontal%20after%20lib%20upgrade&In-Reply-To=%3CCAEzV9hk4Lrn4jMQsqirc3EjBy4eib92M4xoQ-pYao7wgQrvvmw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000442.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Touch working only horizontal after lib upgrade</H1>
+    <B>James Coggan</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Touch%20working%20only%20horizontal%20after%20lib%20upgrade&In-Reply-To=%3CCAEzV9hk4Lrn4jMQsqirc3EjBy4eib92M4xoQ-pYao7wgQrvvmw%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Touch working only horizontal after lib upgrade">james.coggan at gmail.com
+       </A><BR>
+    <I>Tue Nov 27 18:02:48 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000442.html">[Tslib-general] tslib + egalax touch controller problems
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#443">[ date ]</a>
+              <a href="thread.html#443">[ thread ]</a>
+              <a href="subject.html#443">[ subject ]</a>
+              <a href="author.html#443">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi guys,
+My first post here
+Anyway, i have and embedded system using tslib version 0.1.1
+The elo touch resistive works perfect with:
+module_raw arctic2
+module pthres pmin=1
+module variance delta=30
+module dejitter delta=100
+module linear
+
+I had to upgrade my system to new libs (because of my qt version) and i
+compiled the tslib same as before
+When i run ts_test, the touch only records horizontal values, and the
+vertical values are always the same, so basically i can move only on 1 line
+Im using the same ts.conf options and the kernel is the same, so i know its
+not the driver
+Any help on this matter?
+Thanks!
+
+-- 
+&lt;<A HREF="http://waduthink.com">http://waduthink.com</A>&gt;
+I'm a WadUthink &lt;<A HREF="http://waduthink.com">http://waduthink.com</A>&gt; maniac!
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20121127/b91fbbb5/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20121127/b91fbbb5/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000442.html">[Tslib-general] tslib + egalax touch controller problems
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#443">[ date ]</a>
+              <a href="thread.html#443">[ thread ]</a>
+              <a href="subject.html#443">[ subject ]</a>
+              <a href="author.html#443">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

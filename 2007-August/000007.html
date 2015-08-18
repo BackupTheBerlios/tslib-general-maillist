@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] problem with data type in input raw
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20problem%20with%20data%20type%20in%20input%20raw&In-Reply-To=%3C46CEEAF6.1040404%40dave.eu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] problem with data type in input raw</H1>
+    <B>Matteo Vit</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20problem%20with%20data%20type%20in%20input%20raw&In-Reply-To=%3C46CEEAF6.1040404%40dave.eu%3E"
+       TITLE="[Tslib-general] problem with data type in input raw">matteo.vit at dave.eu
+       </A><BR>
+    <I>Fri Aug 24 16:28:06 CEST 2007</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7">[ date ]</a>
+              <a href="thread.html#7">[ thread ]</a>
+              <a href="subject.html#7">[ subject ]</a>
+              <a href="author.html#7">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I've built the 1.0.0 version of tslib and looking through the source 
+code in input_raw.c inside check_fd, absbit is u_int64_t (unsigned long 
+long), but the bitmask in input.h inside the kernel tree is unsigned 
+long. So the bitmask check can fail even if it is correct. Is it correct 
+or there something wrong with my compiler (gcc 4.1.2) ?
+
+-- 
+Matteo VIT
+
+DAVE Srl - Electronics System House
+via Forniz 2/1 33080 Porcia (PN) - Italy
+Telephone: +39.0434.921215
+Telefax: +39.0434.1994030
+web: www.dave.eu
+e-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">matteo.vit at dave.eu</A>
+how to reach us: <A HREF="http://mail.map24.com/dave">http://mail.map24.com/dave</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7">[ date ]</a>
+              <a href="thread.html#7">[ thread ]</a>
+              <a href="subject.html#7">[ subject ]</a>
+              <a href="author.html#7">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

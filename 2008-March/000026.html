@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Tslib stylus problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20stylus%20problem&In-Reply-To=%3C70EBC5652FA82044842A32C185EB46413922%40ala-mail09.corp.ad.wrs.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000023.html">
+   <LINK REL="Next"  HREF="000028.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Tslib stylus problem</H1>
+    <B>Shapiro, Alex (OTTAWA)</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20stylus%20problem&In-Reply-To=%3C70EBC5652FA82044842A32C185EB46413922%40ala-mail09.corp.ad.wrs.com%3E"
+       TITLE="[Tslib-general] Tslib stylus problem">Alex.Shapiro at windriver.com
+       </A><BR>
+    <I>Sun Mar 30 04:03:35 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000023.html">[Tslib-general] Tslib stylus problem
+</A></li>
+        <LI>Next message: <A HREF="000028.html">[Tslib-general] Tslib stylus problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#26">[ date ]</a>
+              <a href="thread.html#26">[ thread ]</a>
+              <a href="subject.html#26">[ subject ]</a>
+              <a href="author.html#26">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Kaius,
+
+Please find attachments for the evtest utility output.
+I have an old environments build with 2.6.14 kernel. The touchscreen on the same h/w works fine in my old environment, I tested its output as well (good-evtest.txt).
+
+Both outputs tested when I point the stylus on the following:
+Up-left -&gt; up-right -&gt; bottom-right -&gt; bottom-left -&gt; centre
+For my bad-evtest.txt (in the new environment 2.6.21), the centre tested with the finger.
+
+Thanks,
+Alex
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general-bounces at lists.berlios.de</A>] On Behalf Of Kaius H&#228;ggblom
+Sent: Friday, March 28, 2008 2:15 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+Subject: Re: [Tslib-general] Tslib stylus problem
+
+Hi.
+ 
+&gt;<i> I got some progress. when calibrating with 800x480 resolution, I 
+</I>&gt;<i> notice that the ts_read_raw() reads X and Y values which exceeds my 
+</I>&gt;<i> screen resolution:
+</I>
+Touchscreen raw X and Y have no direct correlation to used screen resolution.
+
+Could you send the output of the event interface, caught with for example the evtest utility?
+
+r,
+Kaius
+
+_______________________________________________
+Tslib-general mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: good-evtest.txt
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080329/5c289ab1/attachment.txt">https://lists.berlios.de/pipermail/tslib-general/attachments/20080329/5c289ab1/attachment.txt</A>&gt;
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: bad-evtest.txt
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080329/5c289ab1/attachment-0001.txt">https://lists.berlios.de/pipermail/tslib-general/attachments/20080329/5c289ab1/attachment-0001.txt</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000023.html">[Tslib-general] Tslib stylus problem
+</A></li>
+	<LI>Next message: <A HREF="000028.html">[Tslib-general] Tslib stylus problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#26">[ date ]</a>
+              <a href="thread.html#26">[ thread ]</a>
+              <a href="subject.html#26">[ subject ]</a>
+              <a href="author.html#26">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Touchscreen calibration problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Touchscreen%20calibration%20problem&In-Reply-To=%3C1220406439.7042.29.camel%40localhost%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000074.html">
+   <LINK REL="Next"  HREF="000076.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Touchscreen calibration problem</H1>
+    <B>stanley.miao</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Touchscreen%20calibration%20problem&In-Reply-To=%3C1220406439.7042.29.camel%40localhost%3E"
+       TITLE="[Tslib-general] Touchscreen calibration problem">stanley.miao at windriver.com
+       </A><BR>
+    <I>Wed Sep  3 03:47:19 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000074.html">[Tslib-general] button emulation
+</A></li>
+        <LI>Next message: <A HREF="000076.html">[Tslib-general] Touchscreen calibration problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#75">[ date ]</a>
+              <a href="thread.html#75">[ thread ]</a>
+              <a href="subject.html#75">[ subject ]</a>
+              <a href="author.html#75">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Following is my touchscreen calibration information. The bottom right
+point has a big Y value, so the four points construct a trapezium. After
+calibration,  the touchscreen still isn't accurate. If I draw a square
+with the draw function of ts_test, it will give me a trapezium. 
+
+Is it because there is some problems with my touchscreen ? or because
+the calibration algorithm is imperfect ?
+
+Thanks
+Stanley.
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">root at localhost</A>:/root&gt; ts_calibrate 
+xres = 240, yres = 320
+Took 33 samples...
+Top left : X = 2492 Y =  122
+Took 26 samples...
+Top right : X = 2221 Y =  336
+Took 26 samples...
+Bot right : X = 2728 Y =  740
+Took 27 samples...
+Bot left : X = 2789 Y =  235
+Took 22 samples...
+Center : X = 2568 Y =  335
+532.714355 -0.200746 0.285931
+-908.327820 0.396201 0.153282
+Calibration constants: 34911968 -13156 18738 -59528172 25965 10045
+65536 
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000074.html">[Tslib-general] button emulation
+</A></li>
+	<LI>Next message: <A HREF="000076.html">[Tslib-general] Touchscreen calibration problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#75">[ date ]</a>
+              <a href="thread.html#75">[ thread ]</a>
+              <a href="subject.html#75">[ subject ]</a>
+              <a href="author.html#75">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

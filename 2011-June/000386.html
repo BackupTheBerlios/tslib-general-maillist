@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] problems reading touchscreen values
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20problems%20reading%20touchscreen%20values&In-Reply-To=%3C1307713190.3146.3219.camel%40lws-gamez%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000385.html">
+   <LINK REL="Next"  HREF="000387.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] problems reading touchscreen values</H1>
+    <B>Teresa Gamez</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20problems%20reading%20touchscreen%20values&In-Reply-To=%3C1307713190.3146.3219.camel%40lws-gamez%3E"
+       TITLE="[Tslib-general] problems reading touchscreen values">T.Gamez at phytec.de
+       </A><BR>
+    <I>Fri Jun 10 15:39:50 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000385.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+        <LI>Next message: <A HREF="000387.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#386">[ date ]</a>
+              <a href="thread.html#386">[ thread ]</a>
+              <a href="subject.html#386">[ subject ]</a>
+              <a href="author.html#386">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Am Freitag, den 10.06.2011, 13:58 +0200 schrieb Vanalme Filip:
+&gt;<i> &gt; -----Original Message-----
+</I>&gt;<i> &gt; From: Vanalme Filip
+</I>&gt;<i> &gt; Sent: vrijdag 10 juni 2011 10:44
+</I>&gt;<i> &gt; To: 'Teresa Gamez'
+</I>&gt;<i> &gt; Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+</I>&gt;<i> &gt; Subject: RE: [Tslib-general] problems reading touchscreen values
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; -----Original Message-----
+</I>&gt;<i> &gt; &gt; From: Teresa Gamez [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">T.Gamez at phytec.de</A>]
+</I>&gt;<i> &gt; &gt; Sent: donderdag 9 juni 2011 11:33
+</I>&gt;<i> &gt; &gt; To: Vanalme Filip
+</I>&gt;<i> &gt; &gt; Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; Subject: Re: [Tslib-general] problems reading touchscreen values
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Hello Filip,
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; I noticed the same problem on our board.
+</I>&gt;<i> &gt; &gt; The values come right from the controller. It seems that if the pressure
+</I>&gt;<i> &gt; &gt; is getting lower, the controller starts sending wrong x and y values.
+</I>&gt;<i> &gt; &gt; I wrote a small patch for the driver to work around this issue.
+</I>&gt;<i> &gt; &gt; It throws away meassurements with low preassure values.
+</I>&gt;<i> &gt; &gt; It works for us but I'm not shure if this is the right solution.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Teresa
+</I>&gt;<i> 
+</I>&gt;<i> [Filip] Hi Teresa,
+</I>&gt;<i> You did not mention it in your reply, but I suppose you are also using the mc13783 device to handle the touchscreen ? And the workaround was probably done in mc13783_ts.c ?
+</I>&gt;<i> 
+</I>
+Hello Filip,
+
+yes I also use the mc13783 and made the workaround in the mc13783_ts.c.
+I have made some tests to come up with the pressure value I check against.
+Here is the patch.
+
+Teresa
+
+---
+ drivers/input/touchscreen/mc13783_ts.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/drivers/input/touchscreen/mc13783_ts.c b/drivers/input/touchscreen/mc13783_ts.c
+index c5bc62d..7e5c554 100644
+--- a/drivers/input/touchscreen/mc13783_ts.c
++++ b/drivers/input/touchscreen/mc13783_ts.c
+@@ -100,6 +100,12 @@ static void mc13783_ts_report_sample(struct mc13783_ts_priv *priv)
+ 			 y2 - y0 &lt; sample_tolerance)) {
+ 		/* report the median coordinate and average pressure */
+ 		if (cr0) {
++
++			if (cr0 &lt; 180) {
++				dev_dbg(&amp;idev-&gt;dev, &quot;Wrong measurement?\n&quot;);
++				return;
++			}
++
+ 			input_report_abs(idev, ABS_X, x1);
+ 			input_report_abs(idev, ABS_Y, y1);
+ 
+-- 
+1.7.0.4
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000385.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+	<LI>Next message: <A HREF="000387.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#386">[ date ]</a>
+              <a href="thread.html#386">[ thread ]</a>
+              <a href="subject.html#386">[ subject ]</a>
+              <a href="author.html#386">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

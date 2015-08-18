@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] problem in installing 'tslib
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20problem%20in%20installing%20%27tslib&In-Reply-To=%3C4F9E024FA551474DAA71C34976CDE0B90444E4FD09%40hstmbx001.corp.satyam.ad%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000161.html">
+   <LINK REL="Next"  HREF="000162.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] problem in installing 'tslib</H1>
+    <B>Avishek_Sharma</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20problem%20in%20installing%20%27tslib&In-Reply-To=%3C4F9E024FA551474DAA71C34976CDE0B90444E4FD09%40hstmbx001.corp.satyam.ad%3E"
+       TITLE="[Tslib-general] problem in installing 'tslib">Avishek_Sharma at satyam.com
+       </A><BR>
+    <I>Thu Jan 15 04:56:41 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000161.html">[Tslib-general] problem in installing 'tslib
+</A></li>
+        <LI>Next message: <A HREF="000162.html">[Tslib-general] Filtering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#167">[ date ]</a>
+              <a href="thread.html#167">[ thread ]</a>
+              <a href="subject.html#167">[ subject ]</a>
+              <a href="author.html#167">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi, thanks for the suggestion.I will try it out.
+regards,
+Avishek
+________________________________________
+From: Chris Larson [<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">kergoth at gmail.com</A>]
+Sent: Tuesday, January 13, 2009 9:33 PM
+To: Avishek_Sharma
+Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+Subject: Re: [Tslib-general] problem in installing 'tslib
+
+Builds out of svn are different from builds from releeases.  Svn
+builds require that you run the scripts that generate configure, among
+other files.  Run ./autogen.sh or autoreconf -f -i prior to the
+./configure.
+
+On Mon, Jan 12, 2009 at 11:44 PM, Avishek_Sharma
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Avishek_Sharma at satyam.com</A>&gt; wrote:
+&gt;<i> Hi everyone.
+</I>&gt;<i>  I am working on a Linux system(fedora).
+</I>&gt;<i>  I downloaded the 'tslib' source code from berlios and tried to install it as suggested in the INSTALL file in the folder.But,when I try the ./configure(the very first command in the installation process) I got  the message.
+</I>&gt;<i>
+</I>&gt;<i>  bash: ./configure : No such file or directory.
+</I>&gt;<i> (I also tried the sh ./configure but got the same message)
+</I>&gt;<i>
+</I>&gt;<i> The path of my tslib source code folder is /root/tslib-1.0
+</I>&gt;<i>
+</I>&gt;<i> In the tslib-1.0 folder,the files/folders present are -
+</I>&gt;<i> Folders -&gt;etc, m4, plugins, src, tests
+</I>&gt;<i> Files-&gt;acinclude.m4, autogen-clean.sh,Authors, autogen.sh,Changelog,configure.ac,COPYING,INSTALL,Makefile.am,NEWS,README,tslib-pc.in
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Please advice/explain on how to proceed.I am new to this so,I don't have any idea on what's wrong and how to install it properly.
+</I>&gt;<i> Thanks in advance.
+</I>&gt;<i>
+</I>&gt;<i> Avishek
+</I>&gt;<i>
+</I>&gt;<i> DISCLAIMER:
+</I>&gt;<i> This email (including any attachments) is intended for the sole use of the intended recipient/s and may contain material that is CONFIDENTIAL AND PRIVATE COMPANY INFORMATION. Any review or reliance by others or copying or distribution or forwarding of any or all of the contents in this message is STRICTLY PROHIBITED. If you are not the intended recipient, please contact the sender by email and delete all copies; your cooperation in this regard is appreciated.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>
+</I>
+
+
+--
+Chris Larson
+clarson at kergoth dot com
+clarson at mvista dot com
+Founder - BitBake, OpenEmbedded, OpenZaurus
+Maintainer - Tslib
+Software Engineer
+MontaVista Software, Inc.
+
+DISCLAIMER:
+This email (including any attachments) is intended for the sole use of the intended recipient/s and may contain material that is CONFIDENTIAL AND PRIVATE COMPANY INFORMATION. Any review or reliance by others or copying or distribution or forwarding of any or all of the contents in this message is STRICTLY PROHIBITED. If you are not the intended recipient, please contact the sender by email and delete all copies; your cooperation in this regard is appreciated.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000161.html">[Tslib-general] problem in installing 'tslib
+</A></li>
+	<LI>Next message: <A HREF="000162.html">[Tslib-general] Filtering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#167">[ date ]</a>
+              <a href="thread.html#167">[ thread ]</a>
+              <a href="subject.html#167">[ subject ]</a>
+              <a href="author.html#167">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

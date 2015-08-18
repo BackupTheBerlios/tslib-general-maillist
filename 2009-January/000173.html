@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Reg: calibration issue in qtopia-free-2.2.0 with tslib-1.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Reg%3A%20calibration%20issue%20in%20qtopia-free-2.2.0%0A%20with%20tslib-1.0&In-Reply-To=%3C49759D57.1090109%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000172.html">
+   <LINK REL="Next"  HREF="000175.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Reg: calibration issue in qtopia-free-2.2.0 with tslib-1.0</H1>
+    <B>Hinko Kocevar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Reg%3A%20calibration%20issue%20in%20qtopia-free-2.2.0%0A%20with%20tslib-1.0&In-Reply-To=%3C49759D57.1090109%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] Reg: calibration issue in qtopia-free-2.2.0 with tslib-1.0">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Tue Jan 20 10:45:59 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000172.html">[Tslib-general] Reg: calibration issue in qtopia-free-2.2.0 with	tslib-1.0
+</A></li>
+        <LI>Next message: <A HREF="000175.html">[Tslib-general] tslib fails to compile on Ubuntu 8.10+, easy patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#173">[ date ]</a>
+              <a href="thread.html#173">[ thread ]</a>
+              <a href="subject.html#173">[ subject ]</a>
+              <a href="author.html#173">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>praveen wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I am working in PXA270 reference board. In our board we used UCB1400 touch 
+</I>&gt;<i> screen controller. we have ported linux-2.6.25 in our board. Now I am using 
+</I>&gt;<i> qtopia-free-2.2.0 with tslib-1.0 to bring up touch screen in our board. 
+</I>&gt;<i> 
+</I>&gt;<i> I am using input module in tslib-1.0. I have calibrated using ts_calibrate 
+</I>&gt;<i> application. And I have tested the application using ts_test application and 
+</I>&gt;<i> the calibration is good.
+</I>&gt;<i> 
+</I>&gt;<i> But I am facing issue when I am porting qtopia-free-2.2.0 above tslib-1.0. In 
+</I>&gt;<i> qtopia calibration is not good, but in tslib-1.0 test application calibration 
+</I>&gt;<i> is good. 
+</I>&gt;<i> 
+</I>&gt;<i> Is any thing I have to do in qtopia to bring the proper calibration? 
+</I>&gt;<i> 
+</I>&gt;<i> Qtopia-free-2.2.0 itself as one calibration application, will it help for this 
+</I>&gt;<i> issue?
+</I>&gt;<i> 
+</I>&gt;<i> Please anyone help me for this issue. 
+</I>&gt;<i> 
+</I>
+Looking the latest qtopia-free-4.3.2 sources, tslib support seems
+to be in place.
+Look at $ ./qtopia-opensource-4.3.2/qtopiacore/qt/src/plugins/mousedrivers/tslib.
+
+HTH;
+HInko
+
+-- 
+Hinko Ko&#269;evar, OSS developer
+&#268;ETRTA POT, d.o.o.
+Planina 3, 4000 Kranj, SI EU
+tel     ++386 (0) 4 280 66 03
+e-mail  <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+http    www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000172.html">[Tslib-general] Reg: calibration issue in qtopia-free-2.2.0 with	tslib-1.0
+</A></li>
+	<LI>Next message: <A HREF="000175.html">[Tslib-general] tslib fails to compile on Ubuntu 8.10+, easy patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#173">[ date ]</a>
+              <a href="thread.html#173">[ thread ]</a>
+              <a href="subject.html#173">[ subject ]</a>
+              <a href="author.html#173">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

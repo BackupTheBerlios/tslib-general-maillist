@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [RFC] ts_open: turn nonblock-parameter into more generic one called 'flags'.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BRFC%5D%20ts_open%3A%20turn%20nonblock-parameter%20into%0A%20more%20generic%20one%20called%20%27flags%27.&In-Reply-To=%3CAANLkTi%3DvLFotHwMouyhx9c%3DsBmOdCayY6a%2BR9t6Wre6X%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000332.html">
+   <LINK REL="Next"  HREF="000333.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [RFC] ts_open: turn nonblock-parameter into more generic one called 'flags'.</H1>
+    <B>Paulius Zaleckas</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BRFC%5D%20ts_open%3A%20turn%20nonblock-parameter%20into%0A%20more%20generic%20one%20called%20%27flags%27.&In-Reply-To=%3CAANLkTi%3DvLFotHwMouyhx9c%3DsBmOdCayY6a%2BR9t6Wre6X%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] [RFC] ts_open: turn nonblock-parameter into more generic one called 'flags'.">paulius.zaleckas at gmail.com
+       </A><BR>
+    <I>Fri Nov 12 15:05:44 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000332.html">[Tslib-general] [RFC] ts_open: turn nonblock-parameter	into	more generic one called 'flags'.
+</A></li>
+        <LI>Next message: <A HREF="000333.html">[Tslib-general] [RFC] ts_open: turn nonblock-parameter into	more generic one	called 'flags'.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#331">[ date ]</a>
+              <a href="thread.html#331">[ thread ]</a>
+              <a href="subject.html#331">[ subject ]</a>
+              <a href="author.html#331">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Nov 12, 2010 at 2:59 PM, Wolfram Sang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt; wrote:
+&gt;<i> An upcoming driver (dmc) will need O_RDWR and can set it this way. At least all
+</I>&gt;<i> in-tree users use 0 for the old flag which will be converted to the old
+</I>&gt;<i> behaviour O_RDONLY.
+</I>&gt;<i>
+</I>&gt;<i> Signed-off-by: Wolfram Sang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt;
+</I>&gt;<i> ---
+</I>&gt;<i>
+</I>&gt;<i> Are we open for API changes? Might be a bit brave, but the result looks more
+</I>&gt;<i> intuitive IMHO.
+</I>
+IMO it is better to just do a fallback if read/write fails and return is -EPERM
+
+&gt;<i> &#160;src/ts_open.c | &#160; &#160;7 +++----
+</I>&gt;<i> &#160;src/tslib.h &#160; | &#160; &#160;2 +-
+</I>&gt;<i> &#160;2 files changed, 4 insertions(+), 5 deletions(-)
+</I>&gt;<i>
+</I>&gt;<i> diff --git a/src/ts_open.c b/src/ts_open.c
+</I>&gt;<i> index 02f1749..1cd26cb 100644
+</I>&gt;<i> --- a/src/ts_open.c
+</I>&gt;<i> +++ b/src/ts_open.c
+</I>&gt;<i> @@ -21,13 +21,12 @@
+</I>&gt;<i>
+</I>&gt;<i> &#160;extern struct tslib_module_info __ts_raw;
+</I>&gt;<i>
+</I>&gt;<i> -struct tsdev *ts_open(const char *name, int nonblock)
+</I>&gt;<i> +struct tsdev *ts_open(const char *name, int flags)
+</I>&gt;<i> &#160;{
+</I>&gt;<i> &#160; &#160; &#160; &#160;struct tsdev *ts;
+</I>&gt;<i> - &#160; &#160; &#160; int flags = O_RDONLY;
+</I>&gt;<i>
+</I>&gt;<i> - &#160; &#160; &#160; if (nonblock)
+</I>&gt;<i> - &#160; &#160; &#160; &#160; &#160; &#160; &#160; flags |= O_NONBLOCK;
+</I>&gt;<i> + &#160; &#160; &#160; if (!flags)
+</I>&gt;<i> + &#160; &#160; &#160; &#160; &#160; &#160; &#160; flags = O_RDONLY;
+</I>&gt;<i>
+</I>&gt;<i> &#160; &#160; &#160; &#160;ts = malloc(sizeof(struct tsdev));
+</I>&gt;<i> &#160; &#160; &#160; &#160;if (ts) {
+</I>&gt;<i> diff --git a/src/tslib.h b/src/tslib.h
+</I>&gt;<i> index df8e284..dc2fd71 100644
+</I>&gt;<i> --- a/src/tslib.h
+</I>&gt;<i> +++ b/src/tslib.h
+</I>&gt;<i> @@ -84,7 +84,7 @@ TSAPI int ts_load_module(struct tsdev *, const char *mod, const char *params);
+</I>&gt;<i> &#160;/*
+</I>&gt;<i> &#160;* Open the touchscreen device.
+</I>&gt;<i> &#160;*/
+</I>&gt;<i> -TSAPI struct tsdev *ts_open(const char *dev_name, int nonblock);
+</I>&gt;<i> +TSAPI struct tsdev *ts_open(const char *dev_name, int flags);
+</I>&gt;<i>
+</I>&gt;<i> &#160;/*
+</I>&gt;<i> &#160;* Return a scaled touchscreen sample.
+</I>&gt;<i> --
+</I>&gt;<i> 1.7.2.3
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000332.html">[Tslib-general] [RFC] ts_open: turn nonblock-parameter	into	more generic one called 'flags'.
+</A></li>
+	<LI>Next message: <A HREF="000333.html">[Tslib-general] [RFC] ts_open: turn nonblock-parameter into	more generic one	called 'flags'.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#331">[ date ]</a>
+              <a href="thread.html#331">[ thread ]</a>
+              <a href="subject.html#331">[ subject ]</a>
+              <a href="author.html#331">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

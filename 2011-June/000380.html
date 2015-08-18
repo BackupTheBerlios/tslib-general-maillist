@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] problems reading touchscreen values
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20problems%20reading%20touchscreen%20values&In-Reply-To=%3C6EE7D1502C48E44E92DCADF9DD3E0DB90187A6B1AD6D%40SRV-VS06.TELEVIC.COM%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000379.html">
+   <LINK REL="Next"  HREF="000381.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] problems reading touchscreen values</H1>
+    <B>Vanalme Filip</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20problems%20reading%20touchscreen%20values&In-Reply-To=%3C6EE7D1502C48E44E92DCADF9DD3E0DB90187A6B1AD6D%40SRV-VS06.TELEVIC.COM%3E"
+       TITLE="[Tslib-general] problems reading touchscreen values">F.Vanalme at TELEVIC.com
+       </A><BR>
+    <I>Wed Jun  8 16:08:50 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000379.html">[Tslib-general] could tslib support multi-touch screen?
+</A></li>
+        <LI>Next message: <A HREF="000381.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#380">[ date ]</a>
+              <a href="thread.html#380">[ thread ]</a>
+              <a href="subject.html#380">[ subject ]</a>
+              <a href="author.html#380">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+
+We are currently working on an i.MX27 based design with MC13783 PMIC controller that reads a resistive touchpanel.
+When using ts_print_raw, we notice that, when the touchscreen is released, we still see values printed on the screen.
+Other remarkable thing is that, at the end of a reading, we get some zeroes, then a value again, the again zeroes :
+...
+3035.374389:   2648   2508   3368
+3035.394361:   2644   2508   3366
+3035.414380:   2640   2512   3374
+3035.434372:   2644   2520   3386
+3035.454336:   2644   2528   3452
+3035.474369:      0      0      0
+3035.474631:   2644   2528      0
+3035.510212:      0   4092   4094
+3035.514648:      0      0      0
+3035.514896:      0   4092      0
+
+I would have expected a single zero at the end of the reading.
+When measuring with an oscilloscope, whe can see that, after releasing the touch, there are still a number of pulses. Looks like a kind of jitter at the end of a reading sequence. Can this be related to the ts library ?
+I think this is also the reason why ts_calibrate always failes. When touching the first crosshair in the upper left corner, the crosshair moves to the upper right corner an immediately moves further to the bottom right corner (without having touched it in the upper right corner).
+
+Another thing we notice : when keeping pressed, ts_print_raw stops reading values after a while. Releasing touch and touching again restarts printing values, but it stops again after a while (some seconds).
+
+I have no idea what could be the problem.
+At first sight, one would think it's a hardware related issue, but the touchscreen is, apart from some connectors, directly connected to the PMIC chip.
+
+In the kernel, I selected :
+Device Drivers ---&gt;
+  Input device support ---&gt;
+   [*] Touchscreens
+      &lt;*&gt; Freescale MC13783 touchscreen input driver
+
+I'm using tslib 1.0 (via ltib environment). I notice that there are 3 more patches that are applied :
+
+-          tslib-1.0-enable_input_events.patch
+
+-          tslib-1.0-mx-pre_gen-2.patch
+
+-          tslib-1.0-directfb_link_fix.patch
+
+In my rc.local file, I have this to create the touchscreen node :
+# create toucscreen node
+major=$(cat /sys/class/input/event0/dev | awk -F: '{print $1}')
+minor=$(cat /sys/class/input/event0/dev | awk -F: '{print $2}')
+if [ ! -d /dev/input ]
+then
+        mkdir /dev/input
+fi
+if [ ! -e /dev/input/event1 ]
+then
+        mknod /dev/input/event1 c $major $minor
+fi
+
+This is the content of my /usr/etc/ts.conf file :
+# Uncomment if you wish to use the linux input layer event interface
+module_raw input
+
+# Uncomment if you're using a Sharp Zaurus SL-5500/SL-5000d
+# module_raw collie
+
+# Uncomment if you're using a Sharp Zaurus SL-C700/C750/C760/C860
+# module_raw corgi
+
+# Uncomment if you're using a device with a UCB1200/1300/1400 TS interface
+# module_raw ucb1x00
+
+# Uncomment if you're using an HP iPaq h3600 or similar
+# module_raw h3600
+
+# Uncomment if you're using a Hitachi Webpad
+# module_raw mk712
+
+# Uncomment if you're using an IBM Arctic II
+# module_raw arctic2
+
+module pthres pmin=1
+module variance delta=30
+module dejitter delta=100
+module linear
+
+This is my /etc/profile file :
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
+alias ll='ls -l'
+
+# Environment variables for touchscreen
+
+export TSLIB_TSDEVICE=/dev/input/event1
+export QWS_MOUSE_PROTO=Tslib:/dev/input/event1
+export TSLIB_TSEVENTTYPE=INPUT
+export TSLIB_CONSOLEDEVICE=none
+export TSLIB_FBDEVICE=/dev/fb0
+export TSLIB_CALIBFILE=/etc/pointercal
+export TSLIB_CONFFILE=/usr/etc/ts.conf
+export TSLIB_PLUGINDIR=/usr/lib/ts
+
+Anyone who recognizes this kind of problem ? Anyone who has encountered similar problems ? Maybe some setting is wrong or not set ?
+
+Thanks for help !
+
+Filip
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20110608/8cd6b0ac/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20110608/8cd6b0ac/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000379.html">[Tslib-general] could tslib support multi-touch screen?
+</A></li>
+	<LI>Next message: <A HREF="000381.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#380">[ date ]</a>
+              <a href="thread.html#380">[ thread ]</a>
+              <a href="subject.html#380">[ subject ]</a>
+              <a href="author.html#380">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

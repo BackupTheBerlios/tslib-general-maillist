@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Error: &quot;selected device is not a touchscreen I	understand&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Error%3A%20%22selected%20device%20is%20not%20a%20touchscreen%20I%0A%09understand%22&In-Reply-To=%3CAANLkTinE3pV1vFUyvrLRxb560D8Fc2SU_1oqJX3v5JqU%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000350.html">
+   <LINK REL="Next"  HREF="000352.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Error: &quot;selected device is not a touchscreen I	understand&quot;</H1>
+    <B>David Rea</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Error%3A%20%22selected%20device%20is%20not%20a%20touchscreen%20I%0A%09understand%22&In-Reply-To=%3CAANLkTinE3pV1vFUyvrLRxb560D8Fc2SU_1oqJX3v5JqU%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Error: &quot;selected device is not a touchscreen I	understand&quot;">dave at daverea.com
+       </A><BR>
+    <I>Fri Jan 14 04:51:35 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000350.html">[Tslib-general] linear plugin and calibration file
+</A></li>
+        <LI>Next message: <A HREF="000352.html">[Tslib-general] Error: &quot;selected device is not a touchscreen I	understand&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#351">[ date ]</a>
+              <a href="thread.html#351">[ thread ]</a>
+              <a href="subject.html#351">[ subject ]</a>
+              <a href="author.html#351">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello-
+
+I am trying to get a 3M MTouch serial touch screen working on a Freescale
+iMX51-based board. My kernel has mtouch support, I have built `inputattach`
+for the target, and `evtest` successfully reports touch events as follows:
+
+~ # ./evtest /dev/input/event0
+
+Input driver version is 1.0.0
+
+Input device ID: bus 0x13 vendor 0x30 product 0x0 version 0x100
+
+Input device name: &quot;MicroTouch Serial TouchScreen&quot;
+
+Supported events:
+
+  Event type 0 (Sync)
+
+  Event type 1 (Key)
+
+    Event code 330 (Touch)
+
+  Event type 3 (Absolute)
+
+    Event code 0 (X)
+
+      Value   8601
+
+      Min        0
+
+      Max    16383
+
+    Event code 1 (Y)
+
+      Value   4426
+
+      Min        0
+
+      Max    16383
+
+Testing ... (interrupt to exit)
+
+Event: time 25197.880411, type 3 (Absolute), code 0 (X), value 8566
+
+Event: time 25197.880417, type 3 (Absolute), code 1 (Y), value 5875
+
+Event: time 25197.880419, type 1 (Key), code 330 (Touch), value 1
+
+Event: time 25197.880422, -------------- Report Sync ------------
+
+Event: time 25197.880427, type 1 (Key), code 330 (Touch), value 0
+
+Event: time 25197.880428, -------------- Report Sync ------------
+
+
+As soon as I run ts_calibrate or ts_print_raw, however, I get the dreaded
+&quot;selected device is not a touchscreen I understand&quot; message. I have defined
+the environment variables as:
+
+TSLIB_TSDEVICE=/dev/input/event0
+
+TSLIB_PLUGINDIR=/usr/lib/ts
+
+TSLIB_CONFFILE=/etc/ts.conf
+
+QWS_MOUSE_PROTO=tslib:/dev/input/event0
+
+
+I have reviewed the advice over in this
+thread&lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/2008-October/000095.html">https://lists.berlios.de/pipermail/tslib-general/2008-October/000095.html</A>&gt;,
+but stopped short at recompiling tslib with debugging on. I'm not quite sure
+how to do that in my cross-compiler environment (DigiEL 5.6). I tried
+configuring the code right in the source directory, but there doesn't seem
+to be a .configure script in the latest code from GitHub.
+
+Can someone give me some direction as to what to try next? Is there anything
+else to try before recompiling tslib with debugging on?
+
+Many Thanks,
+Dave
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20110113/4ac24212/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20110113/4ac24212/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000350.html">[Tslib-general] linear plugin and calibration file
+</A></li>
+	<LI>Next message: <A HREF="000352.html">[Tslib-general] Error: &quot;selected device is not a touchscreen I	understand&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#351">[ date ]</a>
+              <a href="thread.html#351">[ thread ]</a>
+              <a href="subject.html#351">[ subject ]</a>
+              <a href="author.html#351">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

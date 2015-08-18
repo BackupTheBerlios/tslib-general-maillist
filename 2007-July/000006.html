@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Cross-compiling tslib-1.0.0 against uclibc 0.9.29
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2007-July/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Cross-compiling%20tslib-1.0.0%20against%20uclibc%200.9.29&In-Reply-To=%3C34115e380707090208n3d57094av5680fd098baeb505%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Cross-compiling tslib-1.0.0 against uclibc 0.9.29</H1>
+    <B>Cedric Hombourger</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Cross-compiling%20tslib-1.0.0%20against%20uclibc%200.9.29&In-Reply-To=%3C34115e380707090208n3d57094av5680fd098baeb505%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Cross-compiling tslib-1.0.0 against uclibc 0.9.29">chombourger at gmail.com
+       </A><BR>
+    <I>Mon Jul  9 11:08:02 CEST 2007</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there,
+
+I have tried cross-compiling tslib against uclibc 0.9.29 and faced some
+issues which I have hopefully fixed:
+
+   1) AC_FUNC_MALLOC in configure.ac seems to cause malloc to be defined to
+rpl_malloc, which is never implemented and therefore cause a link error.
+Removing this line from AC_FUNC_MALLOC is a workaround I chose.
+   2) The line AM_INIT_AUTOMAKE(dist-bzip2) should be
+AM_INIT_AUTOMAKE(tslib). This fixes the error &quot;No rule to make dist-bzip2.pc
+&quot;.
+
+With these two changes, I have successfuly built tslib.
+May these changes be included in the next release? (If not already the case
+obviously).
+
+Regards,
+Cedric Hombourger
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20070709/83b5455f/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20070709/83b5455f/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

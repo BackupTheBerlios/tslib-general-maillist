@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Inconsistent message from tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-December/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%3D%3Futf-8%3Fq%3FInconsistent_message_from_tslib%3D3A_Sele%3F%3D%0A%20%3D%3Futf-8%3Fq%3Fcted_device_is_not_a_touchscreen_%3D28must_support_BTN%3D5FTOUCH_ev%3F%3D%0A%20%3D%3Futf-8%3Fq%3Fents%3D29%3F%3D&In-Reply-To=%3C1323128621.31426607%40apps.rackspace.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000413.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Inconsistent message from tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)</H1>
+    <B>minh at imi-test.com</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%3D%3Futf-8%3Fq%3FInconsistent_message_from_tslib%3D3A_Sele%3F%3D%0A%20%3D%3Futf-8%3Fq%3Fcted_device_is_not_a_touchscreen_%3D28must_support_BTN%3D5FTOUCH_ev%3F%3D%0A%20%3D%3Futf-8%3Fq%3Fents%3D29%3F%3D&In-Reply-To=%3C1323128621.31426607%40apps.rackspace.com%3E"
+       TITLE="[Tslib-general] Inconsistent message from tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)">minh at imi-test.com
+       </A><BR>
+    <I>Tue Dec  6 00:43:41 CET 2011</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000413.html">[Tslib-general] Inconsistent message from tslib: Selected	device is not a touchscreen (must support BTN_TOUCH events)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#410">[ date ]</a>
+              <a href="thread.html#410">[ thread ]</a>
+              <a href="subject.html#410">[ subject ]</a>
+              <a href="author.html#410">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi,
+ 
+I have Qt 4.7.3 and tslib 1.0-98 installed.  Both are setup and working fine on openSuse 11.4 using 7 inches USB powered touch screen Lilliput UM-70/C/T .  The following environment variables are set:
+ 
+
+
+export TSLIB_TSEVENTTYPE=INPUT
+export TSLIB_FBDEVICE=/dev/fb1 
+export TSLIB_TSDEVICE=&quot;/usr/input/by-id/usb-eGalax_Inc._USB_TouchController-event-mouse&quot;
+export TSLIB_CALIBFILE=/etc/ts.calib
+
+export TSLIB_CONFFILE=/usr/local/etc/ts.conf
+
+export TSLIB_PLUGINDIR=/usr/local/lib/ts
+export TSLIB_CONSOLEDEVICE=none
+&#65279;export QWS_MOUSE_PROTO=&quot;tslib:/dev/input/by-id/usb-eGalax_Inc._USB_TouchController-event-mouse&quot;
+&#65279;export QWS_DISPLAY=&quot;LinuxFb:/dev/fb1&quot;
+&#65279;
+&#65279;I was able to launh my program using the following command ./myprogram -qws and everything works great.  But i just noticed that after i do a restart / reboot of my system, launch my program again using ./myprogram -qws, and then when i touch the screen, i get the following message
+&#65279;
+&#65279;tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)
+&#65279;
+This problem does not happen all the times, but it do happen inconsistently.  To solve the issue, I have to force a reboot / or shutdown of the system (3-4 times) before i can get it to work as usual using the touch screen.  Once working, it works great.
+&#65279;
+&#65279;Can anyone please help me on this?  Any idea?
+&#65279;
+&#65279;Thank you so much for your help.
+&#65279;
+&#65279;Minh.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20111205/700f8ab8/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20111205/700f8ab8/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000413.html">[Tslib-general] Inconsistent message from tslib: Selected	device is not a touchscreen (must support BTN_TOUCH events)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#410">[ date ]</a>
+              <a href="thread.html#410">[ thread ]</a>
+              <a href="subject.html#410">[ subject ]</a>
+              <a href="author.html#410">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

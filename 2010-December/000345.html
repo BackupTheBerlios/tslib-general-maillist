@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Testing TSLIB based applications
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-December/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Testing%20TSLIB%20based%20applications&In-Reply-To=%3CAANLkTi%3D_yRSsveg98zw3SQ%3D63uMsP00y00qA%2BksXsj1R%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000344.html">
+   <LINK REL="Next"  HREF="000346.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Testing TSLIB based applications</H1>
+    <B>Chris Larson</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Testing%20TSLIB%20based%20applications&In-Reply-To=%3CAANLkTi%3D_yRSsveg98zw3SQ%3D63uMsP00y00qA%2BksXsj1R%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Testing TSLIB based applications">clarson at kergoth.com
+       </A><BR>
+    <I>Wed Dec  1 22:36:34 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000344.html">[Tslib-general] Testing TSLIB based applications
+</A></li>
+        <LI>Next message: <A HREF="000346.html">[Tslib-general] USB HID Touch Screens/Multi-Touch/QT
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#345">[ date ]</a>
+              <a href="thread.html#345">[ thread ]</a>
+              <a href="subject.html#345">[ subject ]</a>
+              <a href="author.html#345">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Dec 1, 2010 at 10:53 AM, David Paulsen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">djpdude at gmail.com</A>&gt; wrote:
+&gt;<i> Greetings all. &#160;I've recently joined a project wherein a significant portion
+</I>&gt;<i> of application input comes from a TS device via what looks to be quite
+</I>&gt;<i> typical use of TSLIB: ts_open(), ts_config(), loop on ts_read().
+</I>&gt;<i> In times past, I've built test scripts and automation based upon things like
+</I>&gt;<i> shell scripts, Expect (<A HREF="http://www.nist.gov/el/msid/expect.cfm">http://www.nist.gov/el/msid/expect.cfm</A>
+</I>&gt;<i>
+</I>&gt;<i> ), python scripts driving Windows applications via their COM interfaces, and
+</I>&gt;<i> the like.
+</I>&gt;<i> I'd like to bring a similar level of test&#160;script-ability to this project's
+</I>&gt;<i> TSLIB interface, doing things like writing a set of struct ts_sample to
+</I>&gt;<i> *someplace* where ts_read() would pick them up just as if they had come from
+</I>&gt;<i> the actual TSDEVICE.
+</I>&gt;<i> Brainstorming and hacking, I first tried using a named pipe, which ts_open()
+</I>&gt;<i> didn't care for much, an then a Linux guru down the hall suggested a
+</I>&gt;<i> pseudo-tty, which seems to have some potential. &#160;(Alternatively, I'm looking
+</I>&gt;<i> at somewhat unattractive alterations to the code - things like,
+</I>&gt;<i> &quot;if(in-test-script-mode) read(fd...); else ts_read(ts...);&quot; &#160;Yuck.)
+</I>
+No,. you should never have to resort to if's for this, even if a
+pseudo tty doesn't work  Absolute worst case you could create a custom
+raw module to deliver events from whichever fake source you desire,
+rather than using input_raw.
+-- 
+Christopher Larson
+clarson at kergoth dot com
+Founder - BitBake, OpenEmbedded, OpenZaurus
+Maintainer - Tslib
+Senior Software Engineer, Mentor Graphics
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000344.html">[Tslib-general] Testing TSLIB based applications
+</A></li>
+	<LI>Next message: <A HREF="000346.html">[Tslib-general] USB HID Touch Screens/Multi-Touch/QT
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#345">[ date ]</a>
+              <a href="thread.html#345">[ thread ]</a>
+              <a href="subject.html#345">[ subject ]</a>
+              <a href="author.html#345">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

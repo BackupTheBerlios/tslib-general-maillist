@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [PATCH] Prefix/correct some error messages in input-raw module
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%5D%20Prefix/correct%20some%20error%20messages%20in%0A%20input-raw%20module&In-Reply-To=%3C49C91E85.3020206%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000198.html">
+   <LINK REL="Next"  HREF="000200.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [PATCH] Prefix/correct some error messages in input-raw module</H1>
+    <B>Christopher Larson</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%5D%20Prefix/correct%20some%20error%20messages%20in%0A%20input-raw%20module&In-Reply-To=%3C49C91E85.3020206%40gmail.com%3E"
+       TITLE="[Tslib-general] [PATCH] Prefix/correct some error messages in input-raw module">kergoth at gmail.com
+       </A><BR>
+    <I>Tue Mar 24 18:55:17 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000198.html">[Tslib-general] don't restart the xserver after execute the	programe of ts_calibrate?
+</A></li>
+        <LI>Next message: <A HREF="000200.html">[Tslib-general] Patch to make /etc/pointercal relative to	systemconfdir
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#199">[ date ]</a>
+              <a href="thread.html#199">[ thread ]</a>
+              <a href="subject.html#199">[ subject ]</a>
+              <a href="author.html#199">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Applied, thanks.  Sorry for the delay, been very busy with a new 
+position at work, and with starting college part time.
+
+Michael Heimpold wrote:
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> I guess there were some copy&amp;  paste mistakes in the error messages in the input-raw module and BTW I unified the messages with the tslib prefix used
+</I>&gt;<i> in other messages.
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> Michael Heimpold
+</I>&gt;<i>
+</I>&gt;<i> Index: plugins/input-raw.c
+</I>&gt;<i> ===================================================================
+</I>&gt;<i> --- plugins/input-raw.c	(Revision 70)
+</I>&gt;<i> +++ plugins/input-raw.c	(Arbeitskopie)
+</I>&gt;<i> @@ -75,26 +75,26 @@
+</I>&gt;<i>   	long keybit[BITS_TO_LONGS(KEY_CNT)];
+</I>&gt;<i>
+</I>&gt;<i>   	if (ioctl(ts-&gt;fd, EVIOCGVERSION,&amp;version)&lt;  0) {
+</I>&gt;<i> -		fprintf(stderr, &quot;selected device is not a Linux input event device\n&quot;);
+</I>&gt;<i> +		fprintf(stderr, &quot;tslib: Selected device is not a Linux input event device\n&quot;);
+</I>&gt;<i>   		return -1;
+</I>&gt;<i>   	}
+</I>&gt;<i>
+</I>&gt;<i>   	if (version != EV_VERSION) {
+</I>&gt;<i> -		fprintf(stderr, &quot;selected device uses a different version of the event protocol than tslib was compiled for\n&quot;);
+</I>&gt;<i> +		fprintf(stderr, &quot;tslib: Selected device uses a different version of the event protocol than tslib was compiled for\n&quot;);
+</I>&gt;<i>   		return -1;
+</I>&gt;<i>   	}
+</I>&gt;<i>
+</I>&gt;<i>   	if ( (ioctl(ts-&gt;fd, EVIOCGBIT(0, EV_CNT), evbit)&lt;  0) ||
+</I>&gt;<i>   		!(evbit[BIT_WORD(EV_ABS)]&amp;  BIT_MASK(EV_ABS)) ||
+</I>&gt;<i>   		!(evbit[BIT_WORD(EV_KEY)]&amp;  BIT_MASK(EV_KEY)) ) {
+</I>&gt;<i> -		fprintf(stderr, &quot;selected device uses is not a touchscreen (must support ABS and KEY event types)\n&quot;);
+</I>&gt;<i> +		fprintf(stderr, &quot;tslib: Selected device is not a touchscreen (must support ABS and KEY event types)\n&quot;);
+</I>&gt;<i>   		return -1;
+</I>&gt;<i>   	}
+</I>&gt;<i>
+</I>&gt;<i>   	if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_ABS, ABS_CNT), absbit))&lt;  0 ||
+</I>&gt;<i>   		!(absbit[BIT_WORD(ABS_X)]&amp;  BIT_MASK(ABS_X)) ||
+</I>&gt;<i>   		!(absbit[BIT_WORD(ABS_Y)]&amp;  BIT_MASK(ABS_Y))) {
+</I>&gt;<i> -		fprintf(stderr, &quot;selected device uses is not a touchscreen (must support ABS_X and ABS_Y events)\n&quot;);
+</I>&gt;<i> +		fprintf(stderr, &quot;tslib: Selected device is not a touchscreen (must support ABS_X and ABS_Y events)\n&quot;);
+</I>&gt;<i>   		return -1;
+</I>&gt;<i>   	}
+</I>&gt;<i>
+</I>&gt;<i> @@ -108,7 +108,7 @@
+</I>&gt;<i>
+</I>&gt;<i>   		if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_KEY, KEY_CNT), keybit)&lt;  0) ||
+</I>&gt;<i>   			!(absbit[BIT_WORD(BTN_TOUCH)]&amp;  BIT_MASK(BTN_TOUCH)) ) {
+</I>&gt;<i> -			fprintf(stderr, &quot;selected device uses is not a touchscreen (must support BTN_TOUCH events)\n&quot;);
+</I>&gt;<i> +			fprintf(stderr, &quot;tslib: Selected device is not a touchscreen (must support BTN_TOUCH events)\n&quot;);
+</I>&gt;<i>   			return -1;
+</I>&gt;<i>   		}
+</I>&gt;<i>   	}
+</I>&gt;<i> @@ -118,7 +118,7 @@
+</I>&gt;<i>
+</I>&gt;<i>   	if (i-&gt;grab_events == GRAB_EVENTS_WANTED) {
+</I>&gt;<i>   		if (ioctl(ts-&gt;fd, EVIOCGRAB, (void *)1)) {
+</I>&gt;<i> -			fprintf(stderr, &quot;Unable to grab selected input device\n&quot;);
+</I>&gt;<i> +			fprintf(stderr, &quot;tslib: Unable to grab selected input device\n&quot;);
+</I>&gt;<i>   			return -1;
+</I>&gt;<i>   		}
+</I>&gt;<i>   		i-&gt;grab_events = GRAB_EVENTS_ACTIVE;
+</I>&gt;<i> @@ -176,8 +176,8 @@
+</I>&gt;<i>   				fprintf(stderr, &quot;RAW---------------------&gt;  %d %d %d %d.%d\n&quot;,
+</I>&gt;<i>   						samp-&gt;x, samp-&gt;y, samp-&gt;pressure, samp-&gt;tv.tv_sec,
+</I>&gt;<i>   						samp-&gt;tv.tv_usec);
+</I>&gt;<i> -	#endif		 /*DEBUG*/
+</I>&gt;<i> -					samp++;
+</I>&gt;<i> +	#endif /* DEBUG */
+</I>&gt;<i> +				samp++;
+</I>&gt;<i>   				total++;
+</I>&gt;<i>   				break;
+</I>&gt;<i>   			case EV_ABS:
+</I>&gt;<i> @@ -251,7 +251,7 @@
+</I>&gt;<i>   	#ifdef DEBUG
+</I>&gt;<i>   				fprintf(stderr, &quot;RAW---------------------------&gt;  %d %d %d\n&quot;,
+</I>&gt;<i>   					samp-&gt;x, samp-&gt;y, samp-&gt;pressure);
+</I>&gt;<i> -	#endif	 /*DEBUG*/
+</I>&gt;<i> +	#endif /* DEBUG */
+</I>&gt;<i>   				samp++;
+</I>&gt;<i>   				total++;
+</I>&gt;<i>   			} else if (ev.type == EV_KEY) {
+</I>&gt;<i> @@ -286,7 +286,7 @@
+</I>&gt;<i>
+</I>&gt;<i>   	if (i-&gt;grab_events == GRAB_EVENTS_ACTIVE) {
+</I>&gt;<i>   		if (ioctl(ts-&gt;fd, EVIOCGRAB, (void *)0)) {
+</I>&gt;<i> -			fprintf(stderr, &quot;Unable to un-grab selected input device\n&quot;);
+</I>&gt;<i> +			fprintf(stderr, &quot;tslib: Unable to un-grab selected input device\n&quot;);
+</I>&gt;<i>   		}
+</I>&gt;<i>   	}
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>    
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000198.html">[Tslib-general] don't restart the xserver after execute the	programe of ts_calibrate?
+</A></li>
+	<LI>Next message: <A HREF="000200.html">[Tslib-general] Patch to make /etc/pointercal relative to	systemconfdir
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#199">[ date ]</a>
+              <a href="thread.html#199">[ thread ]</a>
+              <a href="subject.html#199">[ subject ]</a>
+              <a href="author.html#199">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

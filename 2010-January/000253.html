@@ -1,0 +1,896 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [PATCH] Support static modules aka modules which	are embedded inside libts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%5D%20Support%20static%20modules%20aka%20modules%20which%0A%09are%20embedded%20inside%20libts&In-Reply-To=%3C1262681272-17479-1-git-send-email-mat%40brain-dump.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000263.html">
+   <LINK REL="Next"  HREF="000266.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [PATCH] Support static modules aka modules which	are embedded inside libts</H1>
+    <B>Marc Andre Tanner</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%5D%20Support%20static%20modules%20aka%20modules%20which%0A%09are%20embedded%20inside%20libts&In-Reply-To=%3C1262681272-17479-1-git-send-email-mat%40brain-dump.org%3E"
+       TITLE="[Tslib-general] [PATCH] Support static modules aka modules which	are embedded inside libts">mat at brain-dump.org
+       </A><BR>
+    <I>Tue Jan  5 09:47:52 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000263.html">[Tslib-general] [PATCH 1/4] configure: disable check for c++	compiler
+</A></li>
+        <LI>Next message: <A HREF="000266.html">[Tslib-general] [PATCH] Support static modules aka modules	which are embedded inside libts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#253">[ date ]</a>
+              <a href="thread.html#253">[ thread ]</a>
+              <a href="subject.html#253">[ subject ]</a>
+              <a href="author.html#253">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This can be usefull for statically linked application or platforms
+where dlopen(3) is not available.
+
+A module will be compiled statically if it was requested during
+./configure with --enable-$FOO=static.
+
+Static modules will have precedence over shared ones which means
+if a module is configured to be embedded inside libts it's
+corresponding shared library isn't build and ignored even if
+it is in $TSLIB_PLUGINDIR.
+
+Signed-off-by: Marc Andre Tanner &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">mat at brain-dump.org</A>&gt;
+---
+ configure.ac                 |  130 ++++-----------------------------------
+ m4/internal/tslib_modules.m4 |   22 +++++++
+ plugins/Makefile.am          |    2 +-
+ plugins/arctic2-raw.c        |    6 ++-
+ plugins/collie-raw.c         |    6 ++-
+ plugins/corgi-raw.c          |    6 ++-
+ plugins/dejitter.c           |    7 ++-
+ plugins/h3600-raw.c          |    6 ++-
+ plugins/input-raw.c          |    6 ++-
+ plugins/linear-h2200.c       |    7 ++-
+ plugins/linear.c             |    7 ++-
+ plugins/mk712-raw.c          |    6 ++-
+ plugins/plugins.h            |   17 +++++
+ plugins/pthres.c             |    7 ++-
+ plugins/tatung-raw.c         |    6 ++-
+ plugins/ucb1x00-raw.c        |    6 ++-
+ plugins/variance.c           |    7 ++-
+ src/Makefile.am              |   55 ++++++++++++++++-
+ src/ts_load_module.c         |  137 +++++++++++++++++++++++++++++++++---------
+ src/tslib-filter.h           |    3 +
+ 20 files changed, 288 insertions(+), 161 deletions(-)
+ create mode 100644 m4/internal/tslib_modules.m4
+ create mode 100644 plugins/plugins.h
+
+diff --git a/configure.ac b/configure.ac
+index f79fc00..6a44ccb 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -50,125 +50,21 @@ AC_FUNC_VPRINTF
+ AC_CHECK_FUNCS([gettimeofday memmove memset munmap select strcasecmp strchr strdup strtoul])
+ 
+ # filters
+-AC_MSG_CHECKING([whether linear modules is requested])
+-AC_ARG_ENABLE(linear, 
+-	AS_HELP_STRING([--enable-linear],
+-		[Enable building of linear scaling (default=yes)]),
+-	[linear_module=$enableval],
+-	[linear_module=yes])
+-AC_MSG_RESULT($linear_module)
+-AM_CONDITIONAL(ENABLE_LINEAR_MODULE, test &quot;$linear_module&quot; = &quot;yes&quot;)
+-
+-AC_MSG_CHECKING([whether dejitter module is requested]) 
+-AC_ARG_ENABLE(dejitter,
+-	AS_HELP_STRING([--enable-dejitter],
+-		[Enable building of dejitter filter (default=yes)]),
+-	[dejitter_module=$enableval],
+-	[dejitter_module=yes])
+-AC_MSG_RESULT($dejitter_module)
+-AM_CONDITIONAL(ENABLE_DEJITTER_MODULE, test &quot;$dejitter_module&quot; = &quot;yes&quot;)
+-
+-AC_MSG_CHECKING([whether linear-h2200 module is requested]) 
+-AC_ARG_ENABLE(linear-h2200,
+-	AS_HELP_STRING([--enable-linear-h2200],
+-		[Enable building of linearizing filter for iPAQ h2200 (default=yes)]),
+-	[h2200_linear_module=$enableval],
+-	[h2200_linear_module=yes])
+-AC_MSG_RESULT($h2200_linear_module)
+-AM_CONDITIONAL(ENABLE_H2200_LINEAR_MODULE, test &quot;$h2200_linear_module&quot; = &quot;yes&quot;)
+-
+-AC_MSG_CHECKING([whether variance module is requested])
+-AC_ARG_ENABLE(variance,
+-	AS_HELP_STRING([--enable-variance],
+-		[Enable building of variance filter (default=yes)]),
+-	[variance_module=$enableval],
+-	[variance_module=yes])
+-AC_MSG_RESULT($variance_module)
+-AM_CONDITIONAL(ENABLE_VARIANCE_MODULE, test &quot;$variance_module&quot; = &quot;yes&quot;)
+-
+-AC_MSG_CHECKING([whether pthres module is requested])
+-AC_ARG_ENABLE(pthres,
+-	AS_HELP_STRING([--enable-pthres],
+-		[Enable building of pthres filter (default=yes)]),
+-	[pthres_module=$enableval],
+-	[pthres_module=yes])
+-AC_MSG_RESULT($pthres_module)
+-AM_CONDITIONAL(ENABLE_PTHRES_MODULE, test &quot;$pthres_module&quot; = &quot;yes&quot;)
+-
++TSLIB_CHECK_MODULE([linear], [yes], [Enable building of linear scaling])
++TSLIB_CHECK_MODULE([dejitter], [yes], [Enable building of dejitter filter])
++TSLIB_CHECK_MODULE([linear-h2200], [yes], [Enable building of linearizing filter for iPAQ h2200])
++TSLIB_CHECK_MODULE([variance], [yes], [Enable building of variance filter])
++TSLIB_CHECK_MODULE([pthres], [yes], [Enable building of pthres filter])
+ 
+ # hardware access modules
+-AC_MSG_CHECKING([whether ucb1x00 module is requested])
+-AC_ARG_ENABLE(ucb1x00,
+-	AS_HELP_STRING([--enable-ucb1x00],
+-		[Enable building of ucb1x00 raw module (UCB1x00 support) (default=yes)]),
+-	[ucb1x00_module=$enableval],
+-	[ucb1x00_module=yes])
+-AC_MSG_RESULT($ucb1x00_module)
+-AM_CONDITIONAL(ENABLE_UCB1X00_MODULE, test &quot;$ucb1x00_module&quot; = &quot;yes&quot;)
+-
+-AC_MSG_CHECKING([whether corgi module is requested])
+-AC_ARG_ENABLE(corgi,
+-        AS_HELP_STRING([--enable-corgi],
+-                [Enable building of corgi raw module (Sharp Zaurus sl-c7x0 support) (default=yes)]),
+-        [corgi_module=$enableval],
+-        [corgi_module=yes])
+-AC_MSG_RESULT($corgi_module)
+-AM_CONDITIONAL(ENABLE_CORGI_MODULE, test &quot;$corgi_module&quot; = &quot;yes&quot;)
+-
+-AC_MSG_CHECKING([whether collie module is requested])
+-AC_ARG_ENABLE(collie,
+-        AS_HELP_STRING([--enable-collie],
+-                [Enable building of collie raw module (Sharp Zaurus sl-5500/5000d support) (default=yes)]),
+-        [collie_module=$enableval],
+-        [collie_module=yes])
+-AC_MSG_RESULT($collie_module)
+-AM_CONDITIONAL(ENABLE_COLLIE_MODULE, test &quot;$collie_module&quot; = &quot;yes&quot;)
+-
+-
+-AC_MSG_CHECKING([whether h3600 module is requested])
+-AC_ARG_ENABLE(h3600,
+-        AS_HELP_STRING([--enable-h3600],
+-                [Enable building of h3600 raw module (HP iPaq H3600 support) (default=yes)]),
+-        [h3600_module=$enableval],
+-        [h3600_module=yes])
+-AC_MSG_RESULT($h3600_module)
+-AM_CONDITIONAL(ENABLE_H3600_MODULE, test &quot;$h3600_module&quot; = &quot;yes&quot;)
+-
+-AC_MSG_CHECKING([whether mk712 module is requested])
+-AC_ARG_ENABLE(mk712,
+-        AS_HELP_STRING([--enable-mk712],
+-                [Enable building of mk712 raw module (Hi tachi support) (default=yes)]),
+-        [mk712_module=$enableval],
+-        [mk712_module=yes])
+-AC_MSG_RESULT($mk712_module)
+-AM_CONDITIONAL(ENABLE_MK712_MODULE, test &quot;$mk712_module&quot; = &quot;yes&quot;)
+-
+-AC_MSG_CHECKING([whether arctic2 module is requested])
+-AC_ARG_ENABLE(arctic2,
+-        AS_HELP_STRING([--enable-arctic2],
+-                [Enable building of arctic2 raw module (IBM Arctic II support) (default=yes)]),
+-        [arctic2_module=$enableval],
+-        [arctic2_module=yes])
+-AC_MSG_RESULT($arctic2_module)
+-AM_CONDITIONAL(ENABLE_ARCTIC2_MODULE, test &quot;$arctic2_module&quot; = &quot;yes&quot;)
+-
+-AC_MSG_CHECKING([whether tatung module is requested])
+-AC_ARG_ENABLE(tatung,
+-        AS_HELP_STRING([--enable-tatung],
+-                [Enable building of tatung raw module (Tatung Webpad support) (default=yes)]),
+-        [tatung_module=$enableval],
+-        [tatung_module=yes])
+-AC_MSG_RESULT($tatung_module)
+-AM_CONDITIONAL(ENABLE_TATUNG_MODULE, test &quot;$tatung_module&quot; = &quot;yes&quot;)
+-
+-AC_MSG_CHECKING([whether input module is requested])
+-AC_ARG_ENABLE(input,
+-        AS_HELP_STRING([--enable-input],
+-                [Enable building of generic input raw module (Linux /dev/input/eventN support) (default=yes)]),
+-        [input_module=$enableval],
+-        [input_module=yes])
+-AC_MSG_RESULT($input_module)
+-AM_CONDITIONAL(ENABLE_INPUT_MODULE, test &quot;$input_module&quot; = &quot;yes&quot;)
++TSLIB_CHECK_MODULE([ucb1x00], [yes], [Enable building of ucb1x00 raw module (UCB1x00 support)])
++TSLIB_CHECK_MODULE([corgi], [yes], [Enable building of corgi raw module (Sharp Zaurus sl-c7x0 support)])
++TSLIB_CHECK_MODULE([collie], [yes], [Enable building of collie raw module (Sharp Zaurus sl-5500/5000d support)])
++TSLIB_CHECK_MODULE([h3600], [yes], [Enable building of h3600 raw module (HP iPaq H3600 support)])
++TSLIB_CHECK_MODULE([mk712], [yes], [Enable building of mk712 raw module (Hi tachi support)])
++TSLIB_CHECK_MODULE([arctic2], [yes], [Enable building of arctic2 raw module (IBM Arctic II support)])
++TSLIB_CHECK_MODULE([tatung], [yes], [Enable building of tatung raw module (Tatung Webpad support)])
++TSLIB_CHECK_MODULE([input], [yes], [Enable building of generic input raw module (Linux /dev/input/eventN support)])
+ 
+ AC_MSG_CHECKING([where to place modules])
+ AC_ARG_WITH(plugindir,
+diff --git a/m4/internal/tslib_modules.m4 b/m4/internal/tslib_modules.m4
+new file mode 100644
+index 0000000..6bc1764
+--- /dev/null
++++ b/m4/internal/tslib_modules.m4
+@@ -0,0 +1,22 @@
++dnl use: TSLIB_CHECK_MODULE(module, default, description)
++AC_DEFUN([TSLIB_CHECK_MODULE],
++[
++m4_pushdef([UP], m4_translit([$1], [-a-z], [_A-Z]))dnl
++
++AC_MSG_CHECKING([whether $1 module is requested]) 
++
++AC_ARG_ENABLE([$1],
++   AC_HELP_STRING([--enable-$1], [$3 (default=$2)]),
++   [enable_module=$enableval],
++   [enable_module=$2])
++AC_MSG_RESULT($enable_module)
++
++AM_CONDITIONAL(ENABLE_[]UP[]_MODULE, test &quot;x$enable_module&quot; = &quot;xyes&quot;)
++AM_CONDITIONAL(ENABLE_STATIC_[]UP[]_MODULE, test &quot;x$enable_module&quot; = &quot;xstatic&quot;)
++if test &quot;x$enable_module&quot; = &quot;xstatic&quot; ; then
++	AC_DEFINE(TSLIB_STATIC_[]UP[]_MODULE, 1, whether $1 should be build as part of libts or as a 
++		separate shared library which is dlopen()-ed at runtime)
++fi
++
++m4_popdef([UP])
++])
+diff --git a/plugins/Makefile.am b/plugins/Makefile.am
+index 93edb29..a73971d 100644
+--- a/plugins/Makefile.am
++++ b/plugins/Makefile.am
+@@ -91,7 +91,7 @@ else
+ INPUT_MODULE =
+ endif
+ 
+-if ENABLE_H2200_LINEAR_MODULE
++if ENABLE_LINEAR_H2200_MODULE
+ H2200_LINEAR_MODULE = linear_h2200.la
+ else
+ H2200_LINEAR_MODULE =
+diff --git a/plugins/arctic2-raw.c b/plugins/arctic2-raw.c
+index 82dfceb..cf7becc 100644
+--- a/plugins/arctic2-raw.c
++++ b/plugins/arctic2-raw.c
+@@ -48,7 +48,7 @@ static const struct tslib_ops arctic2_ops =
+ 	.read	= arctic2_read,
+ };
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *arctic2_mod_init(struct tsdev *dev, const char *params)
+ {
+ 	struct tslib_module_info *m;
+ 
+@@ -59,3 +59,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 	m-&gt;ops = &amp;arctic2_ops;
+ 	return m;
+ }
++
++#ifndef TSLIB_STATIC_ARCTIC2_MODULE
++	TSLIB_MODULE_INIT(arctic2_mod_init);
++#endif
+diff --git a/plugins/collie-raw.c b/plugins/collie-raw.c
+index 28e817f..7bb15d7 100644
+--- a/plugins/collie-raw.c
++++ b/plugins/collie-raw.c
+@@ -48,7 +48,7 @@ static const struct tslib_ops collie_ops =
+ 	.read	= collie_read,
+ };
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *collie_mod_init(struct tsdev *dev, const char *params)
+ {
+ 	struct tslib_module_info *m;
+ 
+@@ -59,3 +59,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 	m-&gt;ops = &amp;collie_ops;
+ 	return m;
+ }
++
++#ifndef TSLIB_STATIC_COLLIE_MODULE
++	TSLIB_MODULE_INIT(collie_mod_init);
++#endif
+diff --git a/plugins/corgi-raw.c b/plugins/corgi-raw.c
+index daef144..d7ddd7c 100644
+--- a/plugins/corgi-raw.c
++++ b/plugins/corgi-raw.c
+@@ -47,7 +47,7 @@ static const struct tslib_ops corgi_ops =
+ 	.read	= corgi_read,
+ };
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *corgi_mod_init(struct tsdev *dev, const char *params)
+ {
+ 	struct tslib_module_info *m;
+ 
+@@ -58,3 +58,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 	m-&gt;ops = &amp;corgi_ops;
+ 	return m;
+ }
++
++#ifndef TSLIB_STATIC_CORGI_MODULE
++	TSLIB_MODULE_INIT(corgi_mod_init);
++#endif
+diff --git a/plugins/dejitter.c b/plugins/dejitter.c
+index 383793b..0d4d634 100644
+--- a/plugins/dejitter.c
++++ b/plugins/dejitter.c
+@@ -29,6 +29,7 @@
+ 
+ #include &lt;stdio.h&gt;
+ 
++#include &quot;config.h&quot;
+ #include &quot;tslib.h&quot;
+ #include &quot;tslib-filter.h&quot;
+ 
+@@ -197,7 +198,7 @@ static const struct tslib_vars dejitter_vars[] =
+ 
+ #define NR_VARS (sizeof(dejitter_vars) / sizeof(dejitter_vars[0]))
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *dejitter_mod_init(struct tsdev *dev, const char *params)
+ {
+ 	struct tslib_dejitter *djt;
+ 
+@@ -219,3 +220,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 
+ 	return &amp;djt-&gt;module;
+ }
++
++#ifndef TSLIB_STATIC_DEJITTER_MODULE
++	TSLIB_MODULE_INIT(dejitter_mod_init);
++#endif
+diff --git a/plugins/h3600-raw.c b/plugins/h3600-raw.c
+index 81aabc2..b6254df 100644
+--- a/plugins/h3600-raw.c
++++ b/plugins/h3600-raw.c
+@@ -47,7 +47,7 @@ static const struct tslib_ops h3600_ops =
+ 	.read	= h3600_read,
+ };
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *h3600_mod_init(struct tsdev *dev, const char *params)
+ {
+ 	struct tslib_module_info *m;
+ 
+@@ -58,3 +58,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 	m-&gt;ops = &amp;h3600_ops;
+ 	return m;
+ }
++
++#ifndef TSLIB_STATIC_H3600_MODULE
++	TSLIB_MODULE_INIT(h3600_mod_init);
++#endif
+diff --git a/plugins/input-raw.c b/plugins/input-raw.c
+index 6bca86b..5fa0acb 100644
+--- a/plugins/input-raw.c
++++ b/plugins/input-raw.c
+@@ -326,7 +326,7 @@ static const struct tslib_vars raw_vars[] =
+ 
+ #define NR_VARS (sizeof(raw_vars) / sizeof(raw_vars[0]))
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *input_mod_init(struct tsdev *dev, const char *params)
+ {
+ 	struct tslib_input *i;
+ 
+@@ -349,3 +349,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 
+ 	return &amp;(i-&gt;module);
+ }
++
++#ifndef TSLIB_STATIC_INPUT_MODULE
++	TSLIB_MODULE_INIT(input_mod_init);
++#endif 
+diff --git a/plugins/linear-h2200.c b/plugins/linear-h2200.c
+index ab4a807..83fe2ed 100644
+--- a/plugins/linear-h2200.c
++++ b/plugins/linear-h2200.c
+@@ -20,6 +20,7 @@
+ 
+ #include &lt;stdio.h&gt;
+ 
++#include &quot;config.h&quot;
+ #include &quot;tslib.h&quot;
+ #include &quot;tslib-filter.h&quot;
+ 
+@@ -106,7 +107,7 @@ static const struct tslib_ops linear_h2200_ops =
+ 	.fini	= linear_h2200_fini,
+ };
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *linear_h2200_mod_init(struct tsdev *dev, const char *params)
+ {
+ 
+ 	struct tslib_linear_h2200 *lin;
+@@ -119,3 +120,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 
+ 	return &amp;lin-&gt;module;
+ }
++
++#ifndef TSLIB_STATIC_LINEAR_H2200_MODULE
++	TSLIB_MODULE_INIT(linear_h2200_mod_init);
++#endif
+diff --git a/plugins/linear.c b/plugins/linear.c
+index 4fe04d3..c55c218 100644
+--- a/plugins/linear.c
++++ b/plugins/linear.c
+@@ -20,6 +20,7 @@
+ 
+ #include &lt;stdio.h&gt;
+ 
++#include &quot;config.h&quot;
+ #include &quot;tslib-private.h&quot;
+ #include &quot;tslib-filter.h&quot;
+ 
+@@ -107,7 +108,7 @@ static const struct tslib_vars linear_vars[] =
+ 
+ #define NR_VARS (sizeof(linear_vars) / sizeof(linear_vars[0]))
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *linear_mod_init(struct tsdev *dev, const char *params)
+ {
+ 
+ 	struct tslib_linear *lin;
+@@ -163,3 +164,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 
+ 	return &amp;lin-&gt;module;
+ }
++
++#ifndef TSLIB_STATIC_LINEAR_MODULE
++	TSLIB_MODULE_INIT(linear_mod_init);
++#endif
+diff --git a/plugins/mk712-raw.c b/plugins/mk712-raw.c
+index 79914b6..b1a6af7 100644
+--- a/plugins/mk712-raw.c
++++ b/plugins/mk712-raw.c
+@@ -50,7 +50,7 @@ static const struct tslib_ops mk712_ops =
+ 	.read	= mk712_read,
+ };
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *mk712_mod_init(struct tsdev *dev, const char *params)
+ {
+ 	struct tslib_module_info *m;
+ 
+@@ -61,3 +61,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 	m-&gt;ops = &amp;mk712_ops;
+ 	return m;
+ }
++
++#ifndef TSLIB_STATIC_MK712_MODULE
++	TSLIB_MODULE_INIT(mk712_mod_init);
++#endif
+diff --git a/plugins/plugins.h b/plugins/plugins.h
+new file mode 100644
+index 0000000..4bba49c
+--- /dev/null
++++ b/plugins/plugins.h
+@@ -0,0 +1,17 @@
++#define TSLIB_DECLARE_MODULE(name) \
++	TSAPI struct tslib_module_info *name##_mod_init(struct tsdev *dev, const char *params)
++
++TSLIB_DECLARE_MODULE(linear);
++TSLIB_DECLARE_MODULE(dejitter);
++TSLIB_DECLARE_MODULE(linear_h2200);
++TSLIB_DECLARE_MODULE(variance);
++TSLIB_DECLARE_MODULE(pthres);
++
++TSLIB_DECLARE_MODULE(ucb1x00);
++TSLIB_DECLARE_MODULE(corgi);
++TSLIB_DECLARE_MODULE(collie);
++TSLIB_DECLARE_MODULE(h3600);
++TSLIB_DECLARE_MODULE(mk712);
++TSLIB_DECLARE_MODULE(arctic2);
++TSLIB_DECLARE_MODULE(tatung);
++TSLIB_DECLARE_MODULE(input);
+diff --git a/plugins/pthres.c b/plugins/pthres.c
+index cca454c..c5e1f6e 100644
+--- a/plugins/pthres.c
++++ b/plugins/pthres.c
+@@ -20,6 +20,7 @@
+ #include &lt;errno.h&gt;
+ #include &lt;limits.h&gt;
+ 
++#include &quot;config.h&quot;
+ #include &quot;tslib.h&quot;
+ #include &quot;tslib-filter.h&quot;
+ 
+@@ -131,7 +132,7 @@ static const struct tslib_vars pthres_vars[] =
+ 
+ #define NR_VARS (sizeof(pthres_vars) / sizeof(pthres_vars[0]))
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *pthres_mod_init(struct tsdev *dev, const char *params)
+ {
+ 
+ 	struct tslib_pthres *p;
+@@ -155,3 +156,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 
+ 	return &amp;p-&gt;module;
+ }
++
++#ifndef TSLIB_STATIC_PTHRES_MODULE
++	TSLIB_MODULE_INIT(pthres_mod_init);
++#endif
+diff --git a/plugins/tatung-raw.c b/plugins/tatung-raw.c
+index 26fae27..5ba85cf 100644
+--- a/plugins/tatung-raw.c
++++ b/plugins/tatung-raw.c
+@@ -57,7 +57,7 @@ static const struct tslib_ops tatung_ops =
+ 	.read	= tatung_read,
+ };
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *tatung_mod_init(struct tsdev *dev, const char *params)
+ {
+ 	struct tslib_module_info *m;
+ 
+@@ -68,3 +68,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 	m-&gt;ops = &amp;tatung_ops;
+ 	return m;
+ }
++
++#ifndef TSLIB_STATIC_TATUNG_MODULE
++	TSLIB_MODULE_INIT(tatung_mod_init);
++#endif
+diff --git a/plugins/ucb1x00-raw.c b/plugins/ucb1x00-raw.c
+index 1f9fd1f..6db7e30 100644
+--- a/plugins/ucb1x00-raw.c
++++ b/plugins/ucb1x00-raw.c
+@@ -49,7 +49,7 @@ static const struct tslib_ops ucb1x00_ops =
+ 	.read	= ucb1x00_read,
+ };
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *ucb1x00_mod_init(struct tsdev *dev, const char *params)
+ {
+ 	struct tslib_module_info *m;
+ 
+@@ -60,3 +60,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 	m-&gt;ops = &amp;ucb1x00_ops;
+ 	return m;
+ }
++
++#ifndef TSLIB_STATIC_UCB1X00_MODULE
++	TSLIB_MODULE_INIT(ucb1x00_mod_init);
++#endif
+diff --git a/plugins/variance.c b/plugins/variance.c
+index 95e12a4..ec24c3e 100644
+--- a/plugins/variance.c
++++ b/plugins/variance.c
+@@ -28,6 +28,7 @@
+ #include &lt;string.h&gt;
+ #include &lt;limits.h&gt;
+ 
++#include &quot;config.h&quot;
+ #include &quot;tslib.h&quot;
+ #include &quot;tslib-filter.h&quot;
+ 
+@@ -161,7 +162,7 @@ static const struct tslib_vars variance_vars[] =
+ 
+ #define NR_VARS (sizeof(variance_vars) / sizeof(variance_vars[0]))
+ 
+-TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++TSAPI struct tslib_module_info *variance_mod_init(struct tsdev *dev, const char *params)
+ {
+ 	struct tslib_variance *var;
+ 
+@@ -183,3 +184,7 @@ TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
+ 
+ 	return &amp;var-&gt;module;
+ }
++
++#ifndef TSLIB_STATIC_VARIANCE_MODULE
++	TSLIB_MODULE_INIT(variance_mod_init);
++#endif
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 57b1b09..9f0b4c0 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -9,7 +9,7 @@
+ # $Id: Makefile.am,v 1.8 2005/02/28 23:44:12 kergoth Exp $
+ #
+ 
+-AM_CFLAGS	 = -DPLUGIN_DIR=\&quot;@PLUGIN_DIR@\&quot; -DTS_CONF=\&quot;@TS_CONF@\&quot; \
++AM_CFLAGS	 = -DPLUGIN_DIR=\&quot;@PLUGIN_DIR@\&quot; -DTS_CONF=\&quot;@TS_CONF@\&quot; -DTS_POINTERCAL=\&quot;@TS_POINTERCAL@\&quot; \
+ 		   $(DEBUGFLAGS) $(LIBFLAGS) $(VIS_CFLAGS)
+ 
+ noinst_HEADERS   = tslib-private.h tslib-filter.h
+@@ -19,6 +19,59 @@ lib_LTLIBRARIES  = libts.la
+ libts_la_SOURCES = ts_attach.c ts_close.c ts_config.c ts_error.c \
+ 		   ts_fd.c ts_load_module.c ts_open.c ts_parse_vars.c \
+ 		   ts_read.c ts_read_raw.c ts_option.c
++
++if ENABLE_STATIC_LINEAR_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/linear.c
++endif
++
++if ENABLE_STATIC_DEJITTER_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/dejitter.c
++endif
++
++if ENABLE_STATIC_LINEAR_H2200_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/linear-h2200.c
++endif
++
++if ENABLE_STATIC_VARIANCE_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/variance.c
++endif
++
++if ENABLE_STATIC_PTHRES_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/pthres.c
++endif
++
++if ENABLE_STATIC_UCB1X00_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/ucb1x00-raw.c
++endif
++
++if ENABLE_STATIC_CORGI_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/corgi-raw.c
++endif
++
++if ENABLE_STATIC_COLLIE_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/collie-raw.c
++endif
++
++if ENABLE_STATIC_H3600_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/h3600-raw.c
++endif
++
++if ENABLE_STATIC_MK712_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/mk712-raw.c
++endif
++
++if ENABLE_STATIC_ARCTIC2_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/arctic2-raw.c
++endif
++
++if ENABLE_STATIC_TATUNG_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/tatung-raw.c
++endif
++
++if ENABLE_STATIC_INPUT_MODULE
++libts_la_SOURCES += $(top_srcdir)/plugins/input-raw.c
++endif
++
+ libts_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
+ 		   -release $(LT_RELEASE) -export-dynamic
+ libts_la_LIBADD  = -ldl
+diff --git a/src/ts_load_module.c b/src/ts_load_module.c
+index 9605b5c..fa75d9e 100644
+--- a/src/ts_load_module.c
++++ b/src/ts_load_module.c
+@@ -22,75 +22,154 @@
+ 
+ #include &quot;tslib-private.h&quot;
+ 
+-int __ts_load_module(struct tsdev *ts, const char *module, const char *params, int raw)
++#include &quot;../plugins/plugins.h&quot;
++
++static struct {
++	const char *name;
++	tslib_module_init mod_init;
++} tslib_modules[] = {
++	/* XXX: sort alphabetically and use a binary search? */
++#ifdef TSLIB_STATIC_ARCTIC2_MODULE
++	{ &quot;arctic2&quot;, arctic2_mod_init },
++#endif
++#ifdef TSLIB_STATIC_COLLIE_MODULE
++	{ &quot;collie&quot;, collie_mod_init },
++#endif
++#ifdef TSLIB_STATIC_CORGI_MODULE
++	{ &quot;corgi&quot;, corgi_mod_init },
++#endif 
++#ifdef TSLIB_STATIC_DEJITTER_MODULE
++	{ &quot;dejitter&quot;, dejitter_mod_init },
++#endif
++#ifdef TSLIB_STATIC_H3600_MODULE
++	{ &quot;h3600&quot;, h3600_mod_init },
++#endif
++#ifdef TSLIB_STATIC_INPUT_MODULE
++	{ &quot;input&quot;, input_mod_init },
++#endif
++#ifdef TSLIB_STATIC_LINEAR_MODULE 
++	{ &quot;linear&quot;, linear_mod_init },
++#endif
++#ifdef TSLIB_STATIC_LINEAR_H2200_MODULE
++	{ &quot;linear_h2200&quot;, linear_h2200_mod_init },
++#endif
++#ifdef TSLIB_STATIC_MK712_MODULE
++	{ &quot;mk712&quot;, mk712_mod_init },
++#endif
++#ifdef TSLIB_STATIC_PTHRES_MODULE
++	{ &quot;pthres&quot;, pthres_mod_init },
++#endif
++#ifdef TSLIB_STATIC_TATUNG_MODULE
++	{ &quot;tatung&quot;, tatung_mod_init },
++#endif
++#ifdef TSLIB_STATIC_UCB1X00_MODULE
++	{ &quot;ucb1x00&quot;, ucb1x00_mod_init },
++#endif
++#ifdef TSLIB_STATIC_VARIANCE_MODULE
++	{ &quot;variance&quot;, variance_mod_init },
++#endif
++};
++
++#define countof(arr) (sizeof(arr) / sizeof((arr)[0]))
++
++static struct tslib_module_info *__ts_load_module_static(struct tsdev *ts, const char *module, const char *params)
++{
++	struct tslib_module_info *info = NULL;
++	unsigned int i;
++
++	for (i = 0; i &lt; countof(tslib_modules); i++) {
++		if (!strcmp(tslib_modules[i].name, module)) {
++			info = tslib_modules[i].mod_init(ts, params);
++#ifdef DEBUG
++			fprintf(stderr, &quot;static module %s init %s\n&quot;, module,
++				info ? &quot;succeeded&quot; : &quot;failed&quot;);
++#endif
++			break;
++		}
++	}
++
++	if (info)
++		info-&gt;handle = NULL;
++
++	return info;
++}
++
++static struct tslib_module_info *__ts_load_module_shared(struct tsdev *ts, const char *module, const char *params)
+ {
+-	struct tslib_module_info * (*init)(struct tsdev *, const char *);
++	tslib_module_init *init;
+ 	struct tslib_module_info *info;
+ 	char fn[1024];
+ 	void *handle;
+-	int ret;
+-	char *plugin_directory=NULL;
+-
+-	if( (plugin_directory = getenv(&quot;TSLIB_PLUGINDIR&quot;)) != NULL ) {
+-		//fn = alloca(sizeof(plugin_directory) + strlen(module) + 4);
+-		strcpy(fn,plugin_directory);
+-	} else {
+-		//fn = alloca(sizeof(PLUGIN_DIR) + strlen(module) + 4);
+-		strcpy(fn, PLUGIN_DIR);
+-	}
++	char *plugin_directory = getenv(&quot;TSLIB_PLUGINDIR&quot;);
+ 
+-	strcat(fn, &quot;/&quot;);
+-	strcat(fn, module);
+-	strcat(fn, &quot;.so&quot;);
++	if (!plugin_directory)
++		plugin_directory = PLUGIN_DIR;
++
++	snprintf(fn, sizeof fn, &quot;%s/%s.so&quot;, plugin_directory, module);
+ 
+-#ifdef DEBUG
+-	printf (&quot;Loading module %s\n&quot;, fn);
+-#endif
+ 	handle = dlopen(fn, RTLD_NOW);
+ 	if (!handle) {
+ #ifdef DEBUG
+ 		fprintf (stderr, &quot;%s dlopen() failed: %s\n&quot;, fn, dlerror());
+ #endif
+-		return -1;
++		return NULL;
+ 	}
+ 
+ 	init = dlsym(handle, &quot;mod_init&quot;);
+-	if (!init) {
++	if (!init || !(*init)) {
+ #ifdef DEBUG
+ 		fprintf (stderr, &quot;%s dlsym() failed: %s\n&quot;, fn, dlerror());
+ #endif
+ 		dlclose(handle);
+-		return -1;
++		return NULL;
+ 	}
+ 
+-	info = init(ts, params);
++	info = (*init)(ts, params);
+ 	if (!info) {
+ #ifdef DEBUG
+ 		fprintf (stderr, &quot;Can't init %s\n&quot;, fn);
+ #endif
+ 		dlclose(handle);
+-		return -1;
++		return NULL;
+ 	}
+ 
+ 	info-&gt;handle = handle;
+ 
+-	if (raw) {
++	return info;
++}
++
++static int __ts_load_module(struct tsdev *ts, const char *module, const char *params, int raw)
++{
++	struct tslib_module_info *info;
++	int ret;
++
++#ifdef DEBUG
++	printf (&quot;Loading module %s\n&quot;, module);
++#endif
++
++	info = __ts_load_module_static(ts, module, params);
++	if (!info)
++		info = __ts_load_module_shared(ts, module, params);
++	if (!info)
++		return -1;
++
++	if (raw)
+ 		ret = __ts_attach_raw(ts, info);
+-	} else {
++	else
+ 		ret = __ts_attach(ts, info);
+-	}
++
+ 	if (ret) {
+ #ifdef DEBUG
+-		fprintf (stderr, &quot;Can't attach %s\n&quot;, fn);
++		fprintf (stderr, &quot;Can't attach %s\n&quot;, module);
+ #endif
+ 		info-&gt;ops-&gt;fini(info);
+-		dlclose(handle);
++		if (info-&gt;handle)
++			dlclose(info-&gt;handle);
+ 	}
+ 
+ 	return ret;
+ }
+ 
+-
+ int ts_load_module(struct tsdev *ts, const char *module, const char *params)
+ {
+ 	return __ts_load_module(ts, module, params, 0);
+diff --git a/src/tslib-filter.h b/src/tslib-filter.h
+index e33735e..5ed7788 100644
+--- a/src/tslib-filter.h
++++ b/src/tslib-filter.h
+@@ -38,6 +38,9 @@ struct tslib_module_info {
+ 	const struct tslib_ops *ops;
+ };
+ 
++typedef struct tslib_module_info *(*tslib_module_init)(struct tsdev *dev, const char *params);
++#define TSLIB_MODULE_INIT(f) TSAPI tslib_module_init mod_init = &amp;f
++
+ TSAPI extern int tslib_parse_vars(struct tslib_module_info *,
+ 			    const struct tslib_vars *, int,
+ 			    const char *);
+-- 
+1.6.5
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000263.html">[Tslib-general] [PATCH 1/4] configure: disable check for c++	compiler
+</A></li>
+	<LI>Next message: <A HREF="000266.html">[Tslib-general] [PATCH] Support static modules aka modules	which are embedded inside libts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#253">[ date ]</a>
+              <a href="thread.html#253">[ thread ]</a>
+              <a href="subject.html#253">[ subject ]</a>
+              <a href="author.html#253">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

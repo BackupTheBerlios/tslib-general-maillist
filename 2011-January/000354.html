@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Rebuilding tslib
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Rebuilding%20tslib&In-Reply-To=%3CAANLkTin_d%3D_yWdNF8syuP3ODh3%3DSPG7ke1JK53iZuKPz%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000353.html">
+   <LINK REL="Next"  HREF="000355.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Rebuilding tslib</H1>
+    <B>David Rea</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Rebuilding%20tslib&In-Reply-To=%3CAANLkTin_d%3D_yWdNF8syuP3ODh3%3DSPG7ke1JK53iZuKPz%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Rebuilding tslib">dave at daverea.com
+       </A><BR>
+    <I>Fri Jan 14 15:28:59 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000353.html">[Tslib-general] Rebuilding tslib
+</A></li>
+        <LI>Next message: <A HREF="000355.html">[Tslib-general] Rebuilding tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#354">[ date ]</a>
+              <a href="thread.html#354">[ thread ]</a>
+              <a href="subject.html#354">[ subject ]</a>
+              <a href="author.html#354">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>.......*and* I've just discovered autogen.sh! Sorry for the list noise
+there.
+
+Cross compilation questions are still outstanding, though - now that I have
+a ./configure script, are there any options besides --host=arm-linux that I
+need to be passing? Is there a way I could run the configure to use the
+build toolchain supplied by the board vendor?
+
+Sorry for the somewhat basic questions, but my cross-compilation experience
+is with bare-metal C code running on microcontrollers!
+
+Cheers &amp; Thanks,
+Dave
+
+On Fri, Jan 14, 2011 at 9:19 AM, David Rea &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">dave at daverea.com</A>&gt; wrote:
+
+&gt;<i> Hi All-
+</I>&gt;<i>
+</I>&gt;<i> Based on presence of the &quot;selected device is not a touchscreen I
+</I>&gt;<i> understand&quot; error on my device, I'm thinking that I am running a pretty old
+</I>&gt;<i> version of tslib. The Git log shows that this error (and the portion of the
+</I>&gt;<i> file descriptor check that triggered it) were removed in November 2008. And
+</I>&gt;<i> based on Thomas' plug-in advice in my previous thread, it looks like I'm
+</I>&gt;<i> going to have to rebuild tslib either way.
+</I>&gt;<i>
+</I>&gt;<i> The problem is, I'm not sure where to start on doing that. When I try to
+</I>&gt;<i> run ./configure in the repository root or src/ directories, I get a bash
+</I>&gt;<i> error saying &quot;No such file or directory&quot; - but I see the configure.acpresent! I've made sure autoconf is installed and tried to follow the
+</I>&gt;<i> directions in INSTALL, but no dice.
+</I>&gt;<i>
+</I>&gt;<i> When I run `autoconf` or `automake` in the source directory, I get piles of
+</I>&gt;<i> errors. Is there a different build procedure I should be following than the
+</I>&gt;<i> one in INSTALL?
+</I>&gt;<i>
+</I>&gt;<i> I'm also concerned about making sure my configuration is for the iMX51
+</I>&gt;<i> target, not my build machine. It looks like it's necessary to add a
+</I>&gt;<i> &quot;--host=arm-linux&quot; switch to the configure command, and then I'm assuming
+</I>&gt;<i> that once I have a config.h file I can pull the whole thing into my
+</I>&gt;<i> vendor-supplied IDE and build from there. Does this sound reasonable?
+</I>&gt;<i>
+</I>&gt;<i> Thanks Very Much,
+</I>&gt;<i> Dave
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20110114/db44c809/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20110114/db44c809/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000353.html">[Tslib-general] Rebuilding tslib
+</A></li>
+	<LI>Next message: <A HREF="000355.html">[Tslib-general] Rebuilding tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#354">[ date ]</a>
+              <a href="thread.html#354">[ thread ]</a>
+              <a href="subject.html#354">[ subject ]</a>
+              <a href="author.html#354">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

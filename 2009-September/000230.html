@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] ts_calibrate does not work?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20ts_calibrate%20does%20not%20work%3F&In-Reply-To=%3C4AB23D2C.1060209%40ELK.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000229.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] ts_calibrate does not work?</H1>
+    <B>Klaus.Fuerth at ELK.de</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20ts_calibrate%20does%20not%20work%3F&In-Reply-To=%3C4AB23D2C.1060209%40ELK.de%3E"
+       TITLE="[Tslib-general] ts_calibrate does not work?">Klaus.Fuerth at ELK.de
+       </A><BR>
+    <I>Thu Sep 17 15:44:12 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000229.html">[Tslib-general] tslib configuration for ELO on ADS5121e board
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#230">[ date ]</a>
+              <a href="thread.html#230">[ thread ]</a>
+              <a href="subject.html#230">[ subject ]</a>
+              <a href="author.html#230">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I compiled tslib-1.0 for my embedded linux arm system. ts_test seems to 
+run fine, but with ts_calibrate I only see the first cross. There is no 
+reaction while tapping the screen.
+Detailed information about system settings and ts_test output below.
+
+Any suggestions what might go wrong with ts_calibrate?
+
+Thank you very much!
+
+Klaus
+
+
+
+I use the following environments:
+
+&gt;<i> export CONSOLE=/dev/tty0
+</I>&gt;<i> export POINTERCAL_FILE=./pointercal
+</I>&gt;<i> #
+</I>&gt;<i> export TSLIB_CALIBFILE=./pointercal.tslib
+</I>&gt;<i> export TSLIB_CONFFILE=$PFAD/tslib/etc/ts.conf
+</I>&gt;<i> export TSLIB_PLUGINDIR=$PFAD/tslib/lib/ts
+</I>&gt;<i> export TSLIB_TSDEVICE=/dev/input/event0
+</I>&gt;<i> export TSLIB_FBDEVICE=/dev/fb0
+</I>&gt;<i> export TSLIB_TSEVENTTYPE=INPUT
+</I>
+With ts_test, I get some output while touching:
+
+&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">root at triton1</A>:/mnt/userfs/Qt-Tests/tslib# bin/ts_test 
+</I>&gt;<i> 0.000000:      0      0      0
+</I>&gt;<i> 1253194575.737635:    220    308      0
+</I>&gt;<i> 1253194575.757630:    220    310      0
+</I>&gt;<i> 1253194575.777644:    238    317      0
+</I>&gt;<i> 1253194575.797645:    245    320      0
+</I>&gt;<i> 1253194575.817641:    247    321      0
+</I>&gt;<i> 1253194575.837650:    248    322      0
+</I>&gt;<i> 1253194575.857639:    253    319      0
+</I>&gt;<i> 1253194575.877639:    248    321      0
+</I>&gt;<i> 1253194575.897633:    248    318      0
+</I>&gt;<i> 1253194575.917640:    247    321      0
+</I>&gt;<i> 1253194575.937643:    249    332      0
+</I>&gt;<i> 1253194575.957639:    253    327      0
+</I>&gt;<i> 1253194575.977685:    251    324      0
+</I>&gt;<i> 1253194575.997635:    249    324      0
+</I>&gt;<i> 1253194576.017651:    248    315      0
+</I>&gt;<i> 1253194576.037642:    245    318      0
+</I>&gt;<i> 1253194576.057637:    242    311      0
+</I>&gt;<i> 1253194576.077647:    215    288      0
+</I>&gt;<i> 1253194576.097596:      0      0      0
+</I>&gt;<i> 1253194576.097632:    215    288      0
+</I>&gt;<i> 1253194578.377633:   3820   3756      0
+</I>&gt;<i> 1253194578.397647:   3827   3725      0
+</I>&gt;<i> 1253194578.417645:   3824   3721      0
+</I>&gt;<i> 1253194578.437633:   3824   3711      0
+</I>&gt;<i> 1253194578.457647:   3825   3706      0
+</I>&gt;<i> 1253194578.477640:   3826   3698      0
+</I>&gt;<i> 1253194578.497642:   3836   3724      0
+</I>&gt;<i> 1253194578.517648:   3831   3722      0
+</I>&gt;<i> 1253194578.537637:   3836   3732      0
+</I>&gt;<i> 1253194578.557640:   3825   3705      0
+</I>&gt;<i> 1253194578.577637:   3828   3699      0
+</I>&gt;<i> 1253194578.597630:   3828   3751      0
+</I>&gt;<i> 1253194578.617631:   3828   3750      0
+</I>&gt;<i> 1253194578.637641:   3833   3748      0
+</I>&gt;<i> 1253194578.657640:   3824   3756      0
+</I>&gt;<i> 1253194578.677638:   3829   3745      0
+</I>&gt;<i> 1253194578.697641:   3833   3743      0
+</I>&gt;<i> 1253194578.717639:   3828   3747      0
+</I>&gt;<i> 1253194578.737637:   3830   3722      0
+</I>&gt;<i> 1253194578.757641:   3823   3735      0
+</I>&gt;<i> 1253194578.777593:      0      0      0
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000229.html">[Tslib-general] tslib configuration for ELO on ADS5121e board
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#230">[ date ]</a>
+              <a href="thread.html#230">[ thread ]</a>
+              <a href="subject.html#230">[ subject ]</a>
+              <a href="author.html#230">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

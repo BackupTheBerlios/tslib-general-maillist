@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] usbtouchscreen/eGalax
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20usbtouchscreen/eGalax&In-Reply-To=%3C72442BCD-9130-4C9B-9946-CC26FE4C132B%40laptouchinc.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000174.html">
+   <LINK REL="Next"  HREF="000177.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] usbtouchscreen/eGalax</H1>
+    <B>Daniel Jabbour</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20usbtouchscreen/eGalax&In-Reply-To=%3C72442BCD-9130-4C9B-9946-CC26FE4C132B%40laptouchinc.com%3E"
+       TITLE="[Tslib-general] usbtouchscreen/eGalax">daniel at laptouchinc.com
+       </A><BR>
+    <I>Wed Jan 21 09:21:38 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000174.html">[Tslib-general] usbtouchscreen/eGalax
+</A></li>
+        <LI>Next message: <A HREF="000177.html">[Tslib-general] usbtouchscreen/eGalax
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#176">[ date ]</a>
+              <a href="thread.html#176">[ thread ]</a>
+              <a href="subject.html#176">[ subject ]</a>
+              <a href="author.html#176">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay-
+
+I guess I should have tried against the latest SVN copy, things have  
+changed! It looks like screens without pressure reporting are now  
+supported. However, my screen (egalax type using usbtouchscreen kernel  
+module) works only if I comment out the part checking for BTN_TOUCH  
+events. However, when I do, ts_calibrate and ts_test seem to work. Any  
+ideas what's going wrong here?
+
+I get:
+&quot;selected device uses is not a touchscreen (must support BTN_TOUCH  
+events)&quot;
+
+Unless I comment out this check in plugins/input-raw.c:
+if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_KEY, KEY_CNT), keybit) &lt; 0) ||
+	!(absbit[BIT_WORD(BTN_TOUCH)] &amp; BIT_MASK(BTN_TOUCH)) ) {
+	fprintf(stderr, &quot;selected device uses is not a touchscreen (must  
+support BTN_TOUCH events)\n&quot;);
+	return -1;
+}
+
+I ran the &quot;evtest&quot; program, and &quot;Touch&quot; is clearly reported as a  
+&quot;supported event&quot;:
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">djabbour at lab0</A>:~/source/evtest$ sudo ./evtest.out /dev/input/event5
+Input driver version is 1.0.0
+Input device ID: bus 0x3 vendor 0xeef product 0x1 version 0x100
+Input device name: &quot;USB Touchscreen 0eef:0001&quot;
+Supported events:
+   Event type 0 (Sync)
+   Event type 1 (Key)
+     Event code 330 (Touch)
+   Event type 3 (Absolute)
+     Event code 0 (X)
+       Value    264
+       Min        0
+       Max     2047
+     Event code 1 (Y)
+       Value    157
+       Min        0
+       Max     2047
+Testing ... (interrupt to exit)
+Event: time 1232525912.768120, type 1 (Key), code 330 (Touch), value 1
+Event: time 1232525912.768134, type 3 (Absolute), code 0 (X), value 791
+Event: time 1232525912.768136, type 3 (Absolute), code 1 (Y), value 737
+Event: time 1232525912.768139, -------------- Report Sync ------------
+Event: time 1232525912.772109, type 1 (Key), code 330 (Touch), value 0
+Event: time 1232525912.772120, -------------- Report Sync ------------
+
+This seems to make sense after looking at the kernel driver. In  
+usbtouchscreen.c usbtouch_process_pkt() (around line 704):
+input_report_key(usbtouch-&gt;input, BTN_TOUCH, usbtouch-&gt;touch);
+This would seem to indicate BTN_TOUCH is sent with every packet sent  
+from the screen? Admittedly I don't yet throughly understand the  
+touchscreen stack...
+
+Any ideas?
+
+--
+Daniel Jabbour
+Software Engineer
+Laptouch, Inc.
+
+
+
+On Jan 20, 2009, at 8:42 PM, Daniel Jabbour wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> It's been established before on this list that touch panels that
+</I>&gt;<i> support the standard linux input/event architecture but lack pressure
+</I>&gt;<i> support fail to work with tslib (see <A HREF="https://lists.berlios.de/pipermail/tslib-general/2008-March/000020.html">https://lists.berlios.de/pipermail/tslib-general/2008-March/000020.html</A>
+</I>&gt;<i>  ). The &quot;hack&quot; described on that post works, but requires a sloppy
+</I>&gt;<i> code-change for anyone wishing to use one of these devices.
+</I>&gt;<i>
+</I>&gt;<i> My question is: How does the package maintainer (or community) suggest
+</I>&gt;<i> we support devices that use usbtouchscreen but lack pressure support?
+</I>&gt;<i> I'd gladly contribute some kind of patch, I'd just like to know what
+</I>&gt;<i> the best approach is. Thanks very much,
+</I>&gt;<i>
+</I>&gt;<i> Daniel
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Daniel Jabbour
+</I>&gt;<i> Software Engineer
+</I>&gt;<i> Laptouch, Inc.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000174.html">[Tslib-general] usbtouchscreen/eGalax
+</A></li>
+	<LI>Next message: <A HREF="000177.html">[Tslib-general] usbtouchscreen/eGalax
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#176">[ date ]</a>
+              <a href="thread.html#176">[ thread ]</a>
+              <a href="subject.html#176">[ subject ]</a>
+              <a href="author.html#176">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

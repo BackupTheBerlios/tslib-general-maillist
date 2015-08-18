@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib and m68k architecture
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20and%20m68k%20architecture&In-Reply-To=%3C4B7C2A12.6050800%40autron.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000268.html">
+   <LINK REL="Next"  HREF="000270.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib and m68k architecture</H1>
+    <B>Alessandro Guerra</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20and%20m68k%20architecture&In-Reply-To=%3C4B7C2A12.6050800%40autron.net%3E"
+       TITLE="[Tslib-general] tslib and m68k architecture">aguerra at autron.net
+       </A><BR>
+    <I>Wed Feb 17 18:40:34 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000268.html">[Tslib-general] General touch rtl19w Serial (or usb) on linux
+</A></li>
+        <LI>Next message: <A HREF="000270.html">[Tslib-general] how adjust pressure sensibility?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#269">[ date ]</a>
+              <a href="thread.html#269">[ thread ]</a>
+              <a href="subject.html#269">[ subject ]</a>
+              <a href="author.html#269">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I have ported qt.embedded free 3.3.8b to m68k architecture (Coldfire).
+I use uClinux as OS.
+When I download my applications to my board, the code runs well if I 
+write the command ./program -qws!
+But obviously I have a problem: my touch screen isn't calibrated, so I 
+see the mouse pointer running fast under my fingers.
+I exported the QWS_MOUSE_PROTO=Auto:/dev/psaux variable to make it function.
+In order to calibrate the screen I've read that the better way is to 
+install tslib. I searched along my distro's options without finding 
+Build tslib!!!
+I haven't got the library installed in this distro. I tried 
+unsuccessfully to cross-compile the library from source.
+
+Here I give you some detail on how I have configured the library:
+
+1) ./autogen.sh
+2) ./configure --prefix=$PWD/_install --host=i686-pc-linux --target=m68k 
+--with-gnu-ld=no CC=m68k-elf-gcc CXX=m68k-elf-g++
+3) make...
+
+errors:
+/opt/emlix/cobra532x/lib/gcc/m68k-uclinux/4.1.1-emlix/../../../../m68k-uclinux/bin/ld.real: 
+cannot find -ldl
+collect2: ld returned 1 exit status
+make[2]: *** [libts.la] Error 1
+
+If someone can help me, I can give other details...
+Thank you very much!
+Alessandro
+
+
+-- 
+Alessandro Guerra
+Autron srl
+via per Mirandola, 8
+41033 Concordia s/S (MO) - Italy
+Tel   : +39-0535.57276
+Fax   : +39-0535.412795
+web: <A HREF="http://www.autron.net">http://www.autron.net</A>
+mailto: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">aguerra at autron.net</A>
+
+PRIVACY
+Ai sensi della D.Lgs. 196/03 si precisa che le informazioni contenute in questo messaggio sono riservate ed a uso esclusivo del destinatario. Qualora il messaggio in parola Le fosse pervenuto per errore, la preghiamo di eliminarlo senza copiarlo e di non inoltrarlo a terzi, dandocene gentilmente comunicazione. Grazie.
+
+DISCLAIMER
+This message, for the law 196/03, may contain confidential and/or privileged information. If you are not the intended recipient or authorized to receive this for the addressee, you must not use, copy, disclose or take any action based on this message or any information herein. If you have received this message in error, please advise the sender immediately by reply e-mail and delete this message. Thank you for your cooperation. 
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000268.html">[Tslib-general] General touch rtl19w Serial (or usb) on linux
+</A></li>
+	<LI>Next message: <A HREF="000270.html">[Tslib-general] how adjust pressure sensibility?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#269">[ date ]</a>
+              <a href="thread.html#269">[ thread ]</a>
+              <a href="subject.html#269">[ subject ]</a>
+              <a href="author.html#269">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

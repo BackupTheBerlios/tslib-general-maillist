@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Tslib stylus problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20stylus%20problem&In-Reply-To=%3C1206903141.14953.24.camel%40haggblom-home%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000026.html">
+   <LINK REL="Next"  HREF="000024.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Tslib stylus problem</H1>
+    <B>Kaius H&#228;ggblom</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20stylus%20problem&In-Reply-To=%3C1206903141.14953.24.camel%40haggblom-home%3E"
+       TITLE="[Tslib-general] Tslib stylus problem">kaius at oliotalo.fi
+       </A><BR>
+    <I>Sun Mar 30 20:52:21 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000026.html">[Tslib-general] Tslib stylus problem
+</A></li>
+        <LI>Next message: <A HREF="000024.html">[Tslib-general] Tslib stylus problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#28">[ date ]</a>
+              <a href="thread.html#28">[ thread ]</a>
+              <a href="subject.html#28">[ subject ]</a>
+              <a href="author.html#28">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi.
+
+&gt;<i> Please find attachments for the evtest utility output.
+</I>&gt;<i> I have an old environments build with 2.6.14 kernel. The touchscreen on the same h/w works fine in my old environment, I tested its output as well (good-evtest.txt).
+</I>&gt;<i> 
+</I>&gt;<i> Both outputs tested when I point the stylus on the following:
+</I>&gt;<i> Up-left -&gt; up-right -&gt; bottom-right -&gt; bottom-left -&gt; centre
+</I>&gt;<i> For my bad-evtest.txt (in the new environment 2.6.21), the centre tested with the finger.
+</I>
+It seems that the driver you use with the newer kernel is buggy, or you
+use an incorrect driver. Basically in your case the event values should
+be within the same area, but in your not-working case you get event
+values that are not even within the indicated range.
+
+&gt;<i>From your evtest:
+</I>
+  Event type 3 (Absolute)
+    Event code 0 (X)
+      Value   3780
+      Min        0
+      Max     4095
+    Event code 1 (Y)
+      Value   4198
+      Min        0
+      Max     4095
+...
+...
+Event: time 104.321075, type 3 (Absolute), code 0 (X), value 7336
+Event: time 104.321075, type 3 (Absolute), code 1 (Y), value 7188
+
+Examining the complete log it seems about double to correct values.
+
+r,
+Kaius
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000026.html">[Tslib-general] Tslib stylus problem
+</A></li>
+	<LI>Next message: <A HREF="000024.html">[Tslib-general] Tslib stylus problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#28">[ date ]</a>
+              <a href="thread.html#28">[ thread ]</a>
+              <a href="subject.html#28">[ subject ]</a>
+              <a href="author.html#28">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

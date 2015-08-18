@@ -1,0 +1,254 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] What can be the reason for low resolution on	touchpanel ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20What%20can%20be%20the%20reason%20for%20low%20resolution%20on%0A%09touchpanel%20%3F&In-Reply-To=%3CFF89E7BD-1682-4C57-8E41-9745C7294FEE%40langendorff.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000216.html">
+   <LINK REL="Next"  HREF="000218.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] What can be the reason for low resolution on	touchpanel ?</H1>
+    <B>Niels Langendorff</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20What%20can%20be%20the%20reason%20for%20low%20resolution%20on%0A%09touchpanel%20%3F&In-Reply-To=%3CFF89E7BD-1682-4C57-8E41-9745C7294FEE%40langendorff.nl%3E"
+       TITLE="[Tslib-general] What can be the reason for low resolution on	touchpanel ?">linux at langendorff.nl
+       </A><BR>
+    <I>Wed Aug 12 12:52:12 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000216.html">[Tslib-general] What can be the reason for low resolution on	touchpanel ?
+</A></li>
+        <LI>Next message: <A HREF="000218.html">[Tslib-general] What can be the reason for low resolution on touchpanel ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#217">[ date ]</a>
+              <a href="thread.html#217">[ thread ]</a>
+              <a href="subject.html#217">[ subject ]</a>
+              <a href="author.html#217">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Bastian,
+
+it looks to me that the problem lies on the hardware level or maybe in  
+the driver. I don't know the ti-omap architecture,
+but on other architectures I used I had a couple of ADCs converting  
+the value of the TS to a digital value. The conversion is done based  
+on a reference voltage.
+
+Things you can look for are:
+- supply voltage of TS correct?
+- reference voltage for ADC correct?
+- what is the output of the ADC, ranging from 0x0000 to full scale?
+- some TI controllers are running in the 1V8 domain, external hardware  
+can run in the 3V3 domain. This can also cause some problems.
+
+The message in evbug:
+&gt;<i> Event: time 1250068896.475348, -------------- Report Sync ------------
+</I>
+
+is caused by the
+
+input_event(dev, EV_SYN, SYN_REPORT, 0); or input_sync(); call
+
+Hope this helps you solving the problem
+
+
+Best regards,
+
+
+Niels Langendorff
+
+Op 12 aug 2009, om 11:37 heeft Bastian Ruppert het volgende geschreven:
+
+&gt;<i> Hello,
+</I>&gt;<i> i try to enable an ads7846 touchcontroller on an embedded arm9
+</I>&gt;<i> platform (ti omap-l137).
+</I>&gt;<i> The driver is working so far, but the tool ts_calibrate gives me a
+</I>&gt;<i> very low resolution:
+</I>&gt;<i>
+</I>&gt;<i> output of ts_calibrate:
+</I>&gt;<i>
+</I>&gt;<i> -bash-3.2# ts_calibrate
+</I>&gt;<i> xres = 320, yres = 240
+</I>&gt;<i> Took 4 samples...
+</I>&gt;<i> Top left : X =    3 Y =   11
+</I>&gt;<i> Took 4 samples...
+</I>&gt;<i> Top right : X =   13 Y =   11
+</I>&gt;<i> Took 1 samples...
+</I>&gt;<i> Bot right : X =   13 Y =    4
+</I>&gt;<i> Took 1 samples...
+</I>&gt;<i> Bot left : X =    3 Y =    3
+</I>&gt;<i> Took 5 samples...
+</I>&gt;<i> Center : X =    7 Y =    7
+</I>&gt;<i> -9.818115 21.828579 -0.061775
+</I>&gt;<i> 246.256531 0.958162 -18.573639
+</I>&gt;<i> Calibration constants: -643440 1430557 -4048 16138668 62794 -1217242
+</I>&gt;<i> 65536
+</I>&gt;<i>
+</I>&gt;<i> It seems the touchscreen is only able to scan max. 15 steps.
+</I>&gt;<i>
+</I>&gt;<i> This results in bad performance for example with the tool ts_test.
+</I>&gt;<i>
+</I>&gt;<i> The question is:
+</I>&gt;<i> Which part of the system can influence the resolution of the
+</I>&gt;<i> touchscreen (where is the problem, hardware, tslib or driver or
+</I>&gt;<i> whatever) and what&#180;s to do?
+</I>&gt;<i>
+</I>&gt;<i> Has anybody experience with problems like that?
+</I>&gt;<i>
+</I>&gt;<i> Any ideas are very welcome, thank you!
+</I>&gt;<i> Bastian.
+</I>&gt;<i>
+</I>&gt;<i> P.S.
+</I>&gt;<i> The environment is a little bit noisy.
+</I>&gt;<i> I reduced the driver SPI speed to make the driver working.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> kernel Version :  2.6.29-rc8-davinci1
+</I>&gt;<i>
+</I>&gt;<i> tslib 1.0
+</I>&gt;<i>
+</I>&gt;<i> I compiled the ads7846 driver (the driver is in the kernel, not a  
+</I>&gt;<i> module)
+</I>&gt;<i> with VERBOSE and DEBUG and dmesg gives me the following output when  
+</I>&gt;<i> pressing the touchscreen:
+</I>&gt;<i>
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 1, Code: 330, Value: 1
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 3, Code: 0, Value: 10
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 3, Code: 1, Value: 5
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 3, Code: 24, Value: 4
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 0, Code: 0, Value: 0
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 1, Code: 330, Value: 0
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 3, Code: 24, Value: 0
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 0, Code: 0, Value: 0
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 1, Code: 330, Value: 1
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 3, Code: 1, Value: 4
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 3, Code: 24, Value: 5
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 0, Code: 0, Value: 0
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 1, Code: 330, Value: 0
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 3, Code: 24, Value: 0
+</I>&gt;<i> evbug.c: Event. Dev: input0, Type: 0, Code: 0, Value: 0
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -bash-3.2# cat /proc/bus/input/devices
+</I>&gt;<i> I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+</I>&gt;<i> N: Name=&quot;ADS784x Touchscreen&quot;
+</I>&gt;<i> P: Phys=spi0.0/input0
+</I>&gt;<i> S: Sysfs=/class/input/input0
+</I>&gt;<i> U: Uniq=
+</I>&gt;<i> H: Handlers=event0 evbug
+</I>&gt;<i> B: EV=b
+</I>&gt;<i> B: KEY=400 0 0 0 0 0 0 0 0 0 0
+</I>&gt;<i> B: ABS=1000003
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -bash-3.2# evtest /dev/input/event0
+</I>&gt;<i> evdev.c(EVIOCGBIT): Suspicious buffer size 511, limiting output to  
+</I>&gt;<i> 64 bytes. Seel
+</I>&gt;<i> Input driver version is 1.0.0
+</I>&gt;<i> Input device ID: bus 0x0 vendor 0x0 product 0x0 version 0x0
+</I>&gt;<i> Input device name: &quot;ADS784x Touchscreen&quot;
+</I>&gt;<i> Supported events:
+</I>&gt;<i>  Event type 0 (Sync)
+</I>&gt;<i>  Event type 1 (Key)
+</I>&gt;<i>    Event code 330 (Touch)
+</I>&gt;<i>  Event type 3 (Absolute)
+</I>&gt;<i>    Event code 0 (X)
+</I>&gt;<i>      Value     10
+</I>&gt;<i>      Min        0
+</I>&gt;<i>      Max     4095
+</I>&gt;<i>    Event code 1 (Y)
+</I>&gt;<i>      Value      4
+</I>&gt;<i>      Min        0
+</I>&gt;<i>      Max     4095
+</I>&gt;<i>    Event code 24 (Pressure)
+</I>&gt;<i>      Value      0
+</I>&gt;<i>      Min        0
+</I>&gt;<i>      Max     4096
+</I>&gt;<i> Testing ... (interrupt to exit)
+</I>&gt;<i> Event: time 1250068896.475094, type 1 (Key), code 330 (Touch), value 1
+</I>&gt;<i> Event: time 1250068896.475207, type 3 (Absolute), code 0 (X), value 6
+</I>&gt;<i> Event: time 1250068896.475260, type 3 (Absolute), code 1 (Y), value 9
+</I>&gt;<i> Event: time 1250068896.475305, type 3 (Absolute), code 24  
+</I>&gt;<i> (Pressure), value 2
+</I>&gt;<i> Event: time 1250068896.475348, -------------- Report Sync ------------
+</I>&gt;<i> Event: time 1250068896.521596, type 3 (Absolute), code 24  
+</I>&gt;<i> (Pressure), value 1
+</I>&gt;<i> Event: time 1250068896.522028, -------------- Report Sync ------------
+</I>&gt;<i> Event: time 1250068896.712321, type 3 (Absolute), code 24  
+</I>&gt;<i> (Pressure), value 2
+</I>&gt;<i> Event: time 1250068896.712783, -------------- Report Sync ------------
+</I>&gt;<i> Event: time 1250068896.730290, type 1 (Key), code 330 (Touch), value 0
+</I>&gt;<i> Event: time 1250068896.730401, type 3 (Absolute), code 24  
+</I>&gt;<i> (Pressure), value 0
+</I>&gt;<i> Event: time 1250068896.730448, -------------- Report Sync ------------
+</I>&gt;<i> Event: time 1250068898.585877, type 1 (Key), code 330 (Touch), value 1
+</I>&gt;<i> Event: time 1250068898.586350, type 3 (Absolute), code 24  
+</I>&gt;<i> (Pressure), value 3
+</I>&gt;<i> Event: time 1250068898.586710, -------------- Report Sync ------------
+</I>&gt;<i> Event: time 1250068898.600223, type 3 (Absolute), code 24  
+</I>&gt;<i> (Pressure), value 2
+</I>&gt;<i> Event: time 1250068898.600651, -------------- Report Sync ------------
+</I>&gt;<i> Event: time 1250068898.626484, type 3 (Absolute), code 24  
+</I>&gt;<i> (Pressure), value 1
+</I>&gt;<i> Event: time 1250068898.626917, -------------- Report Sync ------------
+</I>&gt;<i> Event: time 1250068898.754460, type 3 (Absolute), code 24  
+</I>&gt;<i> (Pressure), value 2
+</I>&gt;<i> Event: time 1250068898.754923, -------------- Report Sync ------------
+</I>&gt;<i> Event: time 1250068898.776418, type 1 (Key), code 330 (Touch), value 0
+</I>&gt;<i> Event: time 1250068898.776533, type 3 (Absolute), code 24  
+</I>&gt;<i> (Pressure), value 0
+</I>&gt;<i> Event: time 1250068898.776583, -------------- Report Sync ------------
+</I>&gt;<i>
+</I>&gt;<i> What does -------------- Report Sync ------------ mean?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This is part of the driversettings in the kernel:
+</I>&gt;<i> static struct ads7846_platform_data ads_info = {
+</I>&gt;<i>   .model            = 7846,
+</I>&gt;<i>   .x_plate_ohms         = 600,//750, // FIXME
+</I>&gt;<i>   .y_plate_ohms         = 220,//400,//300, // FIXME
+</I>&gt;<i>   .pressure_max         = 4096,//4096,
+</I>&gt;<i>   .debounce_max         = 20,//1,
+</I>&gt;<i>   .debounce_rep         = 4,//0,
+</I>&gt;<i>   .debounce_tol         = 5,//(~0),
+</I>&gt;<i>   .get_pendown_state      = ads7846_pendown_state,
+</I>&gt;<i>   //.gpio_pendown         =ADS7846_PENIRQ,
+</I>&gt;<i> };
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000216.html">[Tslib-general] What can be the reason for low resolution on	touchpanel ?
+</A></li>
+	<LI>Next message: <A HREF="000218.html">[Tslib-general] What can be the reason for low resolution on touchpanel ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#217">[ date ]</a>
+              <a href="thread.html#217">[ thread ]</a>
+              <a href="subject.html#217">[ subject ]</a>
+              <a href="author.html#217">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

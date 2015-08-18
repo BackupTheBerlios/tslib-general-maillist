@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] HI
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20HI&In-Reply-To=%3C4AA8EDF6.5A42.00B3.0%40lntsec.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000220.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] HI</H1>
+    <B>Vinay Mallikarjun</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20HI&In-Reply-To=%3C4AA8EDF6.5A42.00B3.0%40lntsec.com%3E"
+       TITLE="[Tslib-general] HI">Vinay.Mallikarjun at lntsec.com
+       </A><BR>
+    <I>Thu Sep 10 08:45:50 CEST 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000220.html">[Tslib-general] HI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#219">[ date ]</a>
+              <a href="thread.html#219">[ thread ]</a>
+              <a href="subject.html#219">[ subject ]</a>
+              <a href="author.html#219">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Good Morning...
+                           Im not able to activate Touch screen on Phytec ARM 11 core based board. I have all the procedures  which im mentioning below.. Initially i downloaded Tslib-1.0.tar.gz  and i compiled it by ./autogen.sh.............. even i compiled it for my ARM compiler by changing in ./.configure CC=........ our ARM compiler,,,,,,,,,,,,,,,,,,,,,,,
+  Next  in compiled my Qt Embedded 4.5.2 by using commnad ./configure -embedded arm -qt-mouse-tslib -L(where my tslib folder of 16Kb was generated)/lib -I/(where my tslib folder of 16Kb was generated)/include 
+Make, make install.......  I ported all lib files generated to board.. i didnt port plugin folder from this generated one bcoz of memory issue..
+then i ported tslib folder generated after compiling TSLIB  zip file... And I passed ENV VARIABLES are
+#bash 3.1 export QTDIR=/usr/local/Trolltech/QtEmebbed   (on board my qte is installed so this is the path)
+                 export TSDIR=/usr/local/Trolltech/tslib    (this the where  paste my TSLIB(compiled one) folder which i have generated now)
+                 export QWS_DISPLAY=&quot;LinuxFb:/dev/fb0&quot;
+                 export QWS_SIZE =240x320
+                export QWS_MOUSE_PROTO=&quot;tslib:/dev/event0&quot;
+                export TSLIB_CALIBFILE =&quot;/etc/pointercal&quot;   (this file would be created by executing ts_calibrate)
+                export TSLIB_CONFFILE=&quot;usr/local/Trolltech/tslib/etc/ts.conf&quot;
+                export TSLIB_CONSOLEDEVICE=&quot;none&quot;
+                export TSLIB_FBDEVICE=&quot;/dev/fb0&quot;
+                export TSLIB_PLUGINDIR=usr/local/Trolltecch/tslib/lib/ts
+                export TSLIB_TSDEVICE=&quot;/dev/event0&quot;
+
+Plz suggest me how to actiavate my TOUCHSCREEN  to wprk on my project...
+With Regards,
+VINAY M
+
+Larsen &amp; Toubro Limited
+www.larsentoubro.com
+
+This Email may contain confidential or privileged information for the intended recipient (s) If you are not the intended recipient, please do not use or disseminate the information, notify the sender and delete it from your system.
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000220.html">[Tslib-general] HI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#219">[ date ]</a>
+              <a href="thread.html#219">[ thread ]</a>
+              <a href="subject.html#219">[ subject ]</a>
+              <a href="author.html#219">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

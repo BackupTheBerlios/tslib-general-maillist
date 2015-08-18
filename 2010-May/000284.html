@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Reliably getting inputattach event node
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Reliably%20getting%20inputattach%20event%20node&In-Reply-To=%3Cy2vdb471ace1005020511pec49b472v72b505c2fbcc7931%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000285.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Reliably getting inputattach event node</H1>
+    <B>Peter Geoghegan</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Reliably%20getting%20inputattach%20event%20node&In-Reply-To=%3Cy2vdb471ace1005020511pec49b472v72b505c2fbcc7931%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Reliably getting inputattach event node">peter.geoghegan86 at gmail.com
+       </A><BR>
+    <I>Sun May  2 14:11:40 CEST 2010</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000285.html">[Tslib-general]  Reliably getting inputattach event node
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#284">[ date ]</a>
+              <a href="thread.html#284">[ thread ]</a>
+              <a href="subject.html#284">[ subject ]</a>
+              <a href="author.html#284">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I'm maintaining an embedded system that runs a fairly stripped down
+version of Opensuse 11.2. I'm using a generic input_raw device that
+has its own kernel driver, reading an event[0-9] device node created
+by inputattach. Previously, I found it useful to set $TSLIB_TSDEVICE
+to the '/dev/input/by-path/serio-1-' symbolic link. However, for some
+reason that symbolic link doesn't appear when using Suse 11.2's
+inpututils,
+
+I set this environment variable within a shell script, that runs and
+restarts my embedded application in an infinite loop.
+
+Can someone suggest a reliable way to get the correct event node? At
+the moment, I'm just using /dev/input/event6, but this is rather
+brittle, I suspect.
+
+Regards,
+Peter Geoghegan
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000285.html">[Tslib-general]  Reliably getting inputattach event node
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#284">[ date ]</a>
+              <a href="thread.html#284">[ thread ]</a>
+              <a href="subject.html#284">[ subject ]</a>
+              <a href="author.html#284">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

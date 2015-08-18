@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] non-linear and jitter problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20non-linear%20and%20jitter%20problems&In-Reply-To=%3C3B956C2DF72.0000022Cejr%40inbox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000203.html">
+   <LINK REL="Next"  HREF="000206.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] non-linear and jitter problems</H1>
+    <B>Junior</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20non-linear%20and%20jitter%20problems&In-Reply-To=%3C3B956C2DF72.0000022Cejr%40inbox.com%3E"
+       TITLE="[Tslib-general] non-linear and jitter problems">ejr at inbox.com
+       </A><BR>
+    <I>Sat Apr 25 22:34:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000203.html">[Tslib-general] non-linear and jitter problems
+</A></li>
+        <LI>Next message: <A HREF="000206.html">[Tslib-general] non-linear and jitter problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#204">[ date ]</a>
+              <a href="thread.html#204">[ thread ]</a>
+              <a href="subject.html#204">[ subject ]</a>
+              <a href="author.html#204">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">praveen at e-consystems.com</A>
+</I>&gt;<i> Sent: Sat, 25 Apr 2009 10:50:09 +0530
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Tslib-general] non-linear and jitter problems
+</I>&gt;<i> 
+</I>&gt;<i> On Friday 24 April 2009 08:26:29 pm Junior wrote:
+</I>&gt;&gt;<i> Hi All,
+</I>&gt;&gt;<i> I've got an long outstanding problem with tslib that I would really like
+</I>&gt;&gt;<i> to
+</I>&gt;&gt;<i> get a handle on. I've used the default ts.conf with module_raw input...
+</I>&gt;&gt;<i> 30... 100 etc. I've tried a few other settings but still have the same
+</I>&gt;&gt;<i> problem in one form or another.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> After a calibration, the points towards the center is pretty much
+</I>&gt;&gt;<i> accurate
+</I>&gt;&gt;<i> although this is a noticeable jitter. However as I get towards the edge
+</I>&gt;&gt;<i> of
+</I>&gt;&gt;<i> the touchscreen the linearity disappears and the jitter gets worse. Has
+</I>&gt;&gt;<i> anyone ever notice this problem? I've been using the test apps such as
+</I>&gt;&gt;<i> ts_test/ts_print, etc.. to see the values. I'm using a VGA resolution.
+</I>&gt;&gt;<i> If
+</I>&gt;&gt;<i> anyone has any ideas/opinions I would like to hear them.
+</I>&gt;&gt;<i> Thanks,
+</I>&gt;&gt;<i> Jr.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> ____________________________________________________________
+</I>&gt;&gt;<i> FREE 3D MARINE AQUARIUM SCREENSAVER - Watch dolphins, sharks &amp; orcas on
+</I>&gt;&gt;<i> your desktop! Check it out at <A HREF="http://www.inbox.com/marineaquarium">http://www.inbox.com/marineaquarium</A>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Tslib-general mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i> 
+</I>&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> Which touch screen driver IC you are using? And also update me which
+</I>&gt;<i> kernel
+</I>&gt;<i> version you are using?
+</I>&gt;<i> 
+</I>&gt;<i> I also faced this type of problem with UCB1400 driver IC. I solved by
+</I>&gt;<i> placing
+</I>&gt;<i> three dummy reads before geting x, y and pressure value.
+</I>&gt;<i> 
+</I>&gt;<i> --
+</I>&gt;<i> Thanks and regards,
+</I>&gt;<i> Praveen
+</I>
+I'm using one the  ads7846 on 2.6.27. Where did you add the dummy read? In the library source or the kernel, or application?
+
+Thanks,
+Jr.
+
+____________________________________________________________
+FREE 3D MARINE AQUARIUM SCREENSAVER - Watch dolphins, sharks &amp; orcas on your desktop!
+Check it out at <A HREF="http://www.inbox.com/marineaquarium">http://www.inbox.com/marineaquarium</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000203.html">[Tslib-general] non-linear and jitter problems
+</A></li>
+	<LI>Next message: <A HREF="000206.html">[Tslib-general] non-linear and jitter problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#204">[ date ]</a>
+              <a href="thread.html#204">[ thread ]</a>
+              <a href="subject.html#204">[ subject ]</a>
+              <a href="author.html#204">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

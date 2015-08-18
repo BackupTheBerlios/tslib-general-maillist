@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Configuring a touch screen that is controlled	by inputattach
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%09by%20inputattach&In-Reply-To=%3Cdb471ace0810230606g775b58bftea186ed148818e7d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000119.html">
+   <LINK REL="Next"  HREF="000121.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Configuring a touch screen that is controlled	by inputattach</H1>
+    <B>Peter Geoghegan</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%09by%20inputattach&In-Reply-To=%3Cdb471ace0810230606g775b58bftea186ed148818e7d%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Configuring a touch screen that is controlled	by inputattach">peter.geoghegan86 at gmail.com
+       </A><BR>
+    <I>Thu Oct 23 15:06:10 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000119.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+        <LI>Next message: <A HREF="000121.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#120">[ date ]</a>
+              <a href="thread.html#120">[ thread ]</a>
+              <a href="subject.html#120">[ subject ]</a>
+              <a href="author.html#120">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hinko,
+
+&gt;<i> No,
+</I>&gt;<i> it is up to the application to react upon received event. In most cases you
+</I>&gt;<i> only need to know when the button(mouse, keyboard) is being released, as that
+</I>&gt;<i> is what is considered the 'real event' -&gt; only when key is 1) pressed and 2)
+</I>&gt;<i> released is user seeing another char on the screen.
+</I>&gt;<i>
+</I>&gt;<i> I was just trying to go and explain what happens..
+</I>
+I appreciate that, but I was not talking about most cases,  I was
+talking about the specific case of ts_calibrate - that would explain
+my difficulties.
+
+I've e-mailed Vojtech Pavlik. He says:
+
+&gt;<i> The device doesn't support pressure reporting at all. Tslib incorrectly
+</I>&gt;<i> assumes all touchscreens do support pressure.
+</I>
+I said:
+&gt;&gt;<i> Should I modify Tslib's input-raw plugin to take account of
+</I>&gt;&gt;<i> this, and convert release events into press events or something?
+</I>
+To which he responded:
+&gt;<i> You can modify it to report pressure=255 when touch=1 and pressure=0
+</I>&gt;<i> when touch=0 for devices that don't report ABS_PRESSURE in the absbit
+</I>&gt;<i> array. Then it'll likely work.
+</I>
+I have a strong feeling that this is exactly what is happening. I'm
+going to modify input-raw as described by Vojtech. If you have any
+further thoughts, or if you meant to suggest that my proposed hack
+wouldn't help the situation for some reason, it'd be great to hear
+from you.
+
+As always, thanks,
+Peter
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000119.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+	<LI>Next message: <A HREF="000121.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#120">[ date ]</a>
+              <a href="thread.html#120">[ thread ]</a>
+              <a href="subject.html#120">[ subject ]</a>
+              <a href="author.html#120">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

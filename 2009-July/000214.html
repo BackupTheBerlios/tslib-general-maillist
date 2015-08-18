@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] TSLIB: support for capacitive touchscreens (iow extending ts_sample struct)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20TSLIB%3A%20support%20for%20capacitive%20touchscreens%20%28iow%0A%20extending%20ts_sample%20struct%29&In-Reply-To=%3C4A6EB3D2.10103%40langendorff.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000213.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] TSLIB: support for capacitive touchscreens (iow extending ts_sample struct)</H1>
+    <B>Niels Langendorff</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20TSLIB%3A%20support%20for%20capacitive%20touchscreens%20%28iow%0A%20extending%20ts_sample%20struct%29&In-Reply-To=%3C4A6EB3D2.10103%40langendorff.nl%3E"
+       TITLE="[Tslib-general] TSLIB: support for capacitive touchscreens (iow extending ts_sample struct)">linux at langendorff.nl
+       </A><BR>
+    <I>Tue Jul 28 10:16:18 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000213.html">[Tslib-general] non-linear and jitter problems
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#214">[ date ]</a>
+              <a href="thread.html#214">[ thread ]</a>
+              <a href="subject.html#214">[ subject ]</a>
+              <a href="author.html#214">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dear members,
+
+for a project I am interfacing a capacitive touchscreen.
+
+To support the second finger and the gesture I had to modify the the 
+file tslib-1.0/src/tslib.h (see patch below) and 
+tslib-1.0/plugins/input-raw.c
+
+I am not very happy to modify the tslib code because by extending the 
+ts_sample struct we are breaking the API which could lead to implications.
+
+Is there another way to provide the extra information to userland using 
+tslib? For example
+- reading x,y,presure from /dev/input/event0 and
+- reading x2,y2,gesture,fingers for /dev/input/event1
+- combining them later (how?)
+
+Thanks for the answer(s),
+
+Best regards,
+
+
+Niels Langendorff
+
+--- tslib-1.0-base/src/tslib.h	2006-08-24 23:02:55.000000000 +0200
++++ tslib-1.0/src/tslib.h	2009-07-28 10:03:31.000000000 +0200
+@@ -45,6 +45,11 @@
+  	int		y;
+  	unsigned int	pressure;
+  	struct timeval	tv;
++	int		finger2_x;
++	int		finger2_y;
++	char	gesture;
++	char	fingers;
++	int 	misc;
+  };
+
+  /*
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000213.html">[Tslib-general] non-linear and jitter problems
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#214">[ date ]</a>
+              <a href="thread.html#214">[ thread ]</a>
+              <a href="subject.html#214">[ subject ]</a>
+              <a href="author.html#214">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

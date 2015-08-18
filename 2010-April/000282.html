@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Click at last position
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-April/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Click%20at%20last%20position&In-Reply-To=%3C979585.14499.qm%40web50904.mail.re2.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000283.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Click at last position</H1>
+    <B>Dunge</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Click%20at%20last%20position&In-Reply-To=%3C979585.14499.qm%40web50904.mail.re2.yahoo.com%3E"
+       TITLE="[Tslib-general] Click at last position">dunge2 at yahoo.com
+       </A><BR>
+    <I>Thu Apr  1 19:00:32 CEST 2010</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000283.html">[Tslib-general] Calibration Touble
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#282">[ date ]</a>
+              <a href="thread.html#282">[ thread ]</a>
+              <a href="subject.html#282">[ subject ]</a>
+              <a href="author.html#282">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+We are using TSLIB on a TS-TPC-7390 device with a 
+SDL/framebuffer application. We had to modify the source to deactivate 
+the pressure input (always send 255) cause the hardware don't send it. 
+(See <A HREF="http://tech.groups.yahoo.com/group/ts-7390/files/">http://tech.groups.yahoo.com/group/ts-7390/files/</A>).
+
+We use what seems to be the default settings:
+
+export 
+TSLIB_TSEVENTTYPE=H3600
+
+ts.conf:
+
+module_raw inputexport
+module pthres pmin=1
+module variance delta=30
+module dejitter delta=100
+module linear
+
+Calibration works fine, cursor don't jitter, everything 
+look nice. Our problem is, that sometime when we click too fast, it send us input of the last position clicked with a 2-3pixels difference, 
+instead of the real new position which can be completely at the other side of the screen. This 
+is awful for a virtual keyboard since some keys duplicate and miss the 
+new one.
+
+My guess is one module causing problem, but I have no 
+idea which one it could be.
+
+Thx
+
+
+      D&#233;couvrez les photos les plus int&#233;ressantes du jour.
+<A HREF="http://www.flickr.com/explore/interesting/7days/">http://www.flickr.com/explore/interesting/7days/</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20100401/bc60a048/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20100401/bc60a048/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000283.html">[Tslib-general] Calibration Touble
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#282">[ date ]</a>
+              <a href="thread.html#282">[ thread ]</a>
+              <a href="subject.html#282">[ subject ]</a>
+              <a href="author.html#282">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

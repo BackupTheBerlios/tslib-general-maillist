@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] non-linear and jitter problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20non-linear%20and%20jitter%20problems&In-Reply-To=%3C200907160011.36936.cmatsuura%40control4.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000212.html">
+   <LINK REL="Next"  HREF="000214.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] non-linear and jitter problems</H1>
+    <B>Craig Matsuura</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20non-linear%20and%20jitter%20problems&In-Reply-To=%3C200907160011.36936.cmatsuura%40control4.com%3E"
+       TITLE="[Tslib-general] non-linear and jitter problems">cmatsuura at control4.com
+       </A><BR>
+    <I>Thu Jul 16 08:11:36 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000212.html">[Tslib-general] eGalax + TouchKit
+</A></li>
+        <LI>Next message: <A HREF="000214.html">[Tslib-general] TSLIB: support for capacitive touchscreens (iow extending ts_sample struct)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#213">[ date ]</a>
+              <a href="thread.html#213">[ thread ]</a>
+              <a href="subject.html#213">[ subject ]</a>
+              <a href="author.html#213">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jr,
+
+I had a problem like this with the ads7846 on the mx31.  Once we added some esd circuits, the edges of the touchscreen, especially on the right side would
+jitter and have a slight bow.  You could see this with the ts_test app when drawing on the right side.
+
+The ads7846 datsheet really tells you what to do, see page 10, section Touchscreen settling.
+
+We ended up keeping the implementing option #2.
+
+Here our the comments in our svn:
+
+Based on the ADS7846 dataheet page 10, section touch Screen Settling.  We need to allow
+the reference to settle.  Slowing the clock did not work, however keeping the ref and ads powered
+during a sampling of y,x,z2,z1 will work.
+
+The driver should contain a section like the following:
+
+ /* leave ADC powered up (disables penirq) between differential samples */
+#define        READ_12BIT_DFR(x, adc, vref) (ADS_START | ADS_A2A1A0_d_ ## x \
+       | ADS_12_BIT | ADS_DFR | \
+       (adc ? ADS_PD10_ADC_ON : 0) | (vref ? ADS_PD10_REF_ON : 0))
+
+#define        READ_Y(vref)    (READ_12BIT_DFR(y,  1, vref))
+#define        READ_Z1(vref)   (READ_12BIT_DFR(z1, 1, vref))
+#define        READ_Z2(vref)   (READ_12BIT_DFR(z2, 1, vref))
+
+Craig
+
+
+On Saturday 25 April 2009 2:34:40 pm Junior wrote:
+&gt;<i> &gt; -----Original Message-----
+</I>&gt;<i> &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">praveen at e-consystems.com</A>
+</I>&gt;<i> &gt; Sent: Sat, 25 Apr 2009 10:50:09 +0530
+</I>&gt;<i> &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+</I>&gt;<i> &gt; Subject: Re: [Tslib-general] non-linear and jitter problems
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; On Friday 24 April 2009 08:26:29 pm Junior wrote:
+</I>&gt;<i> &gt;&gt; Hi All,
+</I>&gt;<i> &gt;&gt; I've got an long outstanding problem with tslib that I would really like
+</I>&gt;<i> &gt;&gt; to
+</I>&gt;<i> &gt;&gt; get a handle on. I've used the default ts.conf with module_raw input...
+</I>&gt;<i> &gt;&gt; 30... 100 etc. I've tried a few other settings but still have the same
+</I>&gt;<i> &gt;&gt; problem in one form or another.
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; After a calibration, the points towards the center is pretty much
+</I>&gt;<i> &gt;&gt; accurate
+</I>&gt;<i> &gt;&gt; although this is a noticeable jitter. However as I get towards the edge
+</I>&gt;<i> &gt;&gt; of
+</I>&gt;<i> &gt;&gt; the touchscreen the linearity disappears and the jitter gets worse. Has
+</I>&gt;<i> &gt;&gt; anyone ever notice this problem? I've been using the test apps such as
+</I>&gt;<i> &gt;&gt; ts_test/ts_print, etc.. to see the values. I'm using a VGA resolution.
+</I>&gt;<i> &gt;&gt; If
+</I>&gt;<i> &gt;&gt; anyone has any ideas/opinions I would like to hear them.
+</I>&gt;<i> &gt;&gt; Thanks,
+</I>&gt;<i> &gt;&gt; Jr.
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; ____________________________________________________________
+</I>&gt;<i> &gt;&gt; FREE 3D MARINE AQUARIUM SCREENSAVER - Watch dolphins, sharks &amp; orcas on
+</I>&gt;<i> &gt;&gt; your desktop! Check it out at <A HREF="http://www.inbox.com/marineaquarium">http://www.inbox.com/marineaquarium</A>
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Tslib-general mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Which touch screen driver IC you are using? And also update me which
+</I>&gt;<i> &gt; kernel
+</I>&gt;<i> &gt; version you are using?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I also faced this type of problem with UCB1400 driver IC. I solved by
+</I>&gt;<i> &gt; placing
+</I>&gt;<i> &gt; three dummy reads before geting x, y and pressure value.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; Thanks and regards,
+</I>&gt;<i> &gt; Praveen
+</I>&gt;<i> 
+</I>&gt;<i> I'm using one the  ads7846 on 2.6.27. Where did you add the dummy read? In the library source or the kernel, or application?
+</I>&gt;<i> 
+</I>&gt;<i> Thanks,
+</I>&gt;<i> Jr.
+</I>&gt;<i> 
+</I>&gt;<i> ____________________________________________________________
+</I>&gt;<i> FREE 3D MARINE AQUARIUM SCREENSAVER - Watch dolphins, sharks &amp; orcas on your desktop!
+</I>&gt;<i> Check it out at <A HREF="http://www.inbox.com/marineaquarium">http://www.inbox.com/marineaquarium</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i> 
+</I>
+-- 
+
+
+
+
+Craig Matsuura - Principal Engineer
+Control4
+11734 South Election Road - Suite 200
+Salt Lake City, UT 84020-6432
+PH: 801-523-3161
+FX: 801-523-3199
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20090716/a70584df/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20090716/a70584df/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000212.html">[Tslib-general] eGalax + TouchKit
+</A></li>
+	<LI>Next message: <A HREF="000214.html">[Tslib-general] TSLIB: support for capacitive touchscreens (iow extending ts_sample struct)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#213">[ date ]</a>
+              <a href="thread.html#213">[ thread ]</a>
+              <a href="subject.html#213">[ subject ]</a>
+              <a href="author.html#213">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

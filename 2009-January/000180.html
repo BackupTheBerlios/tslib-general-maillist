@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Patch to make /etc/pointercal relative to	systemconfdir
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Patch%20to%20make%20/etc/pointercal%20relative%20to%0A%09systemconfdir&In-Reply-To=%3C503A69AF-84C7-4BFA-B265-AC764C25A944%40laptouchinc.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000179.html">
+   <LINK REL="Next"  HREF="000181.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Patch to make /etc/pointercal relative to	systemconfdir</H1>
+    <B>Daniel Jabbour</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Patch%20to%20make%20/etc/pointercal%20relative%20to%0A%09systemconfdir&In-Reply-To=%3C503A69AF-84C7-4BFA-B265-AC764C25A944%40laptouchinc.com%3E"
+       TITLE="[Tslib-general] Patch to make /etc/pointercal relative to	systemconfdir">daniel at laptouchinc.com
+       </A><BR>
+    <I>Sun Jan 25 05:00:51 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000179.html">[Tslib-general] Running tslib as unprivileged user
+</A></li>
+        <LI>Next message: <A HREF="000181.html">[Tslib-general] [PATCH] Prefix/correct some error messages in	input-raw module
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#180">[ date ]</a>
+              <a href="thread.html#180">[ thread ]</a>
+              <a href="subject.html#180">[ subject ]</a>
+              <a href="author.html#180">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+While /etc/ts.conf is always relative to systemconfdir (set during ./ 
+configure), the /etc/pointercal file is hard-coded to /etc/pointercal.  
+For users who wish to prefix their installation this is troublesome,  
+and impossible if they cannot/do not which to modify the root /etc.  
+The patch below resolves this by making /etc/pointercal relative to  
+the systemconfdir set during ./configure (or defaults to prefix/etc as  
+it should). This mirrors the behavior of tslib's /etc/ts.conf file.
+
+You should note that the changes to ts_calibrate.c also include the  
+changes I submitted in a previous patch regarding changes in order to  
+compile with the -D_FORIFY_SOURCE=2 flag. Unfortunately, this patch  
+includes code on the same lines, so it would conflict if you patched  
+previously.
+
+Thank you,
+
+--
+Daniel Jabbour
+Software Engineer
+Laptouch, Inc.
+
+
+Index: plugins/linear.c
+===================================================================
+--- plugins/linear.c    (revision 70)
++++ plugins/linear.c    (working copy)
+@@ -108,7 +108,6 @@
+         int index;
+         char *tokptr;
+         char *calfile=NULL;
+-       char *defaultcalfile = &quot;/etc/pointercal&quot;;
+
+         lin = malloc(sizeof(struct tslib_linear));
+         if (lin == NULL)
+@@ -132,7 +131,7 @@
+         /*
+          * Check calibration file
+          */
+-       if( (calfile = getenv(&quot;TSLIB_CALIBFILE&quot;)) == NULL) calfile =  
+defaultcalfile;
++       if( (calfile = getenv(&quot;TSLIB_CALIBFILE&quot;)) == NULL) calfile =  
+TS_POINTERCAL;
+         if(stat(calfile,&amp;sbuf)==0) {
+                 pcal_fd = open(calfile,O_RDONLY);
+                 read(pcal_fd,pcalbuf,200);
+Index: plugins/Makefile.am
+===================================================================
+--- plugins/Makefile.am (revision 70)
++++ plugins/Makefile.am (working copy)
+@@ -9,7 +9,7 @@
+  # $Id: Makefile.am,v 1.7 2005/02/28 23:44:12 kergoth Exp $
+  #
+
+-AM_CFLAGS              = $(DEBUGFLAGS) $(LIBFLAGS) $(VIS_CFLAGS)
++AM_CFLAGS              = -DTS_POINTERCAL=\&quot;@TS_POINTERCAL@\&quot; $ 
+(DEBUGFLAGS) $(LIBFLAGS) $(VIS_CFLAGS)
+  LDADD          = -rpath $(PLUGIN_DIR)
+  INCLUDES               = -I$(top_srcdir)/src
+
+Index: tests/Makefile.am
+===================================================================
+--- tests/Makefile.am   (revision 70)
++++ tests/Makefile.am   (working copy)
+@@ -9,7 +9,7 @@
+  # $Id: Makefile.am,v 1.4 2004/07/21 19:12:59 dlowder Exp $
+  #
+
+-AM_CFLAGS               = $(DEBUGFLAGS)
++AM_CFLAGS               = -DTS_POINTERCAL=\&quot;@TS_POINTERCAL@\&quot; $ 
+(DEBUGFLAGS)
+  INCLUDES               = -I$(top_srcdir)/src
+
+  bin_PROGRAMS           = ts_test ts_calibrate ts_print ts_print_raw  
+ts_harvest
+Index: tests/ts_calibrate.c
+===================================================================
+--- tests/ts_calibrate.c        (revision 70)
++++ tests/ts_calibrate.c        (working copy)
+@@ -21,6 +21,7 @@
+  #include &lt;sys/ioctl.h&gt;
+  #include &lt;sys/mman.h&gt;
+  #include &lt;sys/time.h&gt;
++#include &lt;sys/stat.h&gt;
+  #include &lt;linux/kd.h&gt;
+  #include &lt;linux/vt.h&gt;
+  #include &lt;linux/fb.h&gt;
+@@ -250,9 +251,9 @@
+                 for (i = 0; i &lt; 7; i++) printf(&quot;%d &quot;, cal.a [i]);
+                 printf(&quot;\n&quot;);
+                 if ((calfile = getenv(&quot;TSLIB_CALIBFILE&quot;)) != NULL) {
+-                       cal_fd = open (calfile, O_CREAT | O_RDWR);
++                       cal_fd = open (calfile, O_CREAT | O_RDWR,  
+S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+                 } else {
+-                       cal_fd = open (&quot;/etc/pointercal&quot;, O_CREAT |  
+O_RDWR);
++                       cal_fd = open (TS_POINTERCAL, O_CREAT |  
+O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+                 }
+                 sprintf (cal_buffer,&quot;%d %d %d %d %d %d %d&quot;,
+                          cal.a[1], cal.a[2], cal.a[0],
+Index: configure.ac
+===================================================================
+--- configure.ac        (revision 70)
++++ configure.ac        (working copy)
+@@ -200,6 +200,9 @@
+  TS_CONF='${sysconfdir}/ts.conf'
+  AC_SUBST(TS_CONF)
+
++TS_POINTERCAL='${sysconfdir}/pointercal'
++AC_SUBST(TS_POINTERCAL)
++
+  # Library versioning
+  LT_RELEASE=1.0
+  LT_CURRENT=0
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000179.html">[Tslib-general] Running tslib as unprivileged user
+</A></li>
+	<LI>Next message: <A HREF="000181.html">[Tslib-general] [PATCH] Prefix/correct some error messages in	input-raw module
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#180">[ date ]</a>
+              <a href="thread.html#180">[ thread ]</a>
+              <a href="subject.html#180">[ subject ]</a>
+              <a href="author.html#180">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

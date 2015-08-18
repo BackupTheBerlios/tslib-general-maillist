@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] HI (Vinay Mallikarjun)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20HI%20%28Vinay%20Mallikarjun%29&In-Reply-To=%3C10476925.719961252715787291.JavaMail.coremail%40bj126app24.126.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000223.html">
+   <LINK REL="Next"  HREF="000225.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] HI (Vinay Mallikarjun)</H1>
+    <B>kjpioo2006</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20HI%20%28Vinay%20Mallikarjun%29&In-Reply-To=%3C10476925.719961252715787291.JavaMail.coremail%40bj126app24.126.com%3E"
+       TITLE="[Tslib-general] HI (Vinay Mallikarjun)">kjpioo2006 at 126.com
+       </A><BR>
+    <I>Sat Sep 12 02:36:27 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000223.html">[Tslib-general] FW: tslib problem
+</A></li>
+        <LI>Next message: <A HREF="000225.html">[Tslib-general] input-raw: Handling of EVIOCGBIT() ioctl coding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#224">[ date ]</a>
+              <a href="thread.html#224">[ thread ]</a>
+              <a href="subject.html#224">[ subject ]</a>
+              <a href="author.html#224">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>hi,
+in your mail,you export TSLIB_PLUGINDIR=usr/local/Trolltecch/tslib/lib/ts.
+that's not right,use &quot;export TSLIB_PLUGINDIR=/usr/local/Trolltecch/tslib/lib/ts&quot;.
+and have changed your ts.conf file? from your [export?TSLIB_TSDEVICE=&quot;/dev/event0&quot; ] and [export?QWS_MOUSE_PROTO=&quot;tslib:/dev/event0&quot;],which set the touch device,i  supposed that you are now using LINUX input event layer,so your should edit your ts.conf file,&quot;# Uncomment if you wish to use the linux input layer event interface
+# module_raw input&quot;.
+ 
+
+
+
+&gt;<i>Hi?Good?Morning...
+</I>&gt;<i>???????????????????????????Im?not?able?to?activate?Touch?screen?on?Phytec?ARM?11?core?based?board.?I?have?all?the?procedures??which?im?mentioning?below..?Initially?i?downloaded?Tslib-1.0.tar.gz??and?i?compiled?it?by?./autogen.sh..............?even?i?compiled?it?for?my?ARM?compiler?by?changing?in?./.configure?CC=........?our?ARM?compiler,,,,,,,,,,,,,,,,,,,,,,,
+</I>&gt;<i>??Next??in?compiled?my?Qt?Embedded?4.5.2?by?using?commnad?./configure?-embedded?arm?-qt-mouse-tslib?-L(where?my?tslib?folder?of?16Kb?was?generated)/lib?-I/(where?my?tslib?folder?of?16Kb?was?generated)/include?
+</I>&gt;<i>Make,?make?install.......??I?ported?all?lib?files?generated?to?board..?i?didnt?port?plugin?folder?from?this?generated?one?bcoz?of?memory?issue..
+</I>&gt;<i>then?i?ported?tslib?folder?generated?after?compiling?TSLIB??zip?file...?And?I?passed?ENV?VARIABLES?are
+</I>&gt;<i>#bash?3.1?export?QTDIR=/usr/local/Trolltech/QtEmebbed???(on?board?my?qte?is?installed?so?this?is?the?path)
+</I>&gt;<i>?????????????????export?TSDIR=/usr/local/Trolltech/tslib????(this?the?where??paste?my?TSLIB(compiled?one)?folder?which?i?have?generated?now)
+</I>&gt;<i>?????????????????export?QWS_DISPLAY=&quot;LinuxFb:/dev/fb0&quot;
+</I>&gt;<i>?????????????????export?QWS_SIZE?=240x320
+</I>&gt;<i>????????????????export?QWS_MOUSE_PROTO=&quot;tslib:/dev/event0&quot;
+</I>&gt;<i>????????????????export?TSLIB_CALIBFILE?=&quot;/etc/pointercal&quot;???(this?file?would?be?created?by?executing?ts_calibrate)
+</I>&gt;<i>????????????????export?TSLIB_CONFFILE=&quot;usr/local/Trolltech/tslib/etc/ts.conf&quot;
+</I>&gt;<i>????????????????export?TSLIB_CONSOLEDEVICE=&quot;none&quot;
+</I>&gt;<i>????????????????export?TSLIB_FBDEVICE=&quot;/dev/fb0&quot;
+</I>&gt;<i>????????????????export?TSLIB_PLUGINDIR=usr/local/Trolltecch/tslib/lib/ts
+</I>&gt;<i>????????????????export?TSLIB_TSDEVICE=&quot;/dev/event0&quot;
+</I>&gt;<i>
+</I>&gt;<i>Plz?suggest?me?how?to?actiavate?my?TOUCHSCREEN??to?wprk?on?my?project...
+</I>&gt;<i>With?Regards,
+</I>&gt;<i>VINAY?M
+</I>&gt;<i>
+</I>&gt;<i>Larsen?&amp;?Toubro?Limited
+</I>&gt;<i>www.larsentoubro.com
+</I>&gt;<i>
+</I>&gt;<i>This?Email?may?contain?confidential?or?privileged?information?for?the?intended?recipient?(s)?If?you?are?not?the?intended?recipient,?please?do?not?use?or?disseminate?the?information,?notify?the?sender?and?delete?it?from?your?system.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>------------------------------
+</I>&gt;<i>
+</I>&gt;<i>_______________________________________________
+</I>&gt;<i>Tslib-general?mailing?list
+</I>&gt;<i><A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i><A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>End?of?Tslib-general?Digest,?Vol?28,?Issue?1
+</I>&gt;<i>********************************************
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20090912/413afc49/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20090912/413afc49/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000223.html">[Tslib-general] FW: tslib problem
+</A></li>
+	<LI>Next message: <A HREF="000225.html">[Tslib-general] input-raw: Handling of EVIOCGBIT() ioctl coding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#224">[ date ]</a>
+              <a href="thread.html#224">[ thread ]</a>
+              <a href="subject.html#224">[ subject ]</a>
+              <a href="author.html#224">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

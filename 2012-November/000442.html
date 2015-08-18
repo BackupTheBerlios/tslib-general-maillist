@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib + egalax touch controller problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2012-November/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20%2B%20egalax%20touch%20controller%20problems&In-Reply-To=%3C721101081.1547973.1353519656839.JavaMail.root%40zmail.sgconsulting.it%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000441.html">
+   <LINK REL="Next"  HREF="000443.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib + egalax touch controller problems</H1>
+    <B>Forconi</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20%2B%20egalax%20touch%20controller%20problems&In-Reply-To=%3C721101081.1547973.1353519656839.JavaMail.root%40zmail.sgconsulting.it%3E"
+       TITLE="[Tslib-general] tslib + egalax touch controller problems">forconi at wavecomm.it
+       </A><BR>
+    <I>Wed Nov 21 18:40:56 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000441.html">[Tslib-general] tslib + egalax touch controller problems
+</A></li>
+        <LI>Next message: <A HREF="000443.html">[Tslib-general] Touch working only horizontal after lib upgrade
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#442">[ date ]</a>
+              <a href="thread.html#442">[ thread ]</a>
+              <a href="subject.html#442">[ subject ]</a>
+              <a href="author.html#442">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+thanks for your support.
+
+The module_raw input doesn't work, if I try to use it ts_print_raw says: &quot;selected device is not a touchscreen I understand&quot;.
+Using only module_raw galax instead does not change the behavior of ts_print_raw, it prints always 0 for X, Y.
+
+Currently I'm trying some multitouch patches that I have found on these mailing list, but they do not work &quot;out of the box&quot;,
+maybe egalax protocol is different...
+I have compiled a multitouch module for tslib and the ts_print_raw output now is:
+
+tslib: Unknown event type 0
+1353518719.295527:   3140   2452      0
+error: could not grab the device. not a multi-touch?
+1353518719.295531:   3140   2452      0
+error: could not grab the device. not a multi-touch?
+1353518719.295586:   3138   2460      0
+error: could not grab the device. not a multi-touch?
+1353518719.295589:   3138   2460      0
+error: could not grab the device. not a multi-touch?
+tslib: Unknown event type 0
+1353518719.299529:   3138   2460      0
+error: could not grab the device. not a multi-touch?
+1353518719.299533:   3138   2460      0
+error: could not grab the device. not a multi-touch?
+1353518719.299589:   3134   2468      0
+error: could not grab the device. not a multi-touch?
+1353518719.299592:   3134   2468      0
+error: could not grab the device. not a multi-touch?
+tslib: Unknown event type 0
+1353518719.305530:   3134   2468      0
+error: could not grab the device. not a multi-touch?
+1353518719.305534:   3134   2468      0
+error: could not grab the device. not a multi-touch?
+1353518719.305591:   3128   2480      0
+error: could not grab the device. not a multi-touch?
+1353518719.305594:   3128   2480      0
+error: could not grab the device. not a multi-touch?
+tslib: Unknown event type 0
+1353518719.311534:   3128   2480      0
+error: could not grab the device. not a multi-touch?
+1353518719.311538:   3128   2480      0
+error: could not grab the device. not a multi-touch?
+1353518719.311594:   3120   2492      0
+error: could not grab the device. not a multi-touch?
+1353518719.311597:   3120   2492      0
+error: could not grab the device. not a multi-touch?
+tslib: Unknown event type 0
+1353518719.315529:   3120   2492      0
+error: could not grab the device. not a multi-touch?
+1353518719.315533:   3120   2492      0
+error: could not grab the device. not a multi-touch?
+1353518719.315589:   3112   2504      0
+error: could not grab the device. not a multi-touch?
+1353518719.315592:   3112   2504      0
+
+
+As you can see it gives many errors (and it does not recognize the pressure - the last number is always 0)
+but now it prints out some X, Y values... I hope to make it work...
+
+
+Regards,
+Samuele
+
+
+
+----- Messaggio originale -----
+Da: &quot;Chris Larson&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">clarson at kergoth.com</A>&gt;
+A: &quot;Forconi&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">forconi at wavecomm.it</A>&gt;
+Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+Inviato: Mercoled&#236;, 21 novembre 2012 17:46:12
+Oggetto: Re: [Tslib-general] tslib + egalax touch controller problems
+
+
+
+
+
+On Wed, Nov 21, 2012 at 9:27 AM, Forconi &lt; <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">forconi at wavecomm.it</A> &gt; wrote: 
+
+
+
+I have patched tslib-1.0 using egalax-patch, and now I have the galax.so module. 
+I have set the TSLIB_TSDEVICE environment variable: export TSLIB_TSDEVICE=/dev/input/event13 
+I have edited ts.conf in order to use galax module: 
+module_raw input 
+module_raw galax 
+module pthres pmin=1 
+module variance delta=30 
+module dejitter delta=100 
+module linear 
+First, you should only ever use one module_raw module. Either use input or use galax. When using /dev/input/event*, the input module_raw module should work fine, as far as I'm aware. 
+-- 
+Christopher Larson
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000441.html">[Tslib-general] tslib + egalax touch controller problems
+</A></li>
+	<LI>Next message: <A HREF="000443.html">[Tslib-general] Touch working only horizontal after lib upgrade
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#442">[ date ]</a>
+              <a href="thread.html#442">[ thread ]</a>
+              <a href="subject.html#442">[ subject ]</a>
+              <a href="author.html#442">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

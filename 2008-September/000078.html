@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Help with tslib
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Help%20with%20tslib&In-Reply-To=%3C48BE67DD.1040209%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000079.html">
+   <LINK REL="Next"  HREF="000080.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Help with tslib</H1>
+    <B>Hinko Kocevar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Help%20with%20tslib&In-Reply-To=%3C48BE67DD.1040209%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] Help with tslib">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Wed Sep  3 12:33:01 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000079.html">[Tslib-general] Help with tslib
+</A></li>
+        <LI>Next message: <A HREF="000080.html">[Tslib-general] TSLIB fix for X and Y are different values e.g.	[1024x768 or 1024x600	or 800x600]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#78">[ date ]</a>
+              <a href="thread.html#78">[ thread ]</a>
+              <a href="subject.html#78">[ subject ]</a>
+              <a href="author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>quinty wrote:
+&gt;<i> hello,
+</I>&gt;<i> 
+</I>&gt;<i> well after hard work, now I understand why my touch screen does not work
+</I>&gt;<i> correctly with TSLIB.
+</I>&gt;<i> there is a function in plugin input-raw.c :
+</I>&gt;<i> 
+</I>&gt;<i> static int check_fd(struct tslib_input *i)
+</I>&gt;<i> 
+</I>&gt;<i>     if (! ((ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version) &gt;= 0) &amp;&amp;
+</I>&gt;<i>         (version == EV_VERSION) &amp;&amp;
+</I>&gt;<i>         (ioctl(ts-&gt;fd, EVIOCGBIT(0, sizeof(bit) * 8), &amp;bit) &gt;= 0) &amp;&amp;
+</I>&gt;<i>         (bit &amp; (1 &lt;&lt; EV_ABS)) &amp;&amp;
+</I>&gt;<i>         (ioctl(ts-&gt;fd, EVIOCGBIT(EV_ABS, sizeof(absbit) * 8), &amp;absbit) &gt;= 0)
+</I>&gt;<i> &amp;&amp;
+</I>&gt;<i>         (absbit &amp; (1 &lt;&lt; ABS_X)) &amp;&amp;
+</I>&gt;<i>         (absbit &amp; (1 &lt;&lt; ABS_Y))
+</I>&gt;<i>         (absbit &amp; (1 &lt;&lt; ABS_PRESSURE)))) {
+</I>&gt;<i> 
+</I>&gt;<i>         fprintf(stderr, &quot;selected device is not a touchscreen I
+</I>&gt;<i> understand\n&quot;);
+</I>&gt;<i>         return -1;
+</I>&gt;<i>     }
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Well, my touch screen have the follow event types:
+</I>&gt;<i>     Event type 0x00 unknown event type
+</I>&gt;<i>     Event type 0x01 Keys or buttons
+</I>&gt;<i>     Event type 0x03 Absolute axis
+</I>&gt;<i> 
+</I>&gt;<i> And in event type 0x03, Absolute axis, there is the follow codes:
+</I>&gt;<i>     Absolute axis 0x00 ( X axis)
+</I>&gt;<i>     Absolute axis 0x01 ( Y axis)
+</I>&gt;<i> 
+</I>&gt;<i> BUT THERE IS NOT ABS_PRESSURE CODE, so, in this point TSLIB tell my that the
+</I>&gt;<i> selected device is not a touchscreen.
+</I>&gt;<i> 
+</I>&gt;<i> More or less I understand the code inside input-raw.c but and I do not known
+</I>&gt;<i> how to fix it.
+</I>&gt;<i> Is it possible to change the code and work with my touchscreen and TSLIB
+</I>&gt;<i> without problems.
+</I>&gt;<i> 
+</I>
+sure. Remove the extra check for absolute axis, recompile and test. Is it better?
+
+HTH,
+Hinko
+
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000079.html">[Tslib-general] Help with tslib
+</A></li>
+	<LI>Next message: <A HREF="000080.html">[Tslib-general] TSLIB fix for X and Y are different values e.g.	[1024x768 or 1024x600	or 800x600]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#78">[ date ]</a>
+              <a href="thread.html#78">[ thread ]</a>
+              <a href="subject.html#78">[ subject ]</a>
+              <a href="author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Configuring a touch screen that is controlled by inputattach
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%20by%20inputattach&In-Reply-To=%3C4905756B.9080107%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000126.html">
+   <LINK REL="Next"  HREF="000128.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Configuring a touch screen that is controlled by inputattach</H1>
+    <B>Hinko Kocevar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%20by%20inputattach&In-Reply-To=%3C4905756B.9080107%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] Configuring a touch screen that is controlled by inputattach">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Mon Oct 27 09:01:47 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000126.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+        <LI>Next message: <A HREF="000128.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#127">[ date ]</a>
+              <a href="thread.html#127">[ thread ]</a>
+              <a href="subject.html#127">[ subject ]</a>
+              <a href="author.html#127">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Peter Geoghegan wrote:
+&gt;<i> Hinko,
+</I>&gt;<i> 
+</I>&gt;<i> Great news. I've applied your patch, and it works nicely. Vojtech
+</I>&gt;<i> Pavlik provided me with an alternative patch (edited so that it would
+</I>&gt;<i> actually compile by me), which works too. I include that here. I'm
+</I>&gt;<i> sorry if you consider it to be redundant, duplicate effort.
+</I>&gt;<i> 
+</I>&gt;<i> Anyway, since I've resolved the issue at last, I'd like to give you my
+</I>&gt;<i> very sincere thanks for your help. I certainly couldn't have done it
+</I>&gt;<i> without you, and I'm relieved that it's over.
+</I>&gt;<i> 
+</I>
+I'm glad you made it work!
+To sum up:
+ - touchscreen hardware was not properly detected by the tslib
+   (due to strict check_fd())
+ - elo was not reporting touch_key
+ - patch below fixed both issues
+
+
+&gt;<i> 
+</I>&gt;<i> --- input-raw.c	2008-10-24 14:49:05.000000000 +0100
+</I>&gt;<i> +++ input-raw.c.vojtech	2008-10-24 14:47:29.000000000 +0100
+</I>&gt;<i> @@ -20,6 +20,7 @@
+</I>&gt;<i>  #include &lt;stdio.h&gt;
+</I>&gt;<i>  #include &lt;limits.h&gt;
+</I>&gt;<i> 
+</I>&gt;<i> +
+</I>&gt;<i>  #include &lt;stdlib.h&gt;
+</I>&gt;<i>  #ifdef HAVE_UNISTD_H
+</I>&gt;<i>  #include &lt;unistd.h&gt;
+</I>&gt;<i> @@ -34,6 +35,7 @@
+</I>&gt;<i> 
+</I>&gt;<i>  #include &quot;tslib-private.h&quot;
+</I>&gt;<i> 
+</I>&gt;<i> +
+</I>&gt;<i>  #define GRAB_EVENTS_WANTED	1
+</I>&gt;<i>  #define GRAB_EVENTS_ACTIVE	2
+</I>&gt;<i> 
+</I>&gt;<i> @@ -49,25 +51,62 @@
+</I>&gt;<i>  	int	grab_events;
+</I>&gt;<i>  };
+</I>&gt;<i> 
+</I>&gt;<i> +#define DIV_ROUND_UP(n,d) (((n) + (d) - 1) / (d))
+</I>&gt;<i> +#define BIT(nr)                 (1UL &lt;&lt; (nr))
+</I>&gt;<i> +#define BIT_MASK(nr)            (1UL &lt;&lt; ((nr) % BITS_PER_LONG))
+</I>&gt;<i> +#define BIT_WORD(nr)            ((nr) / BITS_PER_LONG)
+</I>&gt;<i> +#define BITS_PER_BYTE           8
+</I>&gt;<i> +#define BITS_PER_LONG           (sizeof(long) * BITS_PER_BYTE)
+</I>&gt;<i> +#define BITS_TO_LONGS(nr)       DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(long))
+</I>&gt;<i> +
+</I>&gt;<i>  static int check_fd(struct tslib_input *i)
+</I>&gt;<i>  {
+</I>&gt;<i>  	struct tsdev *ts = i-&gt;module.dev;
+</I>&gt;<i>  	int version;
+</I>&gt;<i> -	u_int32_t bit;
+</I>&gt;<i> -	u_int64_t absbit;
+</I>&gt;<i> +	long evbit[BITS_TO_LONGS(EV_CNT)];
+</I>&gt;<i> +	long absbit[BITS_TO_LONGS(ABS_CNT)];
+</I>&gt;<i> +	long keybit[BITS_TO_LONGS(KEY_CNT)];
+</I>&gt;<i> +
+</I>&gt;<i> +	if (ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version) &lt; 0) {
+</I>&gt;<i> +		fprintf(stderr, &quot;selected device is not a Linux input event device\n&quot;);
+</I>&gt;<i> +		return -1;
+</I>&gt;<i> +	}
+</I>&gt;<i> +
+</I>&gt;<i> +	if (version != EV_VERSION) {
+</I>&gt;<i> +	fprintf(stderr, &quot;selected device uses a different version of the
+</I>&gt;<i> event protocol than tslib was compiled for\n&quot;);
+</I>&gt;<i> +		return -1;
+</I>&gt;<i> +	}
+</I>&gt;<i> +
+</I>&gt;<i> +	if ( (ioctl(ts-&gt;fd, EVIOCGBIT(0, EV_CNT), evbit) &lt; 0) ||
+</I>&gt;<i> +		!(evbit[BIT_WORD(EV_ABS)] &amp; BIT_MASK(EV_ABS)) ||
+</I>&gt;<i> +		!(evbit[BIT_WORD(EV_KEY)] &amp; BIT_MASK(EV_KEY)) ) {
+</I>&gt;<i> +		fprintf(stderr, &quot;selected device uses is not a touchscreen (must
+</I>&gt;<i> support ABS and KEY event types)\n&quot;);
+</I>&gt;<i> +		return -1;
+</I>&gt;<i> +	}
+</I>&gt;<i> +
+</I>This restriction about the the BTN_TOUCH is little to restrictive - eg. I have a touchscreen device
+that reports only ABS_X, ABS_Y and ABS_PRESSURE. No BTN_xxx are reported, ever.
+
+&gt;<i> +	if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_ABS, ABS_CNT), absbit)) &lt; 0 ||
+</I>&gt;<i> +		!(absbit[BIT_WORD(ABS_X)] &amp; BIT_MASK(ABS_X)) ||
+</I>&gt;<i> +		!(absbit[BIT_WORD(ABS_Y)] &amp; BIT_MASK(ABS_Y))) {
+</I>&gt;<i> +		fprintf(stderr, &quot;selected device uses is not a touchscreen (must
+</I>&gt;<i> support ABS_X and ABS_Y events)\n&quot;);
+</I>&gt;<i> +		return -1;
+</I>&gt;<i> +	}
+</I>&gt;<i> 
+</I>&gt;<i> -	if (! ((ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version) &gt;= 0) &amp;&amp;
+</I>&gt;<i> -		(version == EV_VERSION) &amp;&amp;
+</I>&gt;<i> -		(ioctl(ts-&gt;fd, EVIOCGBIT(0, sizeof(bit) * 8), &amp;bit) &gt;= 0) &amp;&amp;
+</I>&gt;<i> -		(bit &amp; (1 &lt;&lt; EV_ABS)) &amp;&amp;
+</I>&gt;<i> -		(ioctl(ts-&gt;fd, EVIOCGBIT(EV_ABS, sizeof(absbit) * 8), &amp;absbit) &gt;= 0) &amp;&amp;
+</I>&gt;<i> -		(absbit &amp; (1 &lt;&lt; ABS_X)) &amp;&amp;
+</I>&gt;<i> -		(absbit &amp; (1 &lt;&lt; ABS_Y)) &amp;&amp; (absbit &amp; (1 &lt;&lt; ABS_PRESSURE)))) {
+</I>&gt;<i> -		fprintf(stderr, &quot;selected device is not a touchscreen I understand\n&quot;);
+</I>&gt;<i> +	/* Since some touchscreens (eg. infrared) physically can't measure pressure,
+</I>&gt;<i> +	the input system doesn't report it on those. Tslib relies on pressure, thus
+</I>&gt;<i> +	we set it to constant 255. It's still controlled by BTN_TOUCH - when not
+</I>&gt;<i> +	touched, the pressure is forced to 0. */
+</I>&gt;<i> +
+</I>&gt;<i> +	if (!(absbit[BIT_WORD(ABS_PRESSURE)] &amp; BIT_MASK(ABS_PRESSURE)))
+</I>&gt;<i> +		i-&gt;current_p = 255;
+</I>&gt;<i> +
+</I>&gt;<i> +	if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_KEY, KEY_CNT), keybit) &lt; 0) ||
+</I>&gt;<i> +		!(absbit[BIT_WORD(BTN_TOUCH)] &amp; BIT_MASK(BTN_TOUCH)) )
+</I>&gt;<i> +		{
+</I>&gt;<i> +		fprintf(stderr, &quot;selected device uses is not a touchscreen (must
+</I>&gt;<i> support BTN_TOUCH events)\n&quot;);
+</I>&gt;<i>  		return -1;
+</I>&gt;<i>  	}
+</I>
+ditto.
+
+# cat /proc/bus/input/devices 
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name=&quot;TSC2301 touchscreen panel&quot;
+P: Phys=
+S: Sysfs=/devices/virtual/input/input0
+U: Uniq=
+H: Handlers=event0 
+B: EV=9
+B: ABS=1000003
+
+# evtest /dev/input/event0 
+Input driver version is 1.0.0
+Input device ID: bus 0x0 vendor 0x0 product 0x0 version 0x0
+Input device name: &quot;TSC2301 touchscreen panel&quot;
+Supported events:
+  Event type 0 (Sync)
+  Event type 3 (Absolute)
+    Event code 0 (X)
+      Value      0
+      Min        0
+      Max     4096
+    Event code 1 (Y)
+      Value      0
+      Min        0
+      Max     4096
+    Event code 24 (Pressure)
+      Value      0
+      Min        0
+      Max        1
+Testing ... (interrupt to exit)
+
+
+
+Best regards,
+Hinko
+
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000126.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+	<LI>Next message: <A HREF="000128.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#127">[ date ]</a>
+              <a href="thread.html#127">[ thread ]</a>
+              <a href="subject.html#127">[ subject ]</a>
+              <a href="author.html#127">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

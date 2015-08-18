@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [PATCH] add support for a ELO 1529L 15&#8221; LCD Touchmonitor
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%3D%3Futf-8%3Fq%3F%3D5BPATCH%3D5D_add_support_for_a_ELO_1529L%3F%3D%0A%20%3D%3Futf-8%3Fq%3F_15%3DE2%3D80%3D9D_LCD_Touchmonitor%3F%3D&In-Reply-To=%3C1309100067.16203.52.camel%40pluto%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000396.html">
+   <LINK REL="Next"  HREF="000398.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [PATCH] add support for a ELO 1529L 15&#8221; LCD Touchmonitor</H1>
+    <B>Andreas Brachold</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%3D%3Futf-8%3Fq%3F%3D5BPATCH%3D5D_add_support_for_a_ELO_1529L%3F%3D%0A%20%3D%3Futf-8%3Fq%3F_15%3DE2%3D80%3D9D_LCD_Touchmonitor%3F%3D&In-Reply-To=%3C1309100067.16203.52.camel%40pluto%3E"
+       TITLE="[Tslib-general] [PATCH] add support for a ELO 1529L 15&#8221; LCD Touchmonitor">anbr at users.sourceforge.net
+       </A><BR>
+    <I>Sun Jun 26 16:54:27 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000396.html">[Tslib-general] tslib multi touch plugin
+</A></li>
+        <LI>Next message: <A HREF="000398.html">[Tslib-general] Aberration in the ts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#397">[ date ]</a>
+              <a href="thread.html#397">[ thread ]</a>
+              <a href="subject.html#397">[ subject ]</a>
+              <a href="author.html#397">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I have a ELO 1529L 15&#8221; LCD Touchmonitor (elotouch.com / Tyco
+Electronics) and wanted to send you a patch, so this could be supported
+in the tslib library.
+
+But this touchmonitor do not provide any BTN_TOUCH messages over USB.
+It's submit BTN_LEFT as key event.
+
+dmesg says : 
+-------------------------------------------------------------------------
+New USB device found, idVendor=04e7, idProduct=0050
+New USB device strings: Mfr=1, Product=2, SerialNumber=3
+Product: Elo TouchSystems 2216 AccuTouch&#174; USB Touchmonitor Interface
+Manufacturer: EloTouchSystems,Inc
+input: EloTouchSystems,Inc Elo TouchSystems 2216 AccuTouch&#174; USB
+Touchmonitor Interface
+as /devices/platform/usbhs-omap.0/ehci-omap.0/usb1/1-2/1-2.4/1-2.4:1.0/input/input2
+generic-usb 0003:04E7:0050.0001: input: USB HID v1.00 Pointer
+[EloTouchSystems,Inc Elo TouchSystems 2216 AccuTouch&#174; USB Touchmonitor
+Interface] on usb-ehci-omap.0-2.4/input0
+-------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
+# evtest /dev/input/touchscreen0 
+Input driver version is 1.0.1
+Input device ID: bus 0x3 vendor 0x4e7 product 0x50 version 0x100
+Input device name: &quot;EloTouchSystems,Inc Elo TouchSystems 2216
+AccuTouch&#65533;&#174; USB Touchmonitor Interface&quot;
+Supported events:
+  Event type 0 (Sync)
+  Event type 1 (Key)
+    Event code 272 (LeftBtn)
+  Event type 3 (Absolute)
+    Event code 0 (X)
+      Value   3123
+      Min      184
+      Max     3932
+    Event code 1 (Y)
+      Value    913
+      Min      184
+      Max     3932
+    Event code 40 (Misc)
+      Value      0
+      Min        0
+      Max      256
+  Event type 4 (Misc)
+    Event code 4 (ScanCode)
+Testing ... (interrupt to exit)
+Event: time 434.977017, type 3 (Absolute), code 0 (X), value 1901
+Event: time 434.977047, type 3 (Absolute), code 1 (Y), value 2051
+Event: time 434.977047, type 3 (Absolute), code 40 (Misc), value 255
+Event: time 434.977047, -------------- Report Sync ------------
+Event: time 434.997067, type 4 (Misc), code 4 (ScanCode), value 90001
+Event: time 434.997067, type 1 (Key), code 272 (LeftBtn), value 1
+Event: time 434.997097, type 3 (Absolute), code 0 (X), value 1899
+Event: time 434.997097, type 3 (Absolute), code 1 (Y), value 2050
+Event: time 434.997128, -------------- Report Sync ------------
+Event: time 435.009060, type 3 (Absolute), code 0 (X), value 1897
+Event: time 435.009091, -------------- Report Sync ------------
+Event: time 435.029171, type 3 (Absolute), code 1 (Y), value 2051
+Event: time 435.029202, -------------- Report Sync ------------
+Event: time 435.041043, type 3 (Absolute), code 1 (Y), value 2054
+Event: time 435.041073, -------------- Report Sync ------------
+Event: time 435.092953, type 4 (Misc), code 4 (ScanCode), value 90001
+Event: time 435.092953, type 1 (Key), code 272 (LeftBtn), value 0
+Event: time 435.093014, type 3 (Absolute), code 40 (Misc), value 0
+Event: time 435.093014, -------------- Report Sync ------------
+-------------------------------------------------------------------------
+
+Sincerely,
+Andreas
+
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: elo_BTN_LEFT.patch
+Type: text/x-patch
+Size: 909 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20110626/10d6a11b/attachment.bin">https://lists.berlios.de/pipermail/tslib-general/attachments/20110626/10d6a11b/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000396.html">[Tslib-general] tslib multi touch plugin
+</A></li>
+	<LI>Next message: <A HREF="000398.html">[Tslib-general] Aberration in the ts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#397">[ date ]</a>
+              <a href="thread.html#397">[ thread ]</a>
+              <a href="subject.html#397">[ subject ]</a>
+              <a href="author.html#397">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

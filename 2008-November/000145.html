@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Hardcode the pointercal file values
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Hardcode%20the%20pointercal%20file%20values&In-Reply-To=%3COF44A8288F.FB89A505-ON652574F8.001965F0-652574F8.00195AEF%40lntinfotech.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000140.html">
+   <LINK REL="Next"  HREF="000141.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Hardcode the pointercal file values</H1>
+    <B>Senthilv.Kumar at lntinfotech.com</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Hardcode%20the%20pointercal%20file%20values&In-Reply-To=%3COF44A8288F.FB89A505-ON652574F8.001965F0-652574F8.00195AEF%40lntinfotech.com%3E"
+       TITLE="[Tslib-general] Hardcode the pointercal file values">Senthilv.Kumar at lntinfotech.com
+       </A><BR>
+    <I>Wed Nov  5 05:37:59 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000140.html">[Tslib-general] Hardcode the pointercal file values
+</A></li>
+        <LI>Next message: <A HREF="000141.html">[Tslib-general] [PATCH] ts_test: add quit button
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#145">[ date ]</a>
+              <a href="thread.html#145">[ thread ]</a>
+              <a href="subject.html#145">[ subject ]</a>
+              <a href="author.html#145">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Hinko,
+
+It has worked fine...
+Thanks for your knowledge sharing...
+
+Thanks &amp; Regards
+Senthil kumar.V
+Off: 022-67953554
+Mob:+91 9920312257
+
+
+Larsen &amp; Toubro Infotech Ltd.
+www.Lntinfotech.com
+
+This Document is classified as: 
+
+L&amp;T Infotech Proprietary   L&amp;T Infotech Confidential   L&amp;T Infotech 
+Internal Use Only   L&amp;T Infotech General Business 
+
+This Email may contain confidential or privileged information for the 
+intended recipient (s) If you are not the intended recipient, please do 
+not use or disseminate the information, notify the sender and delete it 
+from your system. 
+
+
+
+Hinko Kocevar &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>&gt; 
+11/03/2008 07:54 PM
+
+To
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Senthilv.Kumar at lntinfotech.com</A>
+cc
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+Subject
+Re: [Tslib-general] Hardcode the pointercal file values
+
+
+
+
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Senthilv.Kumar at lntinfotech.com</A> wrote:
+&gt;<i> Hi,
+</I>&gt;<i> Am working on touch screen issue for Linux 2.6.27 kernel
+</I>&gt;<i> 
+</I>&gt;<i> i have calibrated touch screen using ts_calibrate utility and i have got 
+</I>
+&gt;<i> updated pointercal file values as follows 
+</I>&gt;<i> -4900 60 16865308 -173 6490 -2343568 65536 65536
+</I>&gt;<i> 
+</I>&gt;<i> Do i need to hard code these values in any touch related file so that 
+</I>&gt;<i> touch driver can calibrate the RAW co-ordinates with these calibrated 
+</I>data 
+&gt;<i> before sending to application ?
+</I>&gt;<i> 
+</I>
+The way we do it is: link our application against tslib and then calibrate 
+each
+embedded device at factory init stage and place the calibration result in 
+/etc/pointercal.
+
+This is almost necessary because touchscreen
+panels may deviate one from another and hardcoding one calibration value 
+for all
+touchscreen panels (even the same mnfr, product, type) is little too
+restrictive, IMHO.
+
+&gt;<i> can you please tell me how should i go ahead after touch screen 
+</I>&gt;<i> calibration ?
+</I>
+test it. use ts_print or ts_draw to see if you calibrated the screen 
+correctly.
+Use the tslib library in your application and it will automagicaly load 
+the calibration
+parameters. Reading the fd returned by the ts_fd() should then spew out 
+valid, calibrated
+events from your touchscreen device.
+
+
+Regards,
+Hinko
+
+
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+
+______________________________________________________________________
+
+
+______________________________________________________________________
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20081105/d9744ebb/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20081105/d9744ebb/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000140.html">[Tslib-general] Hardcode the pointercal file values
+</A></li>
+	<LI>Next message: <A HREF="000141.html">[Tslib-general] [PATCH] ts_test: add quit button
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#145">[ date ]</a>
+              <a href="thread.html#145">[ thread ]</a>
+              <a href="subject.html#145">[ subject ]</a>
+              <a href="author.html#145">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

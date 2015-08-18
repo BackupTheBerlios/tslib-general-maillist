@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Configuring a touch screen that is controlled	by inputattach
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%09by%20inputattach&In-Reply-To=%3Cdb471ace0810240703o3e746910w16a9d6aeedcf211%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000125.html">
+   <LINK REL="Next"  HREF="000127.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Configuring a touch screen that is controlled	by inputattach</H1>
+    <B>Peter Geoghegan</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%09by%20inputattach&In-Reply-To=%3Cdb471ace0810240703o3e746910w16a9d6aeedcf211%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Configuring a touch screen that is controlled	by inputattach">peter.geoghegan86 at gmail.com
+       </A><BR>
+    <I>Fri Oct 24 16:03:20 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000125.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+        <LI>Next message: <A HREF="000127.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#126">[ date ]</a>
+              <a href="thread.html#126">[ thread ]</a>
+              <a href="subject.html#126">[ subject ]</a>
+              <a href="author.html#126">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hinko,
+
+Great news. I've applied your patch, and it works nicely. Vojtech
+Pavlik provided me with an alternative patch (edited so that it would
+actually compile by me), which works too. I include that here. I'm
+sorry if you consider it to be redundant, duplicate effort.
+
+Anyway, since I've resolved the issue at last, I'd like to give you my
+very sincere thanks for your help. I certainly couldn't have done it
+without you, and I'm relieved that it's over.
+
+Anway, you get the idea. You have my gratitude,
+Regards,
+Peter
+
+
+--- input-raw.c	2008-10-24 14:49:05.000000000 +0100
++++ input-raw.c.vojtech	2008-10-24 14:47:29.000000000 +0100
+@@ -20,6 +20,7 @@
+ #include &lt;stdio.h&gt;
+ #include &lt;limits.h&gt;
+
++
+ #include &lt;stdlib.h&gt;
+ #ifdef HAVE_UNISTD_H
+ #include &lt;unistd.h&gt;
+@@ -34,6 +35,7 @@
+
+ #include &quot;tslib-private.h&quot;
+
++
+ #define GRAB_EVENTS_WANTED	1
+ #define GRAB_EVENTS_ACTIVE	2
+
+@@ -49,25 +51,62 @@
+ 	int	grab_events;
+ };
+
++#define DIV_ROUND_UP(n,d) (((n) + (d) - 1) / (d))
++#define BIT(nr)                 (1UL &lt;&lt; (nr))
++#define BIT_MASK(nr)            (1UL &lt;&lt; ((nr) % BITS_PER_LONG))
++#define BIT_WORD(nr)            ((nr) / BITS_PER_LONG)
++#define BITS_PER_BYTE           8
++#define BITS_PER_LONG           (sizeof(long) * BITS_PER_BYTE)
++#define BITS_TO_LONGS(nr)       DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(long))
++
+ static int check_fd(struct tslib_input *i)
+ {
+ 	struct tsdev *ts = i-&gt;module.dev;
+ 	int version;
+-	u_int32_t bit;
+-	u_int64_t absbit;
++	long evbit[BITS_TO_LONGS(EV_CNT)];
++	long absbit[BITS_TO_LONGS(ABS_CNT)];
++	long keybit[BITS_TO_LONGS(KEY_CNT)];
++
++	if (ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version) &lt; 0) {
++		fprintf(stderr, &quot;selected device is not a Linux input event device\n&quot;);
++		return -1;
++	}
++
++	if (version != EV_VERSION) {
++	fprintf(stderr, &quot;selected device uses a different version of the
+event protocol than tslib was compiled for\n&quot;);
++		return -1;
++	}
++
++	if ( (ioctl(ts-&gt;fd, EVIOCGBIT(0, EV_CNT), evbit) &lt; 0) ||
++		!(evbit[BIT_WORD(EV_ABS)] &amp; BIT_MASK(EV_ABS)) ||
++		!(evbit[BIT_WORD(EV_KEY)] &amp; BIT_MASK(EV_KEY)) ) {
++		fprintf(stderr, &quot;selected device uses is not a touchscreen (must
+support ABS and KEY event types)\n&quot;);
++		return -1;
++	}
++
++	if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_ABS, ABS_CNT), absbit)) &lt; 0 ||
++		!(absbit[BIT_WORD(ABS_X)] &amp; BIT_MASK(ABS_X)) ||
++		!(absbit[BIT_WORD(ABS_Y)] &amp; BIT_MASK(ABS_Y))) {
++		fprintf(stderr, &quot;selected device uses is not a touchscreen (must
+support ABS_X and ABS_Y events)\n&quot;);
++		return -1;
++	}
+
+-	if (! ((ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version) &gt;= 0) &amp;&amp;
+-		(version == EV_VERSION) &amp;&amp;
+-		(ioctl(ts-&gt;fd, EVIOCGBIT(0, sizeof(bit) * 8), &amp;bit) &gt;= 0) &amp;&amp;
+-		(bit &amp; (1 &lt;&lt; EV_ABS)) &amp;&amp;
+-		(ioctl(ts-&gt;fd, EVIOCGBIT(EV_ABS, sizeof(absbit) * 8), &amp;absbit) &gt;= 0) &amp;&amp;
+-		(absbit &amp; (1 &lt;&lt; ABS_X)) &amp;&amp;
+-		(absbit &amp; (1 &lt;&lt; ABS_Y)) &amp;&amp; (absbit &amp; (1 &lt;&lt; ABS_PRESSURE)))) {
+-		fprintf(stderr, &quot;selected device is not a touchscreen I understand\n&quot;);
++	/* Since some touchscreens (eg. infrared) physically can't measure pressure,
++	the input system doesn't report it on those. Tslib relies on pressure, thus
++	we set it to constant 255. It's still controlled by BTN_TOUCH - when not
++	touched, the pressure is forced to 0. */
++
++	if (!(absbit[BIT_WORD(ABS_PRESSURE)] &amp; BIT_MASK(ABS_PRESSURE)))
++		i-&gt;current_p = 255;
++
++	if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_KEY, KEY_CNT), keybit) &lt; 0) ||
++		!(absbit[BIT_WORD(BTN_TOUCH)] &amp; BIT_MASK(BTN_TOUCH)) )
++		{
++		fprintf(stderr, &quot;selected device uses is not a touchscreen (must
+support BTN_TOUCH events)\n&quot;);
+ 		return -1;
+ 	}
+
+-	if (bit &amp; (1 &lt;&lt; EV_SYN))
++	if (evbit[BIT_WORD(EV_SYN)] &amp; BIT_MASK(EV_SYN))
+ 		i-&gt;using_syn = 1;
+ 	
+ 	if (i-&gt;grab_events == GRAB_EVENTS_WANTED) {
+@@ -306,3 +345,4 @@
+
+ 	return &amp;(i-&gt;module);
+ }
++
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000125.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+	<LI>Next message: <A HREF="000127.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#126">[ date ]</a>
+              <a href="thread.html#126">[ thread ]</a>
+              <a href="subject.html#126">[ subject ]</a>
+              <a href="author.html#126">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

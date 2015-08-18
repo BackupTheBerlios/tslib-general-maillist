@@ -1,0 +1,542 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] HTC HD2 capacitive touchscreen
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-July/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20HTC%20HD2%20capacitive%20touchscreen&In-Reply-To=%3CAANLkTimBiZAOuIN42SScjg6vJmbtmyRZ70pquxZ47FL-%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000303.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] HTC HD2 capacitive touchscreen</H1>
+    <B>Lukas-David Gorris</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20HTC%20HD2%20capacitive%20touchscreen&In-Reply-To=%3CAANLkTimBiZAOuIN42SScjg6vJmbtmyRZ70pquxZ47FL-%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] HTC HD2 capacitive touchscreen">lukas.gorris at googlemail.com
+       </A><BR>
+    <I>Mon Jul  5 02:23:20 CEST 2010</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000303.html">[Tslib-general] terminating ts_calibrate/ts_test via console?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#302">[ date ]</a>
+              <a href="thread.html#302">[ thread ]</a>
+              <a href="subject.html#302">[ subject ]</a>
+              <a href="author.html#302">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dear all,
+
+On 6/30/10, Lukas-David Gorris &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">lukas.gorris at googlemail.com</A>&gt; wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> We recently added a toucshcreen driver to the htc hd2 (aka leo) kernel.
+</I>&gt;<i>
+</I>&gt;<i> The full patch can be viewed here
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://git.linuxtogo.org/?p=groups/mobile-linux/kernel.git;a=commitdiff;h=6a2efb17dced8b2989a4359d98d66b0446743fdf">http://git.linuxtogo.org/?p=groups/mobile-linux/kernel.git;a=commitdiff;h=6a2efb17dced8b2989a4359d98d66b0446743fdf</A>
+</I>&gt;<i>
+</I>&gt;<i> I get the device on /dev/input/event0 . It works in Xorg with tslib module.
+</I>&gt;<i> But there is a problem. On each touch event, the cursor will dodge to
+</I>&gt;<i> the top left corner and then move back to the initial touch position.
+</I>&gt;<i> Also the pointer is a bit off but main problem is it's impossible to
+</I>&gt;<i> click with the cursor moving when tapping screen.
+</I>&gt;<i>
+</I>&gt;<i> I tested this in an ubuntu armel (karmic version) rootfs. It has
+</I>&gt;<i> following ts.conf
+</I>&gt;<i>
+</I>&gt;<i> module_raw input
+</I>&gt;<i> module pthres pmin=1
+</I>&gt;<i> module variance delta=30
+</I>&gt;<i> module dejitter delta=100
+</I>&gt;<i> module linear
+</I>&gt;<i>
+</I>&gt;<i> and this in xorg.conf
+</I>&gt;<i>
+</I>&gt;<i> Section &quot;ServerLayout&quot;
+</I>&gt;<i>          Identifier      &quot;Builtin Default Layout&quot;
+</I>&gt;<i>          Screen  &quot;Framebuffer&quot;
+</I>&gt;<i>         InputDevice &quot;Touchscreen&quot; &quot;CorePointer&quot;
+</I>&gt;<i>          InputDevice &quot;Keyboard&quot; &quot;CoreKeyboard&quot;
+</I>&gt;<i> EndSection
+</I>&gt;<i>
+</I>&gt;<i> Section &quot;InputDevice&quot;
+</I>&gt;<i>      # use usb mouse until touchscreen driver is present for machine
+</I>&gt;<i>      Identifier     &quot;Mouse0&quot;
+</I>&gt;<i>      Driver         &quot;mouse&quot;
+</I>&gt;<i>      Option         &quot;Protocol&quot; &quot;auto&quot;
+</I>&gt;<i>      Option         &quot;Device&quot; &quot;/dev/input/mice&quot;
+</I>&gt;<i>      Option         &quot;Emulate3Buttons&quot; &quot;no&quot;
+</I>&gt;<i>      Option         &quot;ZAxisMapping&quot; &quot;4 5&quot;
+</I>&gt;<i> EndSection
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Section &quot;InputDevice&quot;
+</I>&gt;<i>      Identifier     &quot;Touchscreen&quot;
+</I>&gt;<i>      Driver         &quot;tslib&quot;
+</I>&gt;<i>      Option         &quot;Protocol&quot; &quot;auto&quot;
+</I>&gt;<i>      Option         &quot;Device&quot; &quot;/dev/input/event0&quot;
+</I>&gt;<i>      Option         &quot;CorePointer&quot;    &quot;true&quot;
+</I>&gt;<i> EndSection
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Hope this is just some configuration thing. If not I suspect it is
+</I>&gt;<i> related to the fact that the  board-htcleo-ts driver is based on a
+</I>&gt;<i> driver that is designed for the android userspace and needs to be
+</I>&gt;<i> patched.
+</I>&gt;<i>
+</I>
+So different people told me this should be fixable by reconfiguration.
+This makes sense to me as the touchscreen works flawlessly in android
+with the exact driver on the device.
+
+I used the tslib binaries to do  some tests and noticed something
+strange. When I run ts_test or ts_calibrate , both recognize the
+touches. In ts_calibrate the crosshair will move on each touch and in
+ts_test I can move the cursor.
+But when I execute either program for the second time, nothing will
+happen as if there was no output. Running hexdump on the node
+/dev/input/event0 it shows the data though and with ts_print_raw I can
+also see it. After a reboot, one of the two programs will work again -
+but only for one time.
+
+How can ts_calibrate and ts_test the dysfunctional while the output
+can be seen in ts_print_raw ?
+
+I wrote the ts_print_raw data to a file directly after bootup (without
+previous ts_* usage) for few seconds and repeated it a second time
+without rebooting between to compare the output. The resulting files
+are attached. It looks same to me..
+
+One thing in the data is striking. Regarding the fact that 3 columns
+are visible, I assumed that one is for X position, one for Y position
+and the third one for the touch state. But the third one does not
+change. It constantly is zero.
+
+Instead the first two values change once there is a touch event:
+
+670.031357:    110    227      0
+2670.071314:    132    266      0
+2670.111229:      0      0      0
+2670.111236: -947150040 -947440328      0
+2670.151243:    285    200      0
+2670.191285:    285    202      0
+
+Each time I touch the screen, they both go to zero first (0,0), then
+they go to a fixed, huge negative value (-947150040,-947440328).
+I think this is most definitely the reason why the cursor moves to the
+top left corner and then moves back to initial position in both Xorg
+and ts_test (in ts_test it just disappears, then returns).
+
+Still it is possible to click stuff - although it's very tricky. e.g.
+I managed to click the Draw field in ts_test . In the draw mode first
+printed but after a while you can see lines appearing.
+(reconstructible in Xorg)
+I wonder if this is related to the fact that in both, Xorg and ts_test
+the cursor will lag behind the position of the finger on the display.
+If movement is stopped, it will arrive near the finger position -
+assuming the finger is held down. Else the cursor will perform the
+(0,0) (-947150040,-947440328) thing.
+
+Looking at all this I wonder if it might really be necessary to patch
+the driver to turn the weird coordinate changing touch event into a
+separate vector..
+
+Anybody able to shed some light ?
+
+
+Best regards
+
+Lukas
+-------------- next part --------------
+2669.434384:     97     76      0
+2669.631282:     97     80      0
+2669.671304:     97     94      0
+2669.711229:     97    105      0
+2669.751228:     97    118      0
+2669.791279:     97    131      0
+2669.831287:     97    144      0
+2669.871295:     98    160      0
+2669.911235:    100    177      0
+2669.951237:    103    198      0
+2669.991289:    106    215      0
+2670.031357:    110    227      0
+2670.071314:    132    266      0
+2670.111229:      0      0      0
+2670.111236: -947150040 -947440328      0
+2670.151243:    285    200      0
+2670.191285:    285    202      0
+2670.231296:    297    217      0
+2670.271307:    308    237      0
+2670.311235:    319    263      0
+2670.351231:    319    302      0
+2670.391292:    307    349      0
+2670.431299:    290    397      0
+2670.471308:    268    442      0
+2670.511234:    249    484      0
+2670.551237:    234    519      0
+2670.591295:    233    549      0
+2670.631298:    244    575      0
+2670.671398:    271    598      0
+2670.711324:    304    619      0
+2670.751322:    326    643      0
+2670.791420:    338    672      0
+2670.831376:      0      0      0
+2670.831477: -947150040 -947440328      0
+2671.391529:    428    189      0
+2671.471385:    427    190      0
+2671.511324:    426    194      0
+2671.551330:    423    217      0
+2671.591377:    412    250      0
+2671.631384:    402    296      0
+2671.671395:    389    351      0
+2671.711323:    374    416      0
+2671.751322:    362    477      0
+2671.791373:    358    527      0
+2671.831368:      0      0      0
+2671.831467: -947150040 -947440328      0
+2672.509812:    207    778      0
+2672.661338:    207    773      0
+2672.702055:    207    753      0
+2672.741453:    217    731      0
+2672.781391:    233    695      0
+2672.821382:    260    654      0
+2672.861386:    300    621      0
+2672.902098:    336    597      0
+2672.941451:    368    582      0
+2672.981392:    392    579      0
+2673.021383:    408    583      0
+2673.061387:    412    612      0
+2673.102121:    414    642      0
+2673.141460:    413    668      0
+2673.181392:    398    690      0
+2673.221383:    387    705      0
+2673.261372:    357    753      0
+2673.302107:      0      0      0
+2673.302206: -947150040 -947440328      0
+2673.341508:    332    512      0
+2673.461334:    332    511      0
+2673.502052:    332    510      0
+2673.541446:      0      0      0
+2673.541547: -947150040 -947440328      0
+2673.581438:    287    462      0
+2673.621336:    287    461      0
+2673.661343:    287    458      0
+2673.702097:    291    445      0
+2673.741483:    310    428      0
+2673.781391:    329    405      0
+2673.821381:    346    388      0
+2673.861386:    360    383      0
+2673.902071:    377    383      0
+2673.941450:    381    403      0
+2673.981388:    393    434      0
+2674.021465:    397    478      0
+2674.061396:    400    520      0
+2674.102124:    402    562      0
+2674.141524:    403    596      0
+2674.181354:    403    623      0
+2674.221388:    399    647      0
+2674.261387:    396    672      0
+2674.302099:    393    695      0
+2674.341455:    390    713      0
+2674.389656:    387    726      0
+2674.421393:    384    730      0
+2674.465516:    458    519      0
+2674.502032:    458    516      0
+2674.541400:    459    513      0
+2674.581313:    462    502      0
+2674.621296:    464    498      0
+2674.661301:      0      0      0
+2674.661309: -947150040 -947440328      0
+2674.702022:    539    256      0
+2674.821384:    538    268      0
+2674.861328:    534    288      0
+2674.902124:    521    330      0
+2674.941457:    510    396      0
+2674.981379:      0      0      0
+2674.981476: -947150040 -947440328      0
+2675.021432:    420    745      0
+2675.061390:    417    733      0
+2675.102123:    414    707      0
+2675.141407:    414    666      0
+2675.181393:    415    630      0
+2675.221385:    419    602      0
+2675.261389:    422    588      0
+2675.302099:    424    578      0
+2675.341445:      0      0      0
+2675.341545: -947150040 -947440328      0
+2683.725829:    341    458      0
+2683.761322:    338    468      0
+2683.801321:    337    479      0
+2683.841406:    326    493      0
+2683.881301:    314    521      0
+2683.921307:    294    549      0
+2683.961277:    277    571      0
+2684.001579:    272    582      0
+2684.041303:    272    581      0
+2684.081294:    292    558      0
+2684.121306:    318    537      0
+2684.161279:    345    516      0
+2684.201310:    364    501      0
+2684.241289:    381    500      0
+2684.281295:    384    504      0
+2684.321395:    388    531      0
+2684.361365:    392    551      0
+2684.401373:      0      0      0
+2684.401471: -947150040 -947440328      0
+2743.800237:    257    404      0
+2743.841321:    261    394      0
+2743.881445:    282    381      0
+2743.921282:    309    365      0
+2743.961294:    338    353      0
+2744.001624:    363    350      0
+2744.041287:    380    351      0
+2744.081313:    384    377      0
+2744.121292:    384    407      0
+2744.161313:    381    442      0
+2744.201316:    376    471      0
+2744.241289:    364    492      0
+2744.281312:    363    503      0
+2744.321294:    365    506      0
+2744.361316:    384    520      0
+2744.401352:      0      0      0
+2744.401362: -947150040 -947440328      0
+2744.581314:    490    720      0
+2744.701307:    486    720      0
+2744.741346:    467    721      0
+2744.781345:    443    721      0
+2744.821347:    412    720      0
+2744.861280:    185    381      0
+2744.901343:    185    380      0
+2744.941345:    189    376      0
+2744.981353:    485    338      0
+2745.021349:    488    340      0
+2745.061362:    498    353      0
+2745.101357:    495    646      0
+2745.141348:    484    650      0
+2745.181354:    472    664      0
+2745.221339:    447    679      0
+2745.261363:    408    694      0
+2745.301355:    356    698      0
+2745.341345:    301    699      0
+2745.381355:    260    696      0
+2745.421335:    237    671      0
+2745.461438:    233    641      0
+2745.501401:    233    608      0
+2745.541363:    248    587      0
+2745.581352:    270    587      0
+2745.621338:    301    586      0
+2745.661367:    390    582      0
+2745.701350:      0      0      0
+2745.701360: -947150040 -947440328      0
+2746.106781:    428    363      0
+2746.221292:    428    365      0
+2746.261361:    427    380      0
+2746.301363:    424    404      0
+2746.341350:    420    436      0
+2746.381357:    416    471      0
+2746.421335:      0      0      0
+2746.421344: -947150040 -947440328      0
+3051.486998:    109     67      0
+3052.681501:    110     68      0
+3052.761461:    113     69      0
+3052.801472:    116     70      0
+3052.842161:    119     71      0
+3052.881464:    129     72      0
+3052.921463:    140     73      0
+3052.961376:    155     73      0
+3053.001392:    174     73      0
+3053.042102:    197     73      0
+3053.081388:    221     73      0
+3053.121386:    245     73      0
+3053.161379:    272     73      0
+3053.201472:    300     74      0
+3053.242178:    326     75      0
+3053.281464:    349     77      0
+3053.321466:    374     78      0
+3053.361462:    396     80      0
+3053.401470:    414     83      0
+3053.442160:    429     86      0
+3053.481468:    443     87      0
+3053.521464:    447     90      0
+3053.561458:    461     93      0
+3053.601475:    464     96      0
+3053.642158:    468     99      0
+3053.681467:    471    103      0
+3053.721754:    471    115      0
+3053.761467:    468    125      0
+3053.801451:    456    139      0
+3053.841514:    438    153      0
+3053.881476:    418    169      0
+3053.921505:    388    185      0
+3053.961464:    354    201      0
+3054.002523:    317    218      0
+3054.041499:    278    235      0
+3054.081448:    242    251      0
+3054.121458:    214    266      0
+3054.161467:    186    279      0
+3054.201534:    165    289      0
+3054.241479:    146    299      0
+3054.282096:    133    302      0
+3054.321466:    132    313      0
+3054.361391:    135    313      0
+3054.401462:    156    314      0
+3054.441506:    181    315      0
+3054.481396:    214    315      0
+3054.521457:    252    316      0
+3054.561390:    290    316      0
+3054.602089:    331    316      0
+3054.641390:    369    316      0
+3054
+-------------- next part --------------
+3051.486998:    109     67      0
+3052.681501:    110     68      0
+3052.761461:    113     69      0
+3052.801472:    116     70      0
+3052.842161:    119     71      0
+3052.881464:    129     72      0
+3052.921463:    140     73      0
+3052.961376:    155     73      0
+3053.001392:    174     73      0
+3053.042102:    197     73      0
+3053.081388:    221     73      0
+3053.121386:    245     73      0
+3053.161379:    272     73      0
+3053.201472:    300     74      0
+3053.242178:    326     75      0
+3053.281464:    349     77      0
+3053.321466:    374     78      0
+3053.361462:    396     80      0
+3053.401470:    414     83      0
+3053.442160:    429     86      0
+3053.481468:    443     87      0
+3053.521464:    447     90      0
+3053.561458:    461     93      0
+3053.601475:    464     96      0
+3053.642158:    468     99      0
+3053.681467:    471    103      0
+3053.721754:    471    115      0
+3053.761467:    468    125      0
+3053.801451:    456    139      0
+3053.841514:    438    153      0
+3053.881476:    418    169      0
+3053.921505:    388    185      0
+3053.961464:    354    201      0
+3054.002523:    317    218      0
+3054.041499:    278    235      0
+3054.081448:    242    251      0
+3054.121458:    214    266      0
+3054.161467:    186    279      0
+3054.201534:    165    289      0
+3054.241479:    146    299      0
+3054.282096:    133    302      0
+3054.321466:    132    313      0
+3054.361391:    135    313      0
+3054.401462:    156    314      0
+3054.441506:    181    315      0
+3054.481396:    214    315      0
+3054.521457:    252    316      0
+3054.561390:    290    316      0
+3054.602089:    331    316      0
+3054.641390:    369    316      0
+3054.681389:    404    316      0
+3054.721442:    432    316      0
+3054.761368:    454    316      0
+3054.802109:    470    316      0
+3054.841390:    482    316      0
+3054.881456:      0      0      0
+3054.881634: -947150040 -947440328      0
+3055.994615:     97     52      0
+3056.431367:     97     55      0
+3056.791429:     98     56      0
+3056.831482:    102     57      0
+3056.871451:    115     58      0
+3056.911451:    133     59      0
+3056.951400:    161     61      0
+3056.991322:    198     61      0
+3057.031392:    239     61      0
+3057.071448:    277     62      0
+3057.111454:    313     64      0
+3057.151401:    343     66      0
+3057.191451:    369     69      0
+3057.231485:    392     72      0
+3057.271447:    410     75      0
+3057.311460:    424     78      0
+3057.351401:    434     81      0
+3057.391405:    436     92      0
+3057.431389:    436    103      0
+3057.471451:    424    117      0
+3057.511456:    394    135      0
+3057.551404:    348    158      0
+3057.591409:    297    184      0
+3057.631522:    252    209      0
+3057.671540:    214    229      0
+3057.711474:    184    245      0
+3057.751710:    162    257      0
+3057.791549:    145    267      0
+3057.831529:    133    270      0
+3057.871470:    133    273      0
+3057.911481:    155    274      0
+3057.952012:    189    274      0
+3057.991503:    239    273      0
+3058.031551:    289    272      0
+3058.071368:    339    272      0
+3058.111398:    385    272      0
+3058.151316:    420    272      0
+3058.191470:    450    274      0
+3058.231472:    473    276      0
+3058.271507:    490    277      0
+3058.311477:    501    278      0
+3058.351409:    511    281      0
+3058.391463:      0      0      0
+3058.391642: -947150040 -947440328      0
+3059.132808:     89     96      0
+3059.731458:     91     97      0
+3059.771374:    104     97      0
+3059.811378:    121     97      0
+3059.851385:    151     97      0
+3059.891317:    189     97      0
+3059.931364:    226     97      0
+3059.971452:    274     99      0
+3060.011474:    317    103      0
+3060.051481:    351    113      0
+3060.091397:    375    116      0
+3060.131452:    390    129      0
+3060.171377:    390    144      0
+3060.211459:    387    162      0
+3060.251473:    368    183      0
+3060.291400:    345    207      0
+3060.331451:    315    233      0
+3060.371453:    277    259      0
+3060.411462:    241    281      0
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000303.html">[Tslib-general] terminating ts_calibrate/ts_test via console?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#302">[ date ]</a>
+              <a href="thread.html#302">[ thread ]</a>
+              <a href="subject.html#302">[ subject ]</a>
+              <a href="author.html#302">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Fwd: if (version &lt; EV_VERSION)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2012-August/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Fwd%3A%20if%20%28version%20%3C%20EV_VERSION%29&In-Reply-To=%3CCA%2BTvN0vtSbZt%3D-7QYY-wBj0FqRHhARHuATceHDObeVua_25tLA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000427.html">
+   <LINK REL="Next"  HREF="000429.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Fwd: if (version &lt; EV_VERSION)</H1>
+    <B>Thomas L&#228;mmlein</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Fwd%3A%20if%20%28version%20%3C%20EV_VERSION%29&In-Reply-To=%3CCA%2BTvN0vtSbZt%3D-7QYY-wBj0FqRHhARHuATceHDObeVua_25tLA%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Fwd: if (version &lt; EV_VERSION)">thomaslaemmlein at gmail.com
+       </A><BR>
+    <I>Wed Aug 15 09:01:53 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000427.html">[Tslib-general] Fwd: if (version &lt; EV_VERSION)
+</A></li>
+        <LI>Next message: <A HREF="000429.html">[Tslib-general] Fwd: if (version &lt; EV_VERSION)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#428">[ date ]</a>
+              <a href="thread.html#428">[ thread ]</a>
+              <a href="subject.html#428">[ subject ]</a>
+              <a href="author.html#428">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Chris,
+
+thank you for your answer, but I'm not sure what you mean.
+I compile the kernel with the ELDK 5.2.1 (From Company denx) Cross Compiler
+in this way:
+
+$ export CROSS_COMPILE=arm-linux-gnueabi-
+
+$ export
+PATH=$PATH:/opt/eldk-5.2.1/armv6/sysroots/i686-eldk-linux/usr/bin:/opt/eldk-5.2.1/armv6/sysroots/i686-eldk-linux/usr/bin/armv6-vfp-linux-gnueabi
+
+$ export ARCH=arm
+
+$ $ cd ~/projects/Qong/Kernels/Denx/linux-2.6-denx
+
+$ make mrproper
+
+$ make menuconfig
+$ make uImage
+
+And I found the define EV_VERSION under
+~/projects/Qong/Kernels/Denx/linux-2.6-denx/include/linux/input.h.
+
+How can I be sure that I compile against
+~/projects/Qong/Kernels/Denx/linux-2.6-denx/include/linux and not /usr/
+include/linux?
+
+The tslib I compile in this way:
+
+$ export CROSS_COMPILE=arm-linux-gnueabi-
+
+$ export
+PATH=$PATH:/opt/eldk-5.2.1/armv6/sysroots/i686-eldk-linux/usr/bin:/opt/eldk-5.2.1/armv6/sysroots/i686-eldk-linux/usr/bin/armv6-vfp-linux-gnueabi
+
+$ export ARCH=arm
+
+$ cd ~/tslib/src
+
+$ ./autogen.sh
+
+ac_cv_func_malloc_0_nonnull=yes ./configure --host=arm-linux \
+
+--prefix=/tmp --sysconfdir=/tmp/etc \
+
+--enable-input --disable-arctic2 --disable-linear-h2200 \
+
+--disable-ucb1x00 --disable-corgi --disable-collie \
+--disable-h3600 --disable-mk71
+
+$ make
+
+Regards,
+
+Thomas
+
+On Wed, Aug 15, 2012 at 1:40 AM, Chris Larson &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">clarson at kergoth.com</A>&gt; wrote:
+
+&gt;<i> On Tue, Aug 14, 2012 at 4:37 PM, Thomas L&#228;mmlein
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">thomaslaemmlein at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt;               if (ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version) &lt; 0) {
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;                                fprintf(stderr, &quot;tslib: Selected device is
+</I>&gt;<i> &gt; not a Linux input event device\n&quot;);
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;                                return -1;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;                 }
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;                  if (version &lt; EV_VERSION) {
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;                                fprintf(stderr, &quot;tslib: Selected device
+</I>&gt;<i> uses
+</I>&gt;<i> &gt; a different version of the event protocol than tslib was compiled
+</I>&gt;<i> for\n&quot;);
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;                                return -1;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;                 }
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I have uncomment the condition&#8222;if (version &lt; EV_VERSION)&#8220; and it works.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; But why in hell is the variable &#8222;version&#8220; lower than EV_VERSION. This
+</I>&gt;<i> means
+</I>&gt;<i> &gt; the driver mc13783_ts gives me a to lower version number.
+</I>&gt;<i>
+</I>&gt;<i> The running kernel's input layer event interface version is older than
+</I>&gt;<i> the version it was compiled against (the one in linux/event.h). Make
+</I>&gt;<i> sure you're compiling against the right headers corresponding to the
+</I>&gt;<i> device, not the build machine.
+</I>&gt;<i> --
+</I>&gt;<i> Christopher Larson
+</I>&gt;<i> clarson at kergoth dot com
+</I>&gt;<i> Founder - BitBake, OpenEmbedded, OpenZaurus
+</I>&gt;<i> Maintainer - Tslib
+</I>&gt;<i> Senior Software Engineer, Mentor Graphics
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20120815/90849d62/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20120815/90849d62/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000427.html">[Tslib-general] Fwd: if (version &lt; EV_VERSION)
+</A></li>
+	<LI>Next message: <A HREF="000429.html">[Tslib-general] Fwd: if (version &lt; EV_VERSION)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#428">[ date ]</a>
+              <a href="thread.html#428">[ thread ]</a>
+              <a href="subject.html#428">[ subject ]</a>
+              <a href="author.html#428">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

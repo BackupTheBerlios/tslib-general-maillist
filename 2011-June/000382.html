@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] problems reading touchscreen values
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20problems%20reading%20touchscreen%20values&In-Reply-To=%3C1307611950.3146.1508.camel%40lws-gamez%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000383.html">
+   <LINK REL="Next"  HREF="000384.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] problems reading touchscreen values</H1>
+    <B>Teresa Gamez</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20problems%20reading%20touchscreen%20values&In-Reply-To=%3C1307611950.3146.1508.camel%40lws-gamez%3E"
+       TITLE="[Tslib-general] problems reading touchscreen values">T.Gamez at phytec.de
+       </A><BR>
+    <I>Thu Jun  9 11:32:30 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000383.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+        <LI>Next message: <A HREF="000384.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#382">[ date ]</a>
+              <a href="thread.html#382">[ thread ]</a>
+              <a href="subject.html#382">[ subject ]</a>
+              <a href="author.html#382">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Filip,
+
+I noticed the same problem on our board.
+The values come right from the controller. It seems that if the pressure
+is getting lower, the controller starts sending wrong x and y values.
+I wrote a small patch for the driver to work around this issue. 
+It throws away meassurements with low preassure values.
+It works for us but I'm not shure if this is the right solution.
+
+
+Teresa
+
+
+Am Mittwoch, den 08.06.2011, 16:08 +0200 schrieb Vanalme Filip:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> We are currently working on an i.MX27 based design with MC13783 PMIC
+</I>&gt;<i> controller that reads a resistive touchpanel.
+</I>&gt;<i> 
+</I>&gt;<i> When using ts_print_raw, we notice that, when the touchscreen is
+</I>&gt;<i> released, we still see values printed on the screen. 
+</I>&gt;<i> 
+</I>&gt;<i> Other remarkable thing is that, at the end of a reading, we get some
+</I>&gt;<i> zeroes, then a value again, the again zeroes :
+</I>&gt;<i> 
+</I>&gt;<i> &#8230;
+</I>&gt;<i> 
+</I>&gt;<i> 3035.374389:   2648   2508   3368
+</I>&gt;<i> 
+</I>&gt;<i> 3035.394361:   2644   2508   3366
+</I>&gt;<i> 
+</I>&gt;<i> 3035.414380:   2640   2512   3374
+</I>&gt;<i> 
+</I>&gt;<i> 3035.434372:   2644   2520   3386
+</I>&gt;<i> 
+</I>&gt;<i> 3035.454336:   2644   2528   3452
+</I>&gt;<i> 
+</I>&gt;<i> 3035.474369:      0      0      0
+</I>&gt;<i> 
+</I>&gt;<i> 3035.474631:   2644   2528      0
+</I>&gt;<i> 
+</I>&gt;<i> 3035.510212:      0   4092   4094
+</I>&gt;<i> 
+</I>&gt;<i> 3035.514648:      0      0      0
+</I>&gt;<i> 
+</I>&gt;<i> 3035.514896:      0   4092      0
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> I would have expected a single zero at the end of the reading.
+</I>&gt;<i> 
+</I>&gt;<i> When measuring with an oscilloscope, whe can see that, after releasing
+</I>&gt;<i> the touch, there are still a number of pulses. Looks like a kind of
+</I>&gt;<i> jitter at the end of a reading sequence. Can this be related to the ts
+</I>&gt;<i> library ?
+</I>&gt;<i> 
+</I>&gt;<i> I think this is also the reason why ts_calibrate always failes. When
+</I>&gt;<i> touching the first crosshair in the upper left corner, the crosshair
+</I>&gt;<i> moves to the upper right corner an immediately moves further to the
+</I>&gt;<i> bottom right corner (without having touched it in the upper right
+</I>&gt;<i> corner).
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> Another thing we notice : when keeping pressed, ts_print_raw stops
+</I>&gt;<i> reading values after a while. Releasing touch and touching again
+</I>&gt;<i> restarts printing values, but it stops again after a while (some
+</I>&gt;<i> seconds).
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> I have no idea what could be the problem. 
+</I>&gt;<i> 
+</I>&gt;<i> At first sight, one would think it&#8217;s a hardware related issue, but the
+</I>&gt;<i> touchscreen is, apart from some connectors, directly connected to the
+</I>&gt;<i> PMIC chip.
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> In the kernel, I selected :
+</I>&gt;<i> 
+</I>&gt;<i> Device Drivers ---&gt;
+</I>&gt;<i>   Input device support ---&gt;
+</I>&gt;<i>    [*] Touchscreens
+</I>&gt;<i>       &lt;*&gt; Freescale MC13783 touchscreen input driver
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> I&#8217;m using tslib 1.0 (via ltib environment). I notice that there are 3
+</I>&gt;<i> more patches that are applied :
+</I>&gt;<i> 
+</I>&gt;<i> -          tslib-1.0-enable_input_events.patch
+</I>&gt;<i> 
+</I>&gt;<i> -          tslib-1.0-mx-pre_gen-2.patch
+</I>&gt;<i> 
+</I>&gt;<i> -          tslib-1.0-directfb_link_fix.patch
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> In my rc.local file, I have this to create the touchscreen node :
+</I>&gt;<i> 
+</I>&gt;<i> # create toucscreen node
+</I>&gt;<i> 
+</I>&gt;<i> major=$(cat /sys/class/input/event0/dev | awk -F: '{print $1}')
+</I>&gt;<i> 
+</I>&gt;<i> minor=$(cat /sys/class/input/event0/dev | awk -F: '{print $2}')
+</I>&gt;<i> 
+</I>&gt;<i> if [ ! -d /dev/input ]
+</I>&gt;<i> 
+</I>&gt;<i> then
+</I>&gt;<i> 
+</I>&gt;<i>         mkdir /dev/input
+</I>&gt;<i> 
+</I>&gt;<i> fi
+</I>&gt;<i> 
+</I>&gt;<i> if [ ! -e /dev/input/event1 ]
+</I>&gt;<i> 
+</I>&gt;<i> then
+</I>&gt;<i> 
+</I>&gt;<i>         mknod /dev/input/event1 c $major $minor
+</I>&gt;<i> 
+</I>&gt;<i> fi
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> This is the content of my /usr/etc/ts.conf file :
+</I>&gt;<i> 
+</I>&gt;<i> # Uncomment if you wish to use the linux input layer event interface
+</I>&gt;<i> 
+</I>&gt;<i> module_raw input
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> # Uncomment if you're using a Sharp Zaurus SL-5500/SL-5000d
+</I>&gt;<i> 
+</I>&gt;<i> # module_raw collie
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> # Uncomment if you're using a Sharp Zaurus SL-C700/C750/C760/C860
+</I>&gt;<i> 
+</I>&gt;<i> # module_raw corgi
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> # Uncomment if you're using a device with a UCB1200/1300/1400 TS
+</I>&gt;<i> interface
+</I>&gt;<i> 
+</I>&gt;<i> # module_raw ucb1x00
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> # Uncomment if you're using an HP iPaq h3600 or similar
+</I>&gt;<i> 
+</I>&gt;<i> # module_raw h3600
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> # Uncomment if you're using a Hitachi Webpad
+</I>&gt;<i> 
+</I>&gt;<i> # module_raw mk712
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> # Uncomment if you're using an IBM Arctic II
+</I>&gt;<i> 
+</I>&gt;<i> # module_raw arctic2
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> module pthres pmin=1
+</I>&gt;<i> 
+</I>&gt;<i> module variance delta=30
+</I>&gt;<i> 
+</I>&gt;<i> module dejitter delta=100
+</I>&gt;<i> 
+</I>&gt;<i> module linear
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> This is my /etc/profile file :
+</I>&gt;<i> 
+</I>&gt;<i> export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
+</I>&gt;<i> 
+</I>&gt;<i> alias ll='ls -l'
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> # Environment variables for touchscreen
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> export TSLIB_TSDEVICE=/dev/input/event1
+</I>&gt;<i> 
+</I>&gt;<i> export QWS_MOUSE_PROTO=Tslib:/dev/input/event1
+</I>&gt;<i> 
+</I>&gt;<i> export TSLIB_TSEVENTTYPE=INPUT
+</I>&gt;<i> 
+</I>&gt;<i> export TSLIB_CONSOLEDEVICE=none
+</I>&gt;<i> 
+</I>&gt;<i> export TSLIB_FBDEVICE=/dev/fb0
+</I>&gt;<i> 
+</I>&gt;<i> export TSLIB_CALIBFILE=/etc/pointercal
+</I>&gt;<i> 
+</I>&gt;<i> export TSLIB_CONFFILE=/usr/etc/ts.conf
+</I>&gt;<i> 
+</I>&gt;<i> export TSLIB_PLUGINDIR=/usr/lib/ts
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> Anyone who recognizes this kind of problem ? Anyone who has
+</I>&gt;<i> encountered similar problems ? Maybe some setting is wrong or not
+</I>&gt;<i> set ?
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for help !
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> Filip
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000383.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+	<LI>Next message: <A HREF="000384.html">[Tslib-general] problems reading touchscreen values
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#382">[ date ]</a>
+              <a href="thread.html#382">[ thread ]</a>
+              <a href="subject.html#382">[ subject ]</a>
+              <a href="author.html#382">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

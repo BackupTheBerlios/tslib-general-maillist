@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Main event loop: How do I get data in from other	processes?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Main%20event%20loop%3A%20How%20do%20I%20get%20data%20in%20from%20other%0A%09processes%3F&In-Reply-To=%3C20090105145609.548fa75b%40danhplaptop%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000154.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Main event loop: How do I get data in from other	processes?</H1>
+    <B>Dan Lyke</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Main%20event%20loop%3A%20How%20do%20I%20get%20data%20in%20from%20other%0A%09processes%3F&In-Reply-To=%3C20090105145609.548fa75b%40danhplaptop%3E"
+       TITLE="[Tslib-general] Main event loop: How do I get data in from other	processes?">danlyke at flutterby.com
+       </A><BR>
+    <I>Mon Jan  5 23:56:09 CET 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000154.html">[Tslib-general] Reg: tslib-1.0 ported on kernel linux-2.6.25
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#153">[ date ]</a>
+              <a href="thread.html#153">[ thread ]</a>
+              <a href="subject.html#153">[ subject ]</a>
+              <a href="author.html#153">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've dug a bit back through the archives, and done some searching, and
+I've seen a few other people trying to solve this issue, but no clear
+answers.
+
+I've got a little app running with ts_read() and it's working great.
+
+This device is going to be doing various asynchronous stuff, working
+with USB devices, talking to various peripherals, so I need a main
+event loop that's grabbing a whole bunch of things.
+
+and select() on ts_fd() indicates that I can't just call &quot;ts_read()&quot; in
+response to the select events.
+
+How do I do this? Have a small simple process that's reading touchscreen
+coordinates and feeding them via a pipe to my main event loop, so that
+I can use a select() there to watch for new data from the touchscreen?
+Is there a way to do this without the extra process?
+
+And is there an intro to how to use the filters somewhere?
+
+Thanks!
+
+Dan
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000154.html">[Tslib-general] Reg: tslib-1.0 ported on kernel linux-2.6.25
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#153">[ date ]</a>
+              <a href="thread.html#153">[ thread ]</a>
+              <a href="subject.html#153">[ subject ]</a>
+              <a href="author.html#153">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

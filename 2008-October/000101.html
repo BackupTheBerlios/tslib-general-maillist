@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Configuring a touch screen that is controlled	by inputattach
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%09by%20inputattach&In-Reply-To=%3Cdb471ace0810200814pc3e7118p6c15401e8c61c6e1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000100.html">
+   <LINK REL="Next"  HREF="000103.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Configuring a touch screen that is controlled	by inputattach</H1>
+    <B>Peter Geoghegan</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%09by%20inputattach&In-Reply-To=%3Cdb471ace0810200814pc3e7118p6c15401e8c61c6e1%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Configuring a touch screen that is controlled	by inputattach">peter.geoghegan86 at gmail.com
+       </A><BR>
+    <I>Mon Oct 20 17:14:10 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000100.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+        <LI>Next message: <A HREF="000103.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#101">[ date ]</a>
+              <a href="thread.html#101">[ thread ]</a>
+              <a href="subject.html#101">[ subject ]</a>
+              <a href="author.html#101">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hinko,
+
+I've generated that configure script successfully. I had to get
+autolib, automake and autoconf.
+
+Now, I don't seem to be able to apply your diff. I apologise for the
+inordinate amount of hand holding you've had to do so far, but please
+do a little more. Here's what I'm getting:
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">lustre at lustre-till</A>:~/tslib-1.0/plugins$ cat mods.diff
+Index: plugins/input-raw.c
+===================================================================
+--- plugins/input-raw.c (revision 52)
++++ plugins/input-raw.c (working copy)
+@@ -55,7 +55,7 @@
+       int version;
+       u_int32_t bit;
+       u_int64_t absbit;
+-
++/*
+       if (! ((ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version) &gt;= 0) &amp;&amp;
+               (version == EV_VERSION) &amp;&amp;
+               (ioctl(ts-&gt;fd, EVIOCGBIT(0, sizeof(bit) * 8), &amp;bit) &gt;= 0) &amp;&amp;
+@@ -66,7 +66,7 @@
+               fprintf(stderr, &quot;selected device is not a touchscreen I
+understand\n&quot;);
+               return -1;
+       }
+-
++*/
+       if (bit &amp; (1 &lt;&lt; EV_SYN))
+               i-&gt;using_syn =
+1;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">lustre at lustre-till</A>:~/Desktop/tslib-1.0/<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">pluginlustre at lustre-till</A>:~/tslib-1.0/plugins$
+patch &lt; mods.diff
+patching file input-raw.c
+Hunk #1 FAILED at 55.
+patch unexpectedly ends in middle of line
+Hunk #2 FAILED at 66.
+2 out of 2 hunks FAILED -- saving rejects to file input-raw.c.rej
+
+I know subversion uses the unified diff format, which I figure gnu
+patch should handle, but I'm getting syntax errors as you can see, and
+am not sufficiently experienced with diff/patch to be able to eyeball
+the diff and see what's probably a trivial error, like a misplaced
+carriage return or something.
+
+Thanks,
+Peter
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000100.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+	<LI>Next message: <A HREF="000103.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#101">[ date ]</a>
+              <a href="thread.html#101">[ thread ]</a>
+              <a href="subject.html#101">[ subject ]</a>
+              <a href="author.html#101">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

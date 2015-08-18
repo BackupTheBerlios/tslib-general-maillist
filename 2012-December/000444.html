@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib, xorg, Lubuntu and a10 tablet
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2012-December/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%2C%20xorg%2C%20Lubuntu%20and%20a10%20tablet&In-Reply-To=%3CCAJaJ%3D3LJMDBoCzt8_isbiy%2BkrGWfCi2_5hwpJ%2BwhmS8s6RhxsA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib, xorg, Lubuntu and a10 tablet</H1>
+    <B>Gabriel Ernesto Cabral</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%2C%20xorg%2C%20Lubuntu%20and%20a10%20tablet&In-Reply-To=%3CCAJaJ%3D3LJMDBoCzt8_isbiy%2BkrGWfCi2_5hwpJ%2BwhmS8s6RhxsA%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] tslib, xorg, Lubuntu and a10 tablet">gabriel at arcadenea.com.ar
+       </A><BR>
+    <I>Thu Dec 27 21:41:21 CET 2012</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#444">[ date ]</a>
+              <a href="thread.html#444">[ thread ]</a>
+              <a href="subject.html#444">[ subject ]</a>
+              <a href="author.html#444">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>hi, i got a 7&quot; tablet with an a10 (sun4i) chip and i'm testing Lubuntu on
+it. I've succesfully compiled and installed tslib and was able to calibrate
+and test (with ts_calibrate and ts_test) the touchscreen. The trouble
+starts when i started to try xorg-input-tslib in Lubuntu, because the
+device is detected, but never get a read value.
+Looking at the source, xorg-input-tslib uses the functions ts_open to open
+the device and ts_read to get values. Seems like ts_open works fine, but
+ts_read always return zero (i've modified the lib to get this debug
+output).
+I don't know what can it be, maybe a device permission?
+
+NOTE: I've patched the lib with the lastest patch available (debian
+0.0.6-7).
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20121227/995e5558/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20121227/995e5558/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#444">[ date ]</a>
+              <a href="thread.html#444">[ thread ]</a>
+              <a href="subject.html#444">[ subject ]</a>
+              <a href="author.html#444">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [RFC] Clean display after tests?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BRFC%5D%20Clean%20display%20after%20tests%3F&In-Reply-To=%3C20081124103624.GC3160%40pengutronix.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000146.html">
+   <LINK REL="Next"  HREF="000148.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [RFC] Clean display after tests?</H1>
+    <B>Wolfram Sang</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BRFC%5D%20Clean%20display%20after%20tests%3F&In-Reply-To=%3C20081124103624.GC3160%40pengutronix.de%3E"
+       TITLE="[Tslib-general] [RFC] Clean display after tests?">w.sang at pengutronix.de
+       </A><BR>
+    <I>Mon Nov 24 11:36:24 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000146.html">[Tslib-general] calibrate in X
+</A></li>
+        <LI>Next message: <A HREF="000148.html">[Tslib-general] [PATCH] allow dynamic loading of libts without	RTLD_GLOBAL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#147">[ date ]</a>
+              <a href="thread.html#147">[ thread ]</a>
+              <a href="subject.html#147">[ subject ]</a>
+              <a href="author.html#147">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ts_tests: clear screen on exit
+
+Signed-off-by: Wolfram Sang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt;
+---
+
+I think it is nice to clean up, but mileages do vary :)
+
+ tests/ts_calibrate.c |    1 +
+ tests/ts_test.c      |    1 +
+ 2 files changed, 2 insertions(+)
+
+Index: tests/ts_test.c
+===================================================================
+--- tests/ts_test.c.orig
++++ tests/ts_test.c
+@@ -213,5 +213,6 @@ int main()
+ 		if (quit_pressed)
+ 			break;
+ 	}
++	fillrect (0, 0, xres - 1, yres - 1, 0);
+ 	close_framebuffer();
+ }
+Index: tests/ts_calibrate.c
+===================================================================
+--- tests/ts_calibrate.c.orig
++++ tests/ts_calibrate.c
+@@ -235,6 +235,7 @@ int main()
+ 		i = -1;
+ 	}
+ 
++	fillrect (0, 0, xres - 1, yres - 1, 0);
+ 	close_framebuffer();
+ 	return i;
+ }
+-- 
+  Dipl.-Ing. Wolfram Sang | <A HREF="http://www.pengutronix.de">http://www.pengutronix.de</A>
+ Pengutronix - Linux Solutions for Science and Industry
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 197 bytes
+Desc: Digital signature
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20081124/93e5ae34/attachment.pgp">https://lists.berlios.de/pipermail/tslib-general/attachments/20081124/93e5ae34/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000146.html">[Tslib-general] calibrate in X
+</A></li>
+	<LI>Next message: <A HREF="000148.html">[Tslib-general] [PATCH] allow dynamic loading of libts without	RTLD_GLOBAL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#147">[ date ]</a>
+              <a href="thread.html#147">[ thread ]</a>
+              <a href="subject.html#147">[ subject ]</a>
+              <a href="author.html#147">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

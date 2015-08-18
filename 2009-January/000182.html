@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [PATCH] Rely on SYN-Events when pen is lifted (WAS:	What is the intential behavoir on &quot;pen up&quot; events?)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%5D%20Rely%20on%20SYN-Events%20when%20pen%20is%20lifted%20%28WAS%3A%0A%09What%20is%20the%20intential%20behavoir%20on%20%22pen%20up%22%20events%3F%29&In-Reply-To=%3C200901270244.15210.michael.heimpold%40s2000.tu-chemnitz.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000166.html">
+   <LINK REL="Next"  HREF="000169.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [PATCH] Rely on SYN-Events when pen is lifted (WAS:	What is the intential behavoir on &quot;pen up&quot; events?)</H1>
+    <B>Michael Heimpold</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%5D%20Rely%20on%20SYN-Events%20when%20pen%20is%20lifted%20%28WAS%3A%0A%09What%20is%20the%20intential%20behavoir%20on%20%22pen%20up%22%20events%3F%29&In-Reply-To=%3C200901270244.15210.michael.heimpold%40s2000.tu-chemnitz.de%3E"
+       TITLE="[Tslib-general] [PATCH] Rely on SYN-Events when pen is lifted (WAS:	What is the intential behavoir on &quot;pen up&quot; events?)">michael.heimpold at s2000.tu-chemnitz.de
+       </A><BR>
+    <I>Tue Jan 27 02:44:15 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000166.html">[Tslib-general] What is the intential behavoir on &quot;pen up&quot; events?
+</A></li>
+        <LI>Next message: <A HREF="000169.html">[Tslib-general] queries on 'tslib'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#182">[ date ]</a>
+              <a href="thread.html#182">[ thread ]</a>
+              <a href="subject.html#182">[ subject ]</a>
+              <a href="author.html#182">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+when the input-raw module of tslib relies on SYN-Events, it should not report
+a BTN_TOUCH to upper layers before the corresponding EV_SYN was seen.
+
+This prevents seeing two pen up events as described in my posting from
+Jan, 14 2009.
+
+Regards,
+Michael
+
+
+
+diff -Naur tslib.orig/plugins/input-raw.c tslib/plugins/input-raw.c
+--- tslib.orig/plugins/input-raw.c	2009-01-25 15:22:40.000000000 +0100
++++ tslib/plugins/input-raw.c	2009-01-27 02:18:04.000000000 +0100
+@@ -156,12 +156,9 @@
+ 				case BTN_TOUCH:
+ 					if (ev.value == 0) {
+ 						/* pen up */
+-						samp-&gt;x = 0;
+-						samp-&gt;y = 0;
+-						samp-&gt;pressure = 0;
+-						samp-&gt;tv = ev.time;
+-						samp++;
+-						total++;
++						i-&gt;current_x = 0;
++						i-&gt;current_y = 0;
++						i-&gt;current_p = 0;
+ 					}
+ 					break;
+ 				}
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000166.html">[Tslib-general] What is the intential behavoir on &quot;pen up&quot; events?
+</A></li>
+	<LI>Next message: <A HREF="000169.html">[Tslib-general] queries on 'tslib'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#182">[ date ]</a>
+              <a href="thread.html#182">[ thread ]</a>
+              <a href="subject.html#182">[ subject ]</a>
+              <a href="author.html#182">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

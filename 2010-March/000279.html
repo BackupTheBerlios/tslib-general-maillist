@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] evtest worked but ts_calibrate with no luck?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20evtest%20worked%20but%20ts_calibrate%20with%20no%20luck%3F&In-Reply-To=%3Cf275a9df1003232357s48fde8bfy6f42d89bcf7d14a2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000278.html">
+   <LINK REL="Next"  HREF="000280.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] evtest worked but ts_calibrate with no luck?</H1>
+    <B>Jiason Li</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20evtest%20worked%20but%20ts_calibrate%20with%20no%20luck%3F&In-Reply-To=%3Cf275a9df1003232357s48fde8bfy6f42d89bcf7d14a2%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] evtest worked but ts_calibrate with no luck?">listjiason at gmail.com
+       </A><BR>
+    <I>Wed Mar 24 07:57:04 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000278.html">[Tslib-general] Calibration Touble
+</A></li>
+        <LI>Next message: <A HREF="000280.html">[Tslib-general] evtest worked but ts_calibrate with no luck?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#279">[ date ]</a>
+              <a href="thread.html#279">[ thread ]</a>
+              <a href="subject.html#279">[ subject ]</a>
+              <a href="author.html#279">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I was using OpenEmbedded to build a rootfs,
+with evtest and tslib/ts_xxx utilities installed.
+
+I was trying to ts_calibrate my touch screen,
+but ts_calibrate did not respond to my touches at all,
+while evtest responded with messages below.
+
+Do you have any idea about this?
+
+Any info are very appreciated. :-)
+
+Thank You!
+jiason
+20100324
+
+
+$ cat /proc/bus/input/devices
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name=&quot;codec_ts&quot;
+P: Phys=codec_ts/input1
+S: Sysfs=/class/input/input0
+U: Uniq=
+H: Handlers=event0
+B: EV=9
+B: ABS=1000003
+
+
+$ ts_calibrate
+xres = 480, yres = 640
+
+
+$ evtest  /dev/input/event0
+
+Input driver version is 1.0.0
+Input device ID: bus 0x0 vendor 0x0 product 0x0 version 0x0
+Input device name: &quot;codec_ts&quot;
+Supported events:
+  Event type 0 (Sync)
+  Event type 3 (Absolute)
+    Event code 0 (X)
+      Value      0
+      Min        0
+      Max        0
+    Event code 1 (Y)
+      Value      0
+      Min        0
+      Max        0
+    Event code 24 (Pressure)
+      Value      0
+      Min        0
+      Max        0
+Testing ... (interrupt to exit)
+Event: time 424.603089, type 3 (Absolute), code 0 (X), value 1856
+Event: time 424.603119, type 3 (Absolute), code 1 (Y), value 1551
+Event: time 424.603119, type 3 (Absolute), code 24 (Pressure), value 4095
+Event: time 424.610901, type 3 (Absolute), code 0 (X), value 1855
+Event: time 424.610932, type 3 (Absolute), code 1 (Y), value 1543
+Event: time 424.610932, type 3 (Absolute), code 24 (Pressure), value 4094
+Event: time 424.618866, type 3 (Absolute), code 0 (X), value 1862
+Event: time 424.618897, type 3 (Absolute), code 1 (Y), value 1533
+Event: time 424.618897, type 3 (Absolute), code 24 (Pressure), value 4095
+Event: time 424.626770, type 3 (Absolute), code 0 (X), value 1863
+Event: time 424.626801, type 3 (Absolute), code 1 (Y), value 1525
+Event: time 424.626801, type 3 (Absolute), code 24 (Pressure), value 4094
+Event: time 424.634400, type 3 (Absolute), code 0 (X), value 1862
+Event: time 424.634430, type 3 (Absolute), code 1 (Y), value 1527
+Event: time 424.634430, type 3 (Absolute), code 24 (Pressure), value 4095
+Event: time 424.642243, type 3 (Absolute), code 0 (X), value 1861
+Event: time 424.642273, type 3 (Absolute), code 1 (Y), value 1530
+Event: time 424.642273, type 3 (Absolute), code 24 (Pressure), value 4094
+Event: time 424.650025, type 3 (Absolute), code 0 (X), value 1851
+Event: time 424.650055, type 3 (Absolute), code 1 (Y), value 1539
+Event: time 424.650055, type 3 (Absolute), code 24 (Pressure), value 4095
+Event: time 424.657868, type 3 (Absolute), code 0 (X), value 1822
+Event: time 424.657898, type 3 (Absolute), code 1 (Y), value 1558
+Event: time 424.657898, type 3 (Absolute), code 24 (Pressure), value 4094
+Event: time 424.665070, type 3 (Absolute), code 24 (Pressure), value 0
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000278.html">[Tslib-general] Calibration Touble
+</A></li>
+	<LI>Next message: <A HREF="000280.html">[Tslib-general] evtest worked but ts_calibrate with no luck?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#279">[ date ]</a>
+              <a href="thread.html#279">[ thread ]</a>
+              <a href="subject.html#279">[ subject ]</a>
+              <a href="author.html#279">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

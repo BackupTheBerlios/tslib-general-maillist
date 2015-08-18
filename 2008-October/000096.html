@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Configuring a touch screen that is controlled by	inputattach
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%20by%09inputattach&In-Reply-To=%3C48FC55E9.6040704%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000095.html">
+   <LINK REL="Next"  HREF="000097.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Configuring a touch screen that is controlled by	inputattach</H1>
+    <B>Hinko Kocevar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%20by%09inputattach&In-Reply-To=%3C48FC55E9.6040704%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] Configuring a touch screen that is controlled by	inputattach">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Mon Oct 20 11:56:57 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000095.html">[Tslib-general] Configuring a touch screen that is controlled by	inputattach
+</A></li>
+        <LI>Next message: <A HREF="000097.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#96">[ date ]</a>
+              <a href="thread.html#96">[ thread ]</a>
+              <a href="subject.html#96">[ subject ]</a>
+              <a href="author.html#96">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Peter Geoghegan wrote:
+&gt;<i> I finally resolved the issue I was having with my Elo touchscreen - it
+</I>&gt;<i> turned out that my distro's inputattach package was broken, which I've
+</I>&gt;<i> reported to the maintainers :
+</I>&gt;<i> <A HREF="https://bugs.launchpad.net/ubuntu/+source/inputattach/+bug/285493">https://bugs.launchpad.net/ubuntu/+source/inputattach/+bug/285493</A> .
+</I>&gt;<i> 
+</I>&gt;<i> The driver makes a new device node - /dev/input/mouse0 or similar. It
+</I>&gt;<i> immediately starts (sort of) working in X.org once I initialise it
+</I>&gt;<i> with inputattach, regardless of my xorg.conf. I suspect it is read as
+</I>&gt;<i> a generic mouse, through that device node. Its X axis is inverted ,
+</I>&gt;<i> and besides, it needs to be calibrated - it's all over the place.
+</I>&gt;<i> 
+</I>&gt;<i> It also creates a /dev/input/event6 device node. I can test this with
+</I>&gt;<i> evtest, and it correctly reports that it's an elo touch.
+</I>&gt;<i> 
+</I>&gt;<i> That being the case, I have two questions:
+</I>&gt;<i> 
+</I>&gt;<i> 1. How do I calibrate the touchscreen?
+</I>&gt;<i> 
+</I>
+Have you tried the ts_calibrate utility from tslib package ?
+
+&gt;<i> 2. Tslib doesn't recognise this device, even though evtest does. What gives?
+</I>
+Are you referring to the &quot;selected device is not a touchscreen I understand&quot; message from check_fd()?
+Try this patch and run some ts_xxx utilities from tests subdir.
+
+$ svn diff
+Index: plugins/input-raw.c
+===================================================================
+--- plugins/input-raw.c	(revision 52)
++++ plugins/input-raw.c	(working copy)
+@@ -55,7 +55,7 @@
+ 	int version;
+ 	u_int32_t bit;
+ 	u_int64_t absbit;
+-
++/*
+ 	if (! ((ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version) &gt;= 0) &amp;&amp;
+ 		(version == EV_VERSION) &amp;&amp;
+ 		(ioctl(ts-&gt;fd, EVIOCGBIT(0, sizeof(bit) * 8), &amp;bit) &gt;= 0) &amp;&amp;
+@@ -66,7 +66,7 @@
+ 		fprintf(stderr, &quot;selected device is not a touchscreen I understand\n&quot;);
+ 		return -1;
+ 	}
+-
++*/
+ 	if (bit &amp; (1 &lt;&lt; EV_SYN))
+ 		i-&gt;using_syn = 1;
+ 	
+
+
+Regards,
+Hinko
+
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000095.html">[Tslib-general] Configuring a touch screen that is controlled by	inputattach
+</A></li>
+	<LI>Next message: <A HREF="000097.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#96">[ date ]</a>
+              <a href="thread.html#96">[ thread ]</a>
+              <a href="subject.html#96">[ subject ]</a>
+              <a href="author.html#96">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

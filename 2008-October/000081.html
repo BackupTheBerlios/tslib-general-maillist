@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Gunze touch screen with Xfbdev
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Gunze%20touch%20screen%20with%20Xfbdev&In-Reply-To=%3Ce00ad49f0810090524w7e0812cep342aa315cc2fd392%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000082.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Gunze touch screen with Xfbdev</H1>
+    <B>Leon Ljunggren</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Gunze%20touch%20screen%20with%20Xfbdev&In-Reply-To=%3Ce00ad49f0810090524w7e0812cep342aa315cc2fd392%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Gunze touch screen with Xfbdev">leon.ljunggren at gmail.com
+       </A><BR>
+    <I>Thu Oct  9 14:24:41 CEST 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000082.html">[Tslib-general] Gunze touch screen with Xfbdev
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#81">[ date ]</a>
+              <a href="thread.html#81">[ thread ]</a>
+              <a href="subject.html#81">[ subject ]</a>
+              <a href="author.html#81">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I'm having a bit of a problem with getting my gunze touch screen (and
+gunze controller) working with tslib. When I try to use the normal
+input module I get a &quot;selected device is not a touchscreen I
+understand&quot; message, if I instead use module h3600 it seems to work
+fine, I can calibrate ok and ts_test works excellent (I've had a few
+minutes of fun just drawing on the screen in the test) but when I try
+to start it with Xfbdev things get worse. It still works somewhat, it
+registers touches at the correct location and I can navigate menus and
+such with it, but as soon as I release the screen the cursor jumps
+down a bit and to the right (about one third of the screen), I don't
+get this behaviour in the test app (then the cursor will stay wherever
+it was when I released the screen).
+Anyone has any ideas on what  could be wrong? I'm guessing that
+perhaps h3600 isn't a perfect match for my screen?
+
+ts.conf:
+module_raw h3600
+module pthres pmin=1
+module variance delta=30
+module dejitter delta=100
+module linear
+
+Staring xfbdev with:
+export TSLIB_CONSOLEDEVICE=none
+export TSLIB_FBDEVICE=/dev/fb
+export TSLIB_TSDEVICE=/dev/input/ts0
+export TSLIB_CONFFILE=/mnt/ts.conf
+export TSLIB_PLUGINDIR=/mnt/lib/ts
+export TSLIB_CALIBFILE=/usr/local/pointercal
+
+export PATH=/mnt/bin:$PATH
+export LD_LIBRARY_PATH=/mnt/lib
+
+./bin/Xfbdev -screen 800x600x16 -mouse tslib,,device=/dev/input/ts0
+
+Thanks
+Leon Ljunggren
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000082.html">[Tslib-general] Gunze touch screen with Xfbdev
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#81">[ date ]</a>
+              <a href="thread.html#81">[ thread ]</a>
+              <a href="subject.html#81">[ subject ]</a>
+              <a href="author.html#81">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] When reading input device how often is ts.conf	accessed?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20When%20reading%20input%20device%20how%20often%20is%20ts.conf%0A%09accessed%3F&In-Reply-To=%3C84BC7EF1B62.00000679ejr%40inbox.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000051.html">
+   <LINK REL="Next"  HREF="000053.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] When reading input device how often is ts.conf	accessed?</H1>
+    <B>Junior</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20When%20reading%20input%20device%20how%20often%20is%20ts.conf%0A%09accessed%3F&In-Reply-To=%3C84BC7EF1B62.00000679ejr%40inbox.com%3E"
+       TITLE="[Tslib-general] When reading input device how often is ts.conf	accessed?">ejr at inbox.com
+       </A><BR>
+    <I>Mon Jun  9 23:28:04 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000051.html">[Tslib-general] touch screen with x-server
+</A></li>
+        <LI>Next message: <A HREF="000053.html">[Tslib-general] TSLIB do not recognize TSC-10 as touchscreen	device...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#52">[ date ]</a>
+              <a href="thread.html#52">[ thread ]</a>
+              <a href="subject.html#52">[ subject ]</a>
+              <a href="author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi All,
+When using tslib to read touchscreen input event, how often is ts.conf accessed?
+
+The tslib README file states:
+raw read --&gt; variance --&gt; dejitter --&gt; linear --&gt; application
+  module       module       module       module
+
+Does the library reads ts.conf for every input event? Or does it get configured when device is accessed but never reads ts.conf again?
+I'm trying to determine the source of a jittering problem (among others) and wondering if I need to move ts.conf to a ram based fs instead of flash.
+
+I also noticed that the dejitter module only accept one argument &quot;delta&quot; in dejitter.c but I've been using
+&quot;module dejitter xdelta=10 ydelta=10 pthreshold=1&quot; all along. I'm not sure when this changed but it didn't seem to make a difference. Am I missing something?
+
+Thanks,
+Jr.
+
+____________________________________________________________
+Receive Notifications of Incoming Messages
+Easily monitor multiple email accounts &amp; access them with a click.
+Visit <A HREF="http://www.inbox.com/notifier">http://www.inbox.com/notifier</A> and check it out!
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000051.html">[Tslib-general] touch screen with x-server
+</A></li>
+	<LI>Next message: <A HREF="000053.html">[Tslib-general] TSLIB do not recognize TSC-10 as touchscreen	device...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#52">[ date ]</a>
+              <a href="thread.html#52">[ thread ]</a>
+              <a href="subject.html#52">[ subject ]</a>
+              <a href="author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

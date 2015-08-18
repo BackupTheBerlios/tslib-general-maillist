@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Module for Hampshire touch screen
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Module%20for%20Hampshire%20touch%20screen&In-Reply-To=%3C49896D70.8060806%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000185.html">
+   <LINK REL="Next"  HREF="000187.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Module for Hampshire touch screen</H1>
+    <B>Bastian Stopp</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Module%20for%20Hampshire%20touch%20screen&In-Reply-To=%3C49896D70.8060806%40gmail.com%3E"
+       TITLE="[Tslib-general] Module for Hampshire touch screen">bastianstopp at gmail.com
+       </A><BR>
+    <I>Wed Feb  4 11:26:56 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000185.html">[Tslib-general] Doubt with TSLIB a my touchscreen,	problem with 	some events...
+</A></li>
+        <LI>Next message: <A HREF="000187.html">[Tslib-general] USB Touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#186">[ date ]</a>
+              <a href="thread.html#186">[ thread ]</a>
+              <a href="subject.html#186">[ subject ]</a>
+              <a href="author.html#186">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello everyone,
+
+currently I am trying to get tslib to work with my Touchscreen from 
+Hampshire ( <A HREF="http://www.microchip.com/tsharc/">http://www.microchip.com/tsharc/</A> )
+and I have some questions which I didn't manage to figure out yet.
+So I would be very glad to get some help from you.
+
+I am using the Octupus chip on my embedded Linux device and the 
+touchscreen driver vom Hampshire which seems to work fine (got output on 
+/dev/ttyS1).
+
+Is there a module for tslib which is usable with this Touchscreen, or do 
+I need to write one myself?
+I tried all modules, but evertime I run ts_calibrate, the X and Y data 
+are equal for every touch event. Some modules don't even react to a touch.
+
+If I do have to write a tslib module by myself, is there any 
+documentation available for writing tslib modules?
+
+I had a look at the code of the other modules and noticed, that every 
+input module needs a pressure parameter to handle the touch data.
+The Hampshire driver does not seem to provide this information ( 
+<A HREF="http://www.microchip.com/tsharc/tb_12mini/TSHARC_12m_users.pdf">http://www.microchip.com/tsharc/tb_12mini/TSHARC_12m_users.pdf</A>  -&gt; page 5 ).
+Does an input module need the pressure parameter?
+
+
+Thank you very much for your help,
+
+
+Bastian Stopp
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000185.html">[Tslib-general] Doubt with TSLIB a my touchscreen,	problem with 	some events...
+</A></li>
+	<LI>Next message: <A HREF="000187.html">[Tslib-general] USB Touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#186">[ date ]</a>
+              <a href="thread.html#186">[ thread ]</a>
+              <a href="subject.html#186">[ subject ]</a>
+              <a href="author.html#186">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

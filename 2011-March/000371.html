@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib: Selected device uses a different version of the event protocol than tslib was compiled for
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%3A%20Selected%20device%20uses%20a%20different%20version%0A%20of%20the%20event%20protocol%20than%20tslib%20was%20compiled%20for&In-Reply-To=%3CAANLkTimbj7C%2B1dibEaQgraWhK%3DPrxQNP5sNOM84QaK0r%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000369.html">
+   <LINK REL="Next"  HREF="000370.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib: Selected device uses a different version of the event protocol than tslib was compiled for</H1>
+    <B>&#1042;&#1083;&#1072;&#1076;&#1080;&#1084;&#1080;&#1088; &#1052;&#1072;&#1083;&#1080;&#1082;</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%3A%20Selected%20device%20uses%20a%20different%20version%0A%20of%20the%20event%20protocol%20than%20tslib%20was%20compiled%20for&In-Reply-To=%3CAANLkTimbj7C%2B1dibEaQgraWhK%3DPrxQNP5sNOM84QaK0r%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] tslib: Selected device uses a different version of the event protocol than tslib was compiled for">vladimir.malyk at gmail.com
+       </A><BR>
+    <I>Thu Mar 17 09:47:15 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000369.html">[Tslib-general] tslib: Selected device uses a different version of the event protocol than tslib was compiled for
+</A></li>
+        <LI>Next message: <A HREF="000370.html">[Tslib-general] tslib: Selected device uses a different version of the event protocol than tslib was compiled for
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#371">[ date ]</a>
+              <a href="thread.html#371">[ thread ]</a>
+              <a href="subject.html#371">[ subject ]</a>
+              <a href="author.html#371">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 16 March 2011 18:06, Julien Boibessot &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">julien.boibessot at free.fr</A>&gt; wrote:
+&gt;<i> ???????? ????? a &#233;crit :
+</I>&gt;&gt;<i> I', using module_raw input in friendly mini2440 with T35 LCD, kernel
+</I>&gt;&gt;<i> 2.6.32.2-FriendlyARM, rootfs built using buildroot from git.
+</I>&gt;&gt;<i> When I'm trying to ts_calibrate/touch my touchscreen, I receive in console:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &quot;tslib: Selected device uses a different version of the event protocol
+</I>&gt;&gt;<i> than tslib was compiled for&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any ideas?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> If you built your toolchain with Buildroot, be sure that the kernel
+</I>&gt;<i> headers you have selected in menuconfig (&quot;Toolchain&quot;) have the same
+</I>&gt;<i> version than the kernel you use.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Julien
+</I>&gt;<i>
+</I>&gt;<i> ARMadeus Systems
+</I>&gt;<i>
+</I>
+Solved!
+There're wrong headers I've selected in menuconfig (&quot;Toolchain&quot;).
+I've rebuildrooted rootfs, everything works fine.
+Thanks a lot!
+
+--
+Best wishes!
+Vladimir Malyk, Positron GmbH
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000369.html">[Tslib-general] tslib: Selected device uses a different version of the event protocol than tslib was compiled for
+</A></li>
+	<LI>Next message: <A HREF="000370.html">[Tslib-general] tslib: Selected device uses a different version of the event protocol than tslib was compiled for
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#371">[ date ]</a>
+              <a href="thread.html#371">[ thread ]</a>
+              <a href="subject.html#371">[ subject ]</a>
+              <a href="author.html#371">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib option for Xfbdev
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20option%20for%20Xfbdev&In-Reply-To=%3Cd79200170804281028y6612d712q3390380ca9e7a8a7%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000032.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib option for Xfbdev</H1>
+    <B>Alim Akhtar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20option%20for%20Xfbdev&In-Reply-To=%3Cd79200170804281028y6612d712q3390380ca9e7a8a7%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] tslib option for Xfbdev">alim.akhtar at gmail.com
+       </A><BR>
+    <I>Mon Apr 28 19:28:32 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000032.html">[Tslib-general] tslib option for Xfbdev
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#33">[ date ]</a>
+              <a href="thread.html#33">[ thread ]</a>
+              <a href="subject.html#33">[ subject ]</a>
+              <a href="author.html#33">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Have you build Xfbdev with Tslib support enable?
+Whats your Xorg-server version?
+If it is xorg-server-1.4 then try &quot;Xfbdev -screen &lt;YOUR SCREEN PARAMETER&gt;
+-mouse tslib,,device=/dev/input/touchscreen0&quot;
+
+Regards
+Alim
+
+On 4/28/08, <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">pavan_savoy at indiatimes.com</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">pavan_savoy at indiatimes.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> I have the Open embedded Angstrom environment on my atmel sam9261 board,
+</I>&gt;<i> and trying to add a touchscreen device to exising one.(replacing).
+</I>&gt;<i>
+</I>&gt;<i> when I start of ts_test or ts_calibrate, by setting the TSLIB_TSDEVICE env
+</I>&gt;<i> variable things are fine, but the X server, doesnt recognise the touches, as
+</I>&gt;<i> ts_test does, why is it so ?
+</I>&gt;<i>
+</I>&gt;<i> Is there any specific option to start of Xfbdev,  by mentioning the right
+</I>&gt;<i> input device,. i have /dev/input/touchscreen0 set as TSLIB_TSDEVICE and
+</I>&gt;<i> working fine.
+</I>&gt;<i>
+</I>&gt;<i> the -mouse option in Xfbdev has tslib, what does that mean.?
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+aLim akHtaR
+mAin hUn nA :-)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080428/6db174c3/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20080428/6db174c3/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000032.html">[Tslib-general] tslib option for Xfbdev
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#33">[ date ]</a>
+              <a href="thread.html#33">[ thread ]</a>
+              <a href="subject.html#33">[ subject ]</a>
+              <a href="author.html#33">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

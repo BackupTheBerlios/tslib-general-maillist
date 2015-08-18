@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [PATCH 1/3] ts_open: open files read/write
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%201/3%5D%20ts_open%3A%20open%20files%20read/write&In-Reply-To=%3C4CDC2BE7.4010203%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000324.html">
+   <LINK REL="Next"  HREF="000328.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [PATCH 1/3] ts_open: open files read/write</H1>
+    <B>Paulius Zaleckas</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%201/3%5D%20ts_open%3A%20open%20files%20read/write&In-Reply-To=%3C4CDC2BE7.4010203%40gmail.com%3E"
+       TITLE="[Tslib-general] [PATCH 1/3] ts_open: open files read/write">paulius.zaleckas at gmail.com
+       </A><BR>
+    <I>Thu Nov 11 18:46:15 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000324.html">[Tslib-general] [PATCH 1/3] ts_open: open files read/write
+</A></li>
+        <LI>Next message: <A HREF="000328.html">[Tslib-general] [RFC] ts_open: turn nonblock-parameter into more	generic one called 'flags'.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#327">[ date ]</a>
+              <a href="thread.html#327">[ thread ]</a>
+              <a href="subject.html#327">[ subject ]</a>
+              <a href="author.html#327">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 11/11/2010 12:39 PM, Wolfram Sang wrote:
+&gt;<i> An upcoming driver (dmc) will need it.
+</I>&gt;<i>
+</I>&gt;<i> Signed-off-by: Wolfram Sang&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt;
+</I>&gt;<i> ---
+</I>&gt;<i>   src/ts_open.c |    2 +-
+</I>&gt;<i>   1 files changed, 1 insertions(+), 1 deletions(-)
+</I>&gt;<i>
+</I>&gt;<i> diff --git a/src/ts_open.c b/src/ts_open.c
+</I>&gt;<i> index 02f1749..b5ddc39 100644
+</I>&gt;<i> --- a/src/ts_open.c
+</I>&gt;<i> +++ b/src/ts_open.c
+</I>&gt;<i> @@ -24,7 +24,7 @@ extern struct tslib_module_info __ts_raw;
+</I>&gt;<i>   struct tsdev *ts_open(const char *name, int nonblock)
+</I>&gt;<i>   {
+</I>&gt;<i>   	struct tsdev *ts;
+</I>&gt;<i> -	int flags = O_RDONLY;
+</I>&gt;<i> +	int flags = O_RDWR;
+</I>
+O_RDWR may fail because of permissions and RDONLY not.
+IMO we need some kind of fallback here...
+
+&gt;<i>   	if (nonblock)
+</I>&gt;<i>   		flags |= O_NONBLOCK;
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000324.html">[Tslib-general] [PATCH 1/3] ts_open: open files read/write
+</A></li>
+	<LI>Next message: <A HREF="000328.html">[Tslib-general] [RFC] ts_open: turn nonblock-parameter into more	generic one called 'flags'.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#327">[ date ]</a>
+              <a href="thread.html#327">[ thread ]</a>
+              <a href="subject.html#327">[ subject ]</a>
+              <a href="author.html#327">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

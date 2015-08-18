@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Toiuch screen
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Toiuch%20screen&In-Reply-To=%3C003f01c8dbfd%2454338310%24fc9a8930%24%40com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000065.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Toiuch screen</H1>
+    <B>Rakesh Jagota</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Toiuch%20screen&In-Reply-To=%3C003f01c8dbfd%2454338310%24fc9a8930%24%40com%3E"
+       TITLE="[Tslib-general] Toiuch screen">jrakesh at gdatech.com
+       </A><BR>
+    <I>Wed Jul  2 06:37:19 CEST 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000065.html">[Tslib-general] I can not fix my problem with touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#64">[ date ]</a>
+              <a href="thread.html#64">[ thread ]</a>
+              <a href="subject.html#64">[ subject ]</a>
+              <a href="author.html#64">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+ 
+
+I am using WM9712 for my touch screen and I have make the xorg to use the
+touch screen driver. I am using tslib and my configuration for touch screen
+as shown below. Touch screen is working fine with x-server, but touch sceen
+used to work only after restarting the X-server(gdm).
+
+ 
+
+.........
+
+.........
+
+Section &quot;InputDevice&quot;
+
+                Identifier             &quot;touchscreen&quot;
+
+                Driver                    &quot;tslib&quot;
+
+                Option                  &quot;Device&quot;
+&quot;/dev/input/by-path/platform-0-0:WM9711_WM9712-event-joystick&quot;
+
+                Option                  &quot;DeviceName&quot;  &quot;touchscreen&quot;
+
+                Option                  &quot;Protocol&quot;           &quot;Auto&quot;
+
+                Option                  &quot;ReportingMode&quot;            &quot;Raw&quot;
+
+                Option                  &quot;SendCoreEvents&quot; &quot;On&quot;
+
+EndSection
+
+ 
+
+Section &quot;InputDevice&quot;
+
+                Identifier             &quot;dummy&quot;
+
+                Driver                    &quot;void&quot;
+
+                Option                  &quot;Device&quot;
+&quot;/dev/input/mice&quot;
+
+EndSection
+
+ 
+
+..........
+
+ 
+
+..........
+
+.........
+
+........
+
+Section &quot;ServerLayout&quot;
+
+                Identifier             &quot;Default Layout&quot;
+
+                Screen                  &quot;Default Screen&quot;
+
+                InputDevice       &quot;Generic Keyboard&quot;
+
+                InputDevice       &quot;Configured Mouse&quot;
+
+                InputDevice       &quot;touchscreen&quot; &quot;SendCoreEvents&quot;
+
+                Option                  &quot;AllowMouseOpenFail&quot; &quot;true&quot;
+
+                InputDevice       &quot;dummy&quot;
+
+EndSection
+
+ 
+
+.........
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080701/f347d4aa/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20080701/f347d4aa/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000065.html">[Tslib-general] I can not fix my problem with touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#64">[ date ]</a>
+              <a href="thread.html#64">[ thread ]</a>
+              <a href="subject.html#64">[ subject ]</a>
+              <a href="author.html#64">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

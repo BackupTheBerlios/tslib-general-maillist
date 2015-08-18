@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Looking for ideas
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Looking%20for%20ideas&In-Reply-To=%3Ce72c2e480810161447jce6c47cqed1f63b401d423a3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000094.html">
+   <LINK REL="Next"  HREF="000095.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Looking for ideas</H1>
+    <B>Philippe Godin</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Looking%20for%20ideas&In-Reply-To=%3Ce72c2e480810161447jce6c47cqed1f63b401d423a3%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Looking for ideas">godp1301 at gmail.com
+       </A><BR>
+    <I>Thu Oct 16 23:47:16 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000094.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+        <LI>Next message: <A HREF="000095.html">[Tslib-general] Configuring a touch screen that is controlled by	inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#93">[ date ]</a>
+              <a href="thread.html#93">[ thread ]</a>
+              <a href="subject.html#93">[ subject ]</a>
+              <a href="author.html#93">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good day everybody,
+
+I successfully integrated tslib on the latest release of xfree86 for a usb
+eGalax based touchscreen. Everything works on a embedded system  with the
+omap3530 processor.
+The system was made up from scratch but is basicly a linux driven system
+using the 2.6.22-18 kernel. I did not use eGalax drivers nor the kernel
+touchscreen drivers. Everything runs using the usbhid subsystem. My system
+uses the /dev/hiddev0 to capture touchscreen data which is then passed to a
+custom tslib module that converts the touchscreen raw data into x and y
+coordinates.
+
+So far, everything is fine so you are all wandering why am I posting to this
+list and why you're losing your time reading me but... Here's my problem. I
+think it should be an easy fix but I'm still aking for help, ideas and
+comments.
+
+The touchscreen and display is not on the same board as the omap processor
+which runs Xfbdev. The device is connected using a vga cable and usb cable.
+I want my device to be hotpluggable.
+Right now, it works if the device is connected before the framebuffer is
+started but as soon as I unplug and replug the display, tslib loses it's
+file descriptor and the touchscreen no longer works.
+I need to find a way to recover from the disconnection/reconnection of the
+device. This file will still be /dev/hiddev0 but the tslib file descriptor
+will point to a invalid descriptor. I've seen that in TsWaitForReadable,
+there's some code that uses the  FD_ZERO, FD_SET and select functions for
+such a recovery but it doesn't work, select always fails. A dirty fix would
+be to close the provided fd in the readBytes function and to reopen the file
+using an hardcoded /dev/hiddev0 statement. I haven't test this solution but
+I'm affraid that Xfbdev might not recover from this as it is responsible for
+calling ts_open in the first place.
+
+Soooo, I'm a bit out of ideas. I would like my fix to look like more an
+error/trap algo that would be triggered from tslib and catched by Xfbdev (in
+tslib.c). Any comments are very appreciated.
+
+thx,
+Flip
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20081016/f8314ebd/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20081016/f8314ebd/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000094.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+	<LI>Next message: <A HREF="000095.html">[Tslib-general] Configuring a touch screen that is controlled by	inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#93">[ date ]</a>
+              <a href="thread.html#93">[ thread ]</a>
+              <a href="subject.html#93">[ subject ]</a>
+              <a href="author.html#93">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

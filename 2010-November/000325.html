@@ -1,0 +1,608 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [PATCH 3/3] plugins: two new drivers (egalax +	touchkit), reposted
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%203/3%5D%20plugins%3A%20two%20new%20drivers%20%28egalax%20%2B%0A%09touchkit%29%2C%20reposted&In-Reply-To=%3C1289471961-2983-4-git-send-email-w.sang%40pengutronix.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000339.html">
+   <LINK REL="Next"  HREF="000322.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [PATCH 3/3] plugins: two new drivers (egalax +	touchkit), reposted</H1>
+    <B>Wolfram Sang</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%203/3%5D%20plugins%3A%20two%20new%20drivers%20%28egalax%20%2B%0A%09touchkit%29%2C%20reposted&In-Reply-To=%3C1289471961-2983-4-git-send-email-w.sang%40pengutronix.de%3E"
+       TITLE="[Tslib-general] [PATCH 3/3] plugins: two new drivers (egalax +	touchkit), reposted">w.sang at pengutronix.de
+       </A><BR>
+    <I>Thu Nov 11 11:39:21 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000339.html">[Tslib-general] [RFC] ts_open: first try to open read/write,	then read-only.
+</A></li>
+        <LI>Next message: <A HREF="000322.html">[Tslib-general] [PATCH 2/3] plugins: add driver for DMC touchscreens
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#325">[ date ]</a>
+              <a href="thread.html#325">[ thread ]</a>
+              <a href="subject.html#325">[ subject ]</a>
+              <a href="author.html#325">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Original submission from Fr&#233;d&#233;ric Salabartan:
+
+<A HREF="https://lists.berlios.de/pipermail/tslib-general/2009-July/000212.html">https://lists.berlios.de/pipermail/tslib-general/2009-July/000212.html</A>
+
+[w.sang] - updated to latest git (Makefile.am, configure.ac)
+	 - used Lindent on the c-files
+	 - fix two build warnings
+
+&lt;there was no SoB by Frederic&gt;
+Cc: Fr&#233;d&#233;ric Salabartan &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">fsn at terawatt.fr</A>&gt;
+Tested-by: Michael Olbrich &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">m.olbrich at pengutronix.de</A>&gt;
+Signed-off-by: Wolfram Sang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt;
+---
+ configure.ac           |    2 +
+ plugins/Makefile.am    |   21 ++++
+ plugins/galax-raw.c    |  295 ++++++++++++++++++++++++++++++++++++++++++++++++
+ plugins/touchkit-raw.c |  157 +++++++++++++++++++++++++
+ 4 files changed, 475 insertions(+), 0 deletions(-)
+ create mode 100644 plugins/galax-raw.c
+ create mode 100644 plugins/touchkit-raw.c
+
+diff --git a/configure.ac b/configure.ac
+index 066d635..fdd3c2f 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -67,6 +67,8 @@ TSLIB_CHECK_MODULE([arctic2], [yes], [Enable building of arctic2 raw module (IBM
+ TSLIB_CHECK_MODULE([tatung], [yes], [Enable building of tatung raw module (Tatung Webpad support)])
+ TSLIB_CHECK_MODULE([dmc], [yes], [Enable building of dmc raw module (HP iPaq DMC support)])
+ TSLIB_CHECK_MODULE([input], [yes], [Enable building of generic input raw module (Linux /dev/input/eventN support)])
++TSLIB_CHECK_MODULE([galax], [yes], [Enable building of HID USB eGalax raw module (Linux /dev/hiddevN support)])
++TSLIB_CHECK_MODULE([touchkit], [yes], [Enable building of serial TouchKit raw module (Linux /dev/ttySX support)])
+ 
+ AC_MSG_CHECKING([where to place modules])
+ AC_ARG_WITH(plugindir,
+diff --git a/plugins/Makefile.am b/plugins/Makefile.am
+index b748a65..5bb3102 100644
+--- a/plugins/Makefile.am
++++ b/plugins/Makefile.am
+@@ -96,6 +96,18 @@ else
+ INPUT_MODULE =
+ endif
+ 
++if ENABLE_GALAX_MODULE
++GALAX_MODULE = galax.la
++else
++GALAX_MODULE =
++endif
++
++if ENABLE_TOUCHKIT_MODULE
++TOUCHKIT_MODULE = touchkit.la
++else
++TOUCHKIT_MODULE =
++endif
++
+ if ENABLE_LINEAR_H2200_MODULE
+ H2200_LINEAR_MODULE = linear_h2200.la
+ else
+@@ -123,6 +135,8 @@ pluginexec_LTLIBRARIES = \
+ 	$(DMC_MODULE) \
+ 	$(H2200_LINEAR_MODULE) \
+ 	$(INPUT_MODULE) \
++	$(GALAX_MODULE) \
++	$(TOUCHKIT_MODULE) \
+ 	$(CY8MRLN_PALMPRE_MODULE)
+   
+ variance_la_SOURCES	= variance.c
+@@ -170,6 +184,13 @@ input_la_SOURCES	= input-raw.c
+ input_la_LDFLAGS	= -module $(LTVSN)
+ input_la_LIBADD		= $(top_builddir)/src/libts.la
+ 
++galax_la_SOURCES	= galax-raw.c
++galax_la_LDFLAGS	= -module $(LTVSN)
++galax_la_LIBADD		= $(top_builddir)/src/libts.la
++
++touchkit_la_SOURCES	= touchkit-raw.c
++touchkit_la_LDFLAGS	= -module $(LTVSN)
++
+ linear_h2200_la_SOURCES	= linear-h2200.c
+ linear_h2200_la_LDFLAGS	= -module $(LTVSN)
+ 
+diff --git a/plugins/galax-raw.c b/plugins/galax-raw.c
+new file mode 100644
+index 0000000..59a4e70
+--- /dev/null
++++ b/plugins/galax-raw.c
+@@ -0,0 +1,295 @@
++/*
++ * tslib/plugins/galax-raw.c
++ *
++ * Inspired from input-raw.c
++ * 2009.05 Fred Salabartan
++ *
++ * This file is placed under the LGPL.  Please see the file
++ * COPYING for more details.
++ *
++ * Plugin for &quot;eGalax Inc. Touch&quot; (using usbhid driver)
++ * (Vendor=0eef Product=0001 Version=0112)
++ */
++
++#include &quot;config.h&quot;
++
++#include &lt;errno.h&gt;
++#include &lt;stdio.h&gt;
++#include &lt;limits.h&gt;
++
++#include &lt;stdlib.h&gt;
++#ifdef HAVE_UNISTD_H
++#include &lt;unistd.h&gt;
++#endif
++#include &lt;sys/time.h&gt;
++#include &lt;sys/types.h&gt;
++
++#include &lt;linux/input.h&gt;
++#ifndef EV_SYN			/* 2.4 kernel headers */
++#define EV_SYN 0x00
++#endif
++#ifndef EV_CNT
++#define EV_CNT (EV_MAX+1)
++#endif
++#ifndef ABS_CNT
++#define ABS_CNT (ABS_MAX+1)
++#endif
++#ifndef KEY_CNT
++#define KEY_CNT (KEY_MAX+1)
++#endif
++
++#include &quot;tslib-private.h&quot;
++
++enum {
++	GRAB_EVENTS_NO = 0,
++	GRAB_EVENTS_WANTED = 1,
++	GRAB_EVENTS_ACTIVE = 2,
++
++	SANE_INIT = 0,
++	SANE_OK = 1,
++	SANE_ERROR = 2,
++
++	BITS_PER_BYTE = 8,
++	BITS_PER_LONG = (sizeof(long) * BITS_PER_BYTE)
++};
++
++#define DIV_ROUND_UP(n,d) (((n) + (d) - 1) / (d))
++#define BIT(nr)                 (1UL &lt;&lt; (nr))
++#define BIT_MASK(nr)            (1UL &lt;&lt; ((nr) % BITS_PER_LONG))
++#define BIT_WORD(nr)            ((nr) / BITS_PER_LONG)
++//#define BITS_PER_LONG           (sizeof(long) * BITS_PER_BYTE)
++#define BITS_TO_LONGS(nr)       DIV_ROUND_UP(nr, BITS_PER_LONG)
++
++struct tslib_galax {
++	struct tslib_module_info module;
++
++	int current_x;
++	int current_y;
++	int current_pressure;
++
++	int sane_fd;		// 0=not init, 1=ok, -1=error
++	int grab_events;
++};
++
++static int ts_galax_check_fd(struct tslib_galax *i)
++{
++	struct tsdev *ts = i-&gt;module.dev;
++	int version;
++	long evbit[BITS_TO_LONGS(EV_CNT)];
++	long absbit[BITS_TO_LONGS(ABS_CNT)];
++	long keybit[BITS_TO_LONGS(KEY_CNT)];
++	struct input_id infos;
++
++	if (ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version) &lt; 0) {
++		fprintf(stderr, &quot;tslib: not a valid input device\n&quot;);
++		return SANE_ERROR;
++	}
++
++	if (version != EV_VERSION) {
++		fprintf(stderr,
++			&quot;tslib: bad event protocol version (lib vs device)\n&quot;);
++		return SANE_ERROR;
++	}
++
++	if ((ioctl(ts-&gt;fd, EVIOCGID, &amp;infos) &lt; 0)) {
++		fprintf(stderr,
++			&quot;tslib: warning, can not read device identifier\n&quot;);
++	} else if (infos.bustype != 3 || infos.vendor != 0x0EEF
++		   || infos.product != 0x0001 || infos.version != 0x0112) {
++		fprintf(stderr,
++			&quot;tslib: this is not an eGalax touchscreen (3,0x0EEF,1,0x0112)\n&quot;
++			&quot;Your device: bus=%d, vendor=0x%X, product=0x%X, version=0x%X\n&quot;,
++			infos.bustype, infos.vendor, infos.product,
++			infos.version);
++		return SANE_ERROR;
++	}
++
++	if ((ioctl(ts-&gt;fd, EVIOCGBIT(0, EV_CNT), evbit) &lt; 0) ||
++	    !(evbit[BIT_WORD(EV_ABS)] &amp; BIT_MASK(EV_ABS)) ||
++	    !(evbit[BIT_WORD(EV_KEY)] &amp; BIT_MASK(EV_KEY))) {
++		fprintf(stderr,
++			&quot;tslib: device does not support ABS and KEY event types\n&quot;);
++		return SANE_ERROR;
++	}
++
++	if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_ABS, ABS_CNT), absbit)) &lt; 0 ||
++	    !(absbit[BIT_WORD(ABS_X)] &amp; BIT_MASK(ABS_X)) ||
++	    !(absbit[BIT_WORD(ABS_Y)] &amp; BIT_MASK(ABS_Y))) {
++		fprintf(stderr,
++			&quot;tslib: device does not support ABS_X and ABS_Y events\n&quot;);
++		return SANE_ERROR;
++	}
++
++	/* Since some touchscreens (eg. infrared) physically can't measure pressure,
++	   the input system doesn't report it on those. Tslib relies on pressure, thus
++	   we set it to constant 255. It's still controlled by BTN_TOUCH - when not
++	   touched, the pressure is forced to 0. */
++	if (!(absbit[BIT_WORD(ABS_PRESSURE)] &amp; BIT_MASK(ABS_PRESSURE))) {
++		i-&gt;current_pressure = 255;
++
++		if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_KEY, KEY_CNT), keybit) &lt; 0) ||
++		    !(keybit[BIT_WORD(BTN_TOUCH)] &amp; BIT_MASK(BTN_TOUCH))) {
++			fprintf(stderr,
++				&quot;tslib: device does support BTN_TOUCH events\n&quot;);
++			return SANE_ERROR;
++		}
++	}
++
++	if (!(evbit[BIT_WORD(EV_SYN)] &amp; BIT_MASK(EV_SYN))) {
++		fprintf(stderr, &quot;tslib: device does not use EV_SYN\n&quot;);
++		return SANE_ERROR;
++	}
++
++	if (i-&gt;grab_events == GRAB_EVENTS_WANTED) {
++		if (ioctl(ts-&gt;fd, EVIOCGRAB, (void *)1)) {
++			fprintf(stderr,
++				&quot;tslib: unable to grab selected input device\n&quot;);
++			return -1;
++		}
++		i-&gt;grab_events = GRAB_EVENTS_ACTIVE;
++	}
++
++	return SANE_OK;
++}
++
++static int ts_galax_read(struct tslib_module_info *inf,
++			 struct ts_sample *samp, int nr)
++{
++	struct tslib_galax *i = (struct tslib_galax *)inf;
++	struct tsdev *ts = inf-&gt;dev;
++	struct input_event ev;
++	int ret = nr;
++	int total = 0;
++
++	if (i-&gt;sane_fd == SANE_INIT)
++		i-&gt;sane_fd = ts_galax_check_fd(i);
++
++	if (i-&gt;sane_fd == SANE_ERROR)
++		return 0;
++
++	while (total &lt; nr) {
++
++		ret = read(ts-&gt;fd, &amp;ev, sizeof(struct input_event));
++		if (ret &lt; (int)sizeof(struct input_event)) {
++			total = -1;
++			break;
++		}
++
++		switch (ev.type) {
++		case EV_KEY:
++			switch (ev.code) {
++			case BTN_TOUCH:
++				if (ev.value == 0) {
++					/* pen up */
++					i-&gt;current_x = 0;
++					i-&gt;current_y = 0;
++					i-&gt;current_pressure = 0;
++				} else {
++					i-&gt;current_pressure = 255;
++				}
++				break;
++			}
++			break;
++
++		case EV_SYN:
++			/* Fill out a new complete event */
++			samp-&gt;x = i-&gt;current_x;
++			samp-&gt;y = i-&gt;current_y;
++			samp-&gt;pressure = i-&gt;current_pressure;
++			samp-&gt;tv = ev.time;
++			samp++;
++			total++;
++			break;
++
++		case EV_ABS:
++			switch (ev.code) {
++			case ABS_X + 2:
++				i-&gt;current_x = ev.value;
++				break;
++			case ABS_Y + 2:
++				i-&gt;current_y = ev.value;
++				break;
++			case ABS_PRESSURE:
++				i-&gt;current_pressure = ev.value;
++				break;
++			}
++			break;
++		}
++	}
++	ret = total;
++
++	return ret;
++}
++
++static int ts_galax_fini(struct tslib_module_info *inf)
++{
++	struct tslib_galax *i = (struct tslib_galax *)inf;
++	struct tsdev *ts = inf-&gt;dev;
++
++	if (i-&gt;grab_events == GRAB_EVENTS_ACTIVE) {
++		if (ioctl(ts-&gt;fd, EVIOCGRAB, (void *)0)) {
++			fprintf(stderr,
++				&quot;tslib: Unable to un-grab selected input device\n&quot;);
++		}
++	}
++
++	free(inf);
++	return 0;
++}
++
++static const struct tslib_ops __ts_galax_ops = {
++	.read = ts_galax_read,
++	.fini = ts_galax_fini,
++};
++
++static int parse_raw_grab(struct tslib_module_info *inf, char *str, void *data)
++{
++	struct tslib_galax *i = (struct tslib_galax *)inf;
++	unsigned long v;
++	int err = errno;
++
++	v = strtoul(str, NULL, 0);
++
++	if (v == ULONG_MAX &amp;&amp; errno == ERANGE)
++		return -1;
++
++	errno = err;
++	switch ((int)data) {
++	case 1:
++		if (v)
++			i-&gt;grab_events = GRAB_EVENTS_WANTED;
++		break;
++	default:
++		return -1;
++	}
++	return 0;
++}
++
++static const struct tslib_vars raw_vars[] = {
++	{&quot;grab_events&quot;, (void *)1, parse_raw_grab},
++};
++
++#define NR_VARS (sizeof(raw_vars) / sizeof(raw_vars[0]))
++
++TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++{
++	struct tslib_galax *i;
++
++	i = malloc(sizeof(struct tslib_galax));
++	if (i == NULL)
++		return NULL;
++
++	i-&gt;module.ops = &amp;__ts_galax_ops;
++	i-&gt;current_x = 0;
++	i-&gt;current_y = 0;
++	i-&gt;current_pressure = 0;
++	i-&gt;sane_fd = SANE_INIT;
++	i-&gt;grab_events = GRAB_EVENTS_NO;
++
++	if (tslib_parse_vars(&amp;i-&gt;module, raw_vars, NR_VARS, params)) {
++		free(i);
++		return NULL;
++	}
++
++	return &amp;(i-&gt;module);
++}
+diff --git a/plugins/touchkit-raw.c b/plugins/touchkit-raw.c
+new file mode 100644
+index 0000000..db527a4
+--- /dev/null
++++ b/plugins/touchkit-raw.c
+@@ -0,0 +1,157 @@
++
++#include &lt;stdlib.h&gt;
++#include &lt;stdio.h&gt;
++#include &lt;unistd.h&gt;
++#include &lt;termios.h&gt;
++#include &lt;string.h&gt;
++
++#include &quot;config.h&quot;
++#include &quot;tslib-private.h&quot;
++
++/*
++ * TouchKit RS232 driver
++ * (controller type SAT4000UR)
++ * 2009.07  Fred Salabartan
++ *
++ * Packet format for position report (5 bytes):
++ * [0] 1 0 0 0 0 0 0 t = header (t=touched)
++ * [1] 0 0 0 0 X X X X = X coord most significant bits
++ * [2] 0 X X X X X X X = X coord less significant bits
++ * [3] 0 0 0 0 Y Y Y Y = Y coord most significant bits
++ * [4] 0 Y Y Y Y Y Y Y = Y coord less significant bits
++ *
++ * Problem: sometimes some packets overlap, so it is possible
++ * to find a new packet in the middle of another packet.
++ * -&gt; check that no byte in the packet (but the first one)
++ *    have its first bit set (0x80 = start)
++ *
++ * This file is placed under the LGPL.  Please see the file
++ * COPYING for more details.
++*/
++
++enum {
++	PACKET_SIZE = 5,
++	BUFFER_SIZE = 100,
++	PACKET_SIGNATURE = 0x81
++};
++
++// Is is a start of packet ?
++#define IsStart(x) (((x)|1) == PACKET_SIGNATURE)
++
++//------------------------------------------------------------------------------
++
++static int touchkit_init(int dev)
++{
++	struct termios tty;
++
++	tcgetattr(dev, &amp;tty);
++	tty.c_iflag = IGNBRK | IGNPAR;
++	tty.c_oflag = 0;
++	tty.c_lflag = 0;
++	tty.c_line = 0;
++	tty.c_cc[VTIME] = 0;
++	tty.c_cc[VMIN] = 1;
++	tty.c_cflag = CS8 | CREAD | CLOCAL | HUPCL;
++	tty.c_cflag |= B9600;
++	tcsetattr(dev, TCSAFLUSH, &amp;tty);
++
++	return 1;
++}
++
++static int touchkit_read(struct tslib_module_info *inf, struct ts_sample *samp,
++			 int nr)
++{
++	static int initDone = 0;
++	static unsigned char buffer[BUFFER_SIZE];	// enough space for 2 &quot;normal&quot; packets
++	static int pos = 0;
++
++	struct tsdev *ts = inf-&gt;dev;
++
++	if (initDone == 0) {
++		initDone = touchkit_init(ts-&gt;fd);
++		if (initDone == -1)
++			return -1;
++	}
++	// read some new bytes (enough for 1 normal packet)
++	int ret = read(ts-&gt;fd, buffer + pos, PACKET_SIZE);
++	if (ret &lt;= 0)
++		return -1;
++
++	pos += ret;
++	if (pos &lt; PACKET_SIZE)
++		return 0;
++
++	// find start
++	int p;
++	int total = 0;
++	for (p = 0; p &lt; pos; ++p)
++		if (IsStart(buffer[p])) {
++			// we have enough data for a packet ?
++			if (p + PACKET_SIZE &gt; pos) {
++				if (p &gt; 0) {
++					// we have found a start &gt;0, it means we have garbage
++					// at beginning of buffer
++					// so let's shift data to ignore this garbage
++					memcpy(buffer, buffer + p, pos - p);
++					pos -= p;
++				}
++				break;
++			}
++
++			unsigned char *data = buffer + p;
++
++			// check if all bytes are ok (no 'start' embedded)
++			int q;
++			for (q = 1; q &lt; PACKET_SIZE; ++q)
++				if (IsStart(buffer[p + q]))
++					break;
++			if (q &lt; PACKET_SIZE) {
++#ifdef DEBUG
++				fprintf(stderr,
++					&quot;Start found within packet [%X %X %X %X %X] ignore %d bytes\n&quot;,
++					data[0], data[1], data[2], data[3],
++					data[4], q);
++#endif
++				p += q - 1;
++				continue;
++			}
++			// now let's decode it
++			samp-&gt;x = (data[1] &amp; 0x000F) &lt;&lt; 7 | (data[2] &amp; 0x007F);
++			samp-&gt;y =
++			    ((data[3] &amp; 0x000F) &lt;&lt; 7 | (data[4] &amp; 0x007F));
++			samp-&gt;pressure = (data[0] &amp; 1) ? 200 : 0;
++			gettimeofday(&amp;samp-&gt;tv, NULL);
++#ifdef DEBUG
++			fprintf(stderr,
++				&quot;RAW -------------------------&gt; data=[%X %X %X %X %X]  x=%d y=%d pres=%d\n&quot;,
++				data[0], data[1], data[2], data[3], data[4],
++				samp-&gt;x, samp-&gt;y, samp-&gt;pressure);
++#endif
++			samp++;
++
++			// now remove it
++			memcpy(buffer, buffer + p + PACKET_SIZE,
++			       pos - p - PACKET_SIZE);
++			pos -= p + PACKET_SIZE;
++			total = 1;
++			break;
++		}
++
++	return total;
++}
++
++static const struct tslib_ops touchkit_ops = {
++	.read = touchkit_read,
++};
++
++TSAPI struct tslib_module_info *mod_init(struct tsdev *dev, const char *params)
++{
++	struct tslib_module_info *m;
++
++	m = malloc(sizeof(struct tslib_module_info));
++	if (m == NULL)
++		return NULL;
++
++	m-&gt;ops = &amp;touchkit_ops;
++	return m;
++}
+-- 
+1.7.2.3
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000339.html">[Tslib-general] [RFC] ts_open: first try to open read/write,	then read-only.
+</A></li>
+	<LI>Next message: <A HREF="000322.html">[Tslib-general] [PATCH 2/3] plugins: add driver for DMC touchscreens
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#325">[ date ]</a>
+              <a href="thread.html#325">[ thread ]</a>
+              <a href="subject.html#325">[ subject ]</a>
+              <a href="author.html#325">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

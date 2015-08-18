@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Configuring a touch screen that is controlled	by inputattach
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%09by%20inputattach&In-Reply-To=%3Cdb471ace0810210416k52d27949mb478c8d4dbd0c84e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000103.html">
+   <LINK REL="Next"  HREF="000104.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Configuring a touch screen that is controlled	by inputattach</H1>
+    <B>Peter Geoghegan</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%09by%20inputattach&In-Reply-To=%3Cdb471ace0810210416k52d27949mb478c8d4dbd0c84e%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Configuring a touch screen that is controlled	by inputattach">peter.geoghegan86 at gmail.com
+       </A><BR>
+    <I>Tue Oct 21 13:16:16 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000103.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+        <LI>Next message: <A HREF="000104.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#102">[ date ]</a>
+              <a href="thread.html#102">[ thread ]</a>
+              <a href="subject.html#102">[ subject ]</a>
+              <a href="author.html#102">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hinko,
+
+If I set the environmental variable TSLIB_TSDEVICE to /dev/input/event6, and the variable TSLIB_CONFFILE to /etc/ts.conf, I can get ts_calibrate to start. It is totally unresponsive though, which suggests to me that the protocol isn't recognised.  Even the keyboard is unresponsive - all I can do is ctrl,alt, del to restart. I guess I could ssh in and kill ts_calibrate, but don't have ssh set up on this box at the moment. ts.conf has module_raw input for the elo as instructed.
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">lustre at lustre-till</A>:~$ sudo od /dev/input/event6 # I now touch the screen once...
+0000000 133711 044375 147311 000000 000003 000000 003373 000000
+0000020 133711 044375 147323 000000 000003 000001 004055 000000
+0000040 133711 044375 147327 000000 000001 000512 000001 000000
+0000060 133711 044375 147346 000000 000000 000000 000000 000000
+0000100 133711 044375 016351 000001 000003 000000 003371 000000
+0000120 133711 044375 016370 000001 000000 000000 000000 000000
+0000140 133711 044375 055577 000001 000003 000001 004051 000000
+0000160 133711 044375 055615 000001 000000 000000 000000 000000
+0000200 133711 044375 134461 000001 000003 000000 003370 000000
+0000220 133711 044375 134473 000001 000003 000001 004047 000000
+0000240 133711 044375 134514 000001 000000 000000 000000 000000
+0000260 133711 044375 003513 000002 000003 000000 003371 000000
+0000300 133711 044375 003543 000002 000000 000000 000000 000000
+0000320 133711 044375 052547 000002 000003 000000 003370 000000
+0000340 133711 044375 052561 000002 000003 000001 004053 000000
+0000360 133711 044375 052601 000002 000000 000000 000000 000000
+0000400 133711 044375 121617 000002 000003 000000 003371 000000
+0000420 133711 044375 121630 000002 000003 000001 004054 000000
+0000440 133711 044375 121634 000002 000001 000512 000000 000000
+0000460 133711 044375 121652 000002 000000 000000 000000 000000
+
+Does this look like data that tslib should interpret correctly? Perhaps it is, but I've made an error elsewhere,
+
+Thanks,
+Peter
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000103.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+	<LI>Next message: <A HREF="000104.html">[Tslib-general] Configuring a touch screen that is controlled by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#102">[ date ]</a>
+              <a href="thread.html#102">[ thread ]</a>
+              <a href="subject.html#102">[ subject ]</a>
+              <a href="author.html#102">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

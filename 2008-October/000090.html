@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Tslib and Elo serial touchscreen
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20and%20Elo%20serial%20touchscreen&In-Reply-To=%3Cdb471ace0810140601k2fe449b2h80fd2bef0264f09%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000089.html">
+   <LINK REL="Next"  HREF="000091.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Tslib and Elo serial touchscreen</H1>
+    <B>Peter Geoghegan</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20and%20Elo%20serial%20touchscreen&In-Reply-To=%3Cdb471ace0810140601k2fe449b2h80fd2bef0264f09%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Tslib and Elo serial touchscreen">peter.geoghegan86 at gmail.com
+       </A><BR>
+    <I>Tue Oct 14 15:01:00 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000089.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+        <LI>Next message: <A HREF="000091.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#90">[ date ]</a>
+              <a href="thread.html#90">[ thread ]</a>
+              <a href="subject.html#90">[ subject ]</a>
+              <a href="author.html#90">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Cyril,
+
+&gt;<i> for serial devices that uses input layer you need run
+</I>&gt;<i> &quot;inputattach --some_driver /dev/ttySX&quot; first so that serial
+</I>&gt;<i> port is intalized and data from serial port are
+</I>&gt;<i> redirected to correct input driver. Thats because there
+</I>&gt;<i> is no hardware autodetection that serial device was plugged in.
+</I>
+Thanks for getting back to me. I try this:
+
+sudo modprobe elo
+sudo inputattach --elotouch /dev/ttyS4
+
+inputattach never returns, which I guess indicates success. However,
+I've diff'd a before and after of /proc/bus/input/devices, and there's
+no difference - nothing new appears. Here's what does appear:
+
+I: Bus=0017 Vendor=0001 Product=0001 Version=0100
+N: Name=&quot;Macintosh mouse button emulation&quot;
+P: Phys=
+S: Sysfs=/devices/virtual/input/input0
+U: Uniq=
+H: Handlers=mouse0 event0
+B: EV=7
+B: KEY=70000 0 0 0 0 0 0 0 0
+B: REL=3
+
+I: Bus=0011 Vendor=0001 Product=0001 Version=ab41
+N: Name=&quot;AT Translated Set 2 keyboard&quot;
+P: Phys=isa0060/serio0/input0
+S: Sysfs=/devices/platform/i8042/serio0/input/input1
+U: Uniq=
+H: Handlers=kbd event1
+B: EV=120013
+B: KEY=4 2000000 3803078 f800d001 feffffdf ffefffff ffffffff fffffffe
+B: MSC=10
+B: LED=7
+
+I: Bus=0003 Vendor=045e Product=0039 Version=0110
+N: Name=&quot;Microsoft Microsoft 5-Button Mouse with IntelliEye(TM)&quot;
+P: Phys=usb-0000:00:1d.0-1/input0
+S: Sysfs=/devices/pci0000:00/0000:00:1d.0/usb1/1-1/1-1:1.0/input/input2
+U: Uniq=
+H: Handlers=mouse1 event2
+B: EV=17
+B: KEY=1f0000 0 0 0 0 0 0 0 0
+B: REL=103
+B: MSC=10
+
+I: Bus=0019 Vendor=0000 Product=0002 Version=0000
+N: Name=&quot;Power Button (FF)&quot;
+P: Phys=LNXPWRBN/button/input0
+S: Sysfs=/devices/virtual/input/input3
+U: Uniq=
+H: Handlers=kbd event3
+B: EV=3
+B: KEY=100000 0 0 0
+
+I: Bus=0019 Vendor=0000 Product=0001 Version=0000
+N: Name=&quot;Power Button (CM)&quot;
+P: Phys=PNP0C0C/button/input0
+S: Sysfs=/devices/virtual/input/input4
+U: Uniq=
+H: Handlers=kbd event4
+B: EV=3
+B: KEY=100000 0 0 0
+
+I: Bus=0010 Vendor=001f Product=0001 Version=0100
+N: Name=&quot;PC Speaker&quot;
+P: Phys=isa0061/input0
+S: Sysfs=/devices/platform/pcspkr/input/input5
+U: Uniq=
+H: Handlers=kbd event5
+B: EV=40001
+B: SND=6
+
+The suggested xorg.conf for getting this open source driver to work
+with X specifies the serial device node - /dev/ttyS0 or whatever, as
+well as specifying a driver, &quot;elographics&quot;, which confuses me. It does
+not use a device node created by the driver itself, as with the
+proprietary driver. As such, I wonder how Tslib can use this, as a
+generic device, because the driver doesn't create a virtual generic
+interface, if you know what I mean. Tslib would have to use the driver
+in the same way as X.org.
+
+Of course, this is all mostly speculative, and I'm outside my comfort
+zone here, so feel free to correct me :-)
+
+Anyway, thanks again for weighing in,
+Regards,
+Peter
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000089.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+	<LI>Next message: <A HREF="000091.html">[Tslib-general] Tslib and Elo serial touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#90">[ date ]</a>
+              <a href="thread.html#90">[ thread ]</a>
+              <a href="subject.html#90">[ subject ]</a>
+              <a href="author.html#90">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

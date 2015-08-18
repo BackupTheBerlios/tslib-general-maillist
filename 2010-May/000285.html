@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general]  Reliably getting inputattach event node
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%20Reliably%20getting%20inputattach%20event%20node&In-Reply-To=%3Cs2w599202051005030640z87b44784z7f6203e9a7cbe51d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000284.html">
+   <LINK REL="Next"  HREF="000286.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general]  Reliably getting inputattach event node</H1>
+    <B>r10kindsofpeople</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%20Reliably%20getting%20inputattach%20event%20node&In-Reply-To=%3Cs2w599202051005030640z87b44784z7f6203e9a7cbe51d%40mail.gmail.com%3E"
+       TITLE="[Tslib-general]  Reliably getting inputattach event node">r10kindsofpeople at gmail.com
+       </A><BR>
+    <I>Mon May  3 15:40:34 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000284.html">[Tslib-general] Reliably getting inputattach event node
+</A></li>
+        <LI>Next message: <A HREF="000286.html">[Tslib-general] Reliably getting inputattach event node
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#285">[ date ]</a>
+              <a href="thread.html#285">[ thread ]</a>
+              <a href="subject.html#285">[ subject ]</a>
+              <a href="author.html#285">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Peter,
+
+...with the caution that I'm still pretty new to Linux, and using Ubuntu not
+Opensuse...
+
+Is this a USB device, and if so, have you tried creating a udev rule?  I've
+been using something like:
+&quot;ACTION==&quot;add&quot;, KERNEL==&quot;event*&quot;, ATTRS{idVendor}==&quot;xxxx&quot;,
+ATTRS{idProduct}==&quot;xxxx&quot;, MODE=&quot;666&quot;, SYMLINK+=&quot;yournamehere&quot;
+
+to create an alias, substituting your USB device's vendor and product ID,
+and your symbolic name, obviously.  Then you can reference /dev/yournamehere
+regardless of the event* to which it gets mapped.
+
+<A HREF="http://reactivated.net/writing_udev_rules.html">http://reactivated.net/writing_udev_rules.html</A> for more reading, but (at
+least under Ubuntu 9.10) substitute &quot;udevadm info&quot; in place of &quot;udevinfo&quot; in
+the examples.
+
+John
+
+
+
+On Sun, May 2, 2010 at 8:11 AM, Peter Geoghegan &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">peter.geoghegan86 at gmail.com</A>
+&gt;<i> wrote:
+</I>
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> I'm maintaining an embedded system that runs a fairly stripped down
+</I>&gt;<i> version of Opensuse 11.2. I'm using a generic input_raw device that
+</I>&gt;<i> has its own kernel driver, reading an event[0-9] device node created
+</I>&gt;<i> by inputattach. Previously, I found it useful to set $TSLIB_TSDEVICE
+</I>&gt;<i> to the '/dev/input/by-path/serio-1-' symbolic link. However, for some
+</I>&gt;<i> reason that symbolic link doesn't appear when using Suse 11.2's
+</I>&gt;<i> inpututils,
+</I>&gt;<i>
+</I>&gt;<i> I set this environment variable within a shell script, that runs and
+</I>&gt;<i> restarts my embedded application in an infinite loop.
+</I>&gt;<i>
+</I>&gt;<i> Can someone suggest a reliable way to get the correct event node? At
+</I>&gt;<i> the moment, I'm just using /dev/input/event6, but this is rather
+</I>&gt;<i> brittle, I suspect.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Peter Geoghegan
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20100503/81294428/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20100503/81294428/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000284.html">[Tslib-general] Reliably getting inputattach event node
+</A></li>
+	<LI>Next message: <A HREF="000286.html">[Tslib-general] Reliably getting inputattach event node
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#285">[ date ]</a>
+              <a href="thread.html#285">[ thread ]</a>
+              <a href="subject.html#285">[ subject ]</a>
+              <a href="author.html#285">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib ts_read_raw.c
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20ts_read_raw.c&In-Reply-To=%3Ctencent_14A7E3292023DC8170EDA076%40qq.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000233.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib ts_read_raw.c</H1>
+    <B>Tsui Bin</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20ts_read_raw.c&In-Reply-To=%3Ctencent_14A7E3292023DC8170EDA076%40qq.com%3E"
+       TITLE="[Tslib-general] tslib ts_read_raw.c">175844237 at qq.com
+       </A><BR>
+    <I>Wed Oct 14 09:25:30 CEST 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000233.html">[Tslib-general] touchscreen without BTN_TOUCH
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#231">[ date ]</a>
+              <a href="thread.html#231">[ thread ]</a>
+              <a href="subject.html#231">[ subject ]</a>
+              <a href="author.html#231">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>code row  87-89 
+
+   if ( (ioctl(ts-&gt;fd, EVIOCGBIT(0, sizeof(evbit)), evbit) &lt; 0) ||
+        !(evbit[BIT_WORD(EV_ABS)] &amp; BIT_MASK(EV_ABS)) ||
+        !(evbit[BIT_WORD(EV_KEY)] &amp; BIT_MASK(EV_KEY)) ) {
+        fprintf(stderr, &quot;tslib: Selected device is not a touchscreen (must support ABS and KEY event types)\n&quot;);
+        return -1;
+    }
+
+this  EVIOCGBIT was define  at input.h
+#define EVIOCGBIT(ev,len)    _IOC(_IOC_READ, 'E', 0x20 + ev, len)    /* get event bits */
+
+here  _IOC(_IOC_READ, 'E', 0x20 + ev, len)
+
+what data structure at {0x20 + ev} ?
+if i want it support ABS and KEY event types 
+in fact, my device don't support this ,but i want to use tslib , my device is egalax's usb touchscreen
+
+download the driver here 
+<A HREF="http://210.64.17.162/web20/eGalaxTouchDriver/linuxDriver.htm">http://210.64.17.162/web20/eGalaxTouchDriver/linuxDriver.htm</A>
+
+i use this one Kernel 2.6.x      2.07.3122
+my systemOS : ubuntu 9.04 32bit
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20091014/75fe04f3/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20091014/75fe04f3/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000233.html">[Tslib-general] touchscreen without BTN_TOUCH
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#231">[ date ]</a>
+              <a href="thread.html#231">[ thread ]</a>
+              <a href="subject.html#231">[ subject ]</a>
+              <a href="author.html#231">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

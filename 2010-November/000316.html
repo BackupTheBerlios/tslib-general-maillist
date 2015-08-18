@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Filter module for TSLib
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Filter%20module%20for%20TSLib&In-Reply-To=%3COFE10F7AB5.5151B0C3-ON852577CF.0067E25C-852577CF.006DA9ED%40bevair.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000317.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Filter module for TSLib</H1>
+    <B>SCrook at bevair.com</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Filter%20module%20for%20TSLib&In-Reply-To=%3COFE10F7AB5.5151B0C3-ON852577CF.0067E25C-852577CF.006DA9ED%40bevair.com%3E"
+       TITLE="[Tslib-general] Filter module for TSLib">SCrook at bevair.com
+       </A><BR>
+    <I>Tue Nov  2 21:02:10 CET 2010</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000317.html">[Tslib-general] Filter module for TSLib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#316">[ date ]</a>
+              <a href="thread.html#316">[ thread ]</a>
+              <a href="subject.html#316">[ subject ]</a>
+              <a href="author.html#316">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've been having an issue with my touchscreen application where it seems 
+like when I tap on a GUI widget, release, then tap on another widget, the 
+click is actually delivered to the first widget I tap on. I spent a little 
+time with ts_test today and I think I know what the problem is.
+
+When I start ts_test and tap on the screen in the upper right hand 
+quadrant and  I'll get some output like this:
+
+        $LongNumber:    645     157     255
+        $LongNumber:    645     157     255
+        $LongNumber:    645     157     255
+        $LongNumber:    645     157     0
+
+($LongNumber is actually a string like this 1288727412.246121 but It 
+doesn't look relevent to what I'm doing).
+
+Now lets say I tap again in the lower left hand quadrant I'll see 
+something like this:
+
+        $LongNumber:    645     157     255
+        $LongNumber:    660     413     255
+        $LongNumber:    660     413     255
+        $LongNumber:    660     413     255
+        $LongNumber:    660     413     0
+
+It looks like instant when I perform the second click, it is actually 
+registering at the last set of (X,Y) coordinates that I tapped and then 
+moving the cursor to the new spot that I actually clicked. I think what I 
+need to do is write a module that will discard the first reading after the 
+touchscreen is tapped that way the application doesn't think I'm doing a 
+click and drag.
+
+Are there any modules out there that do something like this already? If 
+not, perhaps I could base it off the variance module? Any thoughts?
+
+Thanks,
+
+Scott Crook
+Automation/Test Engineer
+Beverage-Air Corporation
+336.245.6420
+www.beverage-air.com 
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20101102/0476d732/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20101102/0476d732/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000317.html">[Tslib-general] Filter module for TSLib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#316">[ date ]</a>
+              <a href="thread.html#316">[ thread ]</a>
+              <a href="subject.html#316">[ subject ]</a>
+              <a href="author.html#316">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Tslib stylus problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20stylus%20problem&In-Reply-To=%3C70EBC5652FA82044842A32C185EB46413929%40ala-mail09.corp.ad.wrs.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000029.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Tslib stylus problem</H1>
+    <B>Shapiro, Alex (OTTAWA)</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib%20stylus%20problem&In-Reply-To=%3C70EBC5652FA82044842A32C185EB46413929%40ala-mail09.corp.ad.wrs.com%3E"
+       TITLE="[Tslib-general] Tslib stylus problem">Alex.Shapiro at windriver.com
+       </A><BR>
+    <I>Mon Mar 31 05:41:19 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000029.html">[Tslib-general] Tslib stylus problem
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Alim, Kaius,
+ 
+Thank you so much taking the time looking at the problem. I found that
+my version of the driver is slightly different (attached) then 
+<A HREF="http://lxr.linux.no/linux+v2.6.21.7/drivers/input/touchscreen/ads7846.c">http://lxr.linux.no/linux+v2.6.21.7/drivers/input/touchscreen/ads7846.c</A> 
+The new driver works fine with the stylus everywhere on the touchscreen.
+Strange, how it is possible that two identical releases 2.6.21.7 have
+different driver.
+ 
+Thank you again!
+ 
+Alex
+
+________________________________
+
+From: Alim Akhtar [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">alim.akhtar at gmail.com</A>] 
+Sent: Sunday, March 30, 2008 9:49 PM
+To: Shapiro, Alex (OTTAWA)
+Subject: Re: [Tslib-general] Tslib stylus problem
+
+
+hi Alex,
+I have looked into your logs, but seems that it is not consistance, Can
+you do one more experiment, to verify that co-ordinates you are getting
+are correct.
+Mark(x) five point on the screen with a help of a marker,
+(left-right(up) and left-right(down) and center)and try to touch the
+same point again and again (dont change the point of touch) and capture
+the log, you should get the same co-ordinates value every time you touch
+on the marked places(may be very slight difference in the co-ordinates
+is allowed). If you are not getting a consistant co-ordinates values,
+then your ads7846 driver is buggy other wise the prolem is with tslib
+setting.
+ Also dont print z1 &amp; z2 instead you can print the value of pressure,
+this will help you to match the values you printed inside the
+ads7846_rx() and the event debug log,
+I have seen the logs , values are matching but it seems you have touched
+all over the screen,
+ 
+Regards
+Alim
+
+ 
+On 3/31/08, Shapiro, Alex (OTTAWA) &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Alex.Shapiro at windriver.com</A>&gt; wrote: 
+
+	Hi Alim,
+	 
+	&gt;please enable the event debug inside kernel config, and touch
+the screen with stylus or finger _without_ running  
+	I enabled the CONFIG_INPUT_EVBUG and got the attached screen
+coordinates when dmesg run.
+	
+	&gt;You can print the co-ordinate from ads7846_rx(), and when you
+touch the screen it will show 
+	A message with coordinates from ads7846_rx() is also shown in
+this printout
+	&quot;### ads7846_rx called: x=7328 , y=7228, z1=3810, z2=7762&quot;
+	 
+	All the printouts prepared while I touch the screen with the
+stylus only.
+	 
+	Thanks,
+	Alex
+	
+	
+________________________________
+
+	From: Alim Akhtar [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">alim.akhtar at gmail.com</A>] 
+	Sent: Sunday, March 30, 2008 11:58 AM
+	To: Shapiro, Alex (OTTAWA)
+	Subject: Re: [Tslib-general] Tslib stylus problem
+	
+	 
+	Hi Alex, 
+	
+	&gt;With my dmesg enabled, both my old environment (k-2.6.14) and
+the new env (k-2.6.21) with &gt;the touchscreen problem are attached. in
+both cases when I touch the screen during ts_cal &gt;&amp; ts_test, nothing
+added to the dmesg. There are some &quot;omapfb&quot; differences in these 
+	please enable the event debug inside kernel config, and touch
+the screen with styls or finger _without_ running  ts_cal or ts_test.
+you should able to see the co-ordibates of the screen if you run dmesg.
+	&gt;How can I test the low level driver?
+	If your are not sure your driver is working, dont proceed
+further, make sure its working fine.
+	You can print the co-ordinate from ads7846_rx(), and when you
+touch the screen it will show you the co-ordinates touched, that will
+give you a rough idea whether the driver is working fine.
+	 
+	The log you have sent is of no use for me.
+	 
+	Regards
+	Alim
+
+	_______________________________________________
+	Tslib-general mailing list
+	<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+	<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+	
+	
+	
+
+
+
+
+-- 
+aLim akHtaR
+mAin hUn nA :-) 
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080330/aad8c81e/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20080330/aad8c81e/attachment.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: ads7846.diff
+Type: application/octet-stream
+Size: 5110 bytes
+Desc: ads7846.diff
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080330/aad8c81e/attachment.obj">https://lists.berlios.de/pipermail/tslib-general/attachments/20080330/aad8c81e/attachment.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000029.html">[Tslib-general] Tslib stylus problem
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

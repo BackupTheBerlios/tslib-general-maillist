@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [PATCH] Fix wrong buffer size passed to strncpy
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%5D%20Fix%20wrong%20buffer%20size%20passed%20to%20strncpy&In-Reply-To=%3C201010042154.25393.michael.heimpold%40s2000.tu-chemnitz.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000308.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [PATCH] Fix wrong buffer size passed to strncpy</H1>
+    <B>Michael Heimpold</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%5D%20Fix%20wrong%20buffer%20size%20passed%20to%20strncpy&In-Reply-To=%3C201010042154.25393.michael.heimpold%40s2000.tu-chemnitz.de%3E"
+       TITLE="[Tslib-general] [PATCH] Fix wrong buffer size passed to strncpy">michael.heimpold at s2000.tu-chemnitz.de
+       </A><BR>
+    <I>Mon Oct  4 21:54:24 CEST 2010</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000308.html">[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#307">[ date ]</a>
+              <a href="thread.html#307">[ thread ]</a>
+              <a href="subject.html#307">[ subject ]</a>
+              <a href="author.html#307">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Use a define which represents the destination buffer instead
+of the string length of the source string.
+Also, instead of a call to memset use a faster assignment.
+
+Signed-off-by: Michael Heimpold &lt;michael.heimpold -at- s2000.tu-chemnitz.de&gt;
+---
+ src/ts_parse_vars.c |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/src/ts_parse_vars.c b/src/ts_parse_vars.c
+index a919aa2..4edc261 100644
+--- a/src/ts_parse_vars.c
++++ b/src/ts_parse_vars.c
+@@ -18,22 +18,23 @@
+ 
+ #include &quot;tslib-private.h&quot;
+ 
+-char s_holder[1024];
++#define BUF_SIZE 1024
++
++char s_holder[BUF_SIZE];
+ 
+ int tslib_parse_vars(struct tslib_module_info *mod,
+ 		     const struct tslib_vars *vars, int nr,
+ 		     const char *str)
+ {
+ 	char *s, *p;
+-	//char *s, *p;
+ 	int ret = 0;
+ 
+ 	if (!str)
+ 		return 0;
+ 
+-	//s = alloca(strlen(str));
+-	memset(s_holder, 0, 1024);
+-	strncpy(s_holder,str,strlen(str));
++	strncpy(s_holder, str, BUF_SIZE - 1);
++	s_holder[BUF_SIZE - 1] = '\0';
++
+ 	s = s_holder;
+ 	while ((p = strsep(&amp;s, &quot; \t&quot;)) != NULL &amp;&amp; ret == 0) {
+ 		const struct tslib_vars *v;
+-- 
+1.5.4.3
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000308.html">[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#307">[ date ]</a>
+              <a href="thread.html#307">[ thread ]</a>
+              <a href="subject.html#307">[ subject ]</a>
+              <a href="author.html#307">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

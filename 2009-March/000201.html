@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [PATCH] Rely on SYN-Events when pen is lifted	(WAS: What is the intential behavoir on &quot;pen up&quot; events?)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%5D%20Rely%20on%20SYN-Events%20when%20pen%20is%20lifted%0A%09%28WAS%3A%20What%20is%20the%20intential%20behavoir%20on%20%22pen%20up%22%20events%3F%29&In-Reply-To=%3CA6E77CBC-5A24-440F-84C2-826C46E4F5B7%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000200.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [PATCH] Rely on SYN-Events when pen is lifted	(WAS: What is the intential behavoir on &quot;pen up&quot; events?)</H1>
+    <B>Christopher Larson</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BPATCH%5D%20Rely%20on%20SYN-Events%20when%20pen%20is%20lifted%0A%09%28WAS%3A%20What%20is%20the%20intential%20behavoir%20on%20%22pen%20up%22%20events%3F%29&In-Reply-To=%3CA6E77CBC-5A24-440F-84C2-826C46E4F5B7%40gmail.com%3E"
+       TITLE="[Tslib-general] [PATCH] Rely on SYN-Events when pen is lifted	(WAS: What is the intential behavoir on &quot;pen up&quot; events?)">kergoth at gmail.com
+       </A><BR>
+    <I>Tue Mar 24 19:05:25 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000200.html">[Tslib-general] Patch to make /etc/pointercal relative to	systemconfdir
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#201">[ date ]</a>
+              <a href="thread.html#201">[ thread ]</a>
+              <a href="subject.html#201">[ subject ]</a>
+              <a href="author.html#201">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Applied, thanks.
+
+On Jan 26, 2009, at 6:44 PM, Michael Heimpold wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> when the input-raw module of tslib relies on SYN-Events, it should  
+</I>&gt;<i> not report
+</I>&gt;<i> a BTN_TOUCH to upper layers before the corresponding EV_SYN was seen.
+</I>&gt;<i>
+</I>&gt;<i> This prevents seeing two pen up events as described in my posting from
+</I>&gt;<i> Jan, 14 2009.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Michael
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> diff -Naur tslib.orig/plugins/input-raw.c tslib/plugins/input-raw.c
+</I>&gt;<i> --- tslib.orig/plugins/input-raw.c	2009-01-25 15:22:40.000000000 +0100
+</I>&gt;<i> +++ tslib/plugins/input-raw.c	2009-01-27 02:18:04.000000000 +0100
+</I>&gt;<i> @@ -156,12 +156,9 @@
+</I>&gt;<i> 				case BTN_TOUCH:
+</I>&gt;<i> 					if (ev.value == 0) {
+</I>&gt;<i> 						/* pen up */
+</I>&gt;<i> -						samp-&gt;x = 0;
+</I>&gt;<i> -						samp-&gt;y = 0;
+</I>&gt;<i> -						samp-&gt;pressure = 0;
+</I>&gt;<i> -						samp-&gt;tv = ev.time;
+</I>&gt;<i> -						samp++;
+</I>&gt;<i> -						total++;
+</I>&gt;<i> +						i-&gt;current_x = 0;
+</I>&gt;<i> +						i-&gt;current_y = 0;
+</I>&gt;<i> +						i-&gt;current_p = 0;
+</I>&gt;<i> 					}
+</I>&gt;<i> 					break;
+</I>&gt;<i> 				}
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>
+-- 
+Chris Larson
+clarson at kergoth dot com
+clarson at mvista dot com
+Founder - BitBake, OpenEmbedded, OpenZaurus
+Maintainer - Tslib
+Software Engineer
+MontaVista Software, Inc.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000200.html">[Tslib-general] Patch to make /etc/pointercal relative to	systemconfdir
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#201">[ date ]</a>
+              <a href="thread.html#201">[ thread ]</a>
+              <a href="subject.html#201">[ subject ]</a>
+              <a href="author.html#201">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

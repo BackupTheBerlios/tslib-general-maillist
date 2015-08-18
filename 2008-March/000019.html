@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] eGalax usbhid-driver and raw-input
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20eGalax%20usbhid-driver%20and%20raw-input&In-Reply-To=%3C1206457805.15417.19.camel%40olio.oliotalo.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000018.html">
+   <LINK REL="Next"  HREF="000021.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] eGalax usbhid-driver and raw-input</H1>
+    <B>Kaius H&#228;ggblom</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20eGalax%20usbhid-driver%20and%20raw-input&In-Reply-To=%3C1206457805.15417.19.camel%40olio.oliotalo.fi%3E"
+       TITLE="[Tslib-general] eGalax usbhid-driver and raw-input">kaius at oliotalo.fi
+       </A><BR>
+    <I>Tue Mar 25 16:10:05 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000018.html">[Tslib-general] disabling linear-h2200
+</A></li>
+        <LI>Next message: <A HREF="000021.html">[Tslib-general] Tslib stylus problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi.
+
+We are trying to support a variety of touchscreens to be used with our
+ARM9-based Linux computer through the tslib raw-input plugin. eGalax
+ships similar touchscreens-controllers, but which uses different drivers
+to interact with Linux. Some use the usbtouchscreen driver, and some use
+the usbhid-driver.
+
+Problems arise for us because these provide different events through the
+event-interface, and tslib does not handle both ways.
+
+Can anyone explain why the events are so different? Seems to me like the
+event codes from usbhid are incorrect, or is this normal but not just
+implemented in tslib?
+
+example of events from eGalax with usbtouchscreen-driver (works OK with
+tslib):
+# ./evtest /dev/input/event1
+Input driver version is 1.0.0
+Input device ID: bus 0x3 vendor 0xeef product 0x1 version 0x100
+Input device name: &quot;eGalax Inc.&quot;
+Supported events:
+  Event type 0 (Sync)
+  Event type 1 (Key)
+    Event code 330 (Touch)
+  Event type 3 (Absolute)
+    Event code 0 (X)
+      Value   1761
+      Min        0
+      Max     2047
+    Event code 1 (Y)
+      Value    713
+      Min        0
+      Max     2047
+Testing ... (interrupt to exit)
+Event: time 947145390.557890, type 1 (Key), code 330 (Touch), value 1
+Event: time 947145390.557915, type 3 (Absolute), code 0 (X), value 1004
+Event: time 947145390.557924, type 3 (Absolute), code 1 (Y), value 890
+Event: time 947145390.557933, -------------- Report Sync ------------
+Event: time 947145390.561897, type 3 (Absolute), code 0 (X), value 1001
+Event: time 947145390.561918, type 3 (Absolute), code 1 (Y), value 889
+Event: time 947145390.561927, -------------- Report Sync ------------
+Event: time 947145390.589788, type 3 (Absolute), code 0 (X), value 1002
+Event: time 947145390.589811, type 3 (Absolute), code 1 (Y), value 890
+Event: time 947145390.589819, -------------- Report Sync ------------
+Event: time 947145390.621698, type 3 (Absolute), code 0 (X), value 1005
+Event: time 947145390.621720, type 3 (Absolute), code 1 (Y), value 889
+Event: time 947145390.621729, -------------- Report Sync ------------
+Event: time 947145390.629668, type 1 (Key), code 330 (Touch), value 0
+Event: time 947145390.629704, -------------- Report Sync ------------
+
+
+example of events from usbhid-driver (does not work with tslib):
+# ./evtest /dev/input/event0
+Input driver version is 1.0.0
+Input device ID: bus 0x3 vendor 0xeef product 0x1 version 0x112
+Input device name: &quot;eGalax Inc. Touch&quot;
+Supported events:
+  Event type 0 (Sync)
+  Event type 1 (Key)
+    Event code 272 (LeftBtn)
+    Event code 273 (RightBtn)
+    Event code 320 (ToolPen)
+    Event code 330 (Touch)
+  Event type 3 (Absolute)
+    Event code 0 (X)
+      Value      0
+      Min       42
+      Max     1981
+    Event code 1 (Y)
+      Value      0
+      Min       42
+      Max     1981
+    Event code 2 (Z)
+      Value   1312
+      Min        0
+      Max     2047
+    Event code 3 (Rx)
+      Value   1312
+      Min        0
+      Max     2047
+Testing ... (interrupt to exit)
+Event: time 947145106.262080, type 3 (Absolute), code 2 (Z), value 1023
+Event: time 947145106.265643, type 3 (Absolute), code 3 (Rx), value 881
+Event: time 947145106.265658, -------------- Report Sync ------------
+Event: time 947145106.281602, type 3 (Absolute), code 3 (Rx), value 880
+Event: time 947145106.281628, -------------- Report Sync ------------
+Event: time 947145106.286762, type 1 (Key), code 330 (Touch), value 0
+Event: time 947145106.297553, -------------- Report Sync ------------
+
+regards,
+Kaius H&#228;ggblom
+Oliotalo Oy
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000018.html">[Tslib-general] disabling linear-h2200
+</A></li>
+	<LI>Next message: <A HREF="000021.html">[Tslib-general] Tslib stylus problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

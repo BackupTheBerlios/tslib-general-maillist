@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Attaching tslib to mtouch...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Attaching%20tslib%20to%20mtouch...&In-Reply-To=%3CSNT144-w178678140EA0EBD3023BC8C2CB0%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000299.html">
+   <LINK REL="Next"  HREF="000301.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Attaching tslib to mtouch...</H1>
+    <B>mois dominguez martinez</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Attaching%20tslib%20to%20mtouch...&In-Reply-To=%3CSNT144-w178678140EA0EBD3023BC8C2CB0%40phx.gbl%3E"
+       TITLE="[Tslib-general] Attaching tslib to mtouch...">moisesdm82 at hotmail.com
+       </A><BR>
+    <I>Tue Jun 29 13:14:45 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000299.html">[Tslib-general] Attaching tslib to mtouch...
+</A></li>
+        <LI>Next message: <A HREF="000301.html">[Tslib-general] HTC HD2 capacitive touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#300">[ date ]</a>
+              <a href="thread.html#300">[ thread ]</a>
+              <a href="subject.html#300">[ subject ]</a>
+              <a href="author.html#300">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi,
+
+Do you have a driver for your touch? or are you receiving the raw data for the touch controller?
+Anyway, look if tslib have a plugin for your device in ts.conf file. If not, you can download tslib source, modify any plugin according to your serial touch data and recompile again.
+
+If you have more problems, do not doubt in asking.
+
+Regards,
+
+Moises.
+
+&gt;<i> Date: Thu, 24 Jun 2010 23:02:46 -0400
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">dave at daverea.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+</I>&gt;<i> Subject: [Tslib-general] Attaching tslib to mtouch...
+</I>&gt;<i> 
+</I>&gt;<i> Hi All-
+</I>&gt;<i> 
+</I>&gt;<i> I am new to tslib and the touch screen world in general, so I
+</I>&gt;<i> apologize if my terminology isn't quite right.
+</I>&gt;<i> 
+</I>&gt;<i> I am trying to get a 3M MicroTouch display working with tslib on an
+</I>&gt;<i> i.MX51 device from Digi. I have verifid communication between the
+</I>&gt;<i> panel and the computer using `cat /dev/ttyS0`, then attached the
+</I>&gt;<i> serial port to the kernel event system using `inputattach --daemon
+</I>&gt;<i> --mtouch /dev/ttyS0`. This successfully creates a /dev/event0
+</I>&gt;<i> interface that also emits data through `cat` when the screen is
+</I>&gt;<i> touched.
+</I>&gt;<i> 
+</I>&gt;<i> I set TSLIB_TSDEVICE=/dev/event0 and tried to run ts_calibrate, but it
+</I>&gt;<i> gives me the error &quot;selected device is not a touchscreen I
+</I>&gt;<i> understand&quot;. I grepped the latest source code for this message, and
+</I>&gt;<i> didn't see it, but a Google search brought me to this mailing list.
+</I>&gt;<i> Apparently it's in an older version?
+</I>&gt;<i> 
+</I>&gt;<i> Can anyone suggest any further steps to get tslib working with this panel?
+</I>&gt;<i> 
+</I>&gt;<i> Thanks,
+</I>&gt;<i> Dave
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I> 		 	   		  
+_________________________________________________________________
+&#191;Un navegador seguro buscando est&#225;s? &#161;Protegete ya en www.ayudartepodria.com!
+www.ayudartepodria.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20100629/9bd5e3ea/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20100629/9bd5e3ea/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000299.html">[Tslib-general] Attaching tslib to mtouch...
+</A></li>
+	<LI>Next message: <A HREF="000301.html">[Tslib-general] HTC HD2 capacitive touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#300">[ date ]</a>
+              <a href="thread.html#300">[ thread ]</a>
+              <a href="subject.html#300">[ subject ]</a>
+              <a href="author.html#300">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

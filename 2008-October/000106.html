@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Configuring a touch screen that is controlled by inputattach
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%20by%20inputattach&In-Reply-To=%3C48FEFA81.5010107%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000105.html">
+   <LINK REL="Next"  HREF="000107.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Configuring a touch screen that is controlled by inputattach</H1>
+    <B>Hinko Kocevar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%20by%20inputattach&In-Reply-To=%3C48FEFA81.5010107%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] Configuring a touch screen that is controlled by inputattach">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Wed Oct 22 12:03:45 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000105.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+        <LI>Next message: <A HREF="000107.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#106">[ date ]</a>
+              <a href="thread.html#106">[ thread ]</a>
+              <a href="subject.html#106">[ subject ]</a>
+              <a href="author.html#106">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Peter Geoghegan wrote:
+&gt;<i> Hinko,
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Another great tool for testing Linux input event devices is evtest tool - google it
+</I>&gt;&gt;<i> up and try it on you /dev/input/eventx to eliminate the linux kernel module problems.
+</I>&gt;<i> 
+</I>&gt;<i> I've already got the touchscreen working with evtest. This isn't
+</I>&gt;<i> surprising, as the author of evtest is also the author of inputattach
+</I>&gt;<i> and the Elo driver I'm using , Vojtech Pavlik, who kindly helped me
+</I>&gt;<i> with an earlier problem I was having with inputattach.
+</I>
+Uh, oh sorry, it a bit long thread and didn't remember about that..
+
+&gt;<i> 
+</I>&gt;<i> evtest gives output like this:
+</I>&gt;<i> Input driver version is 1.0.0
+</I>&gt;<i> Input device ID: bus 0x13 vendor 0x29 product 0x0 version 0x201
+</I>&gt;<i> Input device name: &quot;Elo Serial TouchScreen&quot;
+</I>&gt;<i> Supported events:
+</I>&gt;<i>   Event type 0 (Reset)
+</I>&gt;<i>     Event code 0 (Reset)
+</I>&gt;<i>     Event code 1 (Key)
+</I>&gt;<i>     Event code 3 (Absolute)
+</I>&gt;<i>   Event type 1 (Key)
+</I>&gt;<i>     Event code 330 (Touch)
+</I>&gt;<i>   Event type 3 (Absolute)
+</I>&gt;<i>     Event code 0 (X)
+</I>&gt;<i>       Value      0
+</I>&gt;<i>       Min       96
+</I>&gt;<i>       Max     4000
+</I>&gt;<i>     Event code 1 (Y)
+</I>&gt;<i>       Value      0
+</I>&gt;<i>       Min       96
+</I>&gt;<i>       Max     4000
+</I>&gt;<i> Testing ... (interrupt to exit)
+</I>&gt;<i> Event: time 1224667232.260192, type 3 (Absolute), code 0 (X), value 2000
+</I>&gt;<i> Event: time 1224667232.260202, type 3 (Absolute), code 1 (Y), value 2165
+</I>&gt;<i> Event: time 1224667232.260205, type 1 (Key), code 330 (Touch), value 1
+</I>&gt;<i> Event: time 1224667232.260207, type 0 (Reset), code 0 (Reset), value 0
+</I>&gt;<i> Event: time 1224667232.280173, type 3 (Absolute), code 0 (X), value 1995
+</I>&gt;<i> Event: time 1224667232.280181, type 3 (Absolute), code 1 (Y), value 2154
+</I>&gt;<i> Event: time 1224667232.280185, type 0 (Reset), code 0 (Reset), value 0
+</I>&gt;<i> Event: time 1224667232.296172, type 3 (Absolute), code 0 (X), value 1998
+</I>&gt;<i> Event: time 1224667232.296181, type 0 (Reset), code 0 (Reset), value 0
+</I>&gt;<i> Event: time 1224667232.320171, type 3 (Absolute), code 0 (X), value 2000
+</I>&gt;<i> Event: time 1224667232.320179, type 3 (Absolute), code 1 (Y), value 2153
+</I>&gt;<i> Event: time 1224667232.320183, type 0 (Reset), code 0 (Reset), value 0
+</I>&gt;<i> Event: time 1224667232.340174, type 3 (Absolute), code 1 (Y), value 2155
+</I>&gt;<i> Event: time 1224667232.340182, type 0 (Reset), code 0 (Reset), value 0
+</I>&gt;<i> Event: time 1224667232.360171, type 3 (Absolute), code 0 (X), value 1999
+</I>&gt;<i> Event: time 1224667232.360178, type 3 (Absolute), code 1 (Y), value 2158
+</I>&gt;<i> Event: time 1224667232.360182, type 0 (Reset), code 0 (Reset), value 0
+</I>&gt;<i> Event: time 1224667232.384181, type 3 (Absolute), code 0 (X), value 1996
+</I>&gt;<i> Event: time 1224667232.384189, type 3 (Absolute), code 1 (Y), value 2162
+</I>&gt;<i> Event: time 1224667232.384193, type 0 (Reset), code 0 (Reset), value 0
+</I>&gt;<i> Event: time 1224667232.400173, type 3 (Absolute), code 1 (Y), value 2159
+</I>&gt;<i> Event: time 1224667232.400180, type 0 (Reset), code 0 (Reset), value 0
+</I>&gt;<i> Event: time 1224667232.420172, type 3 (Absolute), code 0 (X), value 1994
+</I>&gt;<i> Event: time 1224667232.420179, type 3 (Absolute), code 1 (Y), value 2152
+</I>&gt;<i> Event: time 1224667232.420183, type 0 (Reset), code 0 (Reset), value 0
+</I>&gt;<i> *snip*
+</I>&gt;<i> 
+</I>
+Right, looking good here...
+
+&gt;<i> ts_print_raw gives output like this, over and over:
+</I>&gt;<i> *snip*
+</I>&gt;<i> 122466750.697770:    2018    2983        0
+</I>&gt;<i> 122466750.697779:    0          0              0
+</I>&gt;<i> tslib: Unknown event type 0
+</I>&gt;<i> *snip*
+</I>&gt;<i> 
+</I>&gt;<i> This is a little bit illuminating. Tslib does not appear to be
+</I>&gt;<i> correctly interpreting the data read from eventX. If I'm not mistaken,
+</I>&gt;<i> it doesn't recognise these type 0 events, which evtest identifies as
+</I>&gt;<i> &quot;(Reset)&quot; events. If that is the case, why? What should I do?
+</I>
+I think it is due to the code you've commented out. What follows in check_fd()
+is a check for your missing EV_SYN events - type 0. Try this dirty hack on check_fd()
+ in order to recognize the EV_SYN (just replace the complete function):
+
+static int check_fd(struct tslib_input *i)
+{
+	i-&gt;using_syn = 1;
+	return 0;
+}
+
+
+
+Best regards,
+Hinko
+
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000105.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+	<LI>Next message: <A HREF="000107.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#106">[ date ]</a>
+              <a href="thread.html#106">[ thread ]</a>
+              <a href="subject.html#106">[ subject ]</a>
+              <a href="author.html#106">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

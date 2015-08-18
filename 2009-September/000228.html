@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] need more pressure to get exact co-ordinate reading - Calibration problem ??
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20need%20more%20pressure%20to%20get%20exact%20co-ordinate%0A%20reading%20-%20Calibration%20problem%20%3F%3F&In-Reply-To=%3C20090916144925.6a6c14cc%40danhplaptop%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000227.html">
+   <LINK REL="Next"  HREF="000229.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] need more pressure to get exact co-ordinate reading - Calibration problem ??</H1>
+    <B>Dan Lyke</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20need%20more%20pressure%20to%20get%20exact%20co-ordinate%0A%20reading%20-%20Calibration%20problem%20%3F%3F&In-Reply-To=%3C20090916144925.6a6c14cc%40danhplaptop%3E"
+       TITLE="[Tslib-general] need more pressure to get exact co-ordinate reading - Calibration problem ??">danlyke at flutterby.com
+       </A><BR>
+    <I>Wed Sep 16 23:49:25 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000227.html">[Tslib-general] need more pressure to get exact co-ordinate reading	- Calibration problem ??
+</A></li>
+        <LI>Next message: <A HREF="000229.html">[Tslib-general] tslib configuration for ELO on ADS5121e board
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#228">[ date ]</a>
+              <a href="thread.html#228">[ thread ]</a>
+              <a href="subject.html#228">[ subject ]</a>
+              <a href="author.html#228">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, 16 Sep 2009 15:59:11 +0530
+&quot;Nirav Rabara&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Nirav.Rabara at matrixtelesol.com</A>&gt; wrote:
+&gt;<i> But whenever I use it I need to put some extra pressure to get cursor
+</I>&gt;<i> on right location, if I put low pressure on touch screen it read wrong
+</I>&gt;<i> co-ordinate.
+</I>
+Sounds like a hardware problem. Resistive touch screen sensors use
+contact made between layers to measure a position, it's quite possible
+that your sensor is only making partial contact, therefore sending a
+value that's in a different place.
+
+I've seen this on a couple of sensor and driver chip combinations,
+I've taken the tack that we when we use the resistive sensors we have
+to take sloppy positioning and mis-clicks into the user interface
+design.
+
+And I'm now of the opinion that if it's not a capacitive touch screen
+then we should be designing in some sort of Bluetooth interface we can
+drive from an iPhone, because anyone who's used an iPhone or equivalent
+device for any amount of time is going to hate the experience of the
+resistive sensor.
+
+Dan
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000227.html">[Tslib-general] need more pressure to get exact co-ordinate reading	- Calibration problem ??
+</A></li>
+	<LI>Next message: <A HREF="000229.html">[Tslib-general] tslib configuration for ELO on ADS5121e board
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#228">[ date ]</a>
+              <a href="thread.html#228">[ thread ]</a>
+              <a href="subject.html#228">[ subject ]</a>
+              <a href="author.html#228">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

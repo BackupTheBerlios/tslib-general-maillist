@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [RFC] ts_open: turn nonblock-parameter into more generic one called 'flags'.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BRFC%5D%20ts_open%3A%20turn%20nonblock-parameter%20into%0A%20more%20generic%20one%20called%20%27flags%27.&In-Reply-To=%3CAANLkTinDu5G%2BN%3D_0Hhfq66HCd8uhkwbymy_Fj-gmU7-x%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000335.html">
+   <LINK REL="Next"  HREF="000337.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [RFC] ts_open: turn nonblock-parameter into more generic one called 'flags'.</H1>
+    <B>Paulius Zaleckas</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BRFC%5D%20ts_open%3A%20turn%20nonblock-parameter%20into%0A%20more%20generic%20one%20called%20%27flags%27.&In-Reply-To=%3CAANLkTinDu5G%2BN%3D_0Hhfq66HCd8uhkwbymy_Fj-gmU7-x%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] [RFC] ts_open: turn nonblock-parameter into more generic one called 'flags'.">paulius.zaleckas at gmail.com
+       </A><BR>
+    <I>Fri Nov 12 16:21:24 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000335.html">[Tslib-general] [RFC] ts_open: turn nonblock-parameter	into	more generic one called 'flags'.
+</A></li>
+        <LI>Next message: <A HREF="000337.html">[Tslib-general] [RFC] ts_open: first try to open read/write,	then read-only.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#336">[ date ]</a>
+              <a href="thread.html#336">[ thread ]</a>
+              <a href="subject.html#336">[ subject ]</a>
+              <a href="author.html#336">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Nov 12, 2010 at 5:14 PM, Chris Larson &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">clarson at kergoth.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Nov 12, 2010 at 8:06 AM, Wolfram Sang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Fri, Nov 12, 2010 at 04:05:44PM +0200, Paulius Zaleckas wrote:
+</I>&gt;&gt;<i> &gt; On Fri, Nov 12, 2010 at 2:59 PM, Wolfram Sang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt;
+</I>&gt;&gt;<i> &gt; wrote:
+</I>&gt;&gt;<i> &gt; &gt; An upcoming driver (dmc) will need O_RDWR and can set it this way. At
+</I>&gt;&gt;<i> &gt; &gt; least all
+</I>&gt;&gt;<i> &gt; &gt; in-tree users use 0 for the old flag which will be converted to the
+</I>&gt;&gt;<i> &gt; &gt; old
+</I>&gt;&gt;<i> &gt; &gt; behaviour O_RDONLY.
+</I>&gt;&gt;<i> &gt; &gt;
+</I>&gt;&gt;<i> &gt; &gt; Signed-off-by: Wolfram Sang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt;
+</I>&gt;&gt;<i> &gt; &gt; ---
+</I>&gt;&gt;<i> &gt; &gt;
+</I>&gt;&gt;<i> &gt; &gt; Are we open for API changes? Might be a bit brave, but the result
+</I>&gt;&gt;<i> &gt; &gt; looks more
+</I>&gt;&gt;<i> &gt; &gt; intuitive IMHO.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; IMO it is better to just do a fallback if read/write fails and return is
+</I>&gt;&gt;<i> &gt; -EPERM
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hmmm, ts_open returns a pointer to a tsdev. So, you mean return a valid
+</I>&gt;&gt;<i> pointer
+</I>&gt;&gt;<i> and set errno to -EPERM? That means that most drivers (which won't need
+</I>&gt;&gt;<i> rw)
+</I>&gt;&gt;<i> might see -EPERM and could not distinguish from a true permission problem?
+</I>&gt;&gt;<i> Or
+</I>&gt;&gt;<i> did I get it wrong?
+</I>&gt;<i>
+</I>&gt;<i> I believe what he means is that if the attempt to open with RDWR fails with
+</I>&gt;<i> an errno of -EPERM, it should attempt to open read only instead. &#160;Referring
+</I>&gt;<i> to the open failure, not how ts_open itself returns.
+</I>
+Exactly. Sorry for bad wording...
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000335.html">[Tslib-general] [RFC] ts_open: turn nonblock-parameter	into	more generic one called 'flags'.
+</A></li>
+	<LI>Next message: <A HREF="000337.html">[Tslib-general] [RFC] ts_open: first try to open read/write,	then read-only.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#336">[ date ]</a>
+              <a href="thread.html#336">[ thread ]</a>
+              <a href="subject.html#336">[ subject ]</a>
+              <a href="author.html#336">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

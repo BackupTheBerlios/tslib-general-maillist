@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Need help with tslib and directfb
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Need%20help%20with%20tslib%20and%20directfb&In-Reply-To=%3CE676753E-A339-4251-A235-A15380A5055A%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000255.html">
+   <LINK REL="Next"  HREF="000257.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Need help with tslib and directfb</H1>
+    <B>Christopher Larson</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Need%20help%20with%20tslib%20and%20directfb&In-Reply-To=%3CE676753E-A339-4251-A235-A15380A5055A%40gmail.com%3E"
+       TITLE="[Tslib-general] Need help with tslib and directfb">kergoth at gmail.com
+       </A><BR>
+    <I>Mon Jan 18 16:01:28 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000255.html">[Tslib-general] Need help with tslib and directfb
+</A></li>
+        <LI>Next message: <A HREF="000257.html">[Tslib-general] Fwd: tslib static - module raw input - ts_calibrate	- eldk arm
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#256">[ date ]</a>
+              <a href="thread.html#256">[ thread ]</a>
+              <a href="subject.html#256">[ subject ]</a>
+              <a href="author.html#256">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Jan 18, 2010, at 3:52 AM, Andreas K&#228;nner wrote:
+&gt;<i> 
+</I>&gt;<i> I want to use directfb it in conjunction with tslib but it always grabs  
+</I>&gt;<i> the standard linux input driver. I think it has to do with this log  
+</I>&gt;<i> message: Couldnt load module pthres (see below)
+</I>
+It obeys ts.conf, your ts.conf is most likely requesting the input raw module.  If you want it to use a different mechanism to talk to your ts hardware, you'll have to adjust the ts.conf to use the most appropriate module.
+
+&gt;<i> The files:
+</I>&gt;<i> 
+</I>&gt;<i> pthres.a
+</I>&gt;<i> pthres.la
+</I>&gt;<i> pthres.so
+</I>&gt;<i> 
+</I>&gt;<i> live in a directory named &quot;ts&quot; inside the lib directory. I looks like  
+</I>&gt;<i> directfb is not searching for pthres in this directory.
+</I>&gt;<i> 
+</I>&gt;<i> Is this path adjustable in tslib so that directfb can find it?
+</I>&gt;<i> 
+</I>&gt;<i> I am glad to hear any suggestions.
+</I>
+All the paths are adjustable via environment variables.  See the README in the source tree for the exact variable names.
+-- 
+Chris Larson
+clarson at kergoth dot com
+clarson at mvista dot com
+Founder - BitBake, OpenEmbedded, OpenZaurus
+Maintainer - Tslib
+Software Engineer
+MontaVista Software, Inc.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000255.html">[Tslib-general] Need help with tslib and directfb
+</A></li>
+	<LI>Next message: <A HREF="000257.html">[Tslib-general] Fwd: tslib static - module raw input - ts_calibrate	- eldk arm
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#256">[ date ]</a>
+              <a href="thread.html#256">[ thread ]</a>
+              <a href="subject.html#256">[ subject ]</a>
+              <a href="author.html#256">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

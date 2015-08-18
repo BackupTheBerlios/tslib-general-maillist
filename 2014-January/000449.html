@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Multi touch plugin support in tslib
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2014-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Multi%20touch%20plugin%20support%20in%20tslib&In-Reply-To=%3CCAL8k1Z6uVgqsN78rNb_4PAGyd5dtDzhT47bpJozEJ%3DLJp3gk1w%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000448.html">
+   <LINK REL="Next"  HREF="000450.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Multi touch plugin support in tslib</H1>
+    <B>Vignesh Raman</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Multi%20touch%20plugin%20support%20in%20tslib&In-Reply-To=%3CCAL8k1Z6uVgqsN78rNb_4PAGyd5dtDzhT47bpJozEJ%3DLJp3gk1w%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Multi touch plugin support in tslib">rvignesh.raman at gmail.com
+       </A><BR>
+    <I>Fri Jan 10 13:13:13 CET 2014</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000448.html">[Tslib-general] Multi touch plugin support in tslib
+</A></li>
+        <LI>Next message: <A HREF="000450.html">[Tslib-general] Multi touch plugin support in tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#449">[ date ]</a>
+              <a href="thread.html#449">[ thread ]</a>
+              <a href="subject.html#449">[ subject ]</a>
+              <a href="author.html#449">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I tried debugging using strace and gdbserver. I see that after open system
+call it crashes,
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">root at mx6q</A>:~# strace -e open /usr/bin/ts_calibrate
+open(&quot;/etc/ld.so.cache&quot;, O_RDONLY|O_CLOEXEC) = 3
+open(&quot;/usr/lib/libts-1.0.so.0&quot;, O_RDONLY|O_CLOEXEC) = 3
+open(&quot;/lib/libdl.so.2&quot;, O_RDONLY|O_CLOEXEC) = 3
+open(&quot;/lib/libgcc_s.so.1&quot;, O_RDONLY|O_CLOEXEC) = 3
+open(&quot;/lib/libc.so.6&quot;, O_RDONLY|O_CLOEXEC) = 3
+open(&quot;/dev/input/event0&quot;, O_RDWR)       = 3
+open(&quot;/etc/ts.conf&quot;, O_RDONLY)          = 4
+Loading module mtinput
+open(&quot;/usr/lib/ts/mtinput.so&quot;, O_RDONLY|O_CLOEXEC) = 5
+--- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0xe3500000} ---
+--- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0} ---
++++ killed by SIGSEGV +++
+Segmentation fault
+
+Looks while loading the mtinput module it fails in __ts_load_module.
+I will add more debug info in this function and check.
+
+Attached patch consist of the multi touch changes taken from
+<A HREF="http://sourceforge.net/projects/tslib-mt/files/">http://sourceforge.net/projects/tslib-mt/files/</A>
+
+
+On Fri, Jan 10, 2014 at 12:01 PM, Vignesh Raman &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">rvignesh.raman at gmail.com</A>&gt;wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> I tired to test the multi touch plugin in tslib.
+</I>&gt;<i> <A HREF="http://sourceforge.net/projects/tslib-mt/files/">http://sourceforge.net/projects/tslib-mt/files/</A>
+</I>&gt;<i>
+</I>&gt;<i> I added tslib/plugin/mtinput-raw.c to tslib git branch and merged the
+</I>&gt;<i> changes in tslib/plugin/Makefile.am and configure.ac
+</I>&gt;<i>
+</I>&gt;<i> I changed module_raw input to module_raw mtinput
+</I>&gt;<i> in ts.conf and tested on imx target. But I get a segmentation fault when I
+</I>&gt;<i> run ts_calibrate or ts_print.
+</I>&gt;<i>
+</I>&gt;<i> Please let me know if anything is missing?
+</I>&gt;<i>
+</I>&gt;<i> Has anyone successfully tested multi touch in tslib?
+</I>&gt;<i>
+</I>&gt;<i> Thanks!
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Regards,
+</I>&gt;<i> Vignesh.
+</I>&gt;<i>
+</I>
+
+
+-- 
+Regards,
+Vignesh.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20140110/e11bcf33/attachment-0001.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20140110/e11bcf33/attachment-0001.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: multi-touch.patch
+Type: text/x-patch
+Size: 22185 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20140110/e11bcf33/attachment-0001.bin">https://lists.berlios.de/pipermail/tslib-general/attachments/20140110/e11bcf33/attachment-0001.bin</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000448.html">[Tslib-general] Multi touch plugin support in tslib
+</A></li>
+	<LI>Next message: <A HREF="000450.html">[Tslib-general] Multi touch plugin support in tslib
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#449">[ date ]</a>
+              <a href="thread.html#449">[ thread ]</a>
+              <a href="subject.html#449">[ subject ]</a>
+              <a href="author.html#449">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

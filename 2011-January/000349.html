@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Low resolution touchscreen
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Low%20resolution%20touchscreen&In-Reply-To=%3C20110107093945.1a19f855%40danlyke-laptop%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000347.html">
+   <LINK REL="Next"  HREF="000348.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Low resolution touchscreen</H1>
+    <B>Dan Lyke</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Low%20resolution%20touchscreen&In-Reply-To=%3C20110107093945.1a19f855%40danlyke-laptop%3E"
+       TITLE="[Tslib-general] Low resolution touchscreen">danlyke at flutterby.com
+       </A><BR>
+    <I>Fri Jan  7 18:39:45 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000347.html">[Tslib-general] Low resolution touchscreen
+</A></li>
+        <LI>Next message: <A HREF="000348.html">[Tslib-general] What can be the reason for low resolution on touchpanel ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#349">[ date ]</a>
+              <a href="thread.html#349">[ thread ]</a>
+              <a href="subject.html#349">[ subject ]</a>
+              <a href="author.html#349">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, 3 Jan 2011 10:37:10 +0100
+&quot;Cosmin Munteanu&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">cosmin at topwing.net</A>&gt; wrote:
+&gt;<i> I've been trying for days to get a 4 wire touchscreen working on a TI
+</I>&gt;<i> OMAP platform with a 7&quot; screen. The problem I'm having is that I get
+</I>&gt;<i> very low resolution on the touch screen. I mean, it seems like the
+</I>&gt;<i> touchscreen is scanning only 15 steps in each direction which results
+</I>&gt;<i> in very poor performance. In ts_test for example, I can only draw
+</I>&gt;<i> squares of approx. 53x35.
+</I>
+When I was trying to quantify resistive touchscreen capabilities I
+ended up building a little jig that put a sharpened dowel (like a
+pencil point) at a repeatable location on the screen, and wrote
+a little app that printed the values as they came off the device
+(before tslib ever got to them).
+
+This let me go back to the hardware guys and say &quot;I'm getting a lot of
+noise&quot;, which led us to change how our interface worked, and how we
+detected button presses and the like (we built a statistical model
+that took a number of samples and matched gaussian curves from those
+samples and the button position and sizes).
+
+So what I'd do if I were in your shoes is sharpen a dowel, take a board
+that you can align to the face of your device, drill a few holes
+through that board that you can press the dowel through, and get some
+samples so that you can see just what the nature of the data you're
+getting from your touchscreen is.
+
+(If it's capacitive rather than resistive, maybe try a Slim Jim or
+other dry sausage?)
+
+It may be that your device has enough noise that you're not getting
+more resolution than that to begin with.
+
+Dan
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000347.html">[Tslib-general] Low resolution touchscreen
+</A></li>
+	<LI>Next message: <A HREF="000348.html">[Tslib-general] What can be the reason for low resolution on touchpanel ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#349">[ date ]</a>
+              <a href="thread.html#349">[ thread ]</a>
+              <a href="subject.html#349">[ subject ]</a>
+              <a href="author.html#349">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

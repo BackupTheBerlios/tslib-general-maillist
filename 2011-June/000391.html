@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] QUERY-Touchscreen calibration
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2011-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20QUERY-Touchscreen%20calibration&In-Reply-To=%3CBANLkTinpiGvLVq4gP5_D_7nqC6qSEXUYFA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000390.html">
+   <LINK REL="Next"  HREF="000392.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] QUERY-Touchscreen calibration</H1>
+    <B>Chris Larson</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20QUERY-Touchscreen%20calibration&In-Reply-To=%3CBANLkTinpiGvLVq4gP5_D_7nqC6qSEXUYFA%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] QUERY-Touchscreen calibration">clarson at kergoth.com
+       </A><BR>
+    <I>Wed Jun 15 16:09:30 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000390.html">[Tslib-general] QUERY-Touchscreen calibration
+</A></li>
+        <LI>Next message: <A HREF="000392.html">[Tslib-general] QUERY-Touchscreen calibration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#391">[ date ]</a>
+              <a href="thread.html#391">[ thread ]</a>
+              <a href="subject.html#391">[ subject ]</a>
+              <a href="author.html#391">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Jun 15, 2011 at 6:56 AM, snehal kakade
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">kakade.snehal02 at gmail.com</A>&gt; wrote:
+&gt;<i> I am using ARCHOS 101 internet tablet.
+</I>&gt;<i> I have ported QT on Armstrong as well as compiled tslib for ARCHOS 101
+</I>&gt;<i> internet tablet.
+</I>&gt;<i> Added a new file (/etc/ts.conf) with the following lines:
+</I>&gt;<i> # Uncomment if you wish to use the linux input layer event interface
+</I>&gt;<i> #module_raw input
+</I>&gt;<i> # Uncomment if you're using a Sharp Zaurus SL-5500/SL-5000d
+</I>&gt;<i> #module_raw collie
+</I>&gt;<i> # Uncomment if you're using a Sharp Zaurus SL-C700/C750/C760/C860
+</I>&gt;<i> # module_raw corgi
+</I>&gt;<i> # Uncomment if you're using a device with a UCB1200/1300/1400 TS interface
+</I>&gt;<i> #module_raw ucb1x00
+</I>&gt;<i> # Uncomment if you're using an HP iPaq h3600 or similar
+</I>&gt;<i> #module_raw h3600
+</I>&gt;<i> # Uncomment if you're using a Hitachi Webpad
+</I>&gt;<i> # module_raw mk712
+</I>&gt;<i> # Uncomment if you're using an IBM Arctic II
+</I>&gt;<i> module_raw arctic2
+</I>&gt;<i> module pthres pmin=1
+</I>&gt;<i> module variance delta=30
+</I>&gt;<i> module dejitter delta=100
+</I>&gt;<i> module linear
+</I>&gt;<i> I have also setup the following environment variables for tslib:
+</I>&gt;<i> export TSLIB_CALIBFILE='/etc/pointercal'
+</I>&gt;<i> export TSLIB_CONFFILE='/etc/ts.conf'
+</I>&gt;<i> export TSLIB_FBDEVICE='/dev/fb0'
+</I>&gt;<i> export TSLIB_PLUGINDIR='/usr/lib/ts'
+</I>&gt;<i> export
+</I>&gt;<i> TSLIB_TSDEVICE=&quot;/dev/input/by-path/platform-ohci-omap.0-usb-0:2:1.0-event&quot;
+</I>&gt;<i> export
+</I>&gt;<i> QWS_MOUSE_PROTO=&quot;Linuxinput:/dev/input/by-path/platform-ohci-omap.0-usb-0:2:1.0-event&quot;
+</I>&gt;<i> Now when I run the ts_calibrate utility which is provided with the tslib
+</I>&gt;<i> package to calibrate the touchscreen, the crosshair appears in top left
+</I>&gt;<i> corner of the tablet but when I touch the crosshair it directly takes all
+</I>&gt;<i> the samples at one go and ends the application i.e. it does not wait for all
+</I>&gt;<i> the samples.
+</I>&gt;<i> So there is the problem in calibration of touchscreen, calibration is not
+</I>&gt;<i> precise.
+</I>&gt;<i> After calibration the touchscreen still isn't accurate.
+</I>&gt;<i> I would like to know whether I am missing anything, if so please let me
+</I>&gt;<i> know.
+</I>
+Unless I'm missing something, you appear to be using an input layer
+event device, yet you're using the 'IBM Artic II' module_raw module?
+Is this really correct for your hardware? We do have module_raw
+input.. In addition, if the calibration is failing, it's almost
+certainly getting useless touchscreen events from the device you
+specified. Run ts_print_raw to see what it receives when you touch the
+touchscreen. These are the uncalibrated values which ts_calibrate is
+operating from.
+-- 
+Christopher Larson
+clarson at kergoth dot com
+Founder - BitBake, OpenEmbedded, OpenZaurus
+Maintainer - Tslib
+Senior Software Engineer, Mentor Graphics
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000390.html">[Tslib-general] QUERY-Touchscreen calibration
+</A></li>
+	<LI>Next message: <A HREF="000392.html">[Tslib-general] QUERY-Touchscreen calibration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#391">[ date ]</a>
+              <a href="thread.html#391">[ thread ]</a>
+              <a href="subject.html#391">[ subject ]</a>
+              <a href="author.html#391">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

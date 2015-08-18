@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] touch screen with x-server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touch%20screen%20with%20x-server&In-Reply-To=%3C005e01c8c542%24ede12d90%24c9a388b0%24%40com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000044.html">
+   <LINK REL="Next"  HREF="000046.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] touch screen with x-server</H1>
+    <B>Rakesh Jagota</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20touch%20screen%20with%20x-server&In-Reply-To=%3C005e01c8c542%24ede12d90%24c9a388b0%24%40com%3E"
+       TITLE="[Tslib-general] touch screen with x-server">jrakesh at gdatech.com
+       </A><BR>
+    <I>Tue Jun  3 08:27:25 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000044.html">[Tslib-general] touch screen with x-server
+</A></li>
+        <LI>Next message: <A HREF="000046.html">[Tslib-general] touch screen with x-server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#45">[ date ]</a>
+              <a href="thread.html#45">[ thread ]</a>
+              <a href="subject.html#45">[ subject ]</a>
+              <a href="author.html#45">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+ 
+
+I am trying to calibrate my touch screen on ppc based reference platform.
+The LCD resolution is 1024x600.
+
+While running the 'ts_calibarte' utility I am not seeing any cross-hair
+pointer on the LCD panel and the log message for 'ts_calibrate is as below:
+
+-------------------------------------------------------------
+
+ 
+
+gda211:~# ts_calibrate 
+
+xres = 1024, yres = 600
+
+selected device is not a touchscreen I understand
+
+Took 13 samples...
+
+Top left : X = 805502960 Y = 269287424
+
+Took 13 samples...
+
+Top right : X = 805502960 Y = 269287424
+
+Took 13 samples...
+
+Bot right : X = 805502960 Y = 269287424
+
+Took 13 samples...
+
+Bot left : X = 805502960 Y = 269287424
+
+Took 13 samples...
+
+Center : X = 805502960 Y = 269287424
+
+0.809927 -16.000055 47.859985
+
+2.292994 -20.713882 61.960167
+
+Calibration constants: 53079 -1048579 3136552 150273 -1357505 4060621 65536 
+
+gda211:~#
+
+ 
+
+ 
+
+-------------------------------------------------------------
+
+And before I run the 'ts_calibrate' I am stopping the gdm (/etc/init.d/gdm
+stop)
+
+ 
+
+ 
+
+I have exported the following for touch screen in /etc/profile file:
+
+ 
+
+-------------------------------------------------------------------
+
+ 
+
+export TSLIB_TSDEVICE=/dev/input/event2 ts_calibrate
+
+export TSLIB_CALIBFILE=&quot;/etc/pointercal&quot;
+
+export TSLIB_CONFFILE=&quot;/etc/ts.conf&quot;
+
+export TSLIB_PLUGINDIR=&quot;/usr/lib/ts&quot;
+
+export TSLIB_FBDEVICE=/dev/fb0
+
+export TSLIB_CONSOLEDEVICE=none
+
+export PATH
+
+------------------------------------------------------------------
+
+ 
+
+And the cat /proc/bus/input/devices entries is :
+
+------------------------------------------------------------------
+
+gda211:~# cat /proc/bus/input/devices 
+
+I: Bus=0003 Vendor=046a Product=0001 Version=0100
+
+N: Name=&quot;HID 046a:0001&quot;
+
+P: Phys=usb-fsl-ehci.0-1.1/input0
+
+S: Sysfs=/class/input/input0
+
+U: Uniq=
+
+H: Handlers=kbd event0 
+
+B: EV=120003
+
+B: KEY=e080ffdf 1cfffff ffffffff fffffffe
+
+B: LED=7
+
+ 
+
+I: Bus=0003 Vendor=413c Product=3200 Version=0110
+
+N: Name=&quot;Dell Dell USB Mouse&quot;
+
+P: Phys=usb-fsl-ehci.0-1.2/input0
+
+S: Sysfs=/class/input/input1
+
+U: Uniq=
+
+H: Handlers=mouse0 event1 
+
+B: EV=7
+
+B: KEY=70000 0 0 0 0 0 0 0 0
+
+B: REL=103
+
+ 
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+
+N: Name=&quot;wm97xx touchscreen&quot;
+
+P: Phys=0-0:WM9711,WM9712/input0
+
+S: Sysfs=/class/input/input2
+
+U: Uniq=
+
+H: Handlers=event2 
+
+B: EV=9
+
+B: ABS=1000003
+
+ 
+
+gda211:~#
+
+----------------------------------------------------------------------------
+--------
+
+ 
+
+I am not able to find out why I am getting negatibe value in /etc/pointercal
+and why I am not getting crosshair pointer on my LCD panel while running the
+'ts_calibrate'
+
+ 
+
+Give me any suggestion if I m doing anything wrong here. 
+
+ 
+
+Regards,
+
+rakesh
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080602/93b214ba/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20080602/93b214ba/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000044.html">[Tslib-general] touch screen with x-server
+</A></li>
+	<LI>Next message: <A HREF="000046.html">[Tslib-general] touch screen with x-server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#45">[ date ]</a>
+              <a href="thread.html#45">[ thread ]</a>
+              <a href="subject.html#45">[ subject ]</a>
+              <a href="author.html#45">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] [RFC] ts_open: turn nonblock-parameter into	more generic one	called 'flags'.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BRFC%5D%20ts_open%3A%20turn%20nonblock-parameter%20into%0A%09more%20generic%20one%09called%20%27flags%27.&In-Reply-To=%3C20101112150645.GD28454%40pengutronix.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000331.html">
+   <LINK REL="Next"  HREF="000334.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] [RFC] ts_open: turn nonblock-parameter into	more generic one	called 'flags'.</H1>
+    <B>Wolfram Sang</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20%5BRFC%5D%20ts_open%3A%20turn%20nonblock-parameter%20into%0A%09more%20generic%20one%09called%20%27flags%27.&In-Reply-To=%3C20101112150645.GD28454%40pengutronix.de%3E"
+       TITLE="[Tslib-general] [RFC] ts_open: turn nonblock-parameter into	more generic one	called 'flags'.">w.sang at pengutronix.de
+       </A><BR>
+    <I>Fri Nov 12 16:06:45 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000331.html">[Tslib-general] [RFC] ts_open: turn nonblock-parameter into more generic one called 'flags'.
+</A></li>
+        <LI>Next message: <A HREF="000334.html">[Tslib-general] [RFC] ts_open: turn nonblock-parameter into more generic one called 'flags'.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#333">[ date ]</a>
+              <a href="thread.html#333">[ thread ]</a>
+              <a href="subject.html#333">[ subject ]</a>
+              <a href="author.html#333">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Nov 12, 2010 at 04:05:44PM +0200, Paulius Zaleckas wrote:
+&gt;<i> On Fri, Nov 12, 2010 at 2:59 PM, Wolfram Sang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt; wrote:
+</I>&gt;<i> &gt; An upcoming driver (dmc) will need O_RDWR and can set it this way. At least all
+</I>&gt;<i> &gt; in-tree users use 0 for the old flag which will be converted to the old
+</I>&gt;<i> &gt; behaviour O_RDONLY.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Signed-off-by: Wolfram Sang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">w.sang at pengutronix.de</A>&gt;
+</I>&gt;<i> &gt; ---
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Are we open for API changes? Might be a bit brave, but the result looks more
+</I>&gt;<i> &gt; intuitive IMHO.
+</I>&gt;<i> 
+</I>&gt;<i> IMO it is better to just do a fallback if read/write fails and return is -EPERM
+</I>
+Hmmm, ts_open returns a pointer to a tsdev. So, you mean return a valid pointer
+and set errno to -EPERM? That means that most drivers (which won't need rw)
+might see -EPERM and could not distinguish from a true permission problem? Or
+did I get it wrong?
+
+Regards,
+
+   Wolfram
+
+-- 
+Pengutronix e.K.                           | Wolfram Sang                |
+Industrial Linux Solutions                 | <A HREF="http://www.pengutronix.de/">http://www.pengutronix.de/</A>  |
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 197 bytes
+Desc: Digital signature
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20101112/62de05c3/attachment.pgp">https://lists.berlios.de/pipermail/tslib-general/attachments/20101112/62de05c3/attachment.pgp</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000331.html">[Tslib-general] [RFC] ts_open: turn nonblock-parameter into more generic one called 'flags'.
+</A></li>
+	<LI>Next message: <A HREF="000334.html">[Tslib-general] [RFC] ts_open: turn nonblock-parameter into more generic one called 'flags'.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#333">[ date ]</a>
+              <a href="thread.html#333">[ thread ]</a>
+              <a href="subject.html#333">[ subject ]</a>
+              <a href="author.html#333">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

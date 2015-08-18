@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Fwd: if (version &lt; EV_VERSION)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2012-August/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Fwd%3A%20if%20%28version%20%3C%20EV_VERSION%29&In-Reply-To=%3CCA%2BTvN0tBZ4Ak66jCo7U7ps2b1KuhK39mJWCWtHvswnvNqYUpEg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000429.html">
+   <LINK REL="Next"  HREF="000432.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Fwd: if (version &lt; EV_VERSION)</H1>
+    <B>Thomas L&#228;mmlein</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Fwd%3A%20if%20%28version%20%3C%20EV_VERSION%29&In-Reply-To=%3CCA%2BTvN0tBZ4Ak66jCo7U7ps2b1KuhK39mJWCWtHvswnvNqYUpEg%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Fwd: if (version &lt; EV_VERSION)">thomaslaemmlein at gmail.com
+       </A><BR>
+    <I>Wed Aug 15 22:22:52 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000429.html">[Tslib-general] Fwd: if (version &lt; EV_VERSION)
+</A></li>
+        <LI>Next message: <A HREF="000432.html">[Tslib-general] Fwd: if (version &lt; EV_VERSION)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#431">[ date ]</a>
+              <a href="thread.html#431">[ thread ]</a>
+              <a href="subject.html#431">[ subject ]</a>
+              <a href="author.html#431">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thank you all for the answers, but I would like to know where the version
+number comes from and how will it generated?
+
+I found this in  ~/projects/Qong/Kernels/Denx/linux-2.6-denx
+/include/linux/input.h
+/*
+ * Protocol version.
+ */
+
+#define EV_VERSION        0x010000
+...
+#define EVIOCGVERSION        _IOR('E', 0x01, int)            /* get driver
+version */
+...
+
+Who implements the function &quot;_IOR('E', 0x01, int)&quot; to generate the version
+number? It should be the driver, isn't it?
+
+The connection between tslib (User Application)  and the driver (Kernel
+space) is &quot;ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version&quot; on the application side
+and the &quot;_IOR('E', 0x01, int)&quot; function on the kernel side.
+
+It would be nice fi you could help me for these questions?
+
+Thanks,
+
+Thomas
+
+
+
+
+
+On Wed, Aug 15, 2012 at 9:21 AM, David Yu &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">keweihk at gmail.com</A>&gt; wrote:
+
+&gt;<i> I think that you could delete all functions about ioctl. EVIOCGVERSION 's
+</I>&gt;<i> value may be different from your target's linux kernel. Althouth you
+</I>&gt;<i> correct your host EVIOCGVERSION to same with target's EVIOCGVERSION, you
+</I>&gt;<i> may not be passed.
+</I>&gt;<i> In my process of debug tslib, I deleted all functions about ioctl and
+</I>&gt;<i> modified some codes according my kernel touchscreen driver.
+</I>&gt;<i>
+</I>&gt;<i> Addition is my uart output.
+</I>&gt;<i>
+</I>&gt;<i> David Yu
+</I>&gt;<i> Thanks
+</I>&gt;<i>
+</I>&gt;<i> *&#22320;&#22336;&#65306;&#28165;&#21326;&#22823;&#23398; FIT&#27004; 4&#21306;308*
+</I>&gt;<i> *&#25163;&#26426;&#65306;13552980886*
+</I>&gt;<i> *&#37038;&#31665;&#65306; **<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">keweihk at gmail.com</A>* &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">keweihk at gmail.com</A>&gt;
+</I>&gt;<i> *MSN: **<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">david.yu at hotmail.com</A>* &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">david.yu at hotmail.com</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2012/8/15 Thomas L&#228;mmlein &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">thomaslaemmlein at gmail.com</A>&gt;
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi Chris,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> thank you for your answer, but I'm not sure what you mean.
+</I>&gt;&gt;<i> I compile the kernel with the ELDK 5.2.1 (From Company denx) Cross
+</I>&gt;&gt;<i> Compiler in this way:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ export CROSS_COMPILE=arm-linux-gnueabi-
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ export
+</I>&gt;&gt;<i> PATH=$PATH:/opt/eldk-5.2.1/armv6/sysroots/i686-eldk-linux/usr/bin:/opt/eldk-5.2.1/armv6/sysroots/i686-eldk-linux/usr/bin/armv6-vfp-linux-gnueabi
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ export ARCH=arm
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ $ cd ~/projects/Qong/Kernels/Denx/linux-2.6-denx
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ make mrproper
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ make menuconfig
+</I>&gt;&gt;<i> $ make uImage
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And I found the define EV_VERSION under
+</I>&gt;&gt;<i> ~/projects/Qong/Kernels/Denx/linux-2.6-denx/include/linux/input.h.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> How can I be sure that I compile against
+</I>&gt;&gt;<i> ~/projects/Qong/Kernels/Denx/linux-2.6-denx/include/linux and not /usr/
+</I>&gt;&gt;<i> include/linux?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The tslib I compile in this way:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ export CROSS_COMPILE=arm-linux-gnueabi-
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ export
+</I>&gt;&gt;<i> PATH=$PATH:/opt/eldk-5.2.1/armv6/sysroots/i686-eldk-linux/usr/bin:/opt/eldk-5.2.1/armv6/sysroots/i686-eldk-linux/usr/bin/armv6-vfp-linux-gnueabi
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ export ARCH=arm
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ cd ~/tslib/src
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ ./autogen.sh
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ac_cv_func_malloc_0_nonnull=yes ./configure --host=arm-linux \
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --prefix=/tmp --sysconfdir=/tmp/etc \
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --enable-input --disable-arctic2 --disable-linear-h2200 \
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --disable-ucb1x00 --disable-corgi --disable-collie \
+</I>&gt;&gt;<i> --disable-h3600 --disable-mk71
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ make
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Regards,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thomas
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Aug 15, 2012 at 1:40 AM, Chris Larson &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">clarson at kergoth.com</A>&gt;wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Tue, Aug 14, 2012 at 4:37 PM, Thomas L&#228;mmlein
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">thomaslaemmlein at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> &gt;               if (ioctl(ts-&gt;fd, EVIOCGVERSION, &amp;version) &lt; 0) {
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;                                fprintf(stderr, &quot;tslib: Selected device
+</I>&gt;&gt;&gt;<i> is
+</I>&gt;&gt;&gt;<i> &gt; not a Linux input event device\n&quot;);
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;                                return -1;
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;                 }
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;                  if (version &lt; EV_VERSION) {
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;                                fprintf(stderr, &quot;tslib: Selected device
+</I>&gt;&gt;&gt;<i> uses
+</I>&gt;&gt;&gt;<i> &gt; a different version of the event protocol than tslib was compiled
+</I>&gt;&gt;&gt;<i> for\n&quot;);
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;                                return -1;
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;                 }
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; I have uncomment the condition&#8222;if (version &lt; EV_VERSION)&#8220; and it works.
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; But why in hell is the variable &#8222;version&#8220; lower than EV_VERSION. This
+</I>&gt;&gt;&gt;<i> means
+</I>&gt;&gt;&gt;<i> &gt; the driver mc13783_ts gives me a to lower version number.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The running kernel's input layer event interface version is older than
+</I>&gt;&gt;&gt;<i> the version it was compiled against (the one in linux/event.h). Make
+</I>&gt;&gt;&gt;<i> sure you're compiling against the right headers corresponding to the
+</I>&gt;&gt;&gt;<i> device, not the build machine.
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> Christopher Larson
+</I>&gt;&gt;&gt;<i> clarson at kergoth dot com
+</I>&gt;&gt;&gt;<i> Founder - BitBake, OpenEmbedded, OpenZaurus
+</I>&gt;&gt;&gt;<i> Maintainer - Tslib
+</I>&gt;&gt;&gt;<i> Senior Software Engineer, Mentor Graphics
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Tslib-general mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20120815/40bf54d8/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20120815/40bf54d8/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000429.html">[Tslib-general] Fwd: if (version &lt; EV_VERSION)
+</A></li>
+	<LI>Next message: <A HREF="000432.html">[Tslib-general] Fwd: if (version &lt; EV_VERSION)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#431">[ date ]</a>
+              <a href="thread.html#431">[ thread ]</a>
+              <a href="subject.html#431">[ subject ]</a>
+              <a href="author.html#431">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

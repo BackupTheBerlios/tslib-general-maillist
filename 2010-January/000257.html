@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Fwd: tslib static - module raw input - ts_calibrate	- eldk arm
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Fwd%3A%20tslib%20static%20-%20module%20raw%20input%20-%20ts_calibrate%0A%09-%20eldk%20arm&In-Reply-To=%3C681741761001200547r61a26c33n734dbbb4d81bc5ea%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000256.html">
+   <LINK REL="Next"  HREF="000258.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Fwd: tslib static - module raw input - ts_calibrate	- eldk arm</H1>
+    <B>Germano Barreiro</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Fwd%3A%20tslib%20static%20-%20module%20raw%20input%20-%20ts_calibrate%0A%09-%20eldk%20arm&In-Reply-To=%3C681741761001200547r61a26c33n734dbbb4d81bc5ea%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Fwd: tslib static - module raw input - ts_calibrate	- eldk arm">germano.barreiro at gmail.com
+       </A><BR>
+    <I>Wed Jan 20 14:47:11 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000256.html">[Tslib-general] Need help with tslib and directfb
+</A></li>
+        <LI>Next message: <A HREF="000258.html">[Tslib-general] tslib static - module raw input - ts_calibrate -	eldk arm
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#257">[ date ]</a>
+              <a href="thread.html#257">[ thread ]</a>
+              <a href="subject.html#257">[ subject ]</a>
+              <a href="author.html#257">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I'm trying to port tslib to a board using ARM and with the DENX
+Embedded Linux installed. I noticed that, when using the gcc from ELDK
+(or gcc 4) it is not generating shared libraries. I have no problems
+with it if the things worked, but unfortunatly, after trying to run
+ts_calibrate in my board, I get these messages:
+
+-bash-3.2# ./ts_calibrate
+Couldnt load module input
+No raw modules loaded.
+ts_config: Success
+
+The relevant environment variables are:
+
+TSLIB_CONFFILE=/usr/tstest/etc/ts.conf
+TSLIB_CALIBFILE=/usr/tstest/etc/pointercal
+TSLIB_TSDEVICE=/dev/event0
+TSLIB_PLUGINDIR=/usr/tstest/lib/ts
+
+As a explanation, my files are under /usr/tstest because there I have
+a rw file system, what is a convenience since I'm making tests which
+can make me need to change files frequently.
+My ts.conf file is:
+
+module_raw input
+module pthres pmin=1
+module variance delta=30
+module dejitter delta=100
+module linear
+
+Since everything is being generated as static, indluding everything
+under lib/ts, should I, maybe, change ts.conf in some way to make the
+library just get the values passed to pthres and other modules withut
+making ts_config.c load them?
+Notice that this setup works fine when I use gcc 3.3.2 from another
+arm crosstool, when the shared libraries and plugins and generated and
+the ts_calibrate application behaves as expected; but the application
+running in the board demmands gcc4, which demmands the newer versions
+of libc, libld, ld-2.6.so, and other stuff, and trying to keep the
+newer and older versions of this stuff together caused other
+undesirable effects in my system.
+I have been googling about this and found other people asking about
+tslib + eldk and static tslib usage, but found no solution tere nor
+examining the code. I tried both 1.0 version and a fresh checkout of
+the svn repository as well, with the same result. So any hint that put
+me, at least, in the right direction, would be greatly apreciated.
+
+Other relevant information:
+
+gcc version: arm-linux-gcc (GCC) 4.2.2
+
+building output with commands:
+
+./autogen.sh
+libtoolize: putting auxiliary files in `.'.
+libtoolize: copying file `./ltmain.sh'
+libtoolize: putting macros in `m4/internal'.
+libtoolize: copying file `m4/internal/libtool.m4'
+libtoolize: copying file `m4/internal/ltoptions.m4'
+libtoolize: copying file `m4/internal/ltsugar.m4'
+libtoolize: copying file `m4/internal/ltversion.m4'
+libtoolize: copying file `m4/internal/lt~obsolete.m4'
+libtoolize: Consider adding `AC_CONFIG_MACRO_DIR([m4])' to configure.ac and
+libtoolize: rerunning libtoolize, to keep the correct libtool macros in-tree.
+
+export ac_cv_func_malloc_0_nonnull=yes
+echo &quot;ac_cv_func_malloc_0_nonnull=yes&quot; &gt; arm-linux.autogen &#160;&lt;=== not
+sure if both these lines are really necessary
+
+./configure --build=i386-linux --host=arm-linux --prefix=`pwd`/install
+
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for arm-linux-strip... arm-linux-strip
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking for arm-linux-g++... arm-linux-g++
+checking for C++ compiler default output file name... a.out
+checking whether the C++ compiler works... yes
+checking whether we are cross compiling... yes
+checking for suffix of executables...
+checking for suffix of object files... o
+checking whether we are using the GNU C++ compiler... yes
+checking whether arm-linux-g++ accepts -g... yes
+checking for style of include used by make... GNU
+checking dependency style of arm-linux-g++... gcc3
+checking for arm-linux-gcc... arm-linux-gcc
+checking whether we are using the GNU C compiler... yes
+checking whether arm-linux-gcc accepts -g... yes
+checking for arm-linux-gcc option to accept ISO C89... none needed
+checking dependency style of arm-linux-gcc... gcc3
+checking how to run the C preprocessor... arm-linux-gcc -E
+checking whether the C compiler supports -fvisibility=hidden... yes
+checking whether to use -fvisibility=hidden... yes
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether ln -s works... yes
+checking whether make sets $(MAKE)... (cached) yes
+checking build system type... i386-pc-linux-gnu
+checking host system type... arm-unknown-linux-gnu
+checking for a sed that does not truncate output... /usr/bin/sed
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking for fgrep... /usr/bin/grep -F
+checking for ld used by arm-linux-gcc...
+/opt/eldk.big/usr/arm-linux-gnueabi/bin/ld
+checking if the linker (/opt/eldk.big/usr/arm-linux-gnueabi/bin/ld) is
+GNU ld... no
+checking for BSD- or MS-compatible name lister (nm)...
+/opt/eldk/usr/bin/arm-linux-nm -B
+checking the name lister (/opt/eldk/usr/bin/arm-linux-nm -B) interface... BSD nm
+checking the maximum length of command line arguments... 1572864
+checking whether the shell understands some XSI constructs... yes
+checking whether the shell understands &quot;+=&quot;... yes
+checking for /opt/eldk.big/usr/arm-linux-gnueabi/bin/ld option to
+reload object files... -r
+checking for arm-linux-objdump... arm-linux-objdump
+checking how to recognize dependent libraries... pass_all
+checking for arm-linux-ar... arm-linux-ar
+checking for arm-linux-strip... (cached) arm-linux-strip
+checking for arm-linux-ranlib... arm-linux-ranlib
+checking command to parse /opt/eldk/usr/bin/arm-linux-nm -B output
+from arm-linux-gcc object... ok
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking whether we are using the GNU C++ compiler... (cached) yes
+checking whether arm-linux-g++ accepts -g... (cached) yes
+checking dependency style of arm-linux-g++... (cached) gcc3
+checking how to run the C++ preprocessor... arm-linux-g++ -E
+checking for objdir... .libs
+checking if arm-linux-gcc supports -fno-rtti -fno-exceptions... no
+checking for arm-linux-gcc option to produce PIC... -fPIC -DPIC
+checking if arm-linux-gcc PIC flag -fPIC -DPIC works... yes
+checking if arm-linux-gcc static flag -static works... yes
+checking if arm-linux-gcc supports -c -o file.o... yes
+checking if arm-linux-gcc supports -c -o file.o... (cached) yes
+checking whether the arm-linux-gcc linker
+(/opt/eldk.big/usr/arm-linux-gnueabi/bin/ld) supports shared
+libraries... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... unsupported
+checking for shl_load... no
+checking for shl_load in -ldld... no
+checking for dlopen... no
+checking for dlopen in -ldl... yes
+checking whether a program can dlopen itself... cross
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... no
+checking whether to build shared libraries... no
+checking whether to build static libraries... yes
+checking for ld used by arm-linux-g++...
+/opt/eldk.big/usr/arm-linux-gnueabi/bin/ld
+checking if the linker (/opt/eldk.big/usr/arm-linux-gnueabi/bin/ld) is
+GNU ld... no
+checking whether the arm-linux-g++ linker
+(/opt/eldk.big/usr/arm-linux-gnueabi/bin/ld) supports shared
+libraries... yes
+checking for arm-linux-g++ option to produce PIC... -fPIC -DPIC
+checking if arm-linux-g++ PIC flag -fPIC -DPIC works... yes
+checking if arm-linux-g++ static flag -static works... yes
+checking if arm-linux-g++ supports -c -o file.o... yes
+checking if arm-linux-g++ supports -c -o file.o... (cached) yes
+checking whether the arm-linux-g++ linker
+(/opt/eldk.big/usr/arm-linux-gnueabi/bin/ld) supports shared
+libraries... yes
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... unsupported
+checking for dlopen in -ldl... (cached) yes
+checking for working alloca.h... yes
+checking for alloca... yes
+checking for ANSI C header files... (cached) yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking for unistd.h... (cached) yes
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking for size_t... yes
+checking whether time.h and sys/time.h may both be included... yes
+checking whether arm-linux-gcc needs -traditional... no
+checking for stdlib.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for getpagesize... yes
+checking for working mmap... no
+checking sys/select.h usability... yes
+checking sys/select.h presence... yes
+checking for sys/select.h... yes
+checking sys/socket.h usability... yes
+checking sys/socket.h presence... yes
+checking for sys/socket.h... yes
+checking types of arguments for select... int,fd_set *,struct timeval *
+checking return type of signal handlers... void
+checking whether lstat dereferences a symlink specified with a
+trailing slash... no
+checking whether stat accepts an empty string... yes
+checking for vprintf... yes
+checking for _doprnt... no
+checking for gettimeofday... yes
+checking for memmove... yes
+checking for memset... yes
+checking for munmap... yes
+checking for select... yes
+checking for strcasecmp... yes
+checking for strchr... yes
+checking for strdup... yes
+checking for strtoul... yes
+checking whether linear modules is requested... yes
+checking whether dejitter module is requested... yes
+checking whether linear-h2200 module is requested... yes
+checking whether variance module is requested... yes
+checking whether pthres module is requested... yes
+checking whether ucb1x00 module is requested... yes
+checking whether corgi module is requested... yes
+checking whether collie module is requested... yes
+checking whether h3600 module is requested... yes
+checking whether mk712 module is requested... yes
+checking whether arctic2 module is requested... yes
+checking whether tatung module is requested... yes
+checking whether input module is requested... yes
+checking where to place modules... ${libdir}/ts
+checking whether to enable debugging... no
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating etc/Makefile
+config.status: creating plugins/Makefile
+config.status: creating src/Makefile
+config.status: creating tests/Makefile
+config.status: creating tslib-1.0.pc
+config.status: creating config.h
+config.status: config.h is unchanged
+config.status: executing depfiles commands
+config.status: executing libtool commands
+
+Followed by make and make install
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000256.html">[Tslib-general] Need help with tslib and directfb
+</A></li>
+	<LI>Next message: <A HREF="000258.html">[Tslib-general] tslib static - module raw input - ts_calibrate -	eldk arm
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#257">[ date ]</a>
+              <a href="thread.html#257">[ thread ]</a>
+              <a href="subject.html#257">[ subject ]</a>
+              <a href="author.html#257">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

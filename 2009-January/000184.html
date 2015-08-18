@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Doubt with TSLIB a my touchscreen, problem with some events...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Doubt%20with%20TSLIB%20a%20my%20touchscreen%2C%0A%20problem%20with%20some%20events...&In-Reply-To=%3C49832315.9050205%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000183.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Doubt with TSLIB a my touchscreen, problem with some events...</H1>
+    <B>Hinko Kocevar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Doubt%20with%20TSLIB%20a%20my%20touchscreen%2C%0A%20problem%20with%20some%20events...&In-Reply-To=%3C49832315.9050205%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] Doubt with TSLIB a my touchscreen, problem with some events...">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Fri Jan 30 16:56:05 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000183.html">[Tslib-general] Doubt with TSLIB a my touchscreen,	problem with some events...
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#184">[ date ]</a>
+              <a href="thread.html#184">[ thread ]</a>
+              <a href="subject.html#184">[ subject ]</a>
+              <a href="author.html#184">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>webquinty quinty wrote:
+&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> I would like to use my touchscreen with QT embedded and TSLIB btu I have a
+</I>&gt;<i> problem, my touch has not a event, ABS_PRESSURE.
+</I>&gt;<i> 
+</I>&gt;<i> Support events types:
+</I>&gt;<i>     Event type 0x00: event sync
+</I>&gt;<i>     Event type 0x01: Keys or buttons
+</I>&gt;<i>     Event type 0x03: Absolute axis
+</I>&gt;<i>     Event type 0x04: Something miscellaneous
+</I>&gt;<i> 
+</I>&gt;<i> Absolute Axis:
+</I>&gt;<i>     Absolute axis 0x00: X axis
+</I>&gt;<i>     Absolute axis 0x01: Y axis
+</I>&gt;<i> 
+</I>&gt;<i> My touch has not more events and input-raw.c of tslib make a check of touch
+</I>&gt;<i> and it fail to check because there is not ABS_PRESSURE event.
+</I>&gt;<i> 
+</I>&gt;<i> Can I change source code of input-raw.c to use my touch or is it very
+</I>&gt;<i> difficult to do it???
+</I>&gt;<i> 
+</I>
+That should do the trick, or you may fix the kernel module driver
+for your touchscreen device to report ABS_PRESSURE..
+
+HTH,
+Hinko
+
+-- 
+Hinko Ko&#269;evar, OSS developer
+&#268;ETRTA POT, d.o.o.
+Planina 3, 4000 Kranj, SI EU
+tel     ++386 (0) 4 280 66 03
+e-mail  <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+http    www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000183.html">[Tslib-general] Doubt with TSLIB a my touchscreen,	problem with some events...
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#184">[ date ]</a>
+              <a href="thread.html#184">[ thread ]</a>
+              <a href="subject.html#184">[ subject ]</a>
+              <a href="author.html#184">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

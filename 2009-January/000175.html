@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib fails to compile on Ubuntu 8.10+, easy patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20fails%20to%20compile%20on%20Ubuntu%208.10%2B%2C%20easy%20patch&In-Reply-To=%3C5A678598-615A-47F9-9D0F-DF68DFE22AE8%40laptouchinc.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000173.html">
+   <LINK REL="Next"  HREF="000174.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib fails to compile on Ubuntu 8.10+, easy patch</H1>
+    <B>Daniel Jabbour</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20fails%20to%20compile%20on%20Ubuntu%208.10%2B%2C%20easy%20patch&In-Reply-To=%3C5A678598-615A-47F9-9D0F-DF68DFE22AE8%40laptouchinc.com%3E"
+       TITLE="[Tslib-general] tslib fails to compile on Ubuntu 8.10+, easy patch">daniel at laptouchinc.com
+       </A><BR>
+    <I>Wed Jan 21 01:45:19 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000173.html">[Tslib-general] Reg: calibration issue in qtopia-free-2.2.0 with tslib-1.0
+</A></li>
+        <LI>Next message: <A HREF="000174.html">[Tslib-general] usbtouchscreen/eGalax
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#175">[ date ]</a>
+              <a href="thread.html#175">[ thread ]</a>
+              <a href="subject.html#175">[ subject ]</a>
+              <a href="author.html#175">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I noticed that gcc fails to compile the latest svn copy of tslib due  
+to a potentially &quot;unsafe&quot; use of open(). Ubuntu 8.10+, for instance,  
+by default enables the compiler flag -D_FORTIFY_SOURCE=2 which throws  
+an error on lines 253 and 255 of ts_calibrate.c. This is a pretty  
+minor issue, but could potentially stop some people using Ubuntu from  
+compiling unless they realize what's going on.
+
+To fix this, all you need to do is set a mode in the open() call. I  
+patched ts_calibrate.c to set 0644 (S_IRUSR | S_IWUSR | S_IRGRP |  
+S_IROTH) and it compiles fine. See below.
+
+Thanks.
+
+--
+Daniel Jabbour
+Software Engineer
+Laptouch, Inc.
+
+Patch below:
+Index: ts_calibrate.c
+===================================================================
+--- ts_calibrate.c      (revision 70)
++++ ts_calibrate.c      (working copy)
+@@ -21,6 +21,7 @@
+  #include &lt;sys/ioctl.h&gt;
+  #include &lt;sys/mman.h&gt;
+  #include &lt;sys/time.h&gt;
++#include &lt;sys/stat.h&gt;
+  #include &lt;linux/kd.h&gt;
+  #include &lt;linux/vt.h&gt;
+  #include &lt;linux/fb.h&gt;
+@@ -250,9 +251,9 @@
+                 for (i = 0; i &lt; 7; i++) printf(&quot;%d &quot;, cal.a [i]);
+                 printf(&quot;\n&quot;);
+                 if ((calfile = getenv(&quot;TSLIB_CALIBFILE&quot;)) != NULL) {
+-                       cal_fd = open (calfile, O_CREAT | O_RDWR);
++                       cal_fd = open (calfile, O_CREAT | O_RDWR,  
+S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+                 } else {
+-                       cal_fd = open (&quot;/etc/pointercal&quot;, O_CREAT |  
+O_RDWR);
++                       cal_fd = open (&quot;/etc/pointercal&quot;, O_CREAT |  
+O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+                 }
+                 sprintf (cal_buffer,&quot;%d %d %d %d %d %d %d&quot;,
+                          cal.a[1], cal.a[2], cal.a[0],
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000173.html">[Tslib-general] Reg: calibration issue in qtopia-free-2.2.0 with tslib-1.0
+</A></li>
+	<LI>Next message: <A HREF="000174.html">[Tslib-general] usbtouchscreen/eGalax
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#175">[ date ]</a>
+              <a href="thread.html#175">[ thread ]</a>
+              <a href="subject.html#175">[ subject ]</a>
+              <a href="author.html#175">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

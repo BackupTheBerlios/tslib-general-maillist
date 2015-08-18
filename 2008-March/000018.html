@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] disabling linear-h2200
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20disabling%20linear-h2200&In-Reply-To=%3C1A1CA1A4CD7D304485214EBCCAEE0A01063779%40BBSC-EX01.bbsconnect.ca%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000020.html">
+   <LINK REL="Next"  HREF="000019.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] disabling linear-h2200</H1>
+    <B>Eric Morrill</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20disabling%20linear-h2200&In-Reply-To=%3C1A1CA1A4CD7D304485214EBCCAEE0A01063779%40BBSC-EX01.bbsconnect.ca%3E"
+       TITLE="[Tslib-general] disabling linear-h2200">EMorrill at EmpowerTechnologies.com
+       </A><BR>
+    <I>Wed Mar 12 01:44:42 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000020.html">[Tslib-general] eGalax (touchkitusb)
+</A></li>
+        <LI>Next message: <A HREF="000019.html">[Tslib-general] eGalax usbhid-driver and raw-input
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18">[ date ]</a>
+              <a href="thread.html#18">[ thread ]</a>
+              <a href="subject.html#18">[ subject ]</a>
+              <a href="author.html#18">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I was trying to disable this feature using the --disable-linear-h2200 option and noticed it was still being built. Tracked it down to the configure.ac file incorrectly specifying dejitter. Something missed in a copy, paste, modify.
+
+Minor issue, but with a trivial fix. Not sure exactly how to submit patches. Below is a diff for the fix.
+
+Index: configure.ac
+===================================================================
+--- configure.ac        (revision 52)
++++ configure.ac        (working copy)
+@@ -71,7 +71,7 @@
+ AM_CONDITIONAL(ENABLE_DEJITTER_MODULE, test &quot;$dejitter_module&quot; = &quot;yes&quot;)
+
+ AC_MSG_CHECKING([whether linear-h2200 module is requested])
+-AC_ARG_ENABLE(dejitter,
++AC_ARG_ENABLE(linear-h2200,
+        AS_HELP_STRING([--enable-linear-h2200],
+                [Enable building of linearizing filter for iPAQ h2200 (default=yes)]),
+        [h2200_linear_module=$enableval],
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080311/25ef4160/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20080311/25ef4160/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000020.html">[Tslib-general] eGalax (touchkitusb)
+</A></li>
+	<LI>Next message: <A HREF="000019.html">[Tslib-general] eGalax usbhid-driver and raw-input
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18">[ date ]</a>
+              <a href="thread.html#18">[ thread ]</a>
+              <a href="subject.html#18">[ subject ]</a>
+              <a href="author.html#18">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

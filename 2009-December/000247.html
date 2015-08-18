@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Need help in getting tslib to work properly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Need%20help%20in%20getting%20tslib%20to%20work%20properly&In-Reply-To=%3Ced7750810912132318sc045c55mf7e35ba92ebf95c2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000246.html">
+   <LINK REL="Next"  HREF="000248.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Need help in getting tslib to work properly</H1>
+    <B>Stanley</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Need%20help%20in%20getting%20tslib%20to%20work%20properly&In-Reply-To=%3Ced7750810912132318sc045c55mf7e35ba92ebf95c2%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Need help in getting tslib to work properly">eva2002 at gmail.com
+       </A><BR>
+    <I>Mon Dec 14 08:18:36 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000246.html">[Tslib-general] Segmentation fault while executing ts_calibrate
+</A></li>
+        <LI>Next message: <A HREF="000248.html">[Tslib-general] tslib &amp; USB touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#247">[ date ]</a>
+              <a href="thread.html#247">[ thread ]</a>
+              <a href="subject.html#247">[ subject ]</a>
+              <a href="author.html#247">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I am new to the embedded world and even more new to LCD touchscreen
+programming.
+I am currently working on at91rm9200dk board with a lcd touchscreen and
+using Buildroot to lay out my linux environment when I tried to work with
+the touchscreen and tslib I got some problem.
+
+After setting for my environment. for the board, I tried running
+ts_calibrate and ts_test. but in both test, I got this &quot;unknown event type
+0&quot; problem. I have search through the web and found some poeple using gentoo
+tslib applying a patch for the problem.
+
+<A HREF="http://projects.openmoko.org/plugins/scmsvn/viewcvs.php/*checkout*/trunk/openmoko-target/x11-libs/tslib/files/tslib-1.0-UnknownEventType0.patch?content-type=text%2Fplain&amp;rev=15&amp;root=gentoo">http://projects.openmoko.org/plugins/scmsvn/viewcvs.php/*checkout*/trunk/openmoko-target/x11-libs/tslib/files/tslib-1.0-UnknownEventType0.patch?content-type=text%2Fplain&amp;rev=15&amp;root=gentoo</A>
+.
+
+I tried the patched but it did not work for me. Anyone know how to resolve
+this problem?
+
+Any help would be good. Thanks
+
+Regards,
+Stanley
+
+
+output from ts_calibrate
+----------------------------
+
+xres = 640, yres =
+480
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+Took 13
+samples...
+Top left : X = 3250 Y =
+3232
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+Took 19
+samples...
+Top right : X =  569 Y =
+3090
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+Took 7
+samples...
+Bot right : X = 1096 Y =
+889
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+Took 28
+samples...
+Bot left : X = 3610 Y =
+613
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+tslib: Unknown event type
+0
+Took 7
+samples...
+Center : X = 2050 Y =
+1954
+833.533813 -0.208233
+-0.037390
+554.510864 -0.003445
+-0.157100
+Calibration constants: 54626472 -13646 -2450 36340424 -225 -10295 65536
+
+
+/etc/ts.conf
+# Uncomment if you wish to use the linux input layer event interface
+# module_raw input
+
+# Uncomment if you're using a Sharp Zaurus SL-5500/SL-5000d
+# module_raw collie
+
+# Uncomment if you're using a Sharp Zaurus SL-C700/C750/C760/C860
+# module_raw corgi
+
+# Uncomment if you're using a device with a UCB1200/1300/1400 TS interface
+# module_raw ucb1x00
+
+# Uncomment if you're using an HP iPaq h3600 or similar
+# module_raw h3600
+
+# Uncomment if you're using a Hitachi Webpad
+# module_raw mk712
+
+# Uncomment if you're using an IBM Arctic II
+# module_raw arctic2
+
+module_raw input
+module pthres pmin=1
+module variance delta=30
+module dejitter delta=100
+module linear
+
+
+Exported envirmonment
+    export TSLIB_FBDEVICE=/dev/fb0
+    export TSLIB_CONSOLEDEVICE=none
+    export TSLIB_CONFFILE=/etc/ts.conf
+    export TSLIB_CALIBFILE=/etc/pointercl
+    export TSLIB_TSDEVICE=/dev/event0
+    export TSLIB_PLUGINDIR=/usr/lib/ts
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20091214/76702ec9/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20091214/76702ec9/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000246.html">[Tslib-general] Segmentation fault while executing ts_calibrate
+</A></li>
+	<LI>Next message: <A HREF="000248.html">[Tslib-general] tslib &amp; USB touchscreen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#247">[ date ]</a>
+              <a href="thread.html#247">[ thread ]</a>
+              <a href="subject.html#247">[ subject ]</a>
+              <a href="author.html#247">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

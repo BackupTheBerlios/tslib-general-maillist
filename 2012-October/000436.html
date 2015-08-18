@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] tslib and input events.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20and%20input%20events.&In-Reply-To=%3C20121019093408.GC4856%40bitwizard.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000437.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] tslib and input events.</H1>
+    <B>Rogier Wolff</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20tslib%20and%20input%20events.&In-Reply-To=%3C20121019093408.GC4856%40bitwizard.nl%3E"
+       TITLE="[Tslib-general] tslib and input events.">R.E.Wolff at BitWizard.nl
+       </A><BR>
+    <I>Fri Oct 19 11:34:08 CEST 2012</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000437.html">[Tslib-general] tslib and input events.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#436">[ date ]</a>
+              <a href="thread.html#436">[ thread ]</a>
+              <a href="subject.html#436">[ subject ]</a>
+              <a href="author.html#436">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi,
+
+In the past I've written a &quot;driver&quot; for a touchscreen that would work
+through a shopping window. This worked by inserting the touch events
+as mouse events into the kernel using uinput.
+
+I have a very old touchscreen that I'd like to use. However, the
+drivers have gone out-of-maintenance. So I modified the previous
+driver, and lo and behold it works. That is, the raw events come
+through, but what's a click, what's a drag, what's a doubleclick etc
+etc is not yet implemented.
+
+This is, I think, where tslib comes in. tslib should be able to help
+in these things, right?
+
+On the other hand, as far as I can deduce, tslib is meant as a library
+with a single application, and not meant for use with &quot;X Windows&quot;. So
+I'd need to port my uinput &quot;driver&quot; into tslib so that all tslib
+supported drivers would be able to send events to uinput, which in
+turn allows us to work with X Windows. Right?
+
+	Rogier. 
+
+-- 
+** <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">R.E.Wolff at BitWizard.nl</A> ** <A HREF="http://www.BitWizard.nl/">http://www.BitWizard.nl/</A> ** +31-15-2600998 **
+**    Delftechpark 26 2628 XH  Delft, The Netherlands. KVK: 27239233    **
+*-- BitWizard writes Linux device drivers for any device you may have! --*
+The plan was simple, like my brother-in-law Phil. But unlike
+Phil, this plan just might work.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000437.html">[Tslib-general] tslib and input events.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#436">[ date ]</a>
+              <a href="thread.html#436">[ thread ]</a>
+              <a href="subject.html#436">[ subject ]</a>
+              <a href="author.html#436">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

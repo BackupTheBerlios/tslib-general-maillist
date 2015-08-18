@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] evtest worked but ts_calibrate with no luck?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20evtest%20worked%20but%20ts_calibrate%20with%20no%20luck%3F&In-Reply-To=%3Cf275a9df1003300218j537dc00m501bf0c698a50db3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000280.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] evtest worked but ts_calibrate with no luck?</H1>
+    <B>Jiason Li</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20evtest%20worked%20but%20ts_calibrate%20with%20no%20luck%3F&In-Reply-To=%3Cf275a9df1003300218j537dc00m501bf0c698a50db3%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] evtest worked but ts_calibrate with no luck?">listjiason at gmail.com
+       </A><BR>
+    <I>Tue Mar 30 11:18:46 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000280.html">[Tslib-general] evtest worked but ts_calibrate with no luck?
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#281">[ date ]</a>
+              <a href="thread.html#281">[ thread ]</a>
+              <a href="subject.html#281">[ subject ]</a>
+              <a href="author.html#281">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Dan,
+
+Again, thanks for the info. :-)
+
+In my case, it was the driver's fault.
+
+My touchscreen driver declared it *supports* EV_SYN,
+but it *never* actually reported an EV_SYN.
+
+While tslib-1.0's input-raw.c expected an EV_SYN if the driver said it supports,
+resulted was tslib never fired an event.
+
+Thanks for the help though! :-)
+
+Thank You!
+jiason
+20100330
+
+
+2010/3/26 Dan Lyke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">danlyke at flutterby.com</A>&gt;:
+&gt;<i> On Thu, 25 Mar 2010 09:14:04 +0800
+</I>&gt;<i> Jiason Li &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">listjiason at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Thanks for your help. :DD
+</I>&gt;<i>
+</I>&gt;<i> Hope it's useful. That was a year ago, and right now it'd take me a few
+</I>&gt;<i> hours (at least) to dig out a device to run tslib on to try to remember
+</I>&gt;<i> what I was doing.
+</I>&gt;<i>
+</I>&gt;&gt;<i> I'll figure it out if filters were the reason. :-)
+</I>&gt;<i>
+</I>&gt;<i> I think I remember that the filters were configurable from the
+</I>&gt;<i> environment variables or the /etc/tslib.conf file.
+</I>&gt;<i>
+</I>&gt;<i> Hope this helps.
+</I>&gt;<i>
+</I>&gt;<i> Dan
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000280.html">[Tslib-general] evtest worked but ts_calibrate with no luck?
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#281">[ date ]</a>
+              <a href="thread.html#281">[ thread ]</a>
+              <a href="subject.html#281">[ subject ]</a>
+              <a href="author.html#281">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

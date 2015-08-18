@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Touch screen issue with x-server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Touch%20screen%20issue%20with%20x-server&In-Reply-To=%3C000b01c8e43a%24ea9d1ba0%24bfd752e0%24%40com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000070.html">
+   <LINK REL="Next"  HREF="000072.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Touch screen issue with x-server</H1>
+    <B>Rakesh Jagota</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Touch%20screen%20issue%20with%20x-server&In-Reply-To=%3C000b01c8e43a%24ea9d1ba0%24bfd752e0%24%40com%3E"
+       TITLE="[Tslib-general] Touch screen issue with x-server">jrakesh at gdatech.com
+       </A><BR>
+    <I>Sat Jul 12 18:18:18 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000070.html">[Tslib-general] Doubt with tslib
+</A></li>
+        <LI>Next message: <A HREF="000072.html">[Tslib-general] Touch panel calibration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#71">[ date ]</a>
+              <a href="thread.html#71">[ thread ]</a>
+              <a href="subject.html#71">[ subject ]</a>
+              <a href="author.html#71">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+ 
+
+I have integrated touch screen driver and using tslib as an user interface.
+I am running x-server and whin I login as user, touch screen never used to
+work but when I restart gdm (/etc/init.d/gdm restart) touch screen start
+working.
+
+ 
+
+When I see my /var/log/Xorg.0.log, I can see the error:
+
+ 
+
+.........
+
+........
+
+(**) Option &quot;TslibDevice&quot; &quot;/dev/event0&quot;
+
+ts_open failed (device=/dev/event0)
+
+(EE) PreInit returned NULL for &quot;touchscreen&quot;
+
+........
+
+........
+
+And entry for touch screen in my /etc/X11/xorg.conf file is like this:
+
+ 
+
+Section &quot;InputDevice&quot;
+
+        Identifier      &quot;touchscreen&quot;
+
+        Driver          &quot;tslib&quot;
+
+        Option          &quot;Device&quot;
+&quot;/dev/input/by-path/platform-0-0:WM9711,WM9712-event-joystick&quot;
+
+        Option          &quot;DeviceName&quot;    &quot;touchscreen&quot;
+
+        Option          &quot;Protocol&quot;      &quot;auto&quot;
+
+EndSection
+
+ 
+
+........
+
+.......
+
+......
+
+.........
+
+ 
+
+Section &quot;ServerLayout&quot;
+
+        Identifier      &quot;Default Layout&quot;
+
+        Screen          &quot;Default Screen&quot;
+
+        InputDevice     &quot;Generic Keyboard&quot;
+
+        InputDevice     &quot;Configured Mouse&quot;
+
+        InputDevice     &quot;touchscreen&quot;   &quot;SendCoreEvents&quot;
+
+        Option          &quot;AllowMouseOpenFail&quot;    &quot;true&quot;
+
+        InputDevice     &quot;dummy&quot;
+
+EndSection
+
+ 
+
+ 
+
+The /etc/ts.conf file is like this:
+
+ 
+
+module_raw input
+
+module pthres pmin=1
+
+module variance delta=30
+
+module dejitter delta=100
+
+module linear
+
+ 
+
+The /etc/profile file like this:
+
+ 
+
+export PATHexport
+TSLIB_TSDEVICE=&quot;/dev/input/by-path/platform-0-0:WM9711,WM9712-event-joystick
+&quot;
+
+export TSLIB_CALIBFILE=/etc/pointercal
+
+export TSLIB_CONFFILE=/etc/ts.conf
+
+export TSLIB_FBDEVICE=/dev/fb0
+
+export TSLIB_CONSOLEDEVICE=none
+
+export TSLIB_PLUGINDIR=/usr/lib/ts
+
+sudo ln -s &quot;/dev/input/by-path/platform-0-0:WM9711,WM9712-event-joystick&quot;
+/dev/event0
+
+ 
+
+Even the above enteries I have included in .bashrc file as well for
+particular user. 
+
+The input.so file is available as shown below:
+
+ 
+
+gda225:/usr/lib/ts# ls
+
+arctic2.so  corgi.so     h3600.so  linear_h2200.so  mk712.so   ucb1x00.so
+
+collie.so   dejitter.so  input.so  linear.so        pthres.so  variance.so
+
+gda225:/usr/lib/ts#
+
+ 
+
+The libts.so file is available in /usr/local/lib as shown below:
+
+ 
+
+gda225:/usr/local/lib# ls -l
+
+total 24
+
+lrwxrwxrwx 1 root staff    18 2008-07-04 17:16 libts-0.0.so.0 -&gt;
+libts-0.0.so.0.1.1
+
+-rwxr-xr-x 1 root staff 20007 2008-07-04 17:15 libts-0.0.so.0.1.1
+
+lrwxrwxrwx 1 root staff    18 2008-07-04 17:16 libts.so -&gt;
+libts-0.0.so.0.1.1
+
+drwxrwsr-x 3 root staff  4096 2008-07-04 14:12 python2.4
+
+gda225:/usr/local/lib#
+
+ 
+
+The /etc/sudoers file is like this:
+
+ 
+
+test ALL = NOPASSWD:/bin/ln, /usr/bin, /usr/lib/ts, /etc/profile,
+/etc/ts.conf, /usr/local/lib, /bin/rm, /usr/bin/ts_calibrate
+
+root ALL = NOPASSWD:/bin/ln
+
+ 
+
+My &quot;cat /proc/bus/input/device&quot; entry is as shown below:
+
+ 
+
+gda225:/usr/local/lib# cat /proc/bus/input/devices
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+
+N: Name=&quot;wm97xx touchscreen&quot;
+
+P: Phys=
+
+S: Sysfs=/class/input/input2
+
+U: Uniq=
+
+H: Handlers=event2 
+
+B: EV=9
+
+B: ABS=1000003 1000003
+
+ 
+
+ 
+
+The input devices entry:
+
+gda225:/dev/input/by-path# ls -l
+
+total 0
+
+lrwxrwxrwx 1 root root 9 2008-07-11 14:13
+platform-0-0:WM9711,WM9712-event-joystick -&gt; ../event2
+
+ 
+
+I could not understand what can be the issue, when I run the &quot;ts_calibarte&quot;
+first time, I used to get the error:
+
+ 
+
+#ts_calibrate
+
+Ts_open: Permission denied
+
+ 
+
+ 
+
+And if I do (ctrl+alt+backspace), I can see ts_config error. And this error
+used to go away once I restart my gdm (/etc/init.d/gdm restart).
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080712/62bcda57/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20080712/62bcda57/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000070.html">[Tslib-general] Doubt with tslib
+</A></li>
+	<LI>Next message: <A HREF="000072.html">[Tslib-general] Touch panel calibration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#71">[ date ]</a>
+              <a href="thread.html#71">[ thread ]</a>
+              <a href="subject.html#71">[ subject ]</a>
+              <a href="author.html#71">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

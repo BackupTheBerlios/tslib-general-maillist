@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Tslib-general Digest, Vol 64, Issue 3
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2014-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib-general%20Digest%2C%20Vol%2064%2C%20Issue%203&In-Reply-To=%3CCAL8k1Z565rdJHehdUvoxjodF_OGogrfCWK2rxSOhFu8k7OhBHQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000450.html">
+   <LINK REL="Next"  HREF="000452.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Tslib-general Digest, Vol 64, Issue 3</H1>
+    <B>Vignesh Raman</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Tslib-general%20Digest%2C%20Vol%2064%2C%20Issue%203&In-Reply-To=%3CCAL8k1Z565rdJHehdUvoxjodF_OGogrfCWK2rxSOhFu8k7OhBHQ%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Tslib-general Digest, Vol 64, Issue 3">rvignesh.raman at gmail.com
+       </A><BR>
+    <I>Mon Jan 13 15:56:47 CET 2014</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000450.html">[Tslib-general] Multi touch plugin support in tslib
+</A></li>
+        <LI>Next message: <A HREF="000452.html">[Tslib-general] Tslib-general Digest, Vol 64, Issue 3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#451">[ date ]</a>
+              <a href="thread.html#451">[ thread ]</a>
+              <a href="subject.html#451">[ subject ]</a>
+              <a href="author.html#451">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Cedirc,
+
+I debugged with gdbserver and got a backtrace,
+
+Program received signal SIGSEGV, Segmentation fault.
+0xe3500000 in ?? ()
+(gdb) bt
+#0  0xe3500000 in ?? ()
+#1  0x76fed034 in __ts_load_module_shared (ts=<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">ts at entry</A>=0x1d008,
+module=<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">module at entry</A>=0x7efff8c3 &quot;mtinput&quot;, params=<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">params at entry</A>=0x0) at
+ts_load_module.c:129
+#2  0x76fed148 in __ts_load_module (ts=<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">ts at entry</A>=0x1d008,
+module=<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">module at entry</A>=0x7efff8c3
+&quot;mtinput&quot;, params=0x0, raw=<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">raw at entry</A>=1) at ts_load_module.c:154
+#3  0x76fed1f4 in ts_load_module_raw (ts=<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">ts at entry</A>=0x1d008,
+module=<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">module at entry</A>=0x7efff8c3 &quot;mtinput&quot;, params=&lt;optimized out&gt;) at
+ts_load_module.c:183
+#4  0x76fece44 in ts_config (ts=0x1d008) at ts_config.c:80
+#5  0x00008c60 in ?? ()
+#6  0x7efffed0 in ?? ()
+Backtrace stopped: frame did not save the PC
+
+The last call in tslib code is in __ts_load_module_shared function.
+The crash appears to be in,
+info = (*init) (ts,params)
+
+Looks like there is no function mtinout_mod_init which should be called
+when above statement is executed. For eg in /etc/ts.conf
+module_raw input is added, input_mod_init will be called. I don't see
+mtinout_mod_init in the code I'm testing.
+
+I will analyse more on this and add necessary changes for mtinput and
+restest again.
+
+Thanks!
+
+
+
+&gt;<i> ----------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 1
+</I>&gt;<i> Date: Fri, 10 Jan 2014 13:51:17 +0100
+</I>&gt;<i> From: Cedric Hombourger &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">chombourger at gmail.com</A>&gt;
+</I>&gt;<i> To: Vignesh Raman &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">rvignesh.raman at gmail.com</A>&gt;
+</I>&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Tslib-general] Multi touch plugin support in tslib
+</I>&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">E15DFFB8-8077-46D5-A660-A9661895AC3F at gmail.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+</I>&gt;<i>
+</I>&gt;<i> Hi Vignesh,
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately, strace will not help us locate where the problem is in the
+</I>&gt;<i> tslib code
+</I>&gt;<i> The last syscall we see is open() and I really doubt it crashes (in fact
+</I>&gt;<i> it returned with a valid fd!)
+</I>&gt;<i>
+</I>&gt;<i> Any chance you can get a gdb backtrace?
+</I>&gt;<i>
+</I>&gt;<i> I see that the mtinput dso was opened. You may need to make sure that
+</I>&gt;<i> symbols of your shared libraries are loaded for gdb to produce a useable
+</I>&gt;<i> backtrace.
+</I>&gt;<i>
+</I>&gt;<i> I would focus on that rather than adding traces (I am not a big fan of the
+</I>&gt;<i> printf/printf debugging technique as you can see particularly when
+</I>&gt;<i> excellent debugging tools exist).
+</I>&gt;<i>
+</I>&gt;<i> Cedric
+</I>&gt;<i>
+</I>&gt;<i> On Jan 10, 2014, at 1:13 PM, Vignesh Raman &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">rvignesh.raman at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I tried debugging using strace and gdbserver. I see that after open
+</I>&gt;<i> system call it crashes,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">root at mx6q</A>:~# strace -e open /usr/bin/ts_calibrate
+</I>&gt;<i> &gt; open(&quot;/etc/ld.so.cache&quot;, O_RDONLY|O_CLOEXEC) = 3
+</I>&gt;<i> &gt; open(&quot;/usr/lib/libts-1.0.so.0&quot;, O_RDONLY|O_CLOEXEC) = 3
+</I>&gt;<i> &gt; open(&quot;/lib/libdl.so.2&quot;, O_RDONLY|O_CLOEXEC) = 3
+</I>&gt;<i> &gt; open(&quot;/lib/libgcc_s.so.1&quot;, O_RDONLY|O_CLOEXEC) = 3
+</I>&gt;<i> &gt; open(&quot;/lib/libc.so.6&quot;, O_RDONLY|O_CLOEXEC) = 3
+</I>&gt;<i> &gt; open(&quot;/dev/input/event0&quot;, O_RDWR)       = 3
+</I>&gt;<i> &gt; open(&quot;/etc/ts.conf&quot;, O_RDONLY)          = 4
+</I>&gt;<i> &gt; Loading module mtinput
+</I>&gt;<i> &gt; open(&quot;/usr/lib/ts/mtinput.so&quot;, O_RDONLY|O_CLOEXEC) = 5
+</I>&gt;<i> &gt; --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0xe3500000}
+</I>&gt;<i> ---
+</I>&gt;<i> &gt; --- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=0} ---
+</I>&gt;<i> &gt; +++ killed by SIGSEGV +++
+</I>&gt;<i> &gt; Segmentation fault
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Looks while loading the mtinput module it fails in __ts_load_module.
+</I>&gt;<i> &gt; I will add more debug info in this function and check.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Attached patch consist of the multi touch changes taken from
+</I>&gt;<i> &gt; <A HREF="http://sourceforge.net/projects/tslib-mt/files/">http://sourceforge.net/projects/tslib-mt/files/</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Fri, Jan 10, 2014 at 12:01 PM, Vignesh Raman &lt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">rvignesh.raman at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I tired to test the multi touch plugin in tslib.
+</I>&gt;<i> &gt; <A HREF="http://sourceforge.net/projects/tslib-mt/files/">http://sourceforge.net/projects/tslib-mt/files/</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I added tslib/plugin/mtinput-raw.c to tslib git branch and merged the
+</I>&gt;<i> changes in tslib/plugin/Makefile.am and configure.ac
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I changed module_raw input to module_raw mtinput
+</I>&gt;<i> &gt; in ts.conf and tested on imx target. But I get a segmentation fault when
+</I>&gt;<i> I run ts_calibrate or ts_print.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Please let me know if anything is missing?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Has anyone successfully tested multi touch in tslib?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Thanks!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; Regards,
+</I>&gt;<i> &gt; Vignesh.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; Regards,
+</I>&gt;<i> &gt; Vignesh.
+</I>&gt;<i> &gt; &lt;multi-touch.patch&gt;_______________________________________________
+</I>&gt;<i> &gt; Tslib-general mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>
+</I>&gt;<i> -------------- next part --------------
+</I>&gt;<i> An HTML attachment was scrubbed...
+</I>&gt;<i> URL: &lt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20140110/412f0a19/attachment-0001.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20140110/412f0a19/attachment-0001.html</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i>
+</I>&gt;<i> End of Tslib-general Digest, Vol 64, Issue 3
+</I>&gt;<i> ********************************************
+</I>&gt;<i>
+</I>
+
+
+-- 
+Regards,
+Vignesh.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20140113/74a003f9/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20140113/74a003f9/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000450.html">[Tslib-general] Multi touch plugin support in tslib
+</A></li>
+	<LI>Next message: <A HREF="000452.html">[Tslib-general] Tslib-general Digest, Vol 64, Issue 3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#451">[ date ]</a>
+              <a href="thread.html#451">[ thread ]</a>
+              <a href="subject.html#451">[ subject ]</a>
+              <a href="author.html#451">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

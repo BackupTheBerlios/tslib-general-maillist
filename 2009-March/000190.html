@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Event driver issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Event%20driver%20issue&In-Reply-To=%3C49B79D65.6050308%40apexar.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000191.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Event driver issue</H1>
+    <B>Diego A. Fons</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Event%20driver%20issue&In-Reply-To=%3C49B79D65.6050308%40apexar.com%3E"
+       TITLE="[Tslib-general] Event driver issue">diegofons at apexar.com
+       </A><BR>
+    <I>Wed Mar 11 12:15:49 CET 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000191.html">[Tslib-general] tslib + xorg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#190">[ date ]</a>
+              <a href="thread.html#190">[ thread ]</a>
+              <a href="subject.html#190">[ subject ]</a>
+              <a href="author.html#190">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>James Pellow wrote:
+&gt;<i> Hi All,
+</I>&gt;<i>
+</I>&gt;<i> I just spent some time debugging a BTN_TOUCH problem in the current event-raw 
+</I>&gt;<i> driver.  It appears this issue is already known, after searching the mailing 
+</I>&gt;<i> list.  The bug touches hardware that does not support pressure.  As a 
+</I>&gt;<i> reminder, here is the patch that fixes the bug, and I can confirm it does 
+</I>&gt;<i> solve the problem for me:
+</I>&gt;<i>
+</I>&gt;<i> Index: plugins/input-raw.c
+</I>&gt;<i> ===================================================================
+</I>&gt;<i> --- plugins/input-raw.c (revision 70)
+</I>&gt;<i> +++ plugins/input-raw.c (working copy)
+</I>&gt;<i> @@ -107,7 +107,7 @@
+</I>&gt;<i>                 i-&gt;current_p = 255;
+</I>&gt;<i>
+</I>&gt;<i>                 if ((ioctl(ts-&gt;fd, EVIOCGBIT(EV_KEY, KEY_CNT), keybit) &lt; 0) ||
+</I>&gt;<i> -                       !(absbit[BIT_WORD(BTN_TOUCH)] &amp; BIT_MASK(BTN_TOUCH)) ) 
+</I>&gt;<i> {
+</I>&gt;<i> +                       !(keybit[BIT_WORD(BTN_TOUCH)] &amp; BIT_MASK(BTN_TOUCH)) ) 
+</I>&gt;<i> {
+</I>&gt;<i>                         fprintf(stderr, &quot;selected device uses is not a 
+</I>&gt;<i> touchscreen (must support BTN_TOUCH events)\n&quot;);
+</I>&gt;<i>                         return -1;
+</I>&gt;<i>                 }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I'm looking forward to a solid next release.  Thanks!
+</I>&gt;<i>
+</I>&gt;<i> Cheers,
+</I>&gt;<i>
+</I>&gt;<i> James
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>Hi,
+
+This a valid and necessary patch in order to use an infrared usb touch 
+(at least in my case).
+
+I've recently compile kernek 2.6.28 and found a problem. TSLib says that 
+an avent is not recognized, in fact, the event is EV_SYN. I've solve 
+this problem by forcing the using_syn attribute to 1. Can it be a 
+problem related with the 2.6.28 kernel and the event input interface? 
+Did anyone realise about this behavior? The same TSLib build work fine 
+with 2.6.25.4 kernel.
+
+Regards,
+Diego A. Fons.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000191.html">[Tslib-general] tslib + xorg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#190">[ date ]</a>
+              <a href="thread.html#190">[ thread ]</a>
+              <a href="subject.html#190">[ subject ]</a>
+              <a href="author.html#190">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

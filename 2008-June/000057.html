@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] TSLIB do not	recognize	TSC-10	as	touchscreendevice...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20TSLIB%20do%20not%0A%09recognize%09TSC-10%09as%09touchscreendevice...&In-Reply-To=%3C00ba01c8d614%248a174550%249e45cff0%24%40com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000056.html">
+   <LINK REL="Next"  HREF="000059.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] TSLIB do not	recognize	TSC-10	as	touchscreendevice...</H1>
+    <B>Rakesh Jagota</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20TSLIB%20do%20not%0A%09recognize%09TSC-10%09as%09touchscreendevice...&In-Reply-To=%3C00ba01c8d614%248a174550%249e45cff0%24%40com%3E"
+       TITLE="[Tslib-general] TSLIB do not	recognize	TSC-10	as	touchscreendevice...">jrakesh at gdatech.com
+       </A><BR>
+    <I>Tue Jun 24 18:08:22 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000056.html">[Tslib-general] TSLIB do not recognize TSC-10	as	touchscreendevice...
+</A></li>
+        <LI>Next message: <A HREF="000059.html">[Tslib-general] TSLIB do not recognize TSC-10 as	touchscreendevice...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#57">[ date ]</a>
+              <a href="thread.html#57">[ thread ]</a>
+              <a href="subject.html#57">[ subject ]</a>
+              <a href="author.html#57">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Can you send me the output for &quot;cat /proc/bus/input/bus/devices&quot;. As I also faced similar kind of problems and fixed the same. And got lot of help from Hinko as well.
+
+Regards,
+Rakesh jagota
+
+-----Original Message-----
+From: Hinko Kocevar [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>] 
+Sent: Tuesday, June 24, 2008 12:32 AM
+To: quinty
+Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+Subject: Re: [Tslib-general] TSLIB do not recognize TSC-10 as touchscreendevice...
+
+quinty wrote:
+&gt;<i> Hello Patrick,
+</I>&gt;<i> 
+</I>&gt;<i> Driver is not the problem. When kernel booting, I saw:
+</I>&gt;<i> input: TSC-10 DM as
+</I>&gt;<i> /devices/pci0000:00/0000:00:0f.4/usb2/2-4/2-4:1.0/input/input2
+</I>&gt;<i> usbcore: registered new interface driver usbtouchscreen
+</I>&gt;<i> I have made hexdump of event2 and I have a lof of hex characters.
+</I>&gt;<i> 
+</I>
+Hex chars can be made human readable by using eg. evtest utility to dump events from the input layer on the console. Or you could use evbug kernel module.
+
+&gt;<i> Then, I understand that driver work properly. But when I execute ./ts_print
+</I>&gt;<i> I have the same message, &quot;selected device is not a touchscreen device I
+</I>&gt;<i> understand&quot;.
+</I>
+The answer lies in the source code of the tslib - see where it prints it out and you can decode the bits that your kernel driver is 'not' supplying in order to present itself to the tslib as a known toushscreen device.
+
+What hardware is your touchscreen using?
+
+What does the: cat /proc/bus/input/devices and cat /proc/bus/input/handlers ?
+
+HTH,
+Hinko
+
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+_______________________________________________
+Tslib-general mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000056.html">[Tslib-general] TSLIB do not recognize TSC-10	as	touchscreendevice...
+</A></li>
+	<LI>Next message: <A HREF="000059.html">[Tslib-general] TSLIB do not recognize TSC-10 as	touchscreendevice...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#57">[ date ]</a>
+              <a href="thread.html#57">[ thread ]</a>
+              <a href="subject.html#57">[ subject ]</a>
+              <a href="author.html#57">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

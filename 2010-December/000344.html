@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Testing TSLIB based applications
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-December/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Testing%20TSLIB%20based%20applications&In-Reply-To=%3CAANLkTininqyna0HBfWrsnivqvbELrf7B0nMG%2B7kq6ob-%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000345.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Testing TSLIB based applications</H1>
+    <B>David Paulsen</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Testing%20TSLIB%20based%20applications&In-Reply-To=%3CAANLkTininqyna0HBfWrsnivqvbELrf7B0nMG%2B7kq6ob-%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Testing TSLIB based applications">djpdude at gmail.com
+       </A><BR>
+    <I>Wed Dec  1 18:53:52 CET 2010</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000345.html">[Tslib-general] Testing TSLIB based applications
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#344">[ date ]</a>
+              <a href="thread.html#344">[ thread ]</a>
+              <a href="subject.html#344">[ subject ]</a>
+              <a href="author.html#344">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Greetings all.  I've recently joined a project wherein a significant portion
+of application input comes from a TS device via what looks to be quite
+typical use of TSLIB: ts_open(), ts_config(), loop on ts_read().
+
+In times past, I've built test scripts and automation based upon things like
+shell scripts, Expect (<A HREF="http://www.nist.gov/el/msid/expect.cfm">http://www.nist.gov/el/msid/expect.cfm</A>), python
+scripts driving Windows applications via their COM interfaces, and the like.
+
+I'd like to bring a similar level of test script-ability to this project's
+TSLIB interface, doing things like writing a set of struct ts_sample to
+*someplace* where ts_read() would pick them up just as if they had come from
+the actual TSDEVICE.
+Brainstorming and hacking, I first tried using a named pipe, which ts_open()
+didn't care for much, an then a Linux guru down the hall suggested a
+pseudo-tty, which seems to have some potential.  (Alternatively, I'm looking
+at somewhat unattractive alterations to the code - things like,
+&quot;if(in-test-script-mode) read(fd...); else ts_read(ts...);&quot;  Yuck.)
+
+Has anyone else attempted this sort of thing?
+
+Thanks for any ideas.
+David
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20101201/ad55da12/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20101201/ad55da12/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000345.html">[Tslib-general] Testing TSLIB based applications
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#344">[ date ]</a>
+              <a href="thread.html#344">[ thread ]</a>
+              <a href="subject.html#344">[ subject ]</a>
+              <a href="author.html#344">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

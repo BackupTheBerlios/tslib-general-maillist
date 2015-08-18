@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Reg: tslib-1.0 ported on kernel linux-2.6.25
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Reg%3A%20tslib-1.0%20ported%20on%20kernel%20linux-2.6.25&In-Reply-To=%3C200901101426.35652.praveen%40e-consystems.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000155.html">
+   <LINK REL="Next"  HREF="000157.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Reg: tslib-1.0 ported on kernel linux-2.6.25</H1>
+    <B>praveen</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Reg%3A%20tslib-1.0%20ported%20on%20kernel%20linux-2.6.25&In-Reply-To=%3C200901101426.35652.praveen%40e-consystems.com%3E"
+       TITLE="[Tslib-general] Reg: tslib-1.0 ported on kernel linux-2.6.25">praveen at e-consystems.com
+       </A><BR>
+    <I>Sat Jan 10 09:56:35 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000155.html">[Tslib-general] Reg: tslib-1.0 ported on kernel linux-2.6.25
+</A></li>
+        <LI>Next message: <A HREF="000157.html">[Tslib-general] how to use tslib?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#156">[ date ]</a>
+              <a href="thread.html#156">[ thread ]</a>
+              <a href="subject.html#156">[ subject ]</a>
+              <a href="author.html#156">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 09 January 2009 08:22:40 pm Dan Lyke wrote:
+&gt;<i> On Fri, 9 Jan 2009 18:45:05 +0530
+</I>&gt;<i>
+</I>&gt;<i> praveen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">praveen at e-consystems.com</A>&gt; wrote:
+</I>&gt;<i> &gt; I don't know which function the above read will call in driver in
+</I>&gt;<i> &gt; Linux-2.6.25.
+</I>&gt;<i>
+</I>&gt;<i> Do you now which device it's opening, and if that device is actually
+</I>&gt;<i> giving you data from the touch screen?
+</I>&gt;<i>
+</I>&gt;<i> On the AT91SAM9261-EK with Linux 2.6.27.7 and uClibc, created with
+</I>&gt;<i> Buildroot, that I'm developing on, my evdev.ko module sets
+</I>&gt;<i> up the touchscreen on /dev/input/event1, and puts something that tslib
+</I>&gt;<i> doesn't do the right thing with on /dev/input/event0.
+</I>&gt;<i>
+</I>&gt;<i> My script that launches my touch screen applications sets
+</I>&gt;<i>
+</I>&gt;<i> export TSLIB_CONFFILE='/etc/ts.conf'
+</I>&gt;<i> export TSLIB_TSDEVICE='/dev/input/event1'
+</I>&gt;<i>
+</I>&gt;<i> Does this help?
+</I>&gt;<i>
+</I>&gt;<i> Dan
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Tslib-general mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>
+Hi Dan,
+
+Thanks for your reply.
+
+From tslib I am opening /dev/input/event0. I have set the following 
+environmental variable in my board. 
+
+export TSLIB_TSDEVICE='/dev/input/event0'
+
+Now I understood that the read function calls event handler evdev.ko. Now I to 
+have properly fill the structure with X, Y and pressure value for tslib to 
+bringup my touch screen.
+
+-- 
+Thanks and regards,
+Praveen
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000155.html">[Tslib-general] Reg: tslib-1.0 ported on kernel linux-2.6.25
+</A></li>
+	<LI>Next message: <A HREF="000157.html">[Tslib-general] how to use tslib?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#156">[ date ]</a>
+              <a href="thread.html#156">[ thread ]</a>
+              <a href="subject.html#156">[ subject ]</a>
+              <a href="author.html#156">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

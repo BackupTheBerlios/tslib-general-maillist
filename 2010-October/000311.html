@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Fw%3A%20Patched%20TSLib%20for%20TS-TPC-7390/95&In-Reply-To=%3CAANLkTikON5%3DCJXeHTo0bP87wU3eaToisV6453iZQuOji%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000310.html">
+   <LINK REL="Next"  HREF="000312.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95</H1>
+    <B>Donal O'Connor</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Fw%3A%20Patched%20TSLib%20for%20TS-TPC-7390/95&In-Reply-To=%3CAANLkTikON5%3DCJXeHTo0bP87wU3eaToisV6453iZQuOji%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95">donaloconnor at gmail.com
+       </A><BR>
+    <I>Fri Oct 22 00:26:38 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000310.html">[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+</A></li>
+        <LI>Next message: <A HREF="000312.html">[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#311">[ date ]</a>
+              <a href="thread.html#311">[ thread ]</a>
+              <a href="subject.html#311">[ subject ]</a>
+              <a href="author.html#311">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ok I originally had wrong one but I can confirm that
+
+<A HREF="http://automon.donaloconnor.net/files/tslib-1.0.zip">http://automon.donaloconnor.net/files/tslib-1.0.zip</A>
+
+&lt;<A HREF="http://automon.donaloconnor.net/files/tslib-1.0.zip">http://automon.donaloconnor.net/files/tslib-1.0.zip</A>&gt;is the one I patched
+and used and it worked on my TS7395 with Lenny.
+
+
+Donal
+
+On Thu, Oct 21, 2010 at 11:06 PM, Donal O'Connor &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">donaloconnor at gmail.com</A>&gt;wrote:
+
+&gt;<i> Hi again Scott,
+</I>&gt;<i>
+</I>&gt;<i> So I went searching my hard drive there and found few files.
+</I>&gt;<i>
+</I>&gt;<i> I think this is the patch I used - don't ask me where I got it from. Have
+</I>&gt;<i> no idea
+</I>&gt;<i> <A HREF="http://automon.donaloconnor.net/files/patch.inputread">http://automon.donaloconnor.net/files/patch.inputread</A>
+</I>&gt;<i>
+</I>&gt;<i> I also uploaded this:
+</I>&gt;<i> <A HREF="http://automon.donaloconnor.net/files/tslib-1.0.zip">http://automon.donaloconnor.net/files/tslib-1.0.zip</A>
+</I>&gt;<i>
+</I>&gt;<i> Now I don't know if this is even waht I used for Lenny but worth a try. It
+</I>&gt;<i> might already be compiled. Haven't time to look.
+</I>&gt;<i> NOt even sure if it's patched but give it a go.
+</I>&gt;<i>
+</I>&gt;<i> Then again I'm not even sure if that patch I uploaded is the patch I used
+</I>&gt;<i> either.
+</I>&gt;<i>
+</I>&gt;<i> If not I'll look closer or give you a binary version.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Cheers,
+</I>&gt;<i>
+</I>&gt;<i> Donal
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Oct 21, 2010 at 10:39 PM, Whealon, Lynetta &lt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Lynetta.Whealon at esterline.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>  I am certainly not working on the same platform that you are but I have
+</I>&gt;&gt;<i> had to deal with these issues using the Hampshire Tsharc Devilray12
+</I>&gt;&gt;<i> resistive touchscreen in my platform.  It also has no pressure sensors.
+</I>&gt;&gt;<i> Hampshire provided me a patch for the file input_raw.c in the plugins
+</I>&gt;&gt;<i> directory within tslib1.0.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I also saw this error when running ts_calibrate because TSLIB_TSDEVICE was
+</I>&gt;&gt;<i> not set correctly.  It must be set to the actual device that is setup and
+</I>&gt;&gt;<i> being used for your touchscreen.  If not set correctly I saw that error.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Lynetta Whealon
+</I>&gt;&gt;<i>   ------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> *From:* <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general-bounces at lists.berlios.de</A> [mailto:
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general-bounces at lists.berlios.de</A>] *On Behalf Of *<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">SCrook at bevair.com</A>
+</I>&gt;&gt;<i> *Sent:* Thursday, October 21, 2010 2:15 PM
+</I>&gt;&gt;<i> *To:* <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+</I>&gt;&gt;<i> *Subject:* [Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hello,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm trying to compile TSLib for the TS-TPC-7395 using a Debian Lenny EABI
+</I>&gt;&gt;<i> distro.
+</I>&gt;&gt;<i> While I am able to compile, when I try to run ts_calibrate I get the
+</I>&gt;&gt;<i> following message:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &quot;selected device is not a touchscreen I understand&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> From what I've been able to gather from searching google, I need to make
+</I>&gt;&gt;<i> some patches to the TSLib in order to use it with this device. I've not
+</I>&gt;&gt;<i> found anything out there as far as a package that is already patched nor any
+</I>&gt;&gt;<i> instructions about how I should go about patching however from what I can
+</I>&gt;&gt;<i> tell it appears that I need to make a no pressure sensors patch as well as a
+</I>&gt;&gt;<i> plugin module patch.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any ideas on what specifically I might need to do to the stock TSLib
+</I>&gt;&gt;<i> source to accomplish this?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> *Scott Crook*
+</I>&gt;&gt;<i> Automation/Test Engineer
+</I>&gt;&gt;<i> Beverage-Air Corporation
+</I>&gt;&gt;<i> 336.245.6420*
+</I>&gt;&gt;<i> *www.beverage-air.com
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Tslib-general mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20101021/74fec687/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20101021/74fec687/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000310.html">[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+</A></li>
+	<LI>Next message: <A HREF="000312.html">[Tslib-general] Fw: Patched TSLib for TS-TPC-7390/95
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#311">[ date ]</a>
+              <a href="thread.html#311">[ thread ]</a>
+              <a href="subject.html#311">[ subject ]</a>
+              <a href="author.html#311">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

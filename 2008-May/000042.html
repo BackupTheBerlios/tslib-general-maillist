@@ -1,0 +1,415 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] FW:  touch screen with x-server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20FW%3A%20%20touch%20screen%20with%20x-server&In-Reply-To=%3C002e01c8c22c%24fc928730%24f5b79590%24%40com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000040.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] FW:  touch screen with x-server</H1>
+    <B>Rakesh Jagota</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20FW%3A%20%20touch%20screen%20with%20x-server&In-Reply-To=%3C002e01c8c22c%24fc928730%24f5b79590%24%40com%3E"
+       TITLE="[Tslib-general] FW:  touch screen with x-server">jrakesh at gdatech.com
+       </A><BR>
+    <I>Fri May 30 10:12:59 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000040.html">[Tslib-general] tslib with x-server
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#42">[ date ]</a>
+              <a href="thread.html#42">[ thread ]</a>
+              <a href="subject.html#42">[ subject ]</a>
+              <a href="author.html#42">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+ 
+
+Today I am seeing the strange behavior while testing touch screen, Earlier I
+was seeing the message like:
+
+ 
+
+pen down: x=9:206, y=a:1030, pressure=b:192
+
+&gt;<i> 
+</I>
+&gt;<i> pen down: x=9:279, y=a:687, pressure=b:192
+</I>
+&gt;<i> 
+</I>
+ 
+
+&gt;<i>From dmesg, but today I am not able to getting anthing:
+</I>
+ 
+
+I am just putting my xorg.con file details here:
+
+=========================================================
+
+ 
+
+Section &quot;InputDevice&quot;
+
+        Identifier      &quot;Configured Mouse&quot;
+
+        Driver          &quot;mouse&quot;
+
+        Option          &quot;CorePointer&quot;
+
+        Option          &quot;Device&quot;                &quot;/dev/input/mice&quot;
+
+        Option          &quot;Protocol&quot;              &quot;ImPS/2&quot;
+
+        Option          &quot;Emulate3Buttons&quot;       &quot;true&quot;
+
+EndSection
+
+ 
+
+Section &quot;InputDevice&quot;
+
+        Identifier      &quot;Touchscreen&quot;
+
+        Driver          &quot;tslib&quot;
+
+        Option          &quot;Device&quot;        &quot;/dev/input/event2&quot;
+
+        Option          &quot;SendCoreEvents&quot;        &quot;On&quot;
+
+EndSection
+
+ 
+
+Section &quot;InputDevice&quot;
+
+        Identifier      &quot;dummy&quot;
+
+        Driver          &quot;void&quot;
+
+        Option          &quot;Device&quot;        &quot;/dev/input/mice&quot;
+
+EndSection
+
+ 
+
+ 
+
+Section &quot;ServerLayout&quot;
+
+        Identifier      &quot;Default Layout&quot;
+
+        Screen          &quot;Default Screen&quot;
+
+        InputDevice     &quot;Generic Keyboard&quot;
+
+        InputDevice     &quot;Configured Mouse&quot;
+
+        InputDevice     &quot;Touchscreen&quot; &quot;CorePointer&quot;
+
+        InputDevice     &quot;dummy&quot;
+
+EndSection
+
+ 
+
+===========================================================
+
+ 
+
+My /etc/profile is as below:
+
+ 
+
+=============================================================
+
+..
+
+.
+
+..
+
+..
+
+ 
+
+export TSLIB_TSDEVICE=&quot;/dev/input/event2&quot;
+
+export TSLIB_CALIBFILE=&quot;/etc/pointercal&quot;
+
+export TSLIB_CONFFILE=&quot;/etc/ts.conf&quot;
+
+export TSLIB_PLUGINDIR=&quot;/usr/lib/ts&quot;
+
+ 
+
+==============================================================
+
+ 
+
+My cat /proc/bus/input/devices output as:
+
+==============================================================
+
+ 
+
+I: Bus=0003 Vendor=413c Product=3200 Version=0110
+
+N: Name=&quot;Dell Dell USB Mouse&quot;
+
+P: Phys=usb-fsl-ehci.0-1.2/input0
+
+S: Sysfs=/class/input/input1
+
+U: Uniq=
+
+H: Handlers=mouse0 event1 
+
+B: EV=7
+
+B: KEY=70000 0 0 0 0 0 0 0 0
+
+B: REL=103
+
+ 
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+
+N: Name=&quot;wm97xx touchscreen&quot;
+
+P: Phys=0-0:WM9711,WM9712/input0
+
+S: Sysfs=/class/input/input2
+
+U: Uniq=
+
+H: Handlers=event2 
+
+B: EV=9
+
+B: ABS=1000003
+
+ 
+
+gda211:/etc#
+===============================================================
+
+ 
+
+My &quot;ts_calibrate&quot; output is:
+
+ 
+
+===========================================================
+
+gda211:/etc# ts_calibrate
+
+xres = 1024, yres = 600
+
+selected device is not a touchscreen I understand
+
+Took 13 samples...
+
+Top left : X = 805502960 Y = 269287424
+
+Took 13 samples...
+
+Top right : X = 805502960 Y = 269287424
+
+Took 13 samples...
+
+Bot right : X = 805502960 Y = 269287424
+
+Took 13 samples...
+
+Bot left : X = 805502960 Y = 269287424
+
+Took 13 samples...
+
+Center : X = 805502960 Y = 269287424
+
+0.809927 -16.000055 47.859985
+
+2.292994 -20.713882 61.960167
+
+Calibration constants: 53079 -1048579 3136552 150273 -1357505 4060621 65536 
+
+gda211:/etc#
+
+ 
+
+ 
+
+==========================================================
+
+ 
+
+ 
+
+My &quot;evtest /dev/input/event2&quot; output is as below after touching the touch
+panel:
+
+========================================================================
+
+ 
+
+gda211:/etc# evtest /dev/input/event2
+
+Input driver version is 1.0.0
+
+Input device ID: bus 0x0 vendor 0x0 product 0x0 version 0x0
+
+Input device name: &quot;wm97xx touchscreen&quot;
+
+Supported events:
+
+  Event type 0 (Reset)
+
+    Event code 0 (Reset)
+
+    Event code 3 (Absolute)
+
+  Event type 3 (Absolute)
+
+    Event code 0 (X)
+
+      Value   1252
+
+      Min      350
+
+      Max     3900
+
+      Fuzz       5
+
+    Event code 1 (Y)
+
+      Value   2324
+
+      Min      320
+
+      Max     3750
+
+      Fuzz      40
+
+    Event code 24 (Pressure)
+
+      Value      0
+
+      Min        0
+
+      Max      150
+
+      Fuzz       4
+
+Testing ... (interrupt to exit)
+
+Event: time 1212109316.854799, type 3 (Absolute), code 0 (X), value 1573
+
+Event: time 1212109316.854805, type 3 (Absolute), code 1 (Y), value 2185
+
+Event: time 1212109316.854808, type 3 (Absolute), code 24 (Pressure), value
+192
+
+Event: time 1212109316.854811, type 0 (Reset), code 0 (Reset), value 0
+
+Event: time 1212109316.862737, type 3 (Absolute), code 0 (X), value 1632
+
+Event: time 1212109316.862746, type 3 (Absolute), code 1 (Y), value 1756
+
+Event: time 1212109316.862751, type 0 (Reset), code 0 (Reset), value 0
+
+Event: time 1212109316.871172, type 3 (Absolute), code 0 (X), value 1494
+
+Event: time 1212109316.871179, type 3 (Absolute), code 1 (Y), value 1520
+
+Event: time 1212109316.871184, type 0 (Reset), code 0 (Reset), value 0
+
+Event: time 1212109316.878673, type 3 (Absolute), code 0 (X), value 1457
+
+Event: time 1212109316.878680, type 3 (Absolute), code 1 (Y), value 1603
+
+Event: time 1212109316.878684, type 0 (Reset), code 0 (Reset), value 0
+
+Event: time 1212109316.886694, type 3 (Absolute), code 0 (X), value 1456
+
+Event: time 1212109316.886701, type 3 (Absolute), code 1 (Y), value 1863
+
+Event: time 1212109316.886706, type 0 (Reset), code 0 (Reset), value 0
+
+Event: time 1212109316.894062, type 3 (Absolute), code 24 (Pressure), value
+0
+
+Event: time 1212109316.894067, type 0 (Reset), code 0 (Reset), value 0
+
+ 
+
+===========================================================================
+
+ 
+
+But I am not seeing any debug message coming from my Touch screen driver
+(wm97xx-core.c). I have configured driver in polling mode, as yesterday with
+the same steps I used to get the x,y and pressure values.
+
+ 
+
+Please suggest me what am I doing wrong.
+
+ 
+
+Regards,
+
+Rakesh jagota
+
+ 
+
+-----Original Message-----
+From: Diego A. Fons [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">diegofons at apexar.com</A>] 
+Sent: Thursday, May 29, 2008 5:12 AM
+To: Rakesh Jagota
+Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">tslib-general at lists.berlios.de</A>
+Subject: Re: [Tslib-general] touch screen with x-server
+
+ 
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20080530/ccec3efb/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20080530/ccec3efb/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000040.html">[Tslib-general] tslib with x-server
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#42">[ date ]</a>
+              <a href="thread.html#42">[ thread ]</a>
+              <a href="subject.html#42">[ subject ]</a>
+              <a href="author.html#42">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

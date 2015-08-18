@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Configuring a touch screen that is controlled by inputattach
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%20by%20inputattach&In-Reply-To=%3C490047B4.7070603%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000114.html">
+   <LINK REL="Next"  HREF="000116.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Configuring a touch screen that is controlled by inputattach</H1>
+    <B>Hinko Kocevar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%20by%20inputattach&In-Reply-To=%3C490047B4.7070603%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] Configuring a touch screen that is controlled by inputattach">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Thu Oct 23 11:45:24 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000114.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+        <LI>Next message: <A HREF="000116.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#115">[ date ]</a>
+              <a href="thread.html#115">[ thread ]</a>
+              <a href="subject.html#115">[ subject ]</a>
+              <a href="author.html#115">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Peter Geoghegan wrote:
+&gt;<i> Hinko,
+</I>&gt;<i> 
+</I>&gt;<i> I ran a GDB before I &quot;make install&quot; per your instructions. Here's what I get:
+</I>&gt;<i> 
+</I>&gt;<i> ...
+</I>&gt;<i> Loading module /usr/local/lib/ts//input.so
+</I>&gt;<i> Loading module /usr/local/lib/ts//pthres.so
+</I>&gt;<i> Couldnt load module pthres
+</I>&gt;<i> 194                                        perror(&quot;ts_config&quot;);
+</I>&gt;<i> 
+</I>&gt;<i> It can't load pthres.so because there is no shared object, only a
+</I>&gt;<i> static .la library.
+</I>&gt;<i> 
+</I>&gt;<i> I run configure again, but this time I just have the
+</I>&gt;<i> --enable-debug=yes flag. I make, make install.
+</I>&gt;<i> 
+</I>
+As long as you can debug it is ok.
+
+&gt;<i> Here is a transcript of my gdb session:
+</I>&gt;<i> 
+</I>&gt;<i> Copyright (C) 2008 Free Software Foundation, Inc.
+</I>&gt;<i> License GPLv3+: GNU GPL version 3 or later &lt;<A HREF="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</A>&gt;
+</I>&gt;<i> This is free software: you are free to change and redistribute it.
+</I>&gt;<i> There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+</I>&gt;<i> and &quot;show warranty&quot; for details.
+</I>&gt;<i> This GDB was configured as &quot;i486-linux-gnu&quot;...
+</I>&gt;<i> (gdb) b main
+</I>&gt;<i> Breakpoint 1 at 0x8048f87: file ts_calibrate.c, line 166.
+</I>&gt;<i> (gdb) r
+</I>&gt;<i> Starting program: /usr/local/bin/ts_calibrate
+</I>&gt;<i> 
+</I>&gt;<i> Breakpoint 1, main () at ts_calibrate.c:166
+</I>&gt;<i> 166	{
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 175		signal(SIGSEGV, sig);
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 176		signal(SIGINT, sig);
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 177		signal(SIGTERM, sig);
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 179		if( (tsdevice = getenv(&quot;TSLIB_TSDEVICE&quot;)) != NULL ) {
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 180			ts = ts_open(tsdevice,0);
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 189		if (!ts) {
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 193		if (ts_config(ts)) {
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> Loading module /usr/local/lib/ts//input.so
+</I>&gt;<i> Loading module /usr/local/lib/ts//pthres.so
+</I>&gt;<i> Loading module /usr/local/lib/ts//variance.so
+</I>&gt;<i> Loading module /usr/local/lib/ts//dejitter.so
+</I>&gt;<i> Loading module /usr/local/lib/ts//linear.so
+</I>&gt;<i> 198		if (open_framebuffer()) {
+</I>&gt;<i> (gdb) s
+</I>&gt;<i> open_framebuffer () at fbutils.c:59
+</I>&gt;<i> 59		if ((fbdevice = getenv (&quot;TSLIB_FBDEVICE&quot;)) == NULL)
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 53	{
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 59		if ((fbdevice = getenv (&quot;TSLIB_FBDEVICE&quot;)) == NULL)
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 60			fbdevice = defaultfbdevice;
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 62		if ((consoledevice = getenv (&quot;TSLIB_CONSOLEDEVICE&quot;)) == NULL)
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 63			consoledevice = defaultconsoledevice;
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 65		if (strcmp (consoledevice, &quot;none&quot;) != 0) {
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 66			sprintf (vtname,&quot;%s%d&quot;, consoledevice, 1);
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 67	        	fd = open (vtname, O_WRONLY);
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 68	        	if (fd &lt; 0) {
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 67	        	fd = open (vtname, O_WRONLY);
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 68	        	if (fd &lt; 0) {
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 73			if (ioctl(fd, VT_OPENQRY, &amp;nr) &lt; 0) {
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 77	        	close(fd);
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 79	        	sprintf(vtname, &quot;%s%d&quot;, consoledevice, nr);
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 81	        	con_fd = open(vtname, O_RDWR | O_NDELAY);
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 82	        	if (con_fd &lt; 0) {
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 81	        	con_fd = open(vtname, O_RDWR | O_NDELAY);
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 82	        	if (con_fd &lt; 0) {
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 87	        	if (ioctl(con_fd, VT_GETSTATE, &amp;vts) == 0)
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 88	        	        last_vt = vts.v_active;
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 90	        	if (ioctl(con_fd, VT_ACTIVATE, nr) &lt; 0) {
+</I>&gt;<i> (gdb) n
+</I>&gt;<i> 
+</I>&gt;<i> ...
+</I>&gt;<i> 
+</I>&gt;<i> And now, the screen goes black.
+</I>&gt;<i> 
+</I>&gt;<i> As before, I cannot do anything other than restarting with ctrl, alt
+</I>&gt;<i> and del. However, I cannot see the &quot;TSLIB calibration utility, touch
+</I>&gt;<i> the cursor&quot; message, unlike before.
+</I>&gt;<i> 
+</I>&gt;<i> It's definitely writing to /dev/fb0 , which is an intelfb that uses
+</I>&gt;<i> the intelfb kernel module. I did a p some_var that showed that in an
+</I>&gt;<i> earlier run of debugging.
+</I>
+I don't think it is tslib releated.
+
+&gt;<i> 
+</I>&gt;<i> Does this offer any hints as to what the problem might be?
+</I>&gt;<i> 
+</I>
+What about if you only open fb device and drop all that VT ioctl() mumbo-jumbo
+that follows?
+
+Eg. just open, set to graphics mode and use..
+
+HTH,
+Hinko
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000114.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+	<LI>Next message: <A HREF="000116.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#115">[ date ]</a>
+              <a href="thread.html#115">[ thread ]</a>
+              <a href="subject.html#115">[ subject ]</a>
+              <a href="author.html#115">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

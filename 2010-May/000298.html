@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] cy8mrln-palmpre
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20cy8mrln-palmpre&In-Reply-To=%3C201005311358.36691.ml%40vdm-design.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000297.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] cy8mrln-palmpre</H1>
+    <B>Thomas Zimmermann</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20cy8mrln-palmpre&In-Reply-To=%3C201005311358.36691.ml%40vdm-design.de%3E"
+       TITLE="[Tslib-general] cy8mrln-palmpre">ml at vdm-design.de
+       </A><BR>
+    <I>Mon May 31 13:58:36 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000297.html">[Tslib-general] no graphics at ts_calibrate
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#298">[ date ]</a>
+              <a href="thread.html#298">[ thread ]</a>
+              <a href="subject.html#298">[ subject ]</a>
+              <a href="author.html#298">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+we (me and two other guys) are trying to write a tslib plugin for the 
+touchscreen of the palm pre.
+But we are having some problems...
+
+Our current code is hosted at github: 
+<A HREF="http://github.com/playya/tslib/blob/master/plugins/cy8mrln-palmpre.c">http://github.com/playya/tslib/blob/master/plugins/cy8mrln-palmpre.c</A>
+
+Now to the touchscreen:
+It's a capacitiv multitouch touchscreen that reports the events in a sort of 
+strange way. The touchscreen is devided into 70 fields (7*10) and you get an 
+intensity (pressure)  for every field. To get the position of the finger one has 
+to interpolate the values of the different fields.
+
+The device constantly reports data (in our configuration 60 pakets per second). 
+We drop all pakets that contain no data.
+
+Our current problem is that we can move around the courser, but we can't make 
+a click event.
+I expected that tslib will handle this but it seems we have to do something 
+that it will recognize the click event.
+
+
+So what do we have to do, to make tslib send a click event?
+
+Regards
+Thomas
+
+PS: I just recognized that kergoth already merged most of our changes to the 
+main repository.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000297.html">[Tslib-general] no graphics at ts_calibrate
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#298">[ date ]</a>
+              <a href="thread.html#298">[ thread ]</a>
+              <a href="subject.html#298">[ subject ]</a>
+              <a href="author.html#298">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] Configuring a touch screen that is controlled by inputattach
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%20by%20inputattach&In-Reply-To=%3C49004D0C.6080901%40cetrtapot.si%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000116.html">
+   <LINK REL="Next"  HREF="000118.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] Configuring a touch screen that is controlled by inputattach</H1>
+    <B>Hinko Kocevar</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20Configuring%20a%20touch%20screen%20that%20is%20controlled%0A%20by%20inputattach&In-Reply-To=%3C49004D0C.6080901%40cetrtapot.si%3E"
+       TITLE="[Tslib-general] Configuring a touch screen that is controlled by inputattach">hinko.kocevar at cetrtapot.si
+       </A><BR>
+    <I>Thu Oct 23 12:08:12 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000116.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+        <LI>Next message: <A HREF="000118.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#117">[ date ]</a>
+              <a href="thread.html#117">[ thread ]</a>
+              <a href="subject.html#117">[ subject ]</a>
+              <a href="author.html#117">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Peter Geoghegan wrote:
+&gt;<i> Hinko,
+</I>&gt;<i> 
+</I>&gt;<i> I find that by specifying the virtual console in use, /dev/tty1,
+</I>&gt;<i> rather than using the default /dev/tty, I can now change virtual
+</I>&gt;<i> console, so it's no longer necessary to restart. Now, if I Ctrl, alt
+</I>&gt;<i> F1 to /dev/tty1, I can see a dump of the data Tslib is receiving.
+</I>&gt;<i> 
+</I>&gt;<i> Here's that dump:
+</I>&gt;<i> 
+</I>&gt;<i> Loading module /usr/local/lib/ts//input.so
+</I>&gt;<i> Loading module /usr/local/lib/ts//pthres.so
+</I>&gt;<i> Loading module /usr/local/lib/ts//variance.so
+</I>&gt;<i> Loading module /usr/local/lib/ts//dejitter.so
+</I>&gt;<i> Loading module /usr/local/lib/ts//linear.so
+</I>&gt;<i> xres = 800, yres = 600
+</I>&gt;<i> RAW-------------------------&gt; 1433 3067 0 1224754159.247087
+</I>&gt;<i> TS_READ_RAW----&gt; x = 1433, y = 3067, pressure = 0
+</I>&gt;<i> *snip*
+</I>&gt;<i> 
+</I>&gt;<i> Incidentally, the pressure is always 0. Why is that?
+</I>&gt;<i> 
+</I>
+Looking at the evtest output from few mails back, it seems that elo does
+not report ABS_PRESSURE, used for detecting touch - pressed/released.
+Looking at the code that handles events in input-raw.c, your output is
+just as expected; when elo sends BTN_TOUCH event, tslib detects it and
+send out x=0, y=0, pressure=0 event --&gt; pen up. thats why for every touch,
+x and y are 0, and pressure is zero. For Linux input this means 'button
+release'. You application should ignore x,y values for such events sent
+by tslib.
+
+Alternatively you could fix the tslib code to do 'the right thing for
+you', eg. adding value check for ev.value == 1 in BTN_TOUCH case statement 
+in input-raw.c and report event with pressure 1. Mybe you could stuff the
+x and y values at the same time from i-&gt;current_x and i-&gt;current_y in the
+same place (just as EV_SYN case does).
+
+
+&gt;<i> Despite this, the problem of the framebuffer interface never changing
+</I>&gt;<i> remains. However, I now see a flashing white underscore in the top
+</I>&gt;<i> left hand of the framebuffer. This is the same as the white underscore
+</I>&gt;<i> that appears (over black) in place of my ubuntu splash screen, ever
+</I>&gt;<i> since I changed my /boot/grub/menu.lst to boot with the kernel
+</I>&gt;<i> argument vga=788 in order to get the damn framebuffer working in the
+</I>&gt;<i> first place! The only difference is the underscore that appears at
+</I>&gt;<i> boot time doesn't flash.
+</I>&gt;<i> 
+</I>&gt;<i> I guess it is a framebuffer problem, but I've had other framebuffer
+</I>&gt;<i> using applications run without incident. I'm going to go ask on a
+</I>&gt;<i> framebuffer list and see what they think.
+</I>
+Try setting framebuffer driver to generic fbdev, possibly with small
+resolution, 640x480 and few colors (8bit palette)..
+
+HTH,
+Hinko
+-- 
+&#268;ETRTA POT, d.o.o., Kranj
+Planina 3
+4000 Kranj
+Slovenia, Europe
+Tel. +386 (0) 4 280 66 03
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hinko.kocevar at cetrtapot.si</A>
+Http: www.cetrtapot.si
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000116.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+	<LI>Next message: <A HREF="000118.html">[Tslib-general] Configuring a touch screen that is controlled	by inputattach
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#117">[ date ]</a>
+              <a href="thread.html#117">[ thread ]</a>
+              <a href="subject.html#117">[ subject ]</a>
+              <a href="author.html#117">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>

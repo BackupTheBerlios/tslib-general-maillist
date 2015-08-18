@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Tslib-general] doubts with qt 3.3.6 and tslib
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/tslib-general/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20doubts%20with%20qt%203.3.6%20and%20tslib&In-Reply-To=%3Cedd655320710172314m74136799j3b31af6b084c59f7%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000015.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Tslib-general] doubts with qt 3.3.6 and tslib</H1>
+    <B>quinty quinty</B> 
+    <A HREF="mailto:tslib-general%40lists.berlios.de?Subject=Re%3A%20%5BTslib-general%5D%20doubts%20with%20qt%203.3.6%20and%20tslib&In-Reply-To=%3Cedd655320710172314m74136799j3b31af6b084c59f7%40mail.gmail.com%3E"
+       TITLE="[Tslib-general] doubts with qt 3.3.6 and tslib">webquinty10 at gmail.com
+       </A><BR>
+    <I>Thu Oct 18 08:14:07 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000015.html">[Tslib-general] doubts with qt 3.3.6 and tslib
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Yes, I read in README file about it.
+
+well, when I use touch screen, I use ./ts_print_raw to read values from it.
+In Y axis I had not problem but in X axis, the scale of touch screen is not
+the same that screen.
+
+fprintf(stderr,&quot;TS_READ_RAW----&gt; x = %d, y = %d, pressure = %d\n&quot;, samp-&gt;x,
+samp-&gt;y, samp-&gt;pressure);
+
+X and Y position, and pressure, but values from X axis only from 0 to 200,
+very strange because my screen resolution and touch screen is 800x600.
+
+And yes, when I executed ts_calibrate, program created a pointercal file in
+etc folder.
+
+well, I will try to search more information about tslib.
+
+
+Thank you very much.
+Best regards
+John Martin
+A&amp;R
+Spain
+
+
+2007/10/18, Hari Prasath &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hariprasath at e-consystems.com</A>&gt;:
+&gt;<i>
+</I>&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Are you using the linux input layer event interface.Because the README
+</I>&gt;<i> file suggests to uncomment the line &quot;module_raw input&quot; only if you are
+</I>&gt;<i> using it.
+</I>&gt;<i>
+</I>&gt;<i> Can you tell me what are the parameters your driver returns when you do
+</I>&gt;<i> a reas operatoion,like in my case my driver returns x,y,z1 &amp; z2.You need
+</I>&gt;<i> to select the proper module from ts.conf file.
+</I>&gt;<i>
+</I>&gt;<i> Did you run ts_calibrate application and got a pointercal file?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, 2007-10-17 at 22:07 +0200, quinty quinty wrote:
+</I>&gt;<i> &gt; Hello Hari,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Thank you for your help.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Well, in my board, I have ts.conf in etc folder with this modules:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ts.conf.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; module_raw input
+</I>&gt;<i> &gt; module pthres pmin=1
+</I>&gt;<i> &gt; module variance delta=30
+</I>&gt;<i> &gt; module dejitter delta=100
+</I>&gt;<i> &gt; module linear
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; the environmente variables:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; TSLIB_TSDEVICE            /dev/input/event0
+</I>&gt;<i> &gt; TSLIB_CALIBFILE            /etc/pointercal
+</I>&gt;<i> &gt; TSLIB_CONFFILE            /etc/ts.conf
+</I>&gt;<i> &gt; TSLIB_PLUGINDIR           /opt/plugins
+</I>&gt;<i> &gt; TSLIB_CONSOLEDEVICE    none
+</I>&gt;<i> &gt; TSLIB_FBDEVICE            /dev/fb0
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; But with this configuration, the touch screen does not work properly.
+</I>&gt;<i> &gt; a half of touch screen work fine.
+</I>&gt;<i> &gt; I will try to make some changes in ts.conf because I read about
+</I>&gt;<i> &gt; problems with blank lines in ts.conf.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; If you have other advice, please tell me.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Best Regards
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; John Martin
+</I>&gt;<i> &gt; A&amp;R
+</I>&gt;<i> &gt; Spain
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; 2007/10/16, Hari Prasath &lt; <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">hariprasath at e-consystems.com</A>&gt;:
+</I>&gt;<i> &gt;         Hello,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;         The module linear is in ts.conf file.you need to put this file
+</I>&gt;<i> &gt;         in tour
+</I>&gt;<i> &gt;         target board ans set the environmente variables given in
+</I>&gt;<i> &gt;         README file of
+</I>&gt;<i> &gt;         tslib package.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;         On Mon, 2007-10-15 at 13:12 +0200, quinty quinty wrote:
+</I>&gt;<i> &gt;         &gt; Hello,
+</I>&gt;<i> &gt;         &gt;
+</I>&gt;<i> &gt;         &gt; I have a bit problem with my touch screen.
+</I>&gt;<i> &gt;         &gt;
+</I>&gt;<i> &gt;         &gt; Well, after patch qt with tslib and compile, I executed a
+</I>&gt;<i> &gt;         &gt; ts_calibration function, and only
+</I>&gt;<i> &gt;         &gt; a half of touch screen is working, and other part of it,
+</I>&gt;<i> &gt;         does not
+</I>&gt;<i> &gt;         &gt; work.
+</I>&gt;<i> &gt;         &gt; And more important, with only half of touch screen, mouse
+</I>&gt;<i> &gt;         moved in all
+</I>&gt;<i> &gt;         &gt; screen.
+</I>&gt;<i> &gt;         &gt; It is very strange, but I can not find what is the problem.
+</I>&gt;<i> &gt;         &gt;
+</I>&gt;<i> &gt;         &gt; I read this:
+</I>&gt;<i> &gt;         &gt;
+</I>&gt;<i> &gt;         &gt; module: linear
+</I>&gt;<i> &gt;         &gt; --------------
+</I>&gt;<i> &gt;         &gt; Description:
+</I>&gt;<i> &gt;         &gt;   Linear scaling module, primerily used for conversion of
+</I>&gt;<i> &gt;         touch screen
+</I>&gt;<i> &gt;         &gt;   co-ordinates to screen co-ordinates.
+</I>&gt;<i> &gt;         &gt;
+</I>&gt;<i> &gt;         &gt; But where can i change this Linear scaling????
+</I>&gt;<i> &gt;         &gt;
+</I>&gt;<i> &gt;         &gt; Best regards
+</I>&gt;<i> &gt;         &gt;
+</I>&gt;<i> &gt;         &gt; _______________________________________________
+</I>&gt;<i> &gt;         &gt; Tslib-general mailing list
+</I>&gt;<i> &gt;         &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">Tslib-general at lists.berlios.de</A>
+</I>&gt;<i> &gt;         &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/tslib-general">https://lists.berlios.de/mailman/listinfo/tslib-general</A>
+</I>&gt;<i> &gt;         --
+</I>&gt;<i> &gt;         G.E.Hari Prasath
+</I>&gt;<i> &gt;         Alert Me:+91-9894592910
+</I>&gt;<i> &gt;         PH: +91-44-42033689, TeleFax: +91-42033600
+</I>&gt;<i> &gt;         www.e-consystems.com
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> --
+</I>&gt;<i> G.E.Hari Prasath
+</I>&gt;<i> Software Engineer|Embedded Linux
+</I>&gt;<i> Mobile:+91-9894592910
+</I>&gt;<i> PH: +91-44-42033689, TeleFax: +91-42033600
+</I>&gt;<i> www.e-consystems.com
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/tslib-general/attachments/20071018/1db7241b/attachment.html">https://lists.berlios.de/pipermail/tslib-general/attachments/20071018/1db7241b/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000015.html">[Tslib-general] doubts with qt 3.3.6 and tslib
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/tslib-general">More information about the Tslib-general
+mailing list</a><br>
+</body></html>
